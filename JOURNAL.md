@@ -56,3 +56,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Plaid : motif de fines lignes répété. Tapis berbère : losanges un peu irréguliers, plus grands.
 - VR : 0 erreur, ~146 k triangles (la VR garde son filtre 4 points, plus rapide).
 - Scores : meubles 8,5 → 9, éclairage 8 → 8,5 → **49,5 → 50,5/70**.
+
+## 2026-11-19 — Séance 5 : prix
+- SSD 2 To 200 → 299,99 € (Predator GM9000, Black November ; marché 300-360 €). Alimentation → Corsair RM850e (2025) 134,95 € LDLC. Chaise Sihoo 300 → 309,99 €. GPU : prix gardé à 899,90 €, confirmé (847,92 € à 889,99 € vus aujourd'hui, jusqu'à 1 400 € sur certaines fiches).
+- **Total : 7 214,67 → 7 349,60 €** (gaming 3 858,71 €).
+- Scores : liste 7 → 7,5 → **50,5 → 51/70**. Restent estimés : boîtier, périphériques, casque.

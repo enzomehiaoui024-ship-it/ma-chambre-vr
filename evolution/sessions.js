@@ -3,6 +3,21 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 5 — prix de la liste revérifiés",
+    avant: 50.5, apres: 51,
+    scores: { meubles: [9, 9], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7, 7.5], vr: [7, 7], plan: [7, 7], video: [5, 5] },
+    changements: [
+      "SSD 2 To : 200 € → 299,99 €. Les SSD ont beaucoup augmenté cette année ; meilleure offre trouvée : Acer Predator GM9000 (encore plus rapide, Gen5)",
+      "Alimentation : modèle précis choisi, Corsair RM850e à 134,95 € chez LDLC",
+      "Chaise Sihoo Doro C300 : 309,99 € (entre 285 et 380 € selon le vendeur)",
+      "Carte graphique RX 9070 XT : prix confirmé autour de 850-900 €, avec les liens des offres du jour",
+      "Nouveau total : 7 349,60 € (chambre 3 490,89 € + gaming 3 858,71 €)"
+    ],
+    images: [],
+    ensuite: "Lit : coutures de la housse et oreillers plus moelleux ; platine vinyle."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 4 — textures corrigées, ombres douces, tapis berbère",
     avant: 49.5, apres: 50.5,
     scores: { meubles: [8.5, 9], eclairage: [8, 8.5], coherence: [7, 7], liste: [7, 7], vr: [7, 7], plan: [7, 7], video: [5, 5] },
