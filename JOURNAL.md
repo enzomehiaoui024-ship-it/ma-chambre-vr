@@ -84,3 +84,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Ajoutés : tapis de passage, 2 multiprises KOPPLA + câbles, 2 goulottes, 2e spot plante.
 - Manquent encore (emplacement à décider avec Enzo) : MOSSLANDA ×2, supports vinyles muraux ×3, « Now Playing », brosse à vinyles, patère (cachée quand la porte est ouverte).
 - Scores : cohérence 7 → 7,5 → **54 → 54,5/70**.
+
+## 2026-11-20 — Séance 10 : vignette de confort VR
+- Plan 32×32 cm à 12 cm devant la tête (dynamique, renderOrder 20), texture radiale (transparent jusqu'à 36 %, noir à 72 %), opacité = vitesse du stick gauche ou 1 pendant ~0,3 s après un virage. Bouton « Confort » dans le menu (activé par défaut).
+- Mock XR : `window.__gpL` (manette gauche) exposée pour les tests.
+- Leçon : une opacité < 1 sur un dégradé déjà transparent se voit à peine dans le champ de vue réel ; l'intensité doit aller jusqu'à 1.
+- Scores : VR 7 → 7,5 → **54,5 → 55/70**.

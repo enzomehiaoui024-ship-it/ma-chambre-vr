@@ -15,7 +15,6 @@
 
 ## VR
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
-- Vignette de confort pendant le déplacement au stick.
 - Mains/manettes plus détaillées.
 
 ## Vidéo

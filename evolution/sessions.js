@@ -3,6 +3,22 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 10 — confort en VR",
+    avant: 54.5, apres: 55,
+    scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7.5, 7.5], liste: [7.5, 7.5], vr: [7, 7.5], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Quand tu avances au stick ou que tu tournes, les bords de la vue s'assombrissent doucement : ça évite d'avoir mal au cœur dans le casque",
+      "Bouton « Confort : oui / non » dans le menu pour l'enlever si tu n'en as pas besoin",
+      "Le compteur d'images par seconde est passé en haut du menu"
+    ],
+    images: [
+      ["vignette-marche", "Vue pendant la marche (bords assombris)"],
+      ["menu-confort", "Menu avec le bouton Confort"]
+    ],
+    ensuite: "Éclairage : reflets légers sur le parquet et l'écran de la TV."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 9 — petits objets de la liste ajoutés",
     avant: 54, apres: 54.5,
     scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7.5], liste: [7.5, 7.5], vr: [7, 7], plan: [7.5, 7.5], video: [7, 7] },
