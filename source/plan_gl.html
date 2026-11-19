@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ma chambre en 3D</title>
+<style>
+html,body{margin:0;height:100%;background:#141413;color:#F6F2E8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;overflow:hidden}
+#view{position:absolute;inset:0}
+#ui{position:absolute;left:0;right:0;bottom:0;padding:10px 10px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(10,10,9,.82) 28%);}
+.row{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none}.row::-webkit-scrollbar{display:none}
+.lbl{font-size:11px;letter-spacing:.08em;color:#C9D19A;margin:6px 2px 0}
+button{flex:0 0 auto;font:inherit;font-size:14px;color:#F6F2E8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 14px;cursor:pointer}
+button.on{background:#A4AE6E;border-color:#A4AE6E;color:#1b1d12}
+#play{width:100%;margin-top:8px;padding:11px;border-radius:12px;background:#F6F2E8;color:#1b1b19;font-weight:600;border:none}
+#cap{position:absolute;left:16px;right:16px;top:calc(14px + env(safe-area-inset-top));opacity:0;transition:opacity .5s;pointer-events:none;border-left:4px solid #A4AE6E;padding:4px 0 4px 12px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+#capL{font-size:11px;letter-spacing:.12em;color:#C9D19A}#capT{font-size:22px;font-weight:600;margin-top:2px}#capS{font-size:14px;opacity:.85}
+#hint{position:absolute;top:10px;right:12px;font-size:11px;opacity:.55}
+</style></head><body>
+<div id="view"></div>
+<div id="hint">1 doigt : tourner · 2 doigts : zoom</div>
+<div id="cap"><div id="capL"></div><div id="capT"></div><div id="capS"></div></div>
+<div id="ui">
+<div class="lbl">ÉCLAIRAGE</div>
+<div class="row"><button data-mode="cosy">Nuit cosy</button><button data-mode="jour">Jour</button><button data-mode="coucher">Coucher de soleil</button><button data-mode="soir">Soir chaud</button><button data-mode="gaming">Gaming</button><button data-mode="fete">Fête</button><button data-mode="cine">Ciné Ambilight</button><button id="auto">Défilé de toutes les ambiances</button></div>
+<div class="lbl">VUES</div>
+<div class="row"><button data-view="ens">Ensemble</button><button data-view="fenetre">Fenêtre et lune</button><button data-view="lit">Lit</button><button data-view="ambi">TV Ambilight</button><button data-view="tv">Commode et TV</button><button data-view="vinyle">Vinyles</button><button data-view="bureau">Bureau gaming</button><button data-view="dessus">Vu de dessus</button></div>
+<button id="play">&#9654;&nbsp; Lancer la visite</button>
+</div>
+<script src="shim2.js"></script><script src="room.js"></script><script src="gl2.js"></script><script src="ambi.js"></script>
+<script src="app_gl.js"></script>
+</body></html>

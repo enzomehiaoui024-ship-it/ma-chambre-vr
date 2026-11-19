@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma chambre cosy · Noir & olive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: summary bar, clickable floor plan, filters, then item cards grouped by room zone. Sunset-lamp palette. */
+:root{
+  --bg:#f6efe6; --surface:#fffaf4; --ink:#2a1d15; --muted:#7a6656; --line:#e6d8c8;
+  --accent:#e2621b; --accent-ink:#ffffff; --rust:#a8481f; --olive:#5f7a3a;
+  --p-e:#fbe1cf; --p-e-ink:#8a3a10; --p-i:#f6ecc4; --p-i-ink:#6d5410; --p-b:#ece6df; --p-b-ink:#5c5047;
+  --done:#e6efdc; --done-ink:#3e5a21;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Figtree", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1b130e; --surface:#261a13; --ink:#f4e6d8; --muted:#b39c88; --line:#3d2b20;
+  --accent:#ff8a3d; --accent-ink:#1b130e; --rust:#e07a4a; --olive:#9fbf6f;
+  --p-e:#4a2513; --p-e-ink:#ffc39c; --p-i:#433813; --p-i-ink:#f2d98a; --p-b:#352920; --p-b-ink:#cdbcab;
+  --done:#26331a; --done-ink:#b9d79a; color-scheme: dark; } }
+:root[data-theme="dark"]{
+  --bg:#1b130e; --surface:#261a13; --ink:#f4e6d8; --muted:#b39c88; --line:#3d2b20;
+  --accent:#ff8a3d; --accent-ink:#1b130e; --rust:#e07a4a; --olive:#9fbf6f;
+  --p-e:#4a2513; --p-e-ink:#ffc39c; --p-i:#433813; --p-i-ink:#f2d98a; --p-b:#352920; --p-b-ink:#cdbcab;
+  --done:#26331a; --done-ink:#b9d79a; color-scheme: dark; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 60px;display:grid;gap:18px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,6vw,38px);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:20px;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+.budget{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.budget input{width:120px}
+input[type=text],input[type=number],select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:720px){.top{grid-template-columns:1fr}}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.plan svg{width:100%;height:auto;display:block}
+.zone{cursor:pointer}
+.zone rect{transition:opacity .2s}
+.zone:hover rect,.zone.on rect{opacity:1!important;stroke:var(--accent);stroke-width:3}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools label{display:flex;gap:6px;align-items:center;font-size:14px}
+.btn{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.group{display:grid;gap:10px}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.ghead small{color:var(--muted);font-variant-numeric:tabular-nums}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.card.E{border-left-color:var(--accent)} .card.I{border-left-color:#d9a92a} .card.B{border-left-color:var(--muted)}
+.card.done{opacity:.62}
+.card.done .nm{text-decoration:line-through}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.nm{font-weight:600;font-size:16px;line-height:1.25}
+.md{color:var(--muted);font-size:13.5px}
+.note{font-size:13px;color:var(--rust)}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.pill.E{background:var(--p-e);color:var(--p-e-ink)} .pill.I{background:var(--p-i);color:var(--p-i-ink)} .pill.B{background:var(--p-b);color:var(--p-b-ink)}
+.price{display:flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.price input{width:84px;padding:5px 8px}
+.price .qty{width:56px}
+.tot{font-family:var(--display);font-weight:700;margin-left:auto}
+.links{display:flex;gap:6px;flex-wrap:wrap}
+.links a{font-size:13px;font-weight:600;text-decoration:none;padding:6px 10px;border-radius:8px;border:1px solid var(--line);color:var(--ink);background:var(--bg)}
+.links a.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chk{display:flex;gap:6px;align-items:center;font-size:14px;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:var(--olive)}
+.ver{font-size:11.5px;color:var(--muted)}
+.empty{color:var(--muted);padding:20px;text-align:center;border:1px dashed var(--line);border-radius:12px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.tip{background:var(--done);color:var(--done-ink);border-radius:12px;padding:10px 14px;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Ma chambre cosy, objet par objet</h1>
+    <p class="sub">13 m² · lit dans le coin sud-ouest · ambiance rétro orange. Coche ce que tu as acheté, ajuste les prix, et ouvre chaque article en un clic.</p>
+  </header>
+
+  <section class="stats" aria-label="Résumé">
+    <div class="stat"><span>Total du panier</span><b id="sTotal">0 €</b></div>
+    <div class="stat"><span>Déjà acheté</span><b id="sDone">0 €</b></div>
+    <div class="stat"><span>Reste à acheter</span><b id="sLeft">0 €</b></div>
+    <div class="stat"><span>Objets cochés</span><b id="sCount">0 / 0</b></div>
+    <div class="stat"><span>Avec un lien direct</span><b id="sLinks">0</b></div>
+  </section>
+  <div class="bar" aria-hidden="true"><i id="prog"></i></div>
+  <div class="budget">
+    <label for="budget">Mon budget max</label>
+    <input id="budget" type="number" min="0" step="10" placeholder="ex. 2000">
+    <span id="budgetMsg" class="md"></span>
+  </div>
+
+  <section class="top">
+    <div class="plan">
+      <h2>Touche une zone du plan</h2>
+      <svg viewBox="0 0 360 380" role="img" aria-label="Plan de la chambre, chaque zone filtre la liste">
+        <rect x="10" y="10" width="340" height="340" rx="6" fill="none" stroke="currentColor" stroke-width="3"/>
+        <g class="zone" data-z="bureau"><rect x="12" y="12" width="150" height="80" rx="6" fill="#c08a5a" opacity=".75"/><text x="87" y="57" text-anchor="middle" font-size="14" fill="#fff" font-weight="600">Bureau</text></g>
+        <g class="zone" data-z="vinyles"><rect x="270" y="105" width="78" height="80" rx="6" fill="#e2621b" opacity=".75"/><text x="309" y="149" text-anchor="middle" font-size="13" fill="#fff" font-weight="600">Vinyles</text></g>
+        <g class="zone" data-z="tv"><rect x="270" y="205" width="78" height="100" rx="6" fill="#7a5032" opacity=".75"/><text x="309" y="259" text-anchor="middle" font-size="13" fill="#fff" font-weight="600">TV</text></g>
+        <g class="zone" data-z="lit"><rect x="12" y="205" width="190" height="143" rx="6" fill="#a8481f" opacity=".75"/><text x="107" y="281" text-anchor="middle" font-size="15" fill="#fff" font-weight="600">Coin lit</text></g>
+        <g class="zone" data-z="centre"><rect x="110" y="100" width="150" height="95" rx="40" fill="#d9a066" opacity=".75"/><text x="185" y="152" text-anchor="middle" font-size="14" fill="#2a1d15" font-weight="600">Centre</text></g>
+        <g class="zone" data-z="plantes"><rect x="212" y="300" width="50" height="48" rx="24" fill="#5f7a3a" opacity=".8"/><text x="237" y="328" text-anchor="middle" font-size="11" fill="#fff" font-weight="600">Plantes</text></g>
+        <g class="zone" data-z="murs"><rect x="110" y="352" width="150" height="24" rx="6" fill="#6f9bb8" opacity=".8"/><text x="185" y="369" text-anchor="middle" font-size="12" fill="#fff" font-weight="600">Murs et fenêtre</text></g>
+        <g class="zone" data-z="pratique"><rect x="12" y="105" width="80" height="80" rx="6" fill="#8a7a6c" opacity=".7"/><text x="52" y="149" text-anchor="middle" font-size="12" fill="#fff" font-weight="600">Pratique</text></g>
+        <text x="309" y="28" text-anchor="middle" font-size="11" fill="currentColor">Porte</text>
+      </svg>
+      <p class="hint">Touche la même zone une 2e fois pour tout réafficher.</p>
+    </div>
+    <div class="group">
+      <h2>Filtrer</h2>
+      <div class="chips" id="zoneChips" role="group" aria-label="Espaces"></div>
+      <div class="chips" id="prioChips" role="group" aria-label="Priorité"></div>
+      <div class="tools">
+        <input id="q" type="text" placeholder="Chercher : lampe, IKEA…" aria-label="Chercher un objet">
+        <select id="sort" aria-label="Trier">
+          <option value="zone">Tri : par espace</option>
+          <option value="store">Tri : par magasin (pour faire tes courses)</option>
+          <option value="prio">Tri : par priorité</option>
+          <option value="price">Tri : du plus cher au moins cher</option>
+        </select>
+        <label><input id="hideDone" type="checkbox"> Masquer ce qui est acheté</label>
+        <label><input id="onlyLinks" type="checkbox"> Articles précis seulement</label>
+      </div>
+      <div class="tools">
+        <button class="btn" id="copyBtn" type="button">Copier ma liste de courses</button>
+        <button class="btn ghost" id="resetBtn" type="button">Remettre les prix d'origine</button>
+      </div>
+      <div class="tip" id="tip"></div>
+    </div>
+  </section>
+
+  <main id="list" class="group" aria-live="polite"></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const Z={lit:"Coin lit",tv:"Commode et TV",vinyles:"Coin vinyles",centre:"Centre de la pièce",bureau:"Bureau",murs:"Murs et fenêtre",plantes:"Plantes",pratique:"Pratique et rangement",gaming:"Setup gaming"};
+const P={E:"Essentiel",I:"Important",B:"Bonus"};
+const S={ikea:"IKEA",amazon:"Amazon",fnac:"Fnac",leroy:"Leroy Merlin",darty:"Darty",action:"Action",cdiscount:"Cdiscount",ldlc:"LDLC",materiel:"Materiel.net",vente:"Vente-unique"};
+const U={
+ ikea:q=>"https://www.ikea.com/fr/fr/search/?q="+encodeURIComponent(q),
+ amazon:q=>"https://www.amazon.fr/s?k="+encodeURIComponent(q),
+ fnac:q=>"https://www.fnac.com/SearchResult/ResultList.aspx?Search="+encodeURIComponent(q),
+ leroy:q=>"https://www.leroymerlin.fr/resultats/?q="+encodeURIComponent(q),
+ darty:q=>"https://www.darty.com/nav/recherche?text="+encodeURIComponent(q),
+ action:q=>"https://www.action.com/fr-fr/search/?q="+encodeURIComponent(q),
+ cdiscount:q=>"https://www.cdiscount.com/search/10/"+encodeURIComponent(q)+".html",
+ ldlc:q=>"https://www.ldlc.com/recherche/"+encodeURIComponent(q)+"/",
+ materiel:q=>"https://www.materiel.net/recherche/"+encodeURIComponent(q)+"/",
+ vente:q=>"https://www.vente-unique.com/recherche?q="+encodeURIComponent(q),
+ gshop:q=>"https://www.google.com/search?tbm=shop&q="+encodeURIComponent(q),
+ lbc:q=>"https://www.leboncoin.fr/recherche?text="+encodeURIComponent(q)
+};
+// [id, nom, modèle, qté, prix, prio, zone, magasin, recherche, note, prix vu en ligne, lien article]
+const D=[
+["lit", "Lit 140x190 avec sommier", "IKEA MALM haut + LURÖY 140x190, coloris brun noir", 1, 249, "E", "lit", "ikea", "lit 140x190 bas", "Coloris brun noir. Place-le à 15 cm du mur de la fenêtre pour que les rideaux tombent derrière", 1, "https://www.ikea.com/fr/fr/p/malm-cadre-de-lit-haut-blanc-luroey-s69598332/"],
+["matelas", "Matelas 140x190", "IKEA VALEVÅG ressorts ensachés, ferme, 140x190", 1, 250, "E", "lit", "ikea", "matelas 140x190", "Le poste à ne pas négliger : prix à vérifier sur la fiche", 0, "https://www.ikea.com/fr/fr/p/valevag-matelas-a-ressorts-ensaches-ferme-bleu-clair-80531712/"],
+["chevet", "Table de chevet", "IKEA GRÅFJÄLLET anthracite 45x36x59", 1, 39.99, "I", "lit", "ikea", "table de chevet bois", "Lien IKEA Belgique : cherche GRÅFJÄLLET sur ikea.fr. Va avec le portant", 1, "https://www.ikea.com/be/fr/p/grafjaellet-table-de-chevet-anthracite-20570221"],
+["lchevet", "Lampe de chevet", "IKEA FADO globe blanc", 1, 19.99, "E", "lit", "ikea", "lampe de chevet boule opaline", "", 1, "https://www.ikea.com/fr/fr/p/fado-lampe-de-table-blanc-80096372/"],
+["couette", "Couette 220x240", "IKEA SMÅSPORRE très chaude, 240x220", 1, 45, "E", "lit", "ikea", "couette 220x240 tempérée", "", 1, "https://www.ikea.com/fr/fr/p/smasporre-couette-tres-chaude-50621865/"],
+["housse", "Housse de couette olive", "Parure percale 240x220 vert olive/sauge + 2 taies", 1, 54, "E", "lit", "amazon", "housse de couette gaze de coton terracotta 220x240", "", 1, "https://www.maisonetstyles.com/produits/parure-de-lit-3-pieces-240x220-cm-percale-sauge-et-piping-beige/"],
+["drap", "Drap-housse 140x190", "IKEA DVALA drap-housse beige", 2, 14.99, "E", "lit", "ikea", "drap housse 140x190", "Un en service, un au lavage", 1, "https://www.ikea.com/fr/fr/p/dvala-drap-housse-beige-30357159/"],
+["oreillers", "Oreillers 60x60", "IKEA SMÅSPORRE oreiller haut 65x65", 2, 15, "E", "lit", "ikea", "oreiller 60x60", "", 1, "https://www.ikea.com/fr/fr/p/smasporre-oreiller-haut-00622810/"],
+["protege", "Protège-matelas 140x190", "IKEA GRUSNARV alèse imperméable", 1, 20, "E", "lit", "ikea", "protège matelas 140x190", "", 1, "https://www.ikea.com/fr/fr/p/grusnarv-alese-40522125/"],
+["coussins", "Coussin crème", "IKEA KRYDDBUSKE beige clair 50x50", 1, 7.99, "B", "lit", "ikea", "coussin velours moutarde", "Sur la page, choisis le coloris beige clair", 1, "https://www.ikea.com/fr/fr/p/kryddbuske-housse-de-coussin-rouille-20624361/"],
+["coussins2", "Coussins moutarde", "IKEA PROFETBLOMMA jaune 50x50", 2, 9.99, "I", "lit", "ikea", "profetblomma coussin jaune", "Lien IKEA Suisse : cherche PROFETBLOMMA sur ikea.fr. Prix estimé", 1, "https://www.ikea.com/ch/fr/p/profetblomma-coussin-jaune-20614201"],
+["plaid", "Plaid crème à motif", "IKEA SÖRBYSKOGEN blanc cassé", 1, 29.99, "I", "lit", "ikea", "plaid crème motif noir", "", 1, "https://www.ikea.com/fr/fr/p/soerbyskogen-plaid-blanc-casse-60623208/"],
+["led", "Ruban LED sous le lit", "TP-Link Tapo L920-5, 5 m, Wi-Fi multicolore", 1, 29.99, "B", "lit", "cdiscount", "tapo l920-5", "Pilotable avec l'appli Tapo, sans hub. Prix vu à 29,99 € (promo)", 1, "https://www.cdiscount.com/maison/r-led.html"],
+["ecran", "Écran gaming 27\" OLED 2K", "MSI MAG 274QP QD-OLED X24, QHD 2560x1440, 240 Hz", 1, 549.99, "E", "gaming", "ldlc", "msi mag 274qp qd-oled", "549,99 € chez TopAchat aujourd'hui. Déjà vu en promo à 349,99 € chez Fnac : guette le Black Friday", 1, "https://www.topachat.com/pages/detail2_cat_est_peripheriques_puis_rubrique_est_w_moni_puis_ref_est_in20031616.html"],
+["cpu", "Processeur", "AMD Ryzen 7 9800X3D", 1, 416.9, "E", "gaming", "ldlc", "ryzen 7 9800x3d", "Le meilleur CPU gaming. Prix qui bouge chaque semaine (390-450 €)", 1, "https://www.ldlc.com/fiche/PB00664304.html"],
+["cm", "Carte mère + watercooling", "MSI B850 Gaming Plus WiFi 7 + AIO MSI A13 360 offert", 1, 309.9, "E", "gaming", "materiel", "msi b850 gaming plus wifi", "Offre Materiel.net jusqu'au 30/11 avec le code VIVACOOLING. Sinon : Asus TUF B850-Plus WiFi + ventirad", 0, ""],
+["ram", "Mémoire", "32 Go DDR5-6000 CL30 (2 x 16 Go), ex. V-Color Manta XSky", 1, 517.09, "E", "gaming", "amazon", "ddr5 32go 6000 cl30", "Bon plan vu à 504,10 € + 12,99 € de port. Sinon compte 640 à 670 € (Corsair Vengeance)", 1, "https://www.dealabs.com/bons-plans/v-color-manta-xsky-rgb-ddr5-6000-ram-cl30-expo-32-gb-dual-kit-black-3450027"],
+["gpu", "Carte graphique", "AMD Radeon RX 9070 XT 16 Go", 1, 899.9, "E", "gaming", "ldlc", "rx 9070 xt", "Prix moyen relevé mi-novembre 2026 (899,90 €) : les prix montent chaque semaine. Option NVIDIA : RTX 5070 Ti (~1330 €)", 0, ""],
+["ssd", "SSD", "NVMe Gen4 2 To (ex. Lexar)", 1, 200, "E", "gaming", "ldlc", "ssd nvme 2 to gen4", "2 To = environ 15-20 gros jeux. Prix depuis 200 €", 0, ""],
+["alim", "Alimentation", "750 à 850 W 80+ Gold", 1, 110, "E", "gaming", "ldlc", "alimentation 850w 80+ gold", "Prix estimé. Largement suffisant pour une RX 9070 XT", 0, ""],
+["boitier", "Boîtier", "Boîtier ATX airflow (noir)", 1, 100, "I", "gaming", "ldlc", "boitier atx airflow", "Prix estimé. Posé au sol à droite sous le bureau", 0, ""],
+["chaise2", "Chaise ergonomique", "Sihoo Doro C300 (remplace la RENBERGET)", 1, 300, "I", "gaming", "amazon", "sihoo doro c300", "Mesh respirant, lombaire et accoudoirs réglables. Option moins chère : Symino MP-001 (~160 €)", 0, ""],
+["periph", "Clavier + souris + tapis XXL", "Clavier mécanique TKL, souris sans fil légère, tapis 90x40", 1, 200, "I", "gaming", "amazon", "clavier mecanique tkl souris sans fil gaming", "Prix estimé selon les modèles", 0, ""],
+["casque", "Casque avec micro", "Casque gaming sans fil", 1, 120, "I", "gaming", "amazon", "casque gaming sans fil micro", "Prix estimé", 0, ""],
+["ledtete", "Ruban LED tête de lit", "Action ruban LED RVB + blanc, 5 m, télécommande", 1, 9.95, "I", "lit", "action", "ruban led rvb telecommande", "Collé derrière le haut du MALM : halo coloré sur le mur. Lien Action Belgique, même produit en France", 1, "https://www.action.com/fr-be/p/3221698/ruban-led-avec-telecommande/"],
+["ledsneak", "LED étagères sneakers", "Paulmann SimpLED Motion 5 m multicolore", 1, 33.9, "I", "murs", "leroy", "paulmann simpled motion 5m", "Sous les 3 étagères à sneakers", 1, "https://www.leroymerlin.fr/produits/kit-ruban-led-5m-multicolore-simpled-motion-paulmann-82607989.html"],
+["ledbureau", "Ruban LED bureau", "Leroy Merlin kit ruban LED 5 m blanc", 1, 12.9, "I", "bureau", "leroy", "kit ruban led 5m", "Sous l'étagère LACK : lumière pour travailler", 1, "https://www.leroymerlin.fr/produits/kit-ruban-led-l-5-m-blanc-neutre-4000-kelvins-160-lumens-m-87978120.html"],
+["ampcouleur", "Ampoules connectées couleur", "TP-Link Tapo L530E E27, lot de 2", 1, 34.95, "I", "centre", "ldlc", "tapo l530e lot de 2", "Pour la suspension et le lampadaire. Wi-Fi, sans hub, même appli que le ruban Tapo", 1, "https://www.ldlc.com/fiche/PB00480587.html"],
+["spots", "Spots pour les plantes", "Spots LED plug-in avec télécommande, lot de 2", 1, 25, "I", "plantes", "leroy", "spot led plug in telecommande plante", "Posés au sol derrière le ficus et le monstera. Prix estimé", 1, "https://www.leroymerlin.fr/produits/spot-led-3-temperatures-de-couleur-3-w-plug-in-avec-fonction-memoire-lampadaires-interieur-avec-telecommande-intensite-variable-94036495.html"],
+["boites", "Boîtes sous le lit", "IKEA MALM rangement pour lit (×2), brun noir", 2, 15, "I", "lit", "ikea", "boîte rangement sous lit", "Prends le même coloris que le lit", 1, "https://www.ikea.com/fr/fr/p/malm-rangement-pr-lit-haut-blanc-40249541/"],
+["passage", "Tapis de passage", "IKEA petits tapis (SJÖINGENJÖR 60x90)", 1, 9.99, "B", "lit", "ikea", "tapis descente de lit 60x100 crème", "", 1, "https://www.ikea.com/fr/fr/cat/petits-tapis-10689/"],
+["commode", "Commode 6 tiroirs", "Buffet Vente-unique bois foncé + pieds métal noir, 120×40×76", 1, 195.99, "E", "tv", "vente", "buffet 120x40x76 6 tiroirs bois naturel fonce pieds metal noir", "Décor chêne foncé. À fixer au mur (anti-basculement). La TV reste sur le support mural au-dessus", 1, "https://www.vente-unique.com/p/buffet-120x40x76cm-avec-6-tiroirs-en-bois-naturel-fonce-pieds-en-metal-noir"],
+["tv", "Télévision 65 pouces", "TCL 65C69K QD-Mini LED 4K, 144 Hz natif, Google TV", 1, 649, "I", "tv", "darty", "tcl 65c69k", "Mini LED, 4K, 144 Hz (donc plus que 120 Hz). Vue à 599 € en promo chez Boulanger", 1, "https://www.boulanger.com/ref/1218993"],
+["barre", "Barre de son", "Ultimea Apollo S40, 2.2, double caisson intégré, 100 W", 1, 89.99, "I", "tv", "cdiscount", "ultimea apollo s40", "Vue à 89,99 € chez Cdiscount. Se sépare en 2 enceintes si tu veux. Branchée en HDMI ARC ou optique, pas de caisson au sol", 0, ""],
+["ledtv", "Rétroéclairage TV", "Ruban LED TV USB RGB 4 m avec télécommande", 1, 11.99, "I", "tv", "cdiscount", "ruban led tv usb 4m rgb", "Derrière la TV, branché sur son port USB : remplace l'Ambilight", 1, "https://www.cdiscount.com/maison/r-led+4m.html"],
+["support", "Support mural TV", "Meliconi GS T400 Plus CG inclinable, 40-65\", 65 kg", 1, 69.95, "E", "tv", "materiel", "support mural tv 65 inclinable vesa 400", "Bas de l'écran à 1,05 m (au-dessus de la lampe FADO), incliné de 5 à 10° vers le lit. Pose par un adulte ou un pro, avec les chevilles adaptées au mur", 1, "https://www.materiel.net/produit/202510130001.html"],
+["champi", "Lampe sur la commode", "IKEA FADO globe blanc", 1, 19.99, "I", "tv", "ikea", "lampe champignon orange", "Remplace la lampe champignon orange", 1, "https://www.ikea.com/fr/fr/p/fado-lampe-de-table-blanc-80096372/"],
+["plateau", "Plateau vide-poche", "IKEA GLATTIS plateau laiton", 1, 15, "B", "tv", "ikea", "plateau vide poche", "", 1, "https://www.ikea.com/fr/fr/p/glattis-plateau-couleur-laiton-70350113/"],
+["livres", "Livres d'art", "Taschen Bauhaus (M. Droste)", 1, 18, "B", "tv", "amazon", "livre art design", "Sur le Kallax ou sous la TV", 1, "https://www.e.leclerc/fp/bauhaus-relie-9783836560139"],
+["diffuseur", "Diffuseur de parfum", "Diffuseur à bâtonnets 100 ml figue", 1, 20, "B", "tv", "amazon", "diffuseur parfum figue", "", 1, "https://www.natureetdecouvertes.com/deco-maison/parfums-interieur/bouquet-parfume/diffuseur-a-batonnets-100ml-figue-93200860"],
+["kallax", "Meuble vinyles", "IKEA KALLAX brun noir 77x77", 1, 49.99, "E", "vinyles", "ikea", "kallax 77x77", "Sur la page, choisis le coloris brun noir", 1, "https://www.ikea.com/fr/fr/p/kallax-etagere-blanc-20275814/"],
+["platine", "Platine vinyle", "Audio-Technica AT-LP60X noire", 1, 135.99, "E", "vinyles", "fnac", "Audio-Technica AT-LP60X", "Préampli intégré, se branche direct aux enceintes", 1, "https://www.pccomponentes.fr/audio-technica-at-lp60xbk-platine-dj-a-entrainement-par-courroie-noir"],
+["enceintes", "Enceintes", "Edifier R1280DB bois (la paire)", 1, 110, "E", "vinyles", "fnac", "Edifier R1280DB", "Posées sur le Kallax, de chaque côté de la platine", 1, "https://www.rueducommerce.fr/p/r24074092288.html"],
+["pochettes", "Étagères à pochettes vinyles", "IKEA MOSSLANDA blanc 55 cm", 2, 5.99, "B", "vinyles", "ikea", "mosslanda", "Pour exposer et changer tes vinyles", 1, "https://www.ikea.com/fr/fr/p/mosslanda-tablette-pour-photos-blanc-40291766/"],
+["vmur", "Supports vinyles muraux", "Millenium Vinyl Holder", 3, 5, "B", "vinyles", "amazon", "support mural vinyle", "", 1, "https://www.thomann.fr/millenium_vinyl_holder.htm"],
+["nowplaying", "Support mural « Now Playing »", "Millenium Vinyl Holder", 1, 6.9, "I", "vinyles", "amazon", "support mural vinyle", "Pour afficher la pochette du disque en cours", 1, "https://www.thomann.fr/millenium_vinyl_holder.htm"],
+["brosse", "Brosse à vinyles", "Dynavox fibre de carbone", 1, 5.9, "I", "vinyles", "amazon", "brosse carbone vinyle", "Un coup de brosse avant chaque écoute", 1, "https://www.audiophonics.fr/fr/accessoires-vinyles/dynavox-brosse-fibre-carbone-pour-nettoyage-vinyle-p-2748.html"],
+["arc", "Lampadaire arc", "OMBRAGE grand arc noir mat, pied marbre, H 180 cm", 1, 119.99, "I", "centre", "vente", "lampadaire arc noir marbre", "Pied contre le mur sud, entre le monstera et le ficus : hors du passage", 1, "https://www.vente-unique.com/p/ombrage-grand-lampadaire-arc-metal-et-marbre-h-180-cm-noir-mat-ombrage"],
+["tapis", "Tapis berbère crème", "Tapis berbère SAUTUL crème 120x170", 1, 34.99, "I", "centre", "amazon", "tapis berbère crème 120x170", "Prix promo vu : il peut avoir changé", 1, "https://www.truffaut.com/tapis-berbere-style-creme-120x170-cm-12.html"],
+["suspension", "Suspension boule papier", "IKEA GULLSUDARE + monture HAVSDJUP, 45 cm", 1, 30, "E", "centre", "ikea", "suspension papier", "L'abat-jour seul coûte 3,49 €", 0, "https://www.ikea.com/fr/fr/p/gullsudare-havsdjup-suspension-blanc-s29613301/"],
+["bougies", "Bougies ou bougies LED", "IKEA SMÅLOM bougie LED 14 cm", 1, 2.99, "B", "centre", "ikea", "bougie led", "", 1, "https://www.ikea.com/fr/fr/p/smalom-bougie-bloc-led-a-pile-blanc-90619785/"],
+["bureau", "Bureau 160 cm", "IKEA TROTTEN blanc/anthracite 160x80", 1, 129, "E", "bureau", "ikea", "trotten 160x80", "Sur la page, choisis blanc/anthracite (pieds foncés)", 1, "https://www.ikea.com/fr/fr/p/trotten-bureau-blanc-s79621921/"],
+["chaise", "Chaise de bureau", "IKEA RENBERGET noir", 0, 69.99, "E", "bureau", "ikea", "chaise de bureau", "Remplacée par la chaise ergonomique du setup gaming", 1, "https://www.ikea.com/fr/fr/p/renberget-chaise-pivotante-bomstad-noir-60493546/"],
+["lbureau", "Lampe de bureau", "IKEA FORSÅ noir", 1, 24.99, "E", "bureau", "ikea", "lampe de bureau", "", 1, "https://www.ikea.com/fr/fr/p/forsa-lampe-de-bureau-noir-00146776/"],
+["etbureau", "Étagère au-dessus du bureau", "IKEA LACK étagère murale brun noir 110x26", 1, 16.99, "I", "bureau", "ikea", "étagère murale bois 140 cm", "À fixer vers 1,60 m du sol (85 cm au-dessus du bureau), au-dessus de l'écran 27\"", 1, "https://www.ikea.com/fr/fr/cat/etageres-murales-10398/f/etageres-murales-marron-f-colors--10019/"],
+["cables", "Cache-câbles", "Goulotte adhésive 15x10 2 m EDO (×2)", 2, 3.29, "I", "bureau", "leroy", "goulotte cache câble adhésive", "", 1, "https://www.leroymerlin.fr/produits/goulotte-de-cables-goulottes-electriques-autocollante-15x10-2m-blanc-edo-96844503.html"],
+["posters", "Posters", "Affiches à choisir : vert, moutarde, noir et crème", 9, 12, "I", "murs", "amazon", "poster rétro exposition", "Desenio et Etsy en ont plein dans ces tons", 1, "https://www.laredoute.fr/ppdp/prod-602629113.aspx"],
+["cadres", "Cadres noirs 30x40", "IKEA RÖDALM noir 30x40", 6, 8.99, "I", "murs", "ikea", "cadre noir 50x70", "", 1, "https://www.ikea.com/fr/fr/p/roedalm-cadre-noir-20548918/"],
+["cadres2", "Cadres au-dessus du lit", "IKEA RÖDALM noir 50x70", 3, 19.99, "I", "murs", "ikea", "rödalm 50x70 noir", "Pour les 3 premiers albums de Kanye : prends les affiches officielles, ou les vinyles sur les supports Millenium", 1, "https://www.ikea.com/fr/fr/p/roedalm-cadre-noir-70548925/"],
+["crochets", "Crochets et bandes adhésives", "COMMAND 4 paires languettes 5 kg (×3)", 3, 9.38, "I", "murs", "leroy", "bande adhésive cadre sans percer", "Utile si tu es en location", 1, "https://www.leroymerlin.fr/produits/4-paires-de-languettes-adhesives-de-fixation-de-tableaux-5kg-max-command-95507429.html"],
+["flottantes", "Étagères flottantes", "Action étagère murale flottante", 2, 6.95, "B", "murs", "action", "étagère murale 80 cm", "Sous la fenêtre, pour les plantes", 1, "https://www.action.com/fr-fr/p/2581270/etagere-murale-flottante/"],
+["rideaux", "Rideaux en lin crème", "IKEA DYTÅG 100 % lin beige, 2 x 145x250", 1, 85, "E", "murs", "ikea", "rideaux lin", "", 1, "https://www.ikea.com/fr/fr/p/dytag-rideaux-2-pieces-beige-avec-oeillets-20607804/"],
+["tringle", "Tringle à rideaux", "IKEA HUGAD noir 120-210 cm", 1, 7.99, "E", "murs", "ikea", "tringle à rideaux 160 cm", "Mesure ta fenêtre avant", 1, "https://www.ikea.com/fr/fr/p/hugad-tringle-a-rideau-noir-30217135/"],
+["ficus", "Ficus", "Ficus lyrata 100 cm (Truffaut)", 1, 45, "I", "plantes", "ikea", "ficus", "", 1, "https://www.truffaut.com/plante-d-interieur-ficus-lyrata-100cm.html"],
+["monstera", "Monstera", "IKEA MONSTERA pot 21 cm", 1, 35, "I", "plantes", "ikea", "monstera", "", 1, "https://www.ikea.com/fr/fr/p/monstera-plante-naturelle-monstera-deliciosa-faux-philo-30349490/"],
+["pothos", "Pothos", "IKEA EPIPREMNUM pothos", 3, 12.99, "B", "plantes", "ikea", "pothos", "", 1, "https://www.ikea.com/fr/fr/p/epipremnum-plante-tombante-pothos-20574894/"],
+["pots", "Cache-pots terracotta", "IKEA MUSKOTBLOMMA terre cuite 15 cm", 5, 6.99, "I", "plantes", "ikea", "cache pot terre cuite", "", 1, "https://www.ikea.com/fr/fr/p/muskotblomma-pot-avec-coupelle-interieur-exterieur-terre-cuite-30454891/"],
+["portant", "Portant à vêtements", "IKEA GRÅFJÄLLET avec étagère à chaussures", 1, 69.99, "I", "pratique", "ikea", "portant vêtements", "90 x 36 x 175 cm : rentre entre le bureau et la porte (environ 1 m de libre). Ton coin streetwear", 1, "https://www.ikea.com/fr/fr/p/grafjaellet-portant-avec-etagere-a-chaussures-anthracite-00570222/"],
+["sneakers", "Étagères à sneakers", "Étagère murale flottante 57x23,5 cm (Action)", 3, 6.95, "I", "murs", "action", "étagère murale flottante 57 cm", "Sur le mur à gauche du bureau, au-dessus des boîtes à sneakers, à 120, 150 et 180 cm (le mur fait 58 cm de large à cet endroit)", 1, "https://www.action.com/fr-fr/p/2581270/etagere-murale-flottante/"],
+["boitesneak", "Boîtes à sneakers transparentes", "SONGMICS lot de 6 (Galaxus)", 1, 28.49, "B", "pratique", "amazon", "songmics boîte chaussures lot de 6 porte magnétique", "Pour les paires que tu veux protéger de la poussière", 1, "https://www.galaxus.fr/fr/s14/product/songmics-chicago-28-x-36-x-22-cm-armoire-a-chaussures-13188662"],
+["linge", "Panier à linge", "IKEA SALUDING bambou 50 l", 1, 25, "E", "pratique", "ikea", "panier à linge", "", 1, "https://www.ikea.com/fr/fr/p/saluding-panier-a-linge-fait-main-bambou-70503583/"],
+["poubelle", "Petite poubelle", "IKEA FNISS 10 l", 1, 1.99, "E", "pratique", "ikea", "poubelle", "", 1, "https://www.ikea.com/fr/fr/p/fniss-poubelle-blanc-40295439/"],
+["pateres", "Patères derrière la porte", "IKEA ENUDDEN patère pour porte", 1, 3.99, "I", "pratique", "ikea", "patère porte", "", 1, "https://www.ikea.com/fr/fr/p/enudden-patere-pour-porte-blanc-60251665/"],
+["cintres", "Cintres", "IKEA BUMERANG noir, lot de 8", 2, 4.99, "E", "pratique", "ikea", "cintres", "", 1, "https://www.ikea.com/fr/fr/p/bumerang-cintre-noir-20238534/"],
+["organis", "Organisateurs de tiroirs", "IKEA SKUBB boîte à compartiments", 1, 7.99, "B", "pratique", "ikea", "organisateur tiroir", "", 1, "https://www.ikea.com/fr/fr/p/skubb-boite-a-compartiments-blanc-10185593/"],
+["multi", "Multiprise parafoudre", "IKEA KOPPLA 6 prises, lot de 2", 1, 20, "E", "pratique", "ikea", "multiprise parafoudre 6 prises", "Une côté lit, une côté bureau", 1, "https://www.ikea.com/fr/fr/p/koppla-bloc-multiprise-6pr-interrupteur-blanc-20412024/"],
+["ampoules", "Ampoules LED 2700 K", "IKEA SOLHETTA E27 2700 K, lot de 2", 3, 1.99, "E", "pratique", "ikea", "ampoule led 2700k", "Blanc chaud obligatoire pour l'ambiance", 1, "https://www.ikea.com/fr/fr/p/solhetta-ampoule-led-e27-470-lumen-globe-opalin-50591482/"],
+["chevilles", "Chevilles, vis et niveau", "FISCHER 8 chevilles + vis Ø8 (×2)", 2, 5.99, "E", "pratique", "leroy", "kit chevilles vis", "", 1, "https://www.leroymerlin.fr/produits/8-chevilles-et-vis-a-expansion-fischer-8-x-l-40-0-mm-80125281.html"]
+];
+const TIPS=["Achète d'abord les essentiels : lit, matelas, linge, rideaux et ampoules à 2700 K.","Le Kallax a des cases de 33 cm : environ 60 à 70 vinyles par case.","Vérifie Leboncoin pour la lampe champignon et le lampadaire arc : le vintage y est souvent moins cher.","Fixe la commode au mur : la fixation est souvent fournie.","Mesure ta fenêtre avant d'acheter la tringle et les rideaux.","Avec des LED à 2700 K, la chambre aura le même orange que sur tes inspirations."];
+
+let st={done:{},price:{},qty:{},zone:null,prio:null,q:"",sort:"zone",hide:false,budget:""};
+function load(){try{const s=JSON.parse(localStorage.getItem("chambre-cosy")||"{}");st=Object.assign(st,s);}catch(e){}}
+function save(){try{localStorage.setItem("chambre-cosy",JSON.stringify({done:st.done,price:st.price,qty:st.qty,budget:st.budget,hide:st.hide,sort:st.sort}));}catch(e){}}
+const eur=n=>n.toLocaleString("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:n%1?2:0});
+const pr=d=>st.price[d[0]]!=null?+st.price[d[0]]:d[4];
+const qt=d=>st.qty[d[0]]!=null?+st.qty[d[0]]:d[3];
+const tot=d=>Math.round(pr(d)*qt(d)*100)/100;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function chips(){
+  const zc=document.getElementById("zoneChips");
+  zc.innerHTML=`<button class="chip" type="button" data-z="" aria-pressed="${!st.zone}">Tout</button>`+Object.entries(Z).map(([k,v])=>`<button class="chip" type="button" data-z="${k}" aria-pressed="${st.zone===k}">${v}</button>`).join("");
+  const pc=document.getElementById("prioChips");
+  pc.innerHTML=`<button class="chip" type="button" data-p="" aria-pressed="${!st.prio}">Toutes priorités</button>`+Object.entries(P).map(([k,v])=>`<button class="chip" type="button" data-p="${k}" aria-pressed="${st.prio===k}">${v}</button>`).join("");
+  document.querySelectorAll(".zone").forEach(g=>g.classList.toggle("on",g.dataset.z===st.zone));
+}
+function card(d){
+  const done=!!st.done[d[0]];
+  return `<article class="card ${d[5]} ${done?"done":""}">
+    <div class="row"><div><div class="nm">${esc(d[1])}</div>${d[2]?`<div class="md">${esc(d[2])}</div>`:""}</div><span class="pill ${d[5]}">${P[d[5]]}</span></div>
+    ${d[9]?`<div class="note">${esc(d[9])}</div>`:""}
+    <div class="price">
+      <label class="md" for="q-${d[0]}">Qté</label><input class="qty" id="q-${d[0]}" type="number" min="0" step="1" value="${qt(d)}" data-qty="${d[0]}">
+      <label class="md" for="p-${d[0]}">Prix</label><input id="p-${d[0]}" type="number" min="0" step="0.01" value="${pr(d)}" data-price="${d[0]}">
+      <span class="tot">${eur(tot(d))}</span>
+    </div>
+    <div class="ver">${d[11]?"Article précis · ":"Pas encore d'article précis · "}${d[10]?"prix vu en ligne en novembre 2026":"prix estimé, à vérifier"}</div>
+    <div class="links">
+      ${d[11]?`<a class="main" href="${esc(d[11])}" target="_blank" rel="noopener">Voir l'article</a><a href="${U[d[7]](d[8])}" target="_blank" rel="noopener">Autres modèles</a>`:`<a class="main" href="${U[d[7]](d[8])}" target="_blank" rel="noopener">Chercher sur ${S[d[7]]}</a>`}
+      <a href="${U.gshop(d[8])}" target="_blank" rel="noopener">Comparer les prix</a>
+      <a href="${U.lbc(d[8])}" target="_blank" rel="noopener">Occasion</a>
+    </div>
+    <label class="chk"><input type="checkbox" data-done="${d[0]}" ${done?"checked":""}> Acheté</label>
+  </article>`;
+}
+function render(){
+  chips();
+  const all=D.reduce((a,d)=>a+tot(d),0), dn=D.filter(d=>st.done[d[0]]).reduce((a,d)=>a+tot(d),0);
+  const n=D.filter(d=>st.done[d[0]]).length;
+  sTotal.textContent=eur(all); sDone.textContent=eur(dn); sLeft.textContent=eur(all-dn); sCount.textContent=n+" / "+D.length; sLinks.textContent=D.filter(d=>d[11]).length+" articles";
+  prog.style.width=(all?dn/all*100:0)+"%";
+  const b=parseFloat(st.budget);
+  budgetMsg.textContent=b>0?(all<=b?`Ça rentre : il te reste ${eur(b-all)} de marge.`:`Il manque ${eur(all-b)}. Commence par les essentiels (${eur(D.filter(d=>d[5]==="E").reduce((a,d)=>a+tot(d),0))}).`):"";
+  let items=D.filter(d=>(!st.zone||d[6]===st.zone)&&(!st.prio||d[5]===st.prio)&&(!st.hide||!st.done[d[0]])&&(!st.links||d[11]));
+  const q=st.q.trim().toLowerCase();
+  if(q)items=items.filter(d=>(d[1]+" "+d[2]+" "+S[d[7]]+" "+Z[d[6]]).toLowerCase().includes(q));
+  let groups;
+  if(st.sort==="store"){groups=Object.keys(S).map(k=>[S[k],items.filter(d=>d[7]===k)]);}
+  else if(st.sort==="prio"){groups=Object.keys(P).map(k=>[P[k],items.filter(d=>d[5]===k)]);}
+  else if(st.sort==="price"){groups=[["Du plus cher au moins cher",[...items].sort((a,b)=>tot(b)-tot(a))]];}
+  else groups=Object.keys(Z).map(k=>[Z[k],items.filter(d=>d[6]===k)]);
+  groups=groups.filter(g=>g[1].length);
+  list.innerHTML=groups.length?groups.map(([t,its])=>`<section class="group"><div class="ghead"><h2>${esc(t)}</h2><small>${its.length} objet${its.length>1?"s":""} · ${eur(its.reduce((a,d)=>a+tot(d),0))}</small></div><div class="cards">${its.map(card).join("")}</div></section>`).join(""):`<div class="empty">Aucun objet ne correspond. Change de filtre ou vide la recherche.</div>`;
+}
+function toast(m){toastEl.textContent=m;toastEl.classList.add("show");setTimeout(()=>toastEl.classList.remove("show"),1800);}
+const toastEl=document.getElementById("toast");
+document.addEventListener("click",e=>{
+  const z=e.target.closest("[data-z]");
+  if(z){const v=z.dataset.z||null;st.zone=(z.classList.contains("zone")&&st.zone===v)?null:v;render();if(z.classList.contains("zone"))list.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const p=e.target.closest("[data-p]");
+  if(p){st.prio=p.dataset.p||null;render();}
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.dataset.done){st.done[t.dataset.done]=t.checked;save();render();}
+  if(t.dataset.price){st.price[t.dataset.price]=Math.max(0,+t.value||0);save();render();}
+  if(t.dataset.qty){st.qty[t.dataset.qty]=Math.max(0,Math.round(+t.value||0));save();render();}
+});
+q.addEventListener("input",()=>{st.q=q.value;render();});
+sort.addEventListener("change",()=>{st.sort=sort.value;save();render();});
+hideDone.addEventListener("change",()=>{st.hide=hideDone.checked;save();render();});
+onlyLinks.addEventListener("change",()=>{st.links=onlyLinks.checked;render();});
+budget.addEventListener("input",()=>{st.budget=budget.value;save();render();});
+resetBtn.addEventListener("click",()=>{st.price={};st.qty={};save();render();toast("Prix et quantités d'origine remis");});
+copyBtn.addEventListener("click",async()=>{
+  const todo=D.filter(d=>!st.done[d[0]]);
+  const txt="Ma liste de courses chambre\n\n"+Object.keys(S).map(k=>{const its=todo.filter(d=>d[7]===k);return its.length?S[k]+"\n"+its.map(d=>`- ${d[1]} x${qt(d)} : ${eur(tot(d))}`).join("\n"):""}).filter(Boolean).join("\n\n")+"\n\nTotal restant : "+eur(todo.reduce((a,d)=>a+tot(d),0));
+  try{await navigator.clipboard.writeText(txt);toast("Liste copiée, colle-la dans tes notes");}catch(err){toast("Copie impossible ici");}
+});
+let ti=0;function tip(){document.getElementById("tip").textContent="Astuce : "+TIPS[ti++%TIPS.length];}
+load();q.value=st.q;sort.value=st.sort;hideDone.checked=st.hide;budget.value=st.budget||"";
+tip();setInterval(tip,7000);render();
+</script>
+</body>
+</html>

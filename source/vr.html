@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ma chambre en VR</title>
+<style>
+html,body{margin:0;height:100%;background:#111;color:#F6F2E8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#ui{position:absolute;left:0;right:0;bottom:0;padding:12px 12px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(10,10,9,.85) 30%)}
+.row{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none}.row::-webkit-scrollbar{display:none}
+button{flex:0 0 auto;font:inherit;font-size:14px;color:#F6F2E8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 14px;cursor:pointer}
+button.on{background:#A4AE6E;border-color:#A4AE6E;color:#1b1d12}
+#vr{width:100%;margin-top:8px;padding:14px;border-radius:12px;background:#F6F2E8;color:#1b1b19;font-weight:600;font-size:17px;border:none}
+#vr:disabled{opacity:.45}
+#msg{font-size:13px;opacity:.8;margin:6px 2px 0}
+#help{position:absolute;top:10px;left:12px;right:12px;font-size:12px;line-height:1.5;opacity:.75}
+</style></head><body>
+<canvas id="cv"></canvas>
+<div id="help">Quest 2 · bouton Y : ouvrir / fermer le menu · vise et appuie sur la gâchette pour choisir · stick gauche : marcher · stick droit : tourner · A / B : ambiance suivante / précédente · X : revenir au départ</div>
+<div id="ui">
+<div class="row"><button data-m="0">Nuit cosy</button><button data-m="1">Jour</button><button data-m="2">Coucher de soleil</button><button data-m="3">Soir chaud</button><button data-m="4">Gaming</button><button data-m="5">Fête</button><button data-m="6">Ciné Ambilight</button></div>
+<button id="auto" style="width:100%;margin-top:6px;border-radius:12px">Défilé de toutes les ambiances</button>
+<button id="vr" disabled>Entrer en VR</button>
+<div id="msg">Chargement…</div>
+</div>
+<script src="shim2.js"></script><script src="room.js"></script><script src="gl2.js"></script><script src="vrgl.js"></script><script src="ambi.js"></script><script src="app_vr.js"></script>
+</body></html>

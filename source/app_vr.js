@@ -1,0 +1,174 @@
+(function(){
+const $=id=>document.getElementById(id);
+const cv=$('cv');const gl=cv.getContext('webgl',{xrCompatible:true,antialias:true,alpha:false});
+if(!gl){$('msg').textContent="WebGL n'est pas disponible sur ce navigateur.";return}
+const R=buildRoom(THREE);const sc=R.scene;window.__R=R;
+// floating label + controllers
+const lab=document.createElement('canvas');lab.width=1024;lab.height=256;
+const labMesh=new THREE.Mesh(new THREE.PlaneGeometry(64,16),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,depthWrite:false}));labMesh.visible=false;labMesh.renderOrder=10;sc.add(labMesh);
+function setLabel(t1,t2){const g=lab.getContext('2d');g.clearRect(0,0,1024,256);g.fillStyle='rgba(16,16,14,.82)';g.beginPath();g.roundRect(8,8,1008,240,48);g.fill();g.fillStyle='#A4AE6E';g.fillRect(48,64,10,128);
+ g.fillStyle='#F6F2E8';g.font='600 84px Inter, -apple-system, sans-serif';g.fillText(t1,90,128);g.font='400 46px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.8)';g.fillText(t2||'',92,200);
+ labMesh.material.map=new THREE.CanvasTexture(lab);labMesh.visible=true;labUntil=performance.now()+3500}
+let labUntil=0;
+const ctrl=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(4,3,12),new THREE.MeshStandardMaterial({color:0x2a2a2c,roughness:.5}));m.visible=false;sc.add(m);return m});
+
+// ---------- in-VR menu panel ----------
+const mc=document.createElement('canvas');mc.width=1024;mc.height=768;const MW=64,MH=48;
+const menuMesh=new THREE.Mesh(new THREE.PlaneGeometry(MW,MH),new THREE.MeshBasicMaterial({color:0xffffff}));menuMesh.visible=false;menuMesh.renderOrder=11;sc.add(menuMesh);
+const rays=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(.5,.5,1),new THREE.MeshBasicMaterial({color:0xC9D19A,transparent:true,opacity:.7,depthWrite:false}));m.visible=false;m.renderOrder=12;sc.add(m);return m});
+const dots=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.9,12,8),new THREE.MeshBasicMaterial({color:0xffffff}));m.visible=false;sc.add(m);return m});
+const menu={open:false,hover:null,C:[0,0,0],N:[0,0,1],Rx:[1,0,0],btns:[]};
+(function(){const B=[];const names=['Nuit cosy','Jour','Coucher de soleil','Soir chaud','Gaming','Fête','Ciné Ambilight'];names.forEach((n,i)=>B.push({id:'m'+i,x:48+(i%2)*474,y:150+Math.floor(i/2)*100,w:454,h:84,t:n}));
+ B.push({id:'auto',x:522,y:450,w:454,h:84,t:'Défilé auto'});B.push({id:'home',x:48,y:566,w:454,h:84,t:'Revenir au départ'});B.push({id:'close',x:522,y:566,w:454,h:84,t:'Fermer le menu'});menu.btns=B})();
+menu.draw=function(){const g=mc.getContext('2d');g.fillStyle='#16150f';g.fillRect(0,0,1024,768);g.strokeStyle='#A4AE6E';g.lineWidth=6;g.strokeRect(3,3,1018,762);
+ g.fillStyle='#F6F2E8';g.font='600 60px Inter, -apple-system, sans-serif';g.fillText('Ma chambre',48,92);g.font='400 30px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.65)';g.fillText('Vise un bouton et appuie sur la gâchette',48,128);
+ for(const b of this.btns){const cur=(b.id==='m'+mi)||(b.id==='auto'&&auto),hov=this.hover===b.id;g.fillStyle=cur?'#A4AE6E':hov?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)';g.beginPath();g.roundRect(b.x,b.y,b.w,b.h,24);g.fill();
+  if(hov){g.strokeStyle='#F6F2E8';g.lineWidth=4;g.stroke()}g.fillStyle=cur?'#1b1d12':'#F6F2E8';g.font='500 40px Inter, -apple-system, sans-serif';const t=b.id==='auto'&&auto?'Arrêter le défilé':b.t;g.fillText(t,b.x+32,b.y+60)}
+ if(menuMesh.material.map)V.retex(menuMesh.material.map);menuMesh.material.map=new THREE.CanvasTexture(mc)};
+menu.place=function(hp,hm){const H=toRoom(hp);const f=rot([-hm[8],0,-hm[10]]);const fl=Math.hypot(f[0],f[2])||1;const fx=f[0]/fl,fz=f[2]/fl;this.C=[H[0]+fx*65,H[1]-20,H[2]+fz*65];const a=Math.atan2(-fx,-fz);this.N=[Math.sin(a),0,Math.cos(a)];this.Rx=[Math.cos(a),0,-Math.sin(a)];
+ menuMesh.userData.matrix=m4mul(T4(...this.C),Ry(a))};
+menu.toggle=function(hp,hm){this.open=!this.open;menuMesh.visible=this.open;if(this.open){this.place(hp,hm);this.draw();labMesh.visible=false}};
+menu.hit=function(O,D){const dn=D[0]*this.N[0]+D[1]*this.N[1]+D[2]*this.N[2];if(dn>-1e-4)return null;const t=((this.C[0]-O[0])*this.N[0]+(this.C[1]-O[1])*this.N[1]+(this.C[2]-O[2])*this.N[2])/dn;if(t<0)return null;
+ const Hh=[O[0]+D[0]*t-this.C[0],O[1]+D[1]*t-this.C[1],O[2]+D[2]*t-this.C[2]];const u=Hh[0]*this.Rx[0]+Hh[2]*this.Rx[2],v=Hh[1];if(Math.abs(u)>MW/2||Math.abs(v)>MH/2)return null;
+ const px=(u/MW+.5)*1024,py=(.5-v/MH)*768;const b=this.btns.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);return{t,btn:b?b.id:null}};
+menu.click=function(id){if(id[0]==='m'&&id!=='m'){setAuto(false);setMode(+id.slice(1),false)}else if(id==='auto')setAuto(!auto);else if(id==='home')resetPos();else if(id==='close'){this.open=false;menuMesh.visible=false}this.draw()};
+const RD={updateShadows:(s,sd)=>V.updateShadows(sd)};
+const hex=h=>[((h>>16)&255)/255,((h>>8)&255)/255,(h&255)/255];
+const mix=(a,b,t)=>a+(b-a)*t,mixc=(a,b,t)=>[mix(a[0],b[0],t),mix(a[1],b[1],t),mix(a[2],b[2],t)];
+const cl=(x,a,b)=>Math.max(a,Math.min(b,x)),ss=(a,b,x)=>{const t=cl((x-a)/(b-a),0,1);return t*t*(3-2*t)};
+function hsl(h,s,l){const f=n=>{const k=(n+h*12)%12,a=s*Math.min(l,1-l);return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return[f(0),f(8),f(4)]}
+const LN=['pend','arc','ns','fado','desk','shelf','bed','head','tv','tvs','mon','pc','sneak','spot','candle','candle2','candle3'];
+const GN=['bedLed','headLed','tvLed','monGlow','pc','shelf','sneak'];
+function st(o){const s={sunI:0,sunC:hex(0xfff0dc),elev:40,az:-17,ambI:.12,skyC:hex(0x8a96b8),gndC:hex(0x3a3040),sky:hex(0x26314f),expo:1.25,
+L:{},G:{},em:{pend:.05,arc:.05,ns:0,fado:.05,dl:0},tv:0,mon:0,shaft:0,dust:0,pcIn:hex(0),night:1,moon:.8,cand:0,fadoC:hex(0xffe2b0),ambi:0};LN.forEach(k=>s.L[k]=[hex(0xffd8a0),0]);GN.forEach(k=>s.G[k]=hex(0));
+for(const k in o){if(k=='L'||k=='G'||k=='em')Object.assign(s[k],o[k]);else s[k]=o[k]}return s}
+const amber=hex(0xff8a2a),warm=hex(0xffcf94);
+const DAY=st({night:0,moon:0,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),sunI:2.0,sunC:hex(0xfff1dc),elev:38,ambI:.62,skyC:hex(0xfff7ec),gndC:hex(0xa58b70),sky:hex(0xffffff),expo:1.05,mon:.95,shaft:.07,dust:1,
+ L:{mon:[hex(0x8f7dff),.25],spot:[hex(0xfff3dc),.15]},G:{monGlow:mixc([0,0,0],hex(0x6a5cff),.25)}});
+const GOLD=st({night:.12,moon:0,sunI:1.35,sunC:hex(0xffa860),elev:16,az:-30,ambI:.32,skyC:hex(0xffd0a0),gndC:hex(0x8a6448),sky:hex(0xffb488),expo:1.0,mon:.9,shaft:.07,dust:.9,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),
+ L:{arc:[warm,.5],mon:[hex(0x8f7dff),.3]},em:{arc:.5},G:{monGlow:[.1,.08,.25]}});
+const EVE=st({sunI:0,ambI:.12,sky:hex(0x1e2848),expo:1.0,tv:.95,mon:.25,pcIn:mixc([0,0,0],hex(0xff8a2a),.5),
+ L:{pend:[hex(0xffe1b8),.3],arc:[warm,.8],ns:[warm,.6],fado:[hex(0xffd9a8),.55],desk:[hex(0xfff0d8),.35],bed:[amber,.85],head:[amber,.6],tv:[amber,.7],tvs:[hex(0xffb080),.35],sneak:[hex(0xfff0d8),.35],spot:[hex(0xfff3dc),.35],mon:[hex(0x8f7dff),.12]},
+ em:{pend:.5,arc:1.2,ns:.8,fado:.9,dl:1},G:{bedLed:mixc([0,0,0],amber,.45),headLed:mixc([0,0,0],amber,.28),tvLed:mixc([0,0,0],amber,.32),sneak:[.25,.22,.18],shelf:[0,0,0]}});
+const vio=hex(0x8a3dff),cya=hex(0x22d8ff),mag=hex(0xff2fa8);
+const GAME=st({sunI:0,ambI:.08,skyC:hex(0x6a60a8),sky:hex(0x141a36),expo:1.1,tv:.25,mon:1,
+ L:{arc:[vio,.6],ns:[cya,.5],bed:[vio,1.3],head:[cya,1.0],tv:[cya,1.0],mon:[hex(0xa07cff),.9],pc:[mag,1.2],shelf:[hex(0xdfe8ff),.3],sneak:[cya,.6],spot:[vio,.4]},
+ em:{arc:.6,ns:.5},G:{bedLed:mixc([0,0,0],vio,.75),headLed:mixc([0,0,0],cya,.45),tvLed:mixc([0,0,0],cya,.5),monGlow:mixc([0,0,0],hex(0x8a5cff),.3),pc:mixc([0,0,0],mag,.5),shelf:[.07,.08,.1],sneak:mixc([0,0,0],cya,.35)},pcIn:mag});
+function FETE(t){const s=st(GAME);const h=t*.22;const c=k=>hsl((h+k)%1,1,.55);
+ s.L.bed=[c(0),1.4];s.L.head=[c(.25),1.1];s.L.tv=[c(.5),1.1];s.L.arc=[c(.75),.9];s.L.ns=[c(.1),.7];s.L.pc=[c(.6),1.2];s.L.sneak=[c(.4),.7];s.L.spot=[c(.85),.5];s.L.pend=[c(.3),.3];
+ s.G.bedLed=mixc([0,0,0],c(0),.8);s.G.headLed=mixc([0,0,0],c(.25),.5);s.G.tvLed=mixc([0,0,0],c(.5),.55);s.G.pc=mixc([0,0,0],c(.6),.6);s.G.sneak=mixc([0,0,0],c(.4),.4);s.pcIn=c(.6);s.em.arc=.9;s.tv=.6;return s}
+const ora=hex(0xffb877),ora2=hex(0xffc28a);
+const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.06,skyC:hex(0x55669e),gndC:hex(0x3a2216),sky:hex(0x262c48),expo:1.05,tv:0,mon:.35,shaft:.035,dust:0,pcIn:mixc([0,0,0],ora,.25),fadoC:hex(0xff9a45),
+ L:{arc:[ora,.85],ns:[ora,.7],fado:[ora2,.8],desk:[hex(0xffd2a0),.45],shelf:[hex(0xffd2a0),.3],bed:[hex(0xff7a2a),.6],head:[hex(0xff8a3a),.4],tv:[hex(0xff8a3a),.3],mon:[hex(0xa8b4ff),.12],pc:[ora,.25],sneak:[hex(0xffb070),.3],spot:[hex(0xffa860),.55],candle:[hex(0xff9a40),.55],candle2:[hex(0xff9a40),.5],candle3:[hex(0xff9a40),.45]},
+ em:{pend:.03,arc:1.5,ns:1.1,fado:1.25,dl:1},G:{bedLed:mixc([0,0,0],hex(0xff6a1a),.42),headLed:mixc([0,0,0],hex(0xff7a2a),.22),tvLed:mixc([0,0,0],hex(0xff7a2a),.18),shelf:[.14,.07,.02],sneak:[.16,.09,.04],pc:mixc([0,0,0],ora,.15)}});
+const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,
+ L:{arc:[hex(0xffb877),.12],candle:[hex(0xff9a40),.3],candle2:[hex(0xff9a40),.25],candle3:[hex(0xff9a40),.2]},em:{arc:.3,pend:.02,fado:.05}});
+function blend(a,b,t){if(t<=0)return a;if(t>=1)return b;const s=st({});for(const k in a){if(k=='L'){for(const n of LN)s.L[n]=[mixc(a.L[n][0],b.L[n][0],t),mix(a.L[n][1],b.L[n][1],t)]}else if(k=='G'){for(const n of GN)s.G[n]=mixc(a.G[n],b.G[n],t)}else if(k=='em'){for(const n in a.em)s.em[n]=mix(a.em[n],b.em[n],t)}else if(Array.isArray(a[k]))s[k]=mixc(a[k],b[k],t);else s[k]=mix(a[k],b[k],t)}return s}
+const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[40.5,'GAME'],[43.5,'GAME'],[44.6,'FETE'],[47.6,'FETE'],[49.2,'EVE']];
+const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:FETE(t);
+function stateAt(t){for(let i=0;i<SCHED.length-1;i++){const[a,na]=SCHED[i],[b,nb]=SCHED[i+1];if(t<b)return blend(getS(na,t),getS(nb,t),ss(0,1,(t-a)/(b-a)))}return getS(SCHED[SCHED.length-1][1],t)}
+
+const setC=(c,v)=>{c.r=v[0];c.g=v[1];c.b=v[2]};
+function apply(s,t){const e=s.elev*Math.PI/180,a=s.az*Math.PI/180;const sd=[Math.sin(a)*Math.cos(e),Math.sin(e),Math.cos(a)*Math.cos(e)];
+R.sun.position.set(180+sd[0]*600,90+sd[1]*600,180+sd[2]*600);R.sun.target.position.set(180,90,180);R.sun.intensity=s.sunI;setC(R.sun.color,s.sunC);
+const key=sd.map(v=>v.toFixed(3)).join();if(key!==lastSun){RD.updateShadows(sc,sd);lastSun=key}
+R.amb.intensity=s.ambI;setC(R.amb.color,s.skyC);setC(R.amb.groundColor,s.gndC);
+setC(R.sky.material.color,s.sky);const so=mixc(s.sky,[1,1,1],.0);R.out.forEach(o=>{const c=hex(o.userData.c0||(o.userData.c0=o.material.color.getHex()));setC(o.material.color,[c[0]*s.sky[0],c[1]*s.sky[1],c[2]*s.sky[2]])});
+[R.tree,R.tree2].forEach(o=>{const c=hex(o.userData.c0||(o.userData.c0=o.material.color.getHex()));setC(o.material.color,[c[0]*s.sky[0],c[1]*s.sky[1],c[2]*s.sky[2]])});
+LN.forEach(n=>{setC(R.L[n].color,s.L[n][0]);R.L[n].intensity=s.L[n][1]});
+GN.forEach(n=>R.G[n].forEach(m=>setC(m.material.color,s.G[n])));
+R.pend.emissiveIntensity=s.em.pend;R.arcBulb.emissiveIntensity=s.em.arc;R.nsShade.emissiveIntensity=s.em.ns;R.fado.emissiveIntensity=s.em.fado;R.dlBulb.emissiveIntensity=s.em.dl;
+setC(R.arcBulb.emissive,s.L.arc[1]>0?mixc(s.L.arc[0],[1,1,1],.35):hex(0xffd9a0));setC(R.nsShade.emissive,mixc(s.L.ns[0],[1,1,1],.3));
+setC(R.screens.tv.material.color,[s.tv,s.tv,s.tv]);setC(R.screens.mon.material.color,[s.mon,s.mon,s.mon]);
+R.shafts.forEach((m,i)=>{m.material.opacity=1;setC(m.material.color,mixc([0,0,0],s.sunC,s.shaft*(1+.3*Math.sin(t*.7+i))));m.rotation.x=0.68+(38-s.elev)*.012});
+R.dust.forEach(d=>{const k=d.userData.seed;if(d.userData.b==null)d.userData.b=[d.position.x,d.position.y,d.position.z];const b=d.userData.b;d.position.set(b[0]+Math.sin(t*.3+k)*6,b[1]+((t*2+k*7)%40)-20,b[2]+Math.cos(t*.25+k)*6);d.visible=s.dust>.02;
+ const inB=ss(0,15,b[1]-20)*s.dust;setC(d.material.color,[inB,inB*.93,inB*.8])});
+
+R.tree.visible=R.tree2.visible=s.night<.5;R.skyN.material.opacity=s.night;R.skyN.visible=s.night>.01;R.sky.visible=s.night<.99;
+R.cityLit.forEach(m=>setC(m.material.color,[s.night*.95,s.night*.9,s.night*.85]));
+setC(R.moon.material.color,[s.moon,s.moon,s.moon]);R.moon.visible=R.moonHalo.visible=s.moon>.01;setC(R.moonHalo.material.color,[.28*s.moon,.32*s.moon,.45*s.moon]);
+const fl=.82+.1*Math.sin(t*9.1)+.08*Math.sin(t*23.7+1.3)+.05*Math.sin(t*5.3);['candle','candle2','candle3'].forEach((n,i)=>R.L[n].intensity*=fl*(1+.05*Math.sin(t*13+i*2)));
+R.flames.forEach((f,i)=>{const k=s.cand*(f.userData.bb?.55:1.4)*(fl+.06*Math.sin(t*17+i));setC(f.material.color,[k,k*.62,k*.25])});
+setC(R.fado.emissive,s.fadoC);
+R.platter.rotation.y=t*3.49;R.label.rotation.y=t*3.49;
+const pc=mixc(s.pcIn,[0,0,0],0);R.pcFans.forEach((f,i)=>setC(f.material.color,mixc([0,0,0],pc,1.3+.3*Math.sin(t*4+i))));setC(R.pcIn.material.color,mixc([0,0,0],pc,.5));
+return s}
+
+
+let lastSun='';
+const dyn=new Set([R.platter,R.label,labMesh,menuMesh,...rays,...dots,...ctrl,...R.shafts,...R.dust]);
+[...Object.values(R.G).flat().map(m=>m.material),...Object.values(R.ambiPads).map(m=>m.material),R.screens.tv.material,R.screens.mon.material,...R.flames.map(m=>m.material),...R.cityLit.map(m=>m.material),...R.out.map(m=>m.material),
+ R.sky.material,R.skyN.material,R.moon.material,R.moonHalo.material,R.tree.material,R.tree2.material,R.pend,R.arcBulb,R.nsShade,R.fado,R.dlBulb,...R.pcFans.map(m=>m.material),R.pcIn.material,R.ceil.material].forEach(m=>dyn.add(m));
+[R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
+const V=makeVRRenderer(gl,sc,dyn);const ambiUp=makeAmbi(R,THREE);window.__V=V;
+const MODES=[['cosy','Nuit cosy',()=>COSY],['jour','Jour',()=>DAY],['coucher','Coucher de soleil',()=>GOLD],['soir','Soir chaud',()=>EVE],['gaming','Gaming néon',()=>GAME],['fete','Fête',t=>FETE(t)],['cine','Ciné Ambilight',()=>CINE]];
+let mi=0,from=COSY,blendT=1,cur=COSY,el=0;
+function setMode(i,show){mi=(i+MODES.length)%MODES.length;if(typeof menu!=='undefined'&&menu.open){menu.draw();show=false}from=cur;blendT=0;document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));if(show)setLabel(MODES[mi][1],'A : ambiance suivante · B : précédente')}
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{if(auto)setAuto(false);setMode(+b.dataset.m,false)});
+let auto=false,autoT=0;function setAuto(on){auto=on;autoT=0;const b=document.getElementById('auto');if(b){b.classList.toggle('on',on);b.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}if(!menu.open)setLabel(on?'Défilé auto activé':'Défilé auto arrêté',on?'Une nouvelle ambiance toutes les 7 s':'Gâchette gauche : relancer');else menu.draw()}
+document.getElementById('auto').onclick=()=>setAuto(!auto);
+function step(dt){el+=dt;if(auto){autoT+=dt;if(autoT>7){autoT=0;setMode(mi+1,true)}}blendT=Math.min(1,blendT+dt/1.2);const s=blend(from,MODES[mi][2](el),ss(0,1,blendT));cur=s;apply(s,el);ambiUp(s,el);R.dust.forEach(d=>d.visible=false);
+ if(labMesh.visible&&performance.now()>labUntil)labMesh.visible=false;V.begin(s.expo);return s}
+// ---------- room <-> XR transforms ----------
+const P={x:250,z:110};let th=Math.atan2(120,-170);
+const Ry=a=>{const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1])};
+const T4=(x,y,z)=>new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1]),S4=k=>new Float32Array([k,0,0,0,0,k,0,0,0,0,k,0,0,0,0,1]);
+let yOff=0;const W2M=()=>m4mul(S4(.01),m4mul(Ry(-th),T4(-P.x,-yOff,-P.z))),M2W=()=>m4mul(T4(P.x,yOff,P.z),m4mul(Ry(th),S4(100)));
+const rot=(v)=>{const c=Math.cos(th),s=Math.sin(th);return[c*v[0]+s*v[2],v[1],-s*v[0]+c*v[2]]};
+const toRoom=p=>{const r=rot([p.x*100,p.y*100,p.z*100]);return[P.x+r[0],r[1]+yOff,P.z+r[2]]};
+function resetPos(){P.x=250;P.z=110;th=Math.atan2(120,-170)}
+// ---------- XR ----------
+let session=null,ref=null;const prevB={left:[],right:[]};let snapLatch=false;
+async function enterVR(){try{session=await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});
+ await gl.makeXRCompatible();const layer=new XRWebGLLayer(session,gl,{framebufferScaleFactor:.9,antialias:true});try{layer.fixedFoveation=1}catch(e){}session.updateRenderState({baseLayer:layer,depthNear:.04,depthFar:40});
+ try{ref=await session.requestReferenceSpace('local-floor');yOff=0}catch(e){ref=await session.requestReferenceSpace('local');yOff=160}
+ session.addEventListener('end',()=>{session=null;$('vr').textContent='Entrer en VR';requestAnimationFrame(loop)});$('vr').textContent='Quitter la VR';menu.pendingOpen=true;session.requestAnimationFrame(xrFrame)}
+ catch(e){$('msg').textContent='Impossible de lancer la VR : '+e.message}}
+let lastT=0;
+function xrFrame(t,frame){session.requestAnimationFrame(xrFrame);const dt=lastT?Math.min((t-lastT)/1000,.05):.016;lastT=t;
+ const pose=frame.getViewerPose(ref);if(!pose)return;const hm=pose.transform.matrix,hp=pose.transform.position;if(menu.pendingOpen){menu.pendingOpen=false;menu.open=false;menu.toggle(hp,hm)}
+ // input
+ const w2r=M2W();let anyHit=false;
+ for(const src of session.inputSources){const gp=src.gamepad;if(!gp)continue;const hd=src.handedness;const b=gp.buttons.map(x=>x.pressed);const pb=prevB[hd]||[];const pr=i=>b[i]&&!pb[i];
+  const ax=gp.axes.length>=4?[gp.axes[2],gp.axes[3]]:[gp.axes[0]||0,gp.axes[1]||0];const ci=hd==='left'?0:1;
+  // ray vs menu panel
+  let hitBtn=null;const rp=src.targetRaySpace&&frame.getPose(src.targetRaySpace,ref);
+  if(rp&&menu.open){const M=m4mul(w2r,rp.transform.matrix);const O=[M[12],M[13],M[14]];let D=[-M[8],-M[9],-M[10]];const dl=Math.hypot(...D);D=D.map(x=>x/dl);
+   const h=menu.hit(O,D);let L=200;if(h){L=h.t;hitBtn=h.btn;anyHit=true;if(hitBtn!==menu.hover){menu.hover=hitBtn;menu.draw()}}
+   rays[ci].visible=true;rays[ci].userData.matrix=m4mul(m4mul(M,S4(.01)),new Float32Array([1,0,0,0,0,1,0,0,0,0,L,0,0,0,-L/2,1]));
+   if(h){dots[ci].visible=true;dots[ci].userData.matrix=T4(O[0]+D[0]*L,O[1]+D[1]*L,O[2]+D[2]*L)}else dots[ci].visible=false}
+  else{rays[ci].visible=false;dots[ci].visible=false}
+  if(menu.open&&hitBtn&&pr(0)){menu.click(hitBtn)}
+  else if(hd==='left'){if(Math.hypot(ax[0],ax[1])>.15){const f=[-hm[8],0,-hm[10]],r=[hm[0],0,hm[2]];const fl=Math.hypot(f[0],f[2])||1,rl=Math.hypot(r[0],r[2])||1;const mv=[(f[0]/fl)*-ax[1]+(r[0]/rl)*ax[0],0,(f[2]/fl)*-ax[1]+(r[2]/rl)*ax[0]];const w=rot(mv);P.x+=w[0]*140*dt;P.z+=w[2]*140*dt}
+   if(pr(4))resetPos();if(pr(0)&&!menu.open)setAuto(!auto);if(pr(5))menu.toggle(hp,hm)}
+  else{if(Math.abs(ax[0])>.7&&!snapLatch){snapLatch=true;const H=toRoom(hp);th+=ax[0]>0?-Math.PI/6:Math.PI/6;const r=rot([hp.x*100,0,hp.z*100]);P.x=H[0]-r[0];P.z=H[2]-r[2];if(menu.open)menu.place(hp,hm)}if(Math.abs(ax[0])<.3)snapLatch=false;
+   if((pr(0)&&!menu.open)||pr(4)){setAuto(false);setMode(mi+1,true)}if(pr(5)){setAuto(false);setMode(mi-1,true)}}
+  prevB[hd]=b;
+  const gs=src.gripSpace&&frame.getPose(src.gripSpace,ref);const cm=ctrl[ci];if(gs){cm.visible=true;cm.userData.matrix=m4mul(w2r,m4mul(gs.transform.matrix,S4(.01)))}else cm.visible=false}
+ if(!anyHit&&menu.hover){menu.hover=null;menu.draw()}
+ // keep head inside the room
+ const H=toRoom(hp);const cx=Math.max(12,Math.min(348,H[0])),cz=Math.max(12,Math.min(348,H[2]));P.x+=cx-H[0];P.z+=cz-H[2];
+ // label in front of head
+ if(labMesh.visible){const Hh=toRoom(hp);const f=rot([-hm[8],0,-hm[10]]);const fl=Math.hypot(f[0],f[2])||1;labMesh.userData.matrix=m4mul(T4(Hh[0]+f[0]/fl*75,Hh[1]-12,Hh[2]+f[2]/fl*75),Ry(Math.atan2(-f[0]/fl,-f[2]/fl)))}
+ const s=step(dt);R.ceil.visible=true;
+ const layer=session.renderState.baseLayer;gl.bindFramebuffer(gl.FRAMEBUFFER,layer.framebuffer);gl.clearColor(s.sky[0]*.2,s.sky[1]*.2,s.sky[2]*.25,1);gl.disable(gl.SCISSOR_TEST);gl.depthMask(true);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ const w2m=W2M();for(const view of pose.views){const vp=layer.getViewport(view);const VP=m4mul(view.projectionMatrix,m4mul(view.transform.inverse.matrix,w2m));V.drawView(VP,toRoom(view.transform.position),[vp.x,vp.y,vp.width,vp.height])}}
+// ---------- flat preview (phone / PC) ----------
+let yaw=th,pitch=-.08;const eye={x:250,y:160,z:110};let drag=null;
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;yaw+=(e.clientX-drag.x)*.005;pitch=Math.max(-1.3,Math.min(1.3,pitch+(e.clientY-drag.y)*.005));drag={x:e.clientX,y:e.clientY}});
+cv.addEventListener('pointerup',()=>drag=null);cv.addEventListener('pointercancel',()=>drag=null);
+let last=performance.now();
+function loop(){if(session)return;requestAnimationFrame(loop);const now=performance.now();const dt=Math.min((now-last)/1000,.05);last=now;
+ const pr=Math.min(devicePixelRatio||1,1.5);const w=Math.round(cv.clientWidth*pr),h=Math.round(cv.clientHeight*pr);if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}
+ const s=step(dt);R.ceil.visible=true;gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.clearColor(.05,.05,.07,1);gl.depthMask(true);gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ const d=[-Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),-Math.cos(yaw)*Math.cos(pitch)];const VP=m4mul(persp(70,w/h,4,3000),look(eye,{x:eye.x+d[0],y:eye.y+d[1],z:eye.z+d[2]}));V.drawView(VP,[eye.x,eye.y,eye.z],[0,0,w,h]);
+ if(window.__onframe)window.__onframe()}
+// ---------- start ----------
+const framed=(()=>{try{return window.self!==window.top}catch(e){return true}})();const isQuest=/OculusBrowser|Quest/i.test(navigator.userAgent);
+function blockedMsg(){return isQuest&&framed?"Ton Quest sait faire de la VR, mais la page Claude la bloque. Utilise la version mise en ligne sur Cloudflare.":isQuest?"La VR n'est pas disponible. Vérifie que la page est en https.":"Ce navigateur n'a pas de mode VR. Ouvre cette page dans le navigateur du Quest."}
+setMode(0,false);
+if(navigator.xr&&navigator.xr.isSessionSupported){navigator.xr.isSessionSupported('immersive-vr').then(ok=>{if(ok){$('vr').disabled=false;$('vr').onclick=()=>{if(session)session.end();else enterVR()};$('msg').textContent='Mets ton casque et appuie sur « Entrer en VR ».'}else $('msg').textContent=blockedMsg()}).catch(()=>$('msg').textContent=blockedMsg())}
+else $('msg').textContent="Ce navigateur n'a pas de mode VR. Ouvre cette page dans le navigateur du Quest.";
+loop();
+})();
