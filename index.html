@@ -51,10 +51,22 @@ function TubeGeometry(cv,n,r,rs){rs=rs||8;const P=[],N=[],U=[];const pts=[],fr=[
 for(let i=0;i<=n;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(n,i+1)];let t=[b.x-a.x,b.y-a.y,b.z-a.z];let l=Math.hypot(...t);t=t.map(v=>v/l);let ref=Math.abs(t[1])<.9?[0,1,0]:[1,0,0];let nn=[t[1]*ref[2]-t[2]*ref[1],t[2]*ref[0]-t[0]*ref[2],t[0]*ref[1]-t[1]*ref[0]];l=Math.hypot(...nn);nn=nn.map(v=>v/l);const bb=[t[1]*nn[2]-t[2]*nn[1],t[2]*nn[0]-t[0]*nn[2],t[0]*nn[1]-t[1]*nn[0]];fr.push([nn,bb])}
 const ring=(i,k)=>{const a=k/rs*2*Math.PI,[nn,bb]=fr[i],c=Math.cos(a),s=Math.sin(a);const d=[nn[0]*c+bb[0]*s,nn[1]*c+bb[1]*s,nn[2]*c+bb[2]*s];return[[pts[i].x+d[0]*r,pts[i].y+d[1]*r,pts[i].z+d[2]*r],d]};
 for(let i=0;i<n;i++)for(let k=0;k<rs;k++){const q=[ring(i,k),ring(i+1,k),ring(i+1,k+1),ring(i,k+1)];[0,1,2,0,2,3].forEach(m=>{P.push(...q[m][0]);N.push(...q[m][1])});U.push(0,0,1,0,1,1,0,0,1,1,0,1)}return fix(G(P,N,U))}
+
+function RoundedBoxGeometry(w,h,d,r,s){s=s||3;r=Math.max(.01,Math.min(r,w/2,h/2,d/2)*.999);const P=[],N=[],U=[];const He=[w/2,h/2,d/2],In=He.map(v=>v-r);
+const co=Hh=>{const a=[];for(let k=0;k<=s;k++){const f=k/s*Math.PI/2;a.push(-(Hh-r)-r*Math.cos(f))}for(let k=0;k<=s;k++){const f=k/s*Math.PI/2;const v=(Hh-r)+r*Math.sin(f);if(Math.abs(v-a[a.length-1])>1e-6)a.push(v)}return a};
+const C=[co(He[0]),co(He[1]),co(He[2])];
+const vert=(p)=>{const q=[0,1,2].map(i=>Math.max(-In[i],Math.min(In[i],p[i])));let n=[p[0]-q[0],p[1]-q[1],p[2]-q[2]];let l=Math.hypot(...n);if(l<1e-9)return null;n=n.map(v=>v/l);return{p:[q[0]+n[0]*r,q[1]+n[1]*r,q[2]+n[2]*r],n}};
+const faces=[[0,1,1,2],[0,-1,1,2],[1,1,0,2],[1,-1,0,2],[2,1,0,1],[2,-1,0,1]];
+for(const[ax,sg,ua,va]of faces){const A=C[ua],B=C[va];for(let i=0;i<A.length-1;i++)for(let j=0;j<B.length-1;j++){const pt=(a,b)=>{const p=[0,0,0];p[ax]=sg*He[ax];p[ua]=a;p[va]=b;const v=vert(p);if(!v){const n=[0,0,0];n[ax]=sg;return{p,n}}return v};
+ const q=[pt(A[i],B[j]),pt(A[i+1],B[j]),pt(A[i+1],B[j+1]),pt(A[i],B[j+1])];const uv=[[i/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),(j+1)/(B.length-1)],[i/(A.length-1),(j+1)/(B.length-1)]];
+ [0,1,2,0,2,3].forEach(k=>{P.push(...q[k].p);N.push(...q[k].n);U.push(...uv[k])})}}return fix(G(P,N,U))}
+function LatheGeometry(pts,seg){seg=seg||32;const P=[],N=[],U=[];const n=pts.length;const nr=[];for(let i=0;i<n;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(n-1,i+1)];let tx=b[0]-a[0],ty=b[1]-a[1];const l=Math.hypot(tx,ty)||1;nr.push([ty/l,-tx/l])}
+for(let i=0;i<n-1;i++)for(let k=0;k<seg;k++){const a0=k/seg*2*Math.PI,a1=(k+1)/seg*2*Math.PI;const V=(pi,a)=>{const[r,y]=pts[pi];return[r*Math.cos(a),y,r*Math.sin(a)]},Nn=(pi,a)=>{const[nx,ny]=nr[pi];return[nx*Math.cos(a),ny,nx*Math.sin(a)]};
+ const q=[[i,a0],[i,a1],[i+1,a1],[i+1,a0]];[0,1,2,0,2,3].forEach(m=>{P.push(...V(q[m][0],q[m][1]));N.push(...Nn(q[m][0],q[m][1]));U.push(q[m][1]/(2*Math.PI),q[m][0]/(n-1))})}return fix(G(P,N,U))}
 class PerspectiveCamera extends Obj{constructor(f,a,n,fa){super();this.fov=f;this.aspect=a;this.near=n;this.far=fa;this.target=new V3()}lookAt(v){this.target.copy(v)}updateProjectionMatrix(){}}
-return{Vector3:V3,Color,Mesh,Group,Scene,HemisphereLight,DirectionalLight,PointLight,MeshStandardMaterial,MeshBasicMaterial,CanvasTexture,BoxGeometry:BoxGeometry,PlaneGeometry,CylinderGeometry,ConeGeometry,SphereGeometry,TubeGeometry,QuadraticBezierCurve3,PerspectiveCamera,RepeatWrapping:1000,DoubleSide:2,PCFSoftShadowMap:1,AdditiveBlending:2,NormalBlending:1}})();
+return{Vector3:V3,Color,Mesh,Group,Scene,HemisphereLight,DirectionalLight,PointLight,MeshStandardMaterial,MeshBasicMaterial,CanvasTexture,BoxGeometry:BoxGeometry,PlaneGeometry,CylinderGeometry,ConeGeometry,SphereGeometry,TubeGeometry,QuadraticBezierCurve3,PerspectiveCamera,RoundedBoxGeometry,LatheGeometry,RepeatWrapping:1000,DoubleSide:2,PCFSoftShadowMap:1,AdditiveBlending:2,NormalBlending:1}})();
 // constructors used with new: wrap geometry fns
-['BoxGeometry','PlaneGeometry','CylinderGeometry','ConeGeometry','SphereGeometry','TubeGeometry'].forEach(k=>{const f=THREE[k];THREE[k]=function(...a){return f(...a)}});
+['BoxGeometry','PlaneGeometry','CylinderGeometry','ConeGeometry','SphereGeometry','TubeGeometry','RoundedBoxGeometry','LatheGeometry'].forEach(k=>{const f=THREE[k];THREE[k]=function(...a){return f(...a)}});
 
 </script><script>
 // Shared room builder: works with real three.js r128 and with the offline shim.
@@ -129,152 +141,230 @@ const facT=(lit)=>T(128,256,(g,w,h)=>{if(!lit){g.fillStyle='#c9cdc4';g.fillRect(
 R.out=[];R.cityLit=[];[[-95,0xffffff,70,170,600],[150,0xf0f0ea,90,130,600],[280,0xe6ebe4,60,190,600],[350,0xf4f4f0,80,150,600],[-60,0xdddddd,90,210,700],[95,0xe9e9e9,60,240,720],[230,0xdedede,80,230,700],[420,0xe0e0e0,90,200,700]].forEach(([x,c,w,h,z])=>{
 R.out.push(noShadow(P(w,h,MB(c,{map:facT(false)}),x,h/2+60,z,Math.PI)));const l=noShadow(P(w,h,MB(0x000000,{map:facT(true),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}),x,h/2+60,z-.6,Math.PI));R.cityLit.push(l)});
 R.tree=noShadow(S(5,150,540,58,MB(0x5f8c57),1,1.1,.6));R.tree2=noShadow(S(330,110,580,40,MB(0x6c9963),1,1,.6));
-// curtains (linen) + rod
-const rodM=M(C.black,{roughness:.3,metalness:.8});B(92,268,222,224,346,348,rodM);S(92,223,347,2.6,rodM);S(268,223,347,2.6,rodM);
-const curM=M(0xffffff,{map:linT,roughness:1});[[96,136],[224,264]].forEach(([a,b])=>{const n=7;for(let i=0;i<n;i++){const w=(b-a)/n;const m=B(a+i*w-.3,a+(i+1)*w+.3,2,220,340+(i%2?3.5:0),342+(i%2?3.5:0),curM)}});
-// door (open against east wall) + hall
-B(262,265,0,208,-3,2,pl);B(345,348,0,208,-3,2,pl);B(262,348,205,208,-3,2,pl);
-const doorM=M(0xF6F5F1,{roughness:.5});B(343,346,0,203,4,82,doorM);S(341.5,100,75,1.8,M(C.black,{metalness:.8,roughness:.3}));
-noShadow(P(220,250,MB(0xD6D1C8),305,125,-120));
+// ===================== DETAILED FURNITURE (v3) =====================
+function RB(x0,x1,y0,y1,z0,z1,r,c,p,s){const m=new THREE.Mesh(new THREE.RoundedBoxGeometry(x1-x0,y1-y0,z1-z0,r,s||2),mat(c));m.position.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);return add(m,p)}
+function Lathe(x,y,z,pts,c,seg,p){const m=new THREE.Mesh(new THREE.LatheGeometry(pts,seg||32),mat(c));m.position.set(x,y,z);return add(m,p)}
+function Grp(x,y,z,ry,p){const g=new THREE.Group();g.position.set(x,y,z);g.rotation.y=ry||0;(p||sc).add(g);return g}
+const metalBlk=M(0x1a1a1b,{metalness:.65,roughness:.35}),anthM=M(0x34373a,{metalness:.55,roughness:.4}),chrome=M(0xd9dadc,{metalness:.95,roughness:.18});
+const bnV=M(0xffffff,{map:bnT,roughness:.5});
+
+// ---------- curtains DYTÅG linen (wave folds) + HUGAD rod ----------
+const rodM=M(C.black,{roughness:.3,metalness:.8});
+{const rod=new THREE.Mesh(new THREE.CylinderGeometry(1,1,180,12),rodM);rod.rotation.z=Math.PI/2;rod.position.set(180,224,347);add(rod)}
+S(89,224,347,2.4,rodM);S(271,224,347,2.4,rodM);B(95,97,218,226,354,360,rodM);B(263,265,218,226,354,360,rodM);
+const curM=M(0xffffff,{map:linT,roughness:1,side:THREE.DoubleSide});
+[[92,138],[222,268]].forEach(([a,b])=>{const n=9,w=(b-a)/n;for(let i=0;i<n;i++){const x=a+i*w+w/2;const zz=343+Math.sin(i*1.7)*2.2;const m=RB(x-w*.62,x+w*.62,1.5,221,zz-2.2,zz+2.2,2,curM);}
+ for(let i=0;i<n;i++)S(a+i*w+w/2,222,343,1.1,rodM)});
+
+// ---------- door (open against east wall) + frame + hall ----------
+const pl2=M(C.white,{roughness:.55});B(261,265,0,209,-4,3,pl2);B(345,349,0,209,-4,3,pl2);B(261,349,205,209,-4,3,pl2);
+const doorM=M(0xF6F5F1,{roughness:.45});RB(342.5,346.5,0,203,4,83,.8,doorM);
+B(342,342.6,20,90,14,73,M(0xEFEDE8,{roughness:.5}));B(342,342.6,110,185,14,73,M(0xEFEDE8,{roughness:.5}));
+Cy(340.5,76,99,101,1.6,chrome);{const h=new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,12,12),chrome);h.rotation.x=Math.PI/2;h.position.set(339.4,100,70.5);add(h)}
+noShadow(P(220,250,MB(0xD6D1C8),305,125,-120));const hf=noShadow(P(120,130,M(0x9d7a55,{map:floorT}),305,0,-60,0,-Math.PI/2));R.hall=[hf];
 const hw=M(0xE9E5DE,{roughness:.95});[[0,265],[345,360]].forEach(([a,b])=>P(b-a,250,hw,(a+b)/2,125,-1,Math.PI));P(80,45,hw,305,227.5,-1,Math.PI);
 P(120,250,hw,245,125,-60,Math.PI/2);P(120,250,hw,365,125,-60,-Math.PI/2);const hc=P(120,120,M(0xF2F0EC),305,250,-60,0,Math.PI/2);hc.userData.noTop=true;
-B(268,272,0,8,-120,-2,pl);const hf=noShadow(P(120,130,M(0x9d7a55,{map:floorT}),305,0,-60,0,-Math.PI/2));R.hall=[hf];
+// window handle
+RB(176,184,150,153,374,376,1,chrome);
 
-// ---------- rug ----------
-B(150,312,0,1.2,192,330,M(0xffffff,{map:rugT,roughness:1}));
+// ---------- rug berber 120x170 (cream, black diamonds, fringe) ----------
+const rugT2=T(512,512,(g,w,h)=>{g.fillStyle='#ECE4D3';g.fillRect(0,0,w,h);for(let i=0;i<4000;i++){g.fillStyle=`rgba(${190+rnd()*40|0},${180+rnd()*40|0},${160+rnd()*30|0},.35)`;g.fillRect(rnd()*w,rnd()*h,2,2)}
+ g.strokeStyle='#1d1b19';g.lineWidth=4;for(let i=-8;i<16;i++){g.beginPath();g.moveTo(i*64,0);g.lineTo(i*64+h,h);g.stroke();g.beginPath();g.moveTo(i*64,h);g.lineTo(i*64+h,0);g.stroke()}});
+RB(200,320,0,1.6,158,328,.8,M(0xffffff,{map:rugT2,roughness:1}));
+{const frT=T(8,64,(g,w,h)=>{g.fillStyle='#E6DCC8';g.fillRect(0,0,w,h);g.fillStyle='#b8ad97';for(let y=0;y<h;y+=2)g.fillRect(0,y,w,1)},1,40);[[197,200],[320,323]].forEach(([a,b])=>B(a,b,0,.5,159,327,M(0xffffff,{map:frT,roughness:1})))}
 
-// ---------- bed MALM brun noir (head west) ----------
-const bnM=M(0xffffff,{map:bnT,roughness:.6});
-B(0,6,0,100,186,348,bnM);// headboard
-B(6,209,10,38,186,190,bnM);B(6,209,10,38,344,348,bnM);B(205,209,10,38,190,344,bnM);B(6,205,12,30,190,344,M(0x3a3230));
-[[10,190],[10,344],[205,190],[205,344]].forEach(p=>B(p[0]-2,p[0]+2,0,10,p[1]-2,p[1]+2,M(0x222222)));
-B(8,203,30,50,191,343,M(0xF7F4EE,{roughness:1}));
-const duv=M(0xffffff,{map:oliveT,roughness:1});B(62,207,50,56,189,345,duv);B(62,207,24,56,188,190,duv);B(62,207,24,56,344,346,duv);B(206,208,24,56,190,344,duv);
-const throwM=M(0xD9CBB0,{roughness:1});B(168,196,56,58,187,347,throwM);B(168,196,30,58,346,348,throwM);
-S(30,58,226,16,M(0xFBF9F4,{roughness:1}),1.3,.45,2);S(30,58,308,16,M(0xFBF9F4,{roughness:1}),1.3,.45,2);
-const cush=(z,c,rz)=>{const m=B(18,30,52,84,z-18,z+18,M(c,{roughness:1}));m.rotation.z=-.28;return m};cush(267,0xDCCDB0);cush(232,C.jaune);cush(302,C.jaune);
+// ---------- bed MALM high 140x190 brun noir (x 0-199, z 171-327) ----------
+const BZ0=171,BZ1=327,BX1=199,BC=(BZ0+BZ1)/2;
+RB(0,4.5,0,100,BZ0,BZ1,1.2,bnV);// headboard
+RB(4.5,BX1,10,38,BZ0,BZ0+2.2,.8,bnV);RB(4.5,BX1,10,38,BZ1-2.2,BZ1,.8,bnV);RB(BX1-2.2,BX1,10,38,BZ0+2.2,BZ1-2.2,.8,bnV);
+B(6,BX1-3,10,22,BZ0+3,BZ1-3,M(0x2a2421));// under-bed boxes area (dark)
+[[8,BZ0+4],[8,BZ1-4],[BX1-6,BZ0+4],[BX1-6,BZ1-4]].forEach(p=>B(p[0]-2,p[0]+2,0,10,p[1]-2,p[1]+2,M(0x1c1918)));
+// mattress + fitted sheet
+RB(7,BX1-3.5,20,45,BZ0+3,BZ1-3,4,M(0xE9DFCB,{roughness:1}),null,3);
+// duvet olive (top + side drapes) + folded top
+const duv=M(0xffffff,{map:oliveT,roughness:1});
+RB(58,BX1+2,43,51,BZ0+1,BZ1-1,3.5,duv,null,3);
+RB(58,BX1+2,25,47,BZ0-.6,BZ0+3.2,1.6,duv);RB(58,BX1+2,25,47,BZ1-3.2,BZ1+.6,1.6,duv);RB(BX1-1,BX1+3.2,25,47,BZ0+1,BZ1-1,1.6,duv);
+RB(52,70,45,55,BZ0+1,BZ1-1,4.5,M(0xffffff,{map:oliveT,roughness:1}),null,3);
+// plaid SÖRBYSKOGEN folded at foot
+const plaidT=T(256,128,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);g.strokeStyle='#22201d';g.lineWidth=7;g.beginPath();g.moveTo(40,100);g.bezierCurveTo(60,10,140,10,130,70);g.bezierCurveTo(120,110,190,110,200,40);g.stroke();for(let i=0;i<w;i+=3){g.fillStyle='rgba(120,110,95,.12)';g.fillRect(i,0,1,h)}});
+RB(158,192,51,54.5,BZ0+2,BZ1-2,1.4,M(0xffffff,{map:plaidT,roughness:1}));RB(BX1-.5,BX1+3.5,30,54.5,BZ0+2,BZ1-2,1.4,M(0xEFE8DA,{roughness:1}));
+// pillows SMÅSPORRE + cushions
+const pil=M(0xFAF7F1,{roughness:1});[[BZ0+8,BC-3],[BC+3,BZ1-8]].forEach(([a,b])=>{const m=RB(8,52,43,60,a,b,7,pil,null,3);m.rotation.z=-.12});
+const cush=(z,c)=>{const g=Grp(24,72,z,0);g.rotation.z=-.32;RB(-6,6,-21,21,-21,21,6,M(c,{roughness:1}),g,3);return g};cush(BC,0xDCCDB0);cush(BC-38,C.jaune);cush(BC+38,C.jaune);
 // LED under bed (glow on floor) + headboard LED glow on wall
-R.G.bedLed=[];const gb=noShadow(P(220,180,glow(0x000000,1),105,.6,267,0,-Math.PI/2));gb.material.map=TI(64,64,(u,v)=>{const d=Math.min(1,Math.hypot(u-.5,v-.5)*2);return Math.pow(1-d,1.6)});R.G.bedLed.push(gb);
+R.G.bedLed=[];const gb=noShadow(P(214,174,glow(0x000000,1),100,.6,BC,0,-Math.PI/2));gb.material.map=TI(64,64,(u,v)=>{const d=Math.min(1,Math.hypot(u-.5,v-.5)*2);return Math.pow(1-d,1.6)});R.G.bedLed.push(gb);
 const softT=gb.material.map;
-R.moonHalo.material.map=softT;const mkGlow=(w,h,x,y,z,ry,rx)=>{const m=noShadow(P(w,h,glow(0x000000,1),x,y,z,ry,rx));m.material.map=softT;return m};
-R.G.headLed=[mkGlow(230,190,.8,120,267,Math.PI/2)];
+const mkGlow=(w,h,x,y,z,ry,rx)=>{const m=noShadow(P(w,h,glow(0x000000,1),x,y,z,ry,rx));m.material.map=softT;return m};
+R.moonHalo.material.map=softT;
+R.G.headLed=[mkGlow(220,170,.8,116,BC,Math.PI/2)];
 
-// ---------- album frames above bed (3) ----------
-const fr=M(C.black,{roughness:.4});const alb=[0x9b6a3c,0x3e3530,0x7a5a8a];
-[188,244,300].forEach((z,i)=>{B(0,2.5,122,174,z,z+52,fr);B(2.5,3.4,125,171,z+3,z+49,0xF4F1EA);B(3.4,4.2,130,166,z+8,z+44,M(alb[i],{roughness:.6}))});
+// ---------- 3 frames RÖDALM 50x70 above bed (album posters, original art) ----------
+const albT=(i)=>T(200,280,(g,w,h)=>{g.fillStyle='#F3EFE6';g.fillRect(0,0,w,h);const cols=[['#8a5a3a','#d9b48a'],['#2d2724','#8c1d1d'],['#6b4a7a','#e6b8c9']][i];g.fillStyle=cols[0];g.fillRect(20,20,160,160);g.fillStyle=cols[1];
+ if(i==0){g.beginPath();g.arc(100,100,46,0,7);g.fill()}else if(i==1){g.fillRect(55,55,90,90)}else{for(let k=0;k<5;k++){g.beginPath();g.moveTo(20,180-k*30);g.lineTo(180,120-k*30);g.lineWidth=8;g.strokeStyle=cols[1];g.stroke()}}
+ g.fillStyle='#2b2724';g.fillRect(20,200,110,9);g.fillRect(20,218,70,6);g.fillStyle='#8f877c';for(let k=0;k<4;k++)g.fillRect(20,236+k*9,150-k*20,4)});
+const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(0,3,112,182,zc-25,zc+25,.6,frM);B(3,3.2,115,179,zc-22,zc+22,M(0xffffff,{map:albT(i),roughness:.6}));noShadow(P(44,64,new THREE.MeshStandardMaterial({color:0xffffff,transparent:true,opacity:.06,roughness:.05}),3.6,147,zc,Math.PI/2))});
 
-// ---------- nightstand GRÅFJÄLLET anthracite + lamp ----------
-const anM=M(C.anth,{roughness:.55});B(2,40,10,52,146,182,anM);B(2,40,50,53,145,183,anM);[[6,150],[6,178],[36,150],[36,178]].forEach(p=>Cy(p[0],p[1],0,10,1.2,M(C.black)));B(40,40.6,24,40,150,178,M(0x2c2e31));
-Cy(18,166,53,56,6,M(C.black,{roughness:.3}));Cy(18,166,56,74,1,M(C.black));const nsShade=Cy(18,166,72,86,9,M(0xEDE5D3,{emissive:0xffd9a0,emissiveIntensity:0,roughness:1}),7);R.nsShade=nsShade.material;
-B(26,38,53,55,150,160,M(0x1f1f1f));// phone
-// ---------- sneaker boxes (clear, lit) on west wall between desk and nightstand ----------
-const shoe=(x,y,z,c,acc)=>{B(x-5,x+5,y,y+3,z,z+27,0xF7F7F2);B(x-4.5,x+4.5,y+3,y+10,z+1,z+18,c);B(x-4.5,x+4.5,y+3,y+7,z+18,z+26,c);B(x-4.6,x+4.6,y+4,y+8,z+7,z+15,acc)};
-const tb=M(0xE8F0F2,{transparent:true,opacity:.22,roughness:.1});
-[[0,0xEDE5D3,C.olive],[24,C.black,0xEDE5D3],[48,C.olive,0xF4F2EC],[72,0xEDE5D3,C.black]].forEach((s,i)=>{const y=s[0];[[90,0],[117,1]].forEach(([z])=>{shoe(14,y+1,z+1,s[1],s[2]);noShadow(B(0,32,y,y+22,z,z+27,tb))})});
-R.G.sneak=[mkGlow(40,110,.8,60,116,Math.PI/2)];
+// ---------- nightstand GRÅFJÄLLET anthracite 45x36x59 + FADO + candles ----------
+{const NZ0=123,NZ1=168,NX=36;const g=Grp(0,0,0,0);
+ [[2,NZ0+2],[2,NZ1-2],[NX-2,NZ0+2],[NX-2,NZ1-2]].forEach(p=>RB(p[0]-1.2,p[0]+1.2,0,57,p[1]-1.2,p[1]+1.2,.5,anthM,g));
+ RB(0,NX,57,59,NZ0,NZ1,.6,M(C.anth,{roughness:.5}),g);RB(1,NX-1,38,52,NZ0+1.5,NZ1-1.5,.6,M(0x2f3134,{roughness:.55}),g);B(NX-1,NX-.4,44,46,NZ0+15,NZ1-15,metalBlk,g);
+ RB(1,NX-1,14,16,NZ0+1.5,NZ1-1.5,.4,M(0x2f3134,{roughness:.55}),g);
+ Lathe(18,59,140,[[0,0],[6,0],[6.2,.6],[5,2.6],[3,3.2],[0,3.2]],M(0xF7F6F2,{roughness:.3}),24);
+ const fg=S(18,74.5,140,12.5,M(0xffffff,{emissive:0xffd9a0,emissiveIntensity:0,roughness:.15}),1,1,1,null,28);R.nsShade=fg.material;
+ B(4,14,59,60,NZ1-10,NZ1-2,M(0x1a1a1a,{roughness:.3}))}
 
-// ---------- desk TROTTEN 160x80 blanc/anthracite + gaming ----------
-const dTop=M(0xF2F1ED,{roughness:.45});B(0,160,72.5,75,0,80,dTop);
-const legM=M(C.anth,{roughness:.4,metalness:.5});[[6],[154]].forEach(([x])=>{B(x-2,x+2,0,72.5,10,14,legM);B(x-2,x+2,0,72.5,66,70,legM);B(x-2,x+2,0,3,4,76,legM);B(x-2,x+2,60,64,12,68,legM)});
-B(8,152,66,72.5,4,8,legM);
-// desk mat XXL
-B(35,125,75,75.4,30,70,M(0x141414,{roughness:1}));
-// keyboard TKL + keycaps
-B(58,94,75.4,77.2,46,60,M(0x1d1d1f,{roughness:.6}));for(let r=0;r<4;r++)for(let k=0;k<12;k++)B(59.5+k*2.9,61.8+k*2.9,77.2,78,47.5+r*3.1,49.8+r*3.1,M(r==0&&k<2?C.olive:0x2b2b2e,{roughness:.5}));
-// mouse
-S(108,76.5,54,3.2,M(0x161616,{roughness:.4}),1,.5,1.7);
-// monitor 27" QD-OLED (61x36)
-const mon=M(0x111214,{roughness:.35,metalness:.3});
-B(66,94,75.4,76.4,14,32,mon);B(77,83,76.4,108,16,19,mon);
-B(49.5,110.5,86,123,19,21.5,mon);
-R.screens.mon=noShadow(P(60,35,MB(0xffffff,{map:monT}),80,104.5,21.6));
-// RGB bar under monitor
-R.G.monGlow=[mkGlow(90,40,80,100,.8,0)];
-// desk lamp FORSÅ noir
-Cy(140,20,75,77,7,M(C.black,{roughness:.4,metalness:.5}));B(139,141,77,110,19,21,M(C.black,{metalness:.5,roughness:.4}));const dl=new THREE.Mesh(new THREE.ConeGeometry(7,12,20,1,true),M(C.black,{side:THREE.DoubleSide,roughness:.4,metalness:.5}));dl.position.set(131,106,26);dl.rotation.z=1.25;add(dl);
-const dlBulb=S(127,104,26,2.6,M(0xffffff,{emissive:0xfff0d0,emissiveIntensity:0}));R.dlBulb=dlBulb.material;
-// headset on stand
-Cy(20,30,75,77,5,M(C.black));Cy(20,30,77,100,.8,M(C.black));const hs=new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(20,92,22),new THREE.Vector3(20,114,30),new THREE.Vector3(20,92,38)),16,1.2,8),M(0x1b1b1b));add(hs);S(20,92,22,4,M(0x222222),.8,1,.5);S(20,92,38,4,M(0x222222),.8,1,.5);
-// mug
-Cy(118,32,75,84,3.8,M(C.olive,{roughness:.6}));
-// PC tower on floor, right under desk (front faces +z)
-const pcM=M(0x0f0f10,{roughness:.35,metalness:.4});B(128,150,2,50,18,64,pcM);[[130,20],[130,62],[148,20],[148,62]].forEach(p=>B(p[0]-1,p[0]+1,0,2,p[1]-1,p[1]+1,M(0x222222)));
-const pcGlass=noShadow(B(127.4,128,4,48,20,62,new THREE.MeshStandardMaterial({color:0x101018,transparent:true,opacity:.55,roughness:.05,metalness:.3})));
-R.pcFans=[];[12,26,40].forEach(y=>{const f=noShadow(new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,.5,24,1,true),MB(0x000000)));f.rotation.x=Math.PI/2;f.position.set(139,y+2,64.4);sc.add(f);R.pcFans.push(f)});
-const pcIn=noShadow(B(128.2,129,6,46,22,60,MB(0x000000)));R.pcIn=pcIn;
+// ---------- sneaker wall: clear boxes + 3 floating shelves with Paulmann LED ----------
+function sneaker(x,y,z,c,acc,ry,p){const g=Grp(x,y,z,ry||0,p);RB(-5,5,0,2.6,-14,14,1.2,M(0xF7F6F2,{roughness:.8}),g);RB(-4.6,4.6,2.2,9.5,-13,4,3,M(c,{roughness:.75}),g);RB(-4.4,4.4,2.2,6.8,0,13.2,3,M(c,{roughness:.75}),g);
+ RB(-4.8,4.8,3,6.5,-6,6,1.5,M(acc,{roughness:.6}),g);RB(-3.6,3.6,8,10,-12,-5,1,M(0x1b1b1b),g);return g}
+const tb=M(0xE8F0F2,{transparent:true,opacity:.2,roughness:.08});
+[[0,0xEDE5D3,C.olive],[22.5,C.black,0xEDE5D3],[45,C.olive,0xF4F2EC],[67.5,0xEDE5D3,C.black]].forEach(([y,c,a])=>{noShadow(RB(0,36,y,y+22,90,118,.8,tb));B(0,36,y,y+.6,90,118,M(0xF4F4F2,{transparent:true,opacity:.35}));sneaker(18,y+1,104,c,a,Math.PI/2+.05)});
+const shelfM=M(0xF4F2EE,{roughness:.5});[[120,0x1D1A18,0xEDE5D3],[150,C.olive,0xF4F2EC],[180,0xF4F2EC,C.jaune]].forEach(([y,c,a])=>{RB(0,23.5,y,y+2.5,88,145,.5,shelfM);sneaker(12,y+2.5,104,c,a,Math.PI/2);sneaker(12,y+2.5,128,c,a,Math.PI/2)});
+R.G.sneak=[mkGlow(46,110,.8,150,116,Math.PI/2)];
+
+// ---------- desk TROTTEN 160x80 white/anthracite ----------
+RB(0,160,72.5,75,0,80,.8,M(0xF2F1ED,{roughness:.42}));
+[[5],[155]].forEach(([x])=>{RB(x-2.5,x+2.5,0,4,2,78,1,anthM);RB(x-2,x+2,4,72.5,36,44,1,anthM);RB(x-2,x+2,68,72.5,6,74,1,anthM);B(x-3,x+3,0,1,4,8,metalBlk);B(x-3,x+3,0,1,72,76,metalBlk)});
+RB(6,154,62,66,4,9,1,anthM);
+// desk mat, keyboard TKL, mouse
+RB(35,125,75,75.4,30,70,1.5,M(0x141414,{roughness:1}));
+RB(58,94,75.4,77.6,46,60,1,M(0x1d1d1f,{roughness:.55}));for(let r=0;r<5;r++)for(let k=0;k<14;k++)RB(59.2+k*2.48,61.2+k*2.48,77.6,78.6,47+r*2.55,48.9+r*2.55,.35,M(r==0&&k<1?C.olive:0x2b2b2e,{roughness:.5}),null,1);
+{const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0x161616,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
+// monitor MSI MAG 274QP 26.5" (61x35.6)
+const mon=M(0x121315,{roughness:.32,metalness:.3});
+RB(66,94,75.4,76.6,13,33,1.2,mon);RB(76.5,83.5,76.6,112,17,20,1.4,mon);RB(76,84,104,110,19,22,1,mon);
+RB(49.5,110.5,88,123.6,20.2,22.2,.6,mon);RB(60,100,93,118,17.4,20.4,2,mon);
+R.screens.mon=noShadow(P(59.6,34.2,MB(0xffffff,{map:monT}),80,105.8,22.25));
+R.G.monGlow=[mkGlow(100,48,80,104,.8,0)];
+// desk lamp FORSÅ black
+Lathe(140,75,18,[[0,0],[7.5,0],[7.5,1.2],[6.5,2],[1,2.4],[0,2.4]],metalBlk,24);
+{const a1=new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,32,10),metalBlk);a1.position.set(140,93,20);a1.rotation.x=.25;add(a1);
+ const a2=new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,22,10),metalBlk);a2.position.set(136,110,30);a2.rotation.z=1.0;add(a2)}
+{const sh=Lathe(0,0,0,[[1.5,0],[2.5,0],[7.5,11],[7.2,11.3]],M(C.black,{side:THREE.DoubleSide,metalness:.5,roughness:.35}),24);sh.position.set(128,112,32);sh.rotation.z=2.0}
+const dlBulb=S(126.5,106.5,32,2.4,M(0xffffff,{emissive:0xfff0d0,emissiveIntensity:0}));R.dlBulb=dlBulb.material;
+// headset + stand, mug
+Lathe(20,75,30,[[0,0],[5.5,0],[5.5,1],[1,1.5],[.9,24],[0,24]],metalBlk,20);
+add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(20,90,21),new THREE.Vector3(20,112,30),new THREE.Vector3(20,90,39)),20,1.1,8),M(0x1b1b1b,{roughness:.6})));
+[[21],[39]].forEach(([z])=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,3,20),M(0x222222,{roughness:.8}));c.rotation.x=Math.PI/2;c.position.set(20,89,z);add(c)});
+Lathe(118,75,32,[[0,0],[3.8,0],[4,9],[3.6,9],[3.4,1],[0,1]],M(C.olive,{roughness:.5}),20);
+// PC tower (front +z) with mesh front, 3 RGB fans, glass side
+{const pcM=M(0x0f0f10,{roughness:.35,metalness:.4});RB(128,150,2,50,18,64,1.2,pcM);[[130,20],[130,62],[148,20],[148,62]].forEach(p=>RB(p[0]-1.4,p[0]+1.4,0,2,p[1]-1.4,p[1]+1.4,.6,M(0x222222)));
+ const meshT=T(64,64,(g,w,h)=>{g.fillStyle='#0d0d0e';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2c';for(let y=0;y<h;y+=4)for(let x=(y/4%2)*2;x<w;x+=4)g.fillRect(x,y,2,2)},4,8);
+ B(129,149,4,48,63.6,64.4,M(0xffffff,{map:meshT,roughness:.8}));
+ noShadow(B(127.4,128,4,48,20,62,new THREE.MeshStandardMaterial({color:0x101018,transparent:true,opacity:.5,roughness:.05,metalness:.3})));
+ R.pcFans=[];[12,26,40].forEach(y=>{const f=noShadow(new THREE.Mesh(new THREE.CylinderGeometry(5.6,5.6,.5,28,1,true),MB(0x000000)));f.rotation.x=Math.PI/2;f.position.set(139,y+2,64.6);sc.add(f);R.pcFans.push(f)});
+ const pcIn=noShadow(B(128.2,129,6,46,22,60,MB(0x000000)));R.pcIn=pcIn;
+ B(140,148,48,50,58,62,metalBlk);}
 R.G.pc=[mkGlow(60,40,139,1,64,0,-Math.PI/2)];
-// gaming chair Sihoo Doro C300 (group, faces north)
-const ch=new THREE.Group();ch.position.set(80,0,112);sc.add(ch);const cm=M(0x1a1a1b,{roughness:.6}),cmet=M(0x2a2a2c,{metalness:.7,roughness:.35});
-for(let i=0;i<5;i++){const a=i/5*Math.PI*2;const leg=B(-1.5,1.5,6,9,0,30,cmet,ch);leg.position.set(Math.sin(a)*15,7.5,Math.cos(a)*15);leg.rotation.y=a;S(Math.sin(a)*30,3,Math.cos(a)*30,3,cm,1,1,1,ch)}
-Cy(0,0,8,44,2.6,cmet,null,16,ch);Cy(0,0,30,44,3.6,cm,null,16,ch);
-B(-25,25,44,52,-22,24,cm,ch);B(-23,23,52,54,-20,22,M(0x232325,{roughness:1}),ch);
-B(-3,3,46,68,22,26,cmet,ch);
-const back=B(-22,22,62,118,24,27,M(0x1c1c1e,{transparent:true,opacity:.85,roughness:.9}),ch);back.rotation.x=-.14;
-B(-23,23,60,64,22,28,cm,ch);B(-23,23,115,119,30,33,cm,ch);B(-12,12,74,86,22,26,M(0x2a2a2c),ch);
-[-27,27].forEach(x=>{B(x-2,x+2,52,70,6,9,cmet,ch);B(x-3.5,x+3.5,70,73,-6,18,cm,ch)});
-B(-14,14,120,130,32,38,cm,ch);// headrest
-// LACK shelf brun noir 110x26 above desk at 160 + books + plant + LED strip
-B(25,135,157,162,0,26,bnM);
-const bk=[C.olive,0xEDE5D3,C.black,0xB5562E,C.jaune,0x6b5a48];for(let i=0;i<10;i++){const h=18+rnd()*7;B(30+i*3.6,33.3+i*3.6,162,162+h,4,22,M(bk[i%6],{roughness:.8}))}
-B(68,90,162,165,6,22,M(0x161616));B(70,88,165,167,7,21,M(0xEDE5D3));
-Cy(115,13,162,176,7,M(0xEDE5D3,{roughness:.7}),8);[[115,182,13,9],[108,176,18,7],[122,172,10,6]].forEach(l=>S(l[0],l[1],l[2],l[3],M(C.green2),1,.7,1));
-for(let i=0;i<5;i++)S(106+Math.sin(i*.9)*2.5,163-i*3.2,24.5,2.4,M(i%2?C.green2:C.green),1,.7,1);
+// chair Sihoo Doro C300 (mesh back, lumbar, 3D armrests) facing north
+{const ch=Grp(80,0,106,0);const cm=M(0x1a1a1b,{roughness:.6}),cmet=M(0x2a2a2c,{metalness:.7,roughness:.3});
+ for(let i=0;i<5;i++){const a=i/5*Math.PI*2;const lg=Grp(0,0,0,a,ch);RB(-1.8,1.8,5,9,0,29,1.2,cmet,lg);S(0,3,30,3,cm,1,1,1,lg)}
+ Lathe(0,7,0,[[0,0],[5,0],[5,2],[2.6,4],[2.6,36],[0,36]],cmet,20,ch);
+ RB(-25,25,44,52,-22,23,4,cm,ch,3);RB(-23,23,51,54,-20,21,3,M(0x26262a,{roughness:1}),ch,3);
+ RB(-3,3,46,66,22,26,1,cmet,ch);
+ const back=Grp(0,0,27,0,ch);back.rotation.x=-.12;RB(-23,23,58,118,-2,2,5,M(0x1b1b1d,{roughness:.6}),back,3);
+ const meshB=new THREE.MeshStandardMaterial({color:0x222226,transparent:true,opacity:.78,roughness:.9});RB(-21,21,60,116,-2.4,-1.6,4,meshB,back,3);
+ RB(-15,15,70,84,-3.2,-1.8,3,M(0x2a2a2c),back,3);
+ [-27,27].forEach(x=>{RB(x-1.8,x+1.8,52,70,4,8,1,cmet,ch);RB(x-3.5,x+3.5,70,73,-8,16,1.4,cm,ch)})}
+// LACK shelf brun noir 110x26 at 157 + books, pothos, 2 frames above
+RB(25,135,157,162,0,26,.8,bnV);
+const bk=[C.olive,0xEDE5D3,C.black,0xB5562E,C.jaune,0x6b5a48];for(let i=0;i<10;i++){const hh=18+rnd()*7;RB(30+i*3.6,33.3+i*3.6,162,162+hh,4,22,.4,M(bk[i%6],{roughness:.8}),null,1)}
+RB(68,90,162,165,6,22,.6,M(0x161616));RB(70,88,165,167,7,21,.6,M(0xEDE5D3));
+Lathe(115,162,13,[[0,0],[5.5,0],[7,12],[6.4,12],[5,1],[0,1]],M(0xC56B45,{roughness:.8}),20);
+for(let i=0;i<12;i++){const a=rnd()*7;S(115+Math.cos(a)*6,174+rnd()*6,13+Math.sin(a)*5,3.2,M(i%2?C.green2:C.green,{roughness:.7}),1,.35,1.2)}
+[[40,70,4],[90,120,5]].forEach(([a,b,i])=>{RB(a,b,176,216,0,2.5,.5,frM);B(a+2.5,b-2.5,178.5,213.5,2.5,2.7,M(0xffffff,{map:poster(i),roughness:.7}))});
 R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
+// laundry basket SALUDING (bamboo) under left of desk + FNISS bin
+{const bamT=T(64,64,(g,w,h)=>{g.fillStyle='#b48c5a';g.fillRect(0,0,w,h);g.strokeStyle='#8a6438';g.lineWidth=2;for(let i=-64;i<128;i+=8){g.beginPath();g.moveTo(i,0);g.lineTo(i+64,64);g.stroke()}},6,3);
+ Lathe(24,0,58,[[0,0],[15,0],[17,48],[16.4,48],[14.4,1],[0,1]],M(0xffffff,{map:bamT,roughness:.9}),28)}
+Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{roughness:.6}),24);
 
-// ---------- streetwear rack along north wall ----------
-const rk=M(C.black,{metalness:.7,roughness:.35});[174,256].forEach(x=>{Cy(x,22,0,160,1.5,rk);B(x-2,x+2,0,2,4,40,rk)});B(172,258,158,161,20.5,23.5,rk);
-const clc=[0x161515,0xEDE5D3,C.olive,0x8a8a8a,0x4F5633,0xF4F2EC,0x3b3d40,0xD8A42C,0x6b5a48];
-for(let i=0,x=180;x<252;x+=6.4,i++){const c=clc[i%9];const L=60+(i%3)*14;B(x,x+4.6,150-L,150,9,35,M(c,{roughness:1}));B(x+1.9,x+2.7,150,159,21.5,22.5,rk)}
-shoe(192,0,8,C.olive,0xEDE5D3);shoe(204,0,8,C.olive,0xEDE5D3);shoe(224,0,10,0xEDE5D3,C.black);shoe(236,0,10,0xEDE5D3,C.black);
+// ---------- portant GRÅFJÄLLET 90x36x175 anthracite + clothes + shoes ----------
+{const X0=168,X1=258,Z0=2,Z1=38;const rk=M(0x303235,{metalness:.6,roughness:.35});
+ [X0+1.5,X1-1.5].forEach(x=>{[Z0+1.5,Z1-1.5].forEach(z=>RB(x-1.3,x+1.3,0,175,z-1.3,z+1.3,.5,rk));RB(x-1.3,x+1.3,10,12,Z0+1,Z1-1,.5,rk);RB(x-1.3,x+1.3,160,162,Z0+1,Z1-1,.5,rk)});
+ RB(X0,X1,173,176,Z0,Z1,.6,M(0x2f3134,{roughness:.5}));
+ {const r=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.2,X1-X0-3,12),rk);r.rotation.z=Math.PI/2;r.position.set((X0+X1)/2,161,20);add(r)}
+ for(let z=Z0+5;z<Z1-2;z+=6.5){const r=new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,X1-X0-3,10),rk);r.rotation.z=Math.PI/2;r.position.set((X0+X1)/2,13,z);add(r)}
+ const clc=[0x161515,0xEDE5D3,C.olive,0x8a8a8a,0x4F5633,0xF4F2EC,0x3b3d40,0xD8A42C,0x6b5a48,0x1D1A18];
+ for(let i=0,x=X0+8;x<X1-6;x+=7.4,i++){const c=clc[i%10],L=58+(i%3)*16,hood=i%3==0;const g=Grp(x,161,20,0);
+  add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,-4,-20),new THREE.Vector3(0,3,0),new THREE.Vector3(0,-4,20)),12,.5,6),M(0x111111)),g);
+  RB(-2.4,2.4,-6-L,-4,-22,22,2.2,M(c,{roughness:1}),g,2);if(hood)RB(-2.8,2.8,-14,-3,-9,9,3,M(c,{roughness:1}),g,2)}
+ [[178,0xF4F2EC,C.black],[196,C.olive,0xEDE5D3],[214,C.black,0xEDE5D3],[232,0xEDE5D3,C.jaune]].forEach(([x,c,a],i)=>{sneaker(x,14,20,c,a,0);sneaker(x+9,14,20,c,a,0)});
+ Lathe(240,176,20,[[0,0],[5,0],[6.2,10],[5.6,10],[4.6,1],[0,1]],M(0xC56B45,{roughness:.8}),18);for(let i=0;i<9;i++)S(240+Math.sin(i)*5,190-i*4,20+Math.cos(i*1.3)*5,2.6,M(i%2?C.green2:C.green),1,.4,1)}
 
-// ---------- Kallax brun noir 2x2 + vinyl ----------
-const kx=bnM;B(321,360,0,3,100,177,kx);B(321,360,74,77,100,177,kx);B(321,360,37,40,100,177,kx);B(321,360,0,77,100,102,kx);B(321,360,0,77,175,177,kx);B(321,360,0,77,137.5,139.5,kx);B(357,360,0,77,100,177,kx);
-const vc=[0x161515,C.olive,0xEDE5D3,0xB5562E,C.jaune,0x3b3d40,0x7a5a8a,0xd6d0c4];let q=0;
-[[3,37,102,137.5],[3,37,139.5,175],[40,74,102,137.5],[40,74,139.5,175]].forEach(c=>{for(let z=c[2]+1;z<c[3]-1;z+=1.5){B(325,356,c[0]+.5,c[0]+31.5,z,z+1.15,M(vc[(q++*7)%8],{roughness:.7}))}});
-// turntable on top
-B(323,358,77,86,121,157,M(0x1f1b18,{roughness:.4}));R.platter=Cy(340,139,86,88,15,M(0x101010,{roughness:.3}));R.label=B(334,346,88,88.4,137,141,M(C.jaune));B(350,352,88,91,128,152,M(0xbbbbbb,{metalness:.8,roughness:.3}));
-// speakers (soundbar halves) on Kallax
-[[100,121],[156,176]].forEach(([a,b])=>{B(330,350,77,87,a,b,M(0x121212,{roughness:.8}));B(329.6,330,79,85,a+1,b-1,M(0x2a2a2a,{roughness:1}))});
-// small frames above Kallax
-[[105,82],[105,128],[150,82],[150,107],[150,152]].forEach((p,i)=>{const w=i<2?40:22;B(357.5,360,p[0],p[0]+40,p[1],p[1]+w,fr);B(357,357.5,p[0]+3,p[0]+37,p[1]+3,p[1]+w-3,M(0xffffff,{map:poster(i+1),roughness:.7}))});
+// ---------- KALLAX 77x77 brun noir + vinyls + AT-LP60X + Edifier R1280DB ----------
+{const X0=321,X1=360,Z0=100,Z1=177,o=3.2,t=1.6;const kx=bnV;
+ RB(X0,X1,0,o,Z0,Z1,.6,kx);RB(X0,X1,77-o,77,Z0,Z1,.6,kx);RB(X0,X1,0,77,Z0,Z0+o,.6,kx);RB(X0,X1,0,77,Z1-o,Z1,.6,kx);
+ B(X0+.5,X1,38.5-t/2,38.5+t/2,Z0+o,Z1-o,kx);B(X0+.5,X1,o,77-o,(Z0+Z1)/2-t/2,(Z0+Z1)/2+t/2,kx);B(X1-.6,X1,o,77-o,Z0+o,Z1-o,M(0x231e1b));
+ const vc=[0x161515,C.olive,0xEDE5D3,0xB5562E,C.jaune,0x3b3d40,0x7a5a8a,0xd6d0c4,0x2d4a6b,0x8a1d1d];let q=0;
+ const cells=[[o,38.5-t/2,Z0+o,(Z0+Z1)/2-t/2],[o,38.5-t/2,(Z0+Z1)/2+t/2,Z1-o],[38.5+t/2,77-o,Z0+o,(Z0+Z1)/2-t/2],[38.5+t/2,77-o,(Z0+Z1)/2+t/2,Z1-o]];
+ cells.forEach(([y0,y1,z0,z1],ci)=>{let z=z0+.6;const n=ci==3?14:22;for(let k=0;k<n&&z<z1-1.2;k++){const tilt=ci==3&&k>9?.25:0;const s=RB(X0+4,X0+35.5,y0+.3,y0+31.8,z,z+.9,.25,M(vc[(q++*7)%10],{roughness:.7}),null,1);if(tilt){s.rotation.x=tilt}z+=1.25}});
+ // turntable AT-LP60X
+ RB(323,358,77,85.5,121,157,1.5,M(0x1c1c1e,{roughness:.35}),null,3);B(323.2,323.6,79,83,124,130,M(0x9a9a9a,{metalness:.8}));
+ R.platter=Cy(340,139,85.5,87.2,14.6,M(0x0d0d0d,{roughness:.25}),null,40);R.label=Cy(340,139,87.2,87.4,4.4,M(C.jaune,{roughness:.6}),null,24);
+ Cy(340,139,87.4,88.4,.5,chrome,null,8);
+ Cy(352,153,85.5,88.5,2.2,M(0x2a2a2a,{metalness:.6}),null,16);{const arm=new THREE.Mesh(new THREE.CylinderGeometry(.45,.45,22,8),chrome);arm.rotation.x=Math.PI/2;arm.rotation.z=.35;arm.position.set(348,88.6,143);add(arm);RB(343.5,346.5,87.8,89,131,134.5,.4,M(0x111111),null,1)}
+ // Edifier R1280DB pair (wood sides, black front)
+ [[102,116.6],[160.4,175]].forEach(([a,b])=>{RB(330,353.4,77,101.6,a,b,.8,M(0x6b4a2e,{roughness:.55}),null,2);B(329.4,330.2,77.6,101,a+.6,b-.6,M(0x151515,{roughness:.7}));
+  const w=new THREE.Mesh(new THREE.CylinderGeometry(5.2,5.2,.6,28),M(0x222224,{roughness:.6}));w.rotation.z=Math.PI/2;w.position.set(329.2,86,(a+b)/2);add(w);
+  const w2=new THREE.Mesh(new THREE.CylinderGeometry(2.6,2.6,.8,20),M(0x3a3a3c,{metalness:.4,roughness:.4}));w2.rotation.z=Math.PI/2;w2.position.set(329,86,(a+b)/2);add(w2);
+  const tw=new THREE.Mesh(new THREE.CylinderGeometry(1.8,1.8,.7,20),M(0x2a2a2a,{metalness:.5,roughness:.3}));tw.rotation.z=Math.PI/2;tw.position.set(329.1,96.5,(a+b)/2);add(tw)});
+ // 4 RÖDALM 30x40 frames above Kallax (2x2)
+ [[110,104],[110,140],[156,104],[156,140]].forEach(([y,z],i)=>{RB(357.5,360,y,y+40,z,z+30,.5,frM);B(357.2,357.5,y+2.5,y+37.5,z+2.5,z+27.5,M(0xffffff,{map:poster(i),roughness:.7}))})}
 
-// ---------- NEW commode 6 tiroirs 120x40x76 (dark oak, black metal legs) ----------
-const cmd=M(0xffffff,{map:oakT,roughness:.6}),cmd2=M(0xffffff,{map:oakT2,roughness:.55}),blkM=M(C.black,{metalness:.7,roughness:.35});
-[[322,201],[322,317],[358,201],[358,317]].forEach(p=>B(p[0]-1.2,p[0]+1.2,0,8,p[1]-1.2,p[1]+1.2,blkM));
-B(321,360,8,10,199,319,blkM);
-B(321,360,10,76,199,319,cmd);
-for(let c=0;c<2;c++)for(let r=0;r<3;r++){const z0=200+c*59.5,y0=11+r*21.6;B(320.2,321,y0,y0+20.4,z0,z0+58.5,cmd2);B(319.2,320.2,y0+14,y0+15.4,z0+19,z0+39.5,blkM)}
-// decor on commode
-const fado=S(342,90,300,11,M(0xffffff,{emissive:0xffe2b0,emissiveIntensity:.05,roughness:.2}));Cy(342,300,76,79,5.5,M(0xffffff));R.fado=fado.material;
-B(330,350,76,77.4,222,244,M(C.brass,{metalness:.9,roughness:.25}));Cy(336,228,77.4,79,2.6,M(C.black));
-Cy(344,268,76,86,3.5,M(0x5b4636,{transparent:true,opacity:.75,roughness:.1}));for(let i=0;i<5;i++){const s=B(343.6,344.4,86,106,267.6,268.4,M(0x3a2a1a));s.rotation.x=(i-2)*.16}
-B(330,352,76,80,282,288,M(C.olive));B(331,351,80,83,281,289,M(0xEDE5D3));
+// ---------- commode 6 tiroirs 120x40x76 (dark oak, black legs) + soundbar + decor ----------
+{const Z0=199,Z1=319,X0=320,X1=360;const cmd=M(0xffffff,{map:oakT,roughness:.55}),cmd2=M(0xffffff,{map:oakT2,roughness:.5});
+ [[X0+3,Z0+3],[X0+3,Z1-3],[X1-3,Z0+3],[X1-3,Z1-3],[X0+3,(Z0+Z1)/2],[X1-3,(Z0+Z1)/2]].forEach(p=>{const l=Lathe(p[0],0,p[1],[[0,0],[1.1,0],[1.6,8],[0,8]],metalBlk,12)});
+ RB(X0,X1,8,76,Z0,Z1,.8,cmd,null,2);
+ for(let c=0;c<2;c++)for(let r=0;r<3;r++){const z0=Z0+1.2+c*59.4,y0=10+r*21.8;RB(X0-.8,X0+.6,y0,y0+20.8,z0,z0+58.2,.6,cmd2,null,1);RB(X0-2.4,X0-.8,y0+13.6,y0+15.2,z0+17,z0+41,.6,metalBlk,null,1);
+  [z0+18,z0+40].forEach(zz=>B(X0-2,X0-.8,y0+13.8,y0+15,zz-.6,zz+.6,metalBlk))}
+ // soundbar Ultimea Apollo S40 (front) + FADO (back right) + tray, candles, diffuser, books
+ RB(322,331,76,82.5,219,299,1.6,M(0x161616,{roughness:.6}),null,2);B(321.6,322,77,82,220,298,M(0x232325,{roughness:.9}));
+ Lathe(346,76,307,[[0,0],[6,0],[6.2,.6],[5,2.6],[3,3.2],[0,3.2]],M(0xF7F6F2,{roughness:.3}),24);
+ const fado=S(346,91.7,307,12.5,M(0xffffff,{emissive:0xffe2b0,emissiveIntensity:.05,roughness:.15}),1,1,1,null,28);R.fado=fado.material;
+ RB(336,356,76,77.4,222,244,.6,M(C.brass,{metalness:.9,roughness:.25}));
+ Lathe(349,76,268,[[0,0],[3.6,0],[3.8,7],[2,9.5],[1.2,10],[0,10]],M(0x5b4636,{transparent:true,opacity:.8,roughness:.1}),18);for(let i=0;i<5;i++){const s=B(348.6,349.4,86,99,267.6,268.4,M(0x3a2a1a));s.rotation.x=(i-2)*.14}
+ RB(336,356,76,79.5,278,292,.4,M(C.olive));RB(337,355,79.5,82.5,279,291,.4,M(0xEDE5D3))}
 
-// ---------- TV 65" on wall (TCL 65C69K) ----------
-B(355,360,85,172,240,278,M(0x1a1a1a,{metalness:.6}));
-B(351,356,90,174,186.5,331.5,M(0x0c0c0d,{roughness:.3,metalness:.3}));
-R.screens.tv=noShadow(P(141,79,MB(0x000000,{map:tvT}),350.9,132,259,-Math.PI/2));
-R.G.tvLed=[mkGlow(210,140,359.3,132,259,-Math.PI/2)];R.ambiPads={l:mkGlow(90,150,359.2,132,172,-Math.PI/2),r:mkGlow(90,150,359.2,132,346,-Math.PI/2),t:mkGlow(200,70,359.2,186,259,-Math.PI/2),b:mkGlow(200,40,359.2,84,259,-Math.PI/2)};
+// ---------- TV TCL 65C69K on wall (bottom at 105 cm) + Meliconi mount ----------
+{const Y0=105,Y1=188.2,Z0=186.6,Z1=331.4,YC=(Y0+Y1)/2;
+ B(355,359.8,YC-28,YC+28,240,278,M(0x1a1a1a,{metalness:.6}));
+ RB(352.5,357,YC-30,YC+30,212,306,2,M(0x101011,{roughness:.4}));
+ RB(350.6,353.2,Y0,Y1,Z0,Z1,.6,M(0x0b0b0c,{roughness:.3,metalness:.3}));
+ R.screens.tv=noShadow(P(143,81.4,MB(0x000000,{map:tvT}),350.55,YC,259,-Math.PI/2));
+ R.G.tvLed=[mkGlow(210,140,359.3,YC,259,-Math.PI/2)];
+ R.ambiPads={l:mkGlow(90,150,359.2,YC,172,-Math.PI/2),r:mkGlow(90,150,359.2,YC,346,-Math.PI/2),t:mkGlow(200,70,359.2,Y1+13,259,-Math.PI/2),b:mkGlow(200,34,359.2,Y0-10,259,-Math.PI/2)};}
 
-// ---------- ficus corner + plant spots ----------
-Cy(336,340,0,32,15,M(C.pot,{roughness:.9}),17);Cy(336,340,32,34,15.5,M(0x3b2a1e));Cy(336,340,34,120,2,M(0x5a3d22));
-for(let i=0;i<46;i++){const a=rnd()*7,r=6+rnd()*22,y=95+rnd()*95;const m=S(336+Math.cos(a)*r,y,340+Math.sin(a)*r*.8,5+rnd()*3,M(i%3?C.green:C.green2,{roughness:.7}),1,.55,1.3);m.rotation.y=a}
+// ---------- plants: ficus lyrata (corner), monstera (window right), plant spots ----------
+{const potM=M(0xC9C2B6,{roughness:.85});Lathe(336,0,340,[[0,0],[13,0],[16,32],[15.2,32],[12.4,2],[0,2]],potM,28);Cy(336,340,30,31,14.8,M(0x3b2a1e));
+ const tr=new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,30,340),new THREE.Vector3(331,80,343),new THREE.Vector3(337,130,338)),16,1.6,8),M(0x5a3d22,{roughness:.9}));add(tr);
+ for(let i=0;i<42;i++){const a=rnd()*7,r=5+rnd()*20,y=100+rnd()*95;const g=Grp(336+Math.cos(a)*r,y,340+Math.sin(a)*r*.8,a);g.rotation.x=-.5+rnd()*.6;
+  const lf=new THREE.Mesh(new THREE.SphereGeometry(6.5,14,10),M(i%3?0x3e6e33:0x4f8540,{roughness:.55}));lf.scale.set(.85,.12,1.35);g.add(lf);lf.castShadow=lf.receiveShadow=true}
+ // monstera at window right (x 226, z 336)
+ Lathe(226,0,336,[[0,0],[10,0],[12,24],[11.4,24],[9.6,1.5],[0,1.5]],M(0xC56B45,{roughness:.8}),24);Cy(226,336,22,23,11.2,M(0x3b2a1e));
+ for(let i=0;i<9;i++){const a=i/9*Math.PI*2+rnd()*.4,len=40+rnd()*45;const tip=new THREE.Vector3(226+Math.cos(a)*len*.45,22+len*.9,336+Math.sin(a)*len*.35);
+  add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(226,22,336),new THREE.Vector3(226+Math.cos(a)*6,22+len*.6,336+Math.sin(a)*4),tip),10,.55,6),M(0x3d6b31)));
+  const g=Grp(tip.x,tip.y,tip.z,-a);g.rotation.x=.5;const lf=new THREE.Mesh(new THREE.SphereGeometry(11,16,10),M(i%2?0x2f5e2a:0x356b30,{roughness:.6,side:THREE.DoubleSide}));lf.scale.set(1,.06,1.15);g.add(lf);lf.castShadow=lf.receiveShadow=true}}
 B(352,360,8,14,300,310,M(C.black,{metalness:.6}));Cy(354,305,14,20,3,M(C.black,{metalness:.6}));
-// windowsill plant
-Cy(150,368,90,100,6,M(0xEDE5D3),7);S(150,106,368,8,M(C.green2),1,.7,.8);
+// windowsill pothos
+Lathe(150,90,368,[[0,0],[5,0],[6.4,10],[5.8,10],[4.4,1],[0,1]],M(0xEDE5D3,{roughness:.7}),18);for(let i=0;i<8;i++)S(150+Math.sin(i)*4,101+rnd()*5,368+Math.cos(i)*3,2.8,M(C.green2),1,.4,1);
 
+// ---------- candles (flicker in cosy mode) ----------
+R.flames=[];const candle=(x,y,z,h,r)=>{Cy(x,z,y,y+h,r||2.6,M(0xF3EBDD,{roughness:.9}),null,20);const f=noShadow(S(x,y+h+1.6,z,1.1,glow(0x000000,1),1,1.8,1));R.flames.push(f);const hl=noShadow(P(14,14,glow(0x000000,1),x,y+h+2,z,0));hl.material.map=softT;hl.userData.bb=1;R.flames.push(hl)};
+candle(28,59,160,7);candle(30,59,152,4.5,2);candle(347,77.4,230,6);candle(341,77.4,237,4,2);candle(212,90,356,8,3);candle(200,90,357,5,2.2);
 
-// candles (flicker in cosy mode)
-R.flames=[];const candle=(x,y,z,h,r)=>{Cy(x,z,y,y+h,r||2.6,M(0xF3EBDD,{roughness:.9}));const f=noShadow(S(x,y+h+1.6,z,1.1,glow(0x000000,1),1,1.8,1));R.flames.push(f);const hl=noShadow(P(14,14,glow(0x000000,1),x,y+h+2,z,0));hl.material.map=softT;hl.userData.bb=1;R.flames.push(hl)};
-candle(31,53,176,7);candle(36.5,53,170,4.5,2);candle(340,77.4,236,6);candle(334,77.4,241,4,2);candle(212,90,356,8,3);candle(222,90,357,5,2.2);
-// ---------- arc floor lamp (black) out of passage ----------
-Cy(300,338,0,5,16,M(0x2a2a2a,{roughness:.3,metalness:.4}));
-const arc=new THREE.QuadraticBezierCurve3(new THREE.Vector3(300,5,338),new THREE.Vector3(290,300,320),new THREE.Vector3(220,205,282));
-add(new THREE.Mesh(new THREE.TubeGeometry(arc,48,1.5,10),M(C.black,{metalness:.7,roughness:.3})));
-const shd=new THREE.Mesh(new THREE.SphereGeometry(24,28,14,0,Math.PI*2,0,Math.PI/2),M(C.black,{side:THREE.DoubleSide,metalness:.5,roughness:.35}));shd.position.set(220,184,282);add(shd);
-const arcBulb=noShadow(S(220,186,282,6,M(0xffffff,{emissive:0xffd9a0,emissiveIntensity:.05})));R.arcBulb=arcBulb.material;
-// ceiling pendant (paper globe)
-Cy(180,180,232,250,.4,M(C.white));const pend=noShadow(S(180,212,180,22,M(0xffffff,{emissive:0xffe6c0,emissiveIntensity:.05,roughness:1})));R.pend=pend.material;
+// ---------- arc lamp OMBRAGE (black, marble base) ----------
+Lathe(300,0,338,[[0,0],[16,0],[16,4.5],[15,5],[0,5]],M(0xEDEBE6,{roughness:.25,metalness:.05}),36);
+Lathe(300,5,338,[[0,0],[2.6,0],[2.2,3],[0,3]],metalBlk,16);
+const arc=new THREE.QuadraticBezierCurve3(new THREE.Vector3(300,7,338),new THREE.Vector3(286,300,318),new THREE.Vector3(214,206,262));
+add(new THREE.Mesh(new THREE.TubeGeometry(arc,56,1.4,10),M(C.black,{metalness:.6,roughness:.3})));
+const shd=new THREE.Mesh(new THREE.SphereGeometry(24,32,16,0,Math.PI*2,0,Math.PI/2),M(C.black,{side:THREE.DoubleSide,metalness:.5,roughness:.32}));shd.position.set(214,184,262);add(shd);
+Cy(214,262,204,208,2.2,metalBlk);
+const arcBulb=noShadow(S(214,186,262,6,M(0xffffff,{emissive:0xffd9a0,emissiveIntensity:.05})));R.arcBulb=arcBulb.material;
+// pendant GULLSUDARE 45 cm (ribbed paper globe)
+Cy(180,180,226,250,.35,M(C.white));Cy(180,180,224,227,1.8,M(C.white));
+const ribT=T(256,64,(g,w,h)=>{g.fillStyle='#fff';g.fillRect(0,0,w,h);for(let i=0;i<h;i+=5){g.fillStyle='rgba(180,170,150,.35)';g.fillRect(0,i,w,1.2)}});
+const pend=noShadow(S(180,202,180,22.5,M(0xffffff,{map:ribT,emissive:0xffe6c0,emissiveIntensity:.05,roughness:1}),1,.98,1,null,32));R.pend=pend.material;
 
 // ---------- dust motes + sun shafts ----------
 R.dust=[];const dm=glow(0xfff1d0,.9);for(let i=0;i<70;i++){const d=noShadow(B(-.35,.35,-.35,.35,-.35,.35,dm));d.position.set(125+rnd()*110,40+rnd()*170,180+rnd()*170);d.userData.seed=rnd()*100;R.dust.push(d)}
@@ -286,9 +376,9 @@ const amb=new THREE.HemisphereLight(0xfff6ea,0x9a8068,.6);sc.add(amb);R.amb=amb;
 const sun=new THREE.DirectionalLight(0xfff0dc,1);sun.position.set(180+150,180+420,180+500);sun.target.position.set(180,0,180);sc.add(sun);sc.add(sun.target);R.sun=sun;
 sun.castShadow=true;if(sun.shadow&&sun.shadow.camera){sun.shadow.mapSize.set(2048,2048);const sc2=sun.shadow.camera;sc2.left=-330;sc2.right=330;sc2.top=330;sc2.bottom=-330;sc2.near=50;sc2.far=1600;sun.shadow.bias=-.0008}
 function PL(name,c,x,y,z,d,dec){const l=new THREE.PointLight(c,0,d||300,dec||1.5);l.position.set(x,y,z);sc.add(l);R.L[name]=l;return l}
-PL('pend',0xffe1b8,180,200,180,520);PL('arc',0xffd39a,220,176,282,330);PL('ns',0xffd09a,18,82,166,220);PL('fado',0xffd9a8,338,92,296,220);
-PL('desk',0xfff0d8,124,100,28,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,105,6,267,190);PL('head',0xff8a30,6,120,267,200);
-PL('tv',0xff8a30,357,132,259,230);PL('tvs',0xffb080,330,132,259,260);PL('mon',0x7a6cff,80,104,40,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,60,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,337,88,238,150,1.6);PL('candle2',0xff9a40,33,66,174,140,1.6);PL('candle3',0xff9a40,216,102,350,130,1.6);
+PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0xffd09a,18,76,140,220);PL('fado',0xffd9a8,346,92,307,220);
+PL('desk',0xfff0d8,124,100,30,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
+PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,80,104,40,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 return R}
 if(typeof module!=='undefined')module.exports=buildRoom;
 
