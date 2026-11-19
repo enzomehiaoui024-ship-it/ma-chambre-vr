@@ -101,3 +101,7 @@ Vues de contrôle fixes (tools/preview.py) :
 - Cônes : arc (bas, .15), FORSÅ (vers le clavier, .45), spot plante (haut, .55), LED sneakers (bas, .1).
 - Mode jour inchangé ; soir/cosy plus contrastés, plafond moins brûlé. VR : 0 erreur.
 - Scores : éclairage 8,5 → 9 → **55 → 55,5/70**.
+
+## 2026-11-20 — Séance 13 : prix
+- Boîtier → Lian Li LANCOOL 207 noir 89,95 € (LDLC). Casque → Arctis Nova 5 Wireless 139,95 € (LDLC). Matelas VALEVÅG 250 → 279 € (ikea.fr, 140x200 : **taille 140x190 à confirmer avec Enzo**).
+- Total : 7 349,60 → **7 388,50 €**. Scores : liste 7,5 → 8 → **55,5 → 56/70**.

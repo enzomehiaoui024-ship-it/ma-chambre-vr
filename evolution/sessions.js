@@ -3,6 +3,20 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 13 — derniers prix estimés remplacés",
+    avant: 55.5, apres: 56,
+    scores: { meubles: [9.5, 9.5], eclairage: [9, 9], coherence: [7.5, 7.5], liste: [7.5, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Boîtier : modèle précis, Lian Li LANCOOL 207 noir à 89,95 € (4 ventilateurs inclus, la carte graphique rentre)",
+      "Casque : SteelSeries Arctis Nova 5 Wireless à 139,95 €",
+      "Matelas VALEVÅG : 279 € sur ikea.fr, mais en 140x200 → à vérifier pour ton lit en 140x190",
+      "Nouveau total : 7 388,50 € (chambre 3 519,89 € + gaming 3 868,61 €)"
+    ],
+    images: [],
+    ensuite: "Il ne reste qu'un prix estimé : clavier + souris + tapis (selon les modèles que tu préfères)."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 12 — lumière des lampes plus réaliste",
     avant: 55, apres: 55.5,
     scores: { meubles: [9.5, 9.5], eclairage: [8.5, 9], coherence: [7.5, 7.5], liste: [7.5, 7.5], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },

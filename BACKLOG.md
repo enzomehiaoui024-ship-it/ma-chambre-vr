@@ -22,3 +22,4 @@
 
 ## À demander à Enzo
 - Emplacement des étagères à pochettes MOSSLANDA, des supports vinyles muraux et du « Now Playing ».
+- Matelas : le VALEVÅG existe-t-il en 140x190 (taille du lit) ? Sinon passer le lit en 140x200 ou choisir un autre matelas.
