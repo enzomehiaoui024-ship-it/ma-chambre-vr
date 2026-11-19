@@ -129,8 +129,6 @@ const facT=(lit)=>T(128,256,(g,w,h)=>{if(!lit){g.fillStyle='#c9cdc4';g.fillRect(
 R.out=[];R.cityLit=[];[[-95,0xffffff,70,170,600],[150,0xf0f0ea,90,130,600],[280,0xe6ebe4,60,190,600],[350,0xf4f4f0,80,150,600],[-60,0xdddddd,90,210,700],[95,0xe9e9e9,60,240,720],[230,0xdedede,80,230,700],[420,0xe0e0e0,90,200,700]].forEach(([x,c,w,h,z])=>{
 R.out.push(noShadow(P(w,h,MB(c,{map:facT(false)}),x,h/2+60,z,Math.PI)));const l=noShadow(P(w,h,MB(0x000000,{map:facT(true),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}),x,h/2+60,z-.6,Math.PI));R.cityLit.push(l)});
 R.tree=noShadow(S(5,150,540,58,MB(0x5f8c57),1,1.1,.6));R.tree2=noShadow(S(330,110,580,40,MB(0x6c9963),1,1,.6));
-// radiator
-B(132,228,22,72,350,355,M(0xF7F7F5,{roughness:.4}));
 // curtains (linen) + rod
 const rodM=M(C.black,{roughness:.3,metalness:.8});B(92,268,222,224,346,348,rodM);S(92,223,347,2.6,rodM);S(268,223,347,2.6,rodM);
 const curM=M(0xffffff,{map:linT,roughness:1});[[96,136],[224,264]].forEach(([a,b])=>{const n=7;for(let i=0;i<n;i++){const w=(b-a)/n;const m=B(a+i*w-.3,a+(i+1)*w+.3,2,220,340+(i%2?3.5:0),342+(i%2?3.5:0),curM)}});
