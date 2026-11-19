@@ -3,6 +3,7 @@ const box=document.getElementById('view');const cv=document.createElement('canva
 const R=buildRoom(THREE);const sc=R.scene;window.__R=R;const ambiUp=makeAmbi(R,THREE);
 const cam=new THREE.PerspectiveCamera(52,1,4,3000);
 let RD=null;function setup(){const pr=Math.min(window.devicePixelRatio||1,1.6)*(window.QSCALE||1);const w=Math.max(8,Math.round(box.clientWidth*pr/8)*8),h=Math.max(8,Math.round(box.clientHeight*pr/8)*8);if(RD&&cv.width===w&&cv.height===h)return;cv.width=w;cv.height=h;RD=makeRenderer(cv);lastSun='';cam.aspect=w/h}
+const FV=f=>cam.aspect>=1?f:2*Math.atan(Math.tan(f*Math.PI/360)/Math.sqrt(cam.aspect))*180/Math.PI;
 const hex=h=>[((h>>16)&255)/255,((h>>8)&255)/255,(h&255)/255];
 const mix=(a,b,t)=>a+(b-a)*t,mixc=(a,b,t)=>[mix(a[0],b[0],t),mix(a[1],b[1],t),mix(a[2],b[2],t)];
 const cl=(x,a,b)=>Math.max(a,Math.min(b,x)),ss=(a,b,x)=>{const t=cl((x-a)/(b-a),0,1);return t*t*(3-2*t)};
@@ -132,10 +133,10 @@ function stopTour(){if(tour){tour=null;playB.innerHTML='&#9654;&nbsp; Lancer la 
 playB.onclick=()=>{if(tour){stopTour();return}tour={t0:performance.now()/1000};playB.innerHTML='&#10073;&#10073;&nbsp; Arrêter la visite'};
 let last=performance.now();window.addEventListener('resize',()=>{setTimeout(setup,200)});
 function frame(){requestAnimationFrame(frame);const now=performance.now();const dt=Math.min((now-last)/1000,.05);last=now;el+=dt;setup();let s;
- if(tour){const t=Math.min(now/1000-tour.t0+3.6,TOTAL-.01);const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=c.f;s=stateAt(t);
+ if(tour){const t=Math.min(now/1000-tour.t0+3.6,TOTAL-.01);const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);s=stateAt(t);
   let sh=null;for(const c2 of CAP)if(t>=c2[0]&&t<=c2[1])sh=c2;if(sh){capL.textContent=sh[2];capT.textContent=sh[3];capS.textContent=sh[4];cap.style.opacity=1}else cap.style.opacity=0;
   if(t>=TOTAL-.02){stopTour();setMode('cosy')}}
- else{if(auto){autoT+=dt;if(autoT>6){autoT=0;setMode(KEYS[(KEYS.indexOf(mode)+1)%7])}}blendT=Math.min(1,blendT+dt/1.2);s=blend(from,MODES[mode](el),ss(0,1,blendT));cam.fov=52;
+ else{if(auto){autoT+=dt;if(autoT>6){autoT=0;setMode(KEYS[(KEYS.indexOf(mode)+1)%7])}}blendT=Math.min(1,blendT+dt/1.2);s=blend(from,MODES[mode](el),ss(0,1,blendT));cam.fov=FV(52);
   if(fly){fly.t=Math.min(1,fly.t+dt/1.6);const u=ss(0,1,fly.t);cam.position.lerpVectors(fly.p0,fly.p1,u);tgt.x=mix(fly.q0.x,fly.q1.x,u);tgt.y=mix(fly.q0.y,fly.q1.y,u);tgt.z=mix(fly.q0.z,fly.q1.z,u);cam.lookAt(tgt);if(fly.t>=1){fly=null;fromPos(cam.position,tgt)}}else toPos()}
  cur=s;apply(s,el);ambiUp(s,el);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});

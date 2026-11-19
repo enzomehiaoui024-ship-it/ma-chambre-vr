@@ -68,3 +68,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Platine : disque à sillons (plan alphaTest), couvercle acrylique ouvert contre le mur, contrepoids, repose-bras.
 - VR : 0 erreur, 361 lots, ~149 k triangles.
 - Scores : meubles 9 → 9,5 → **51 → 51,5/70**.
+
+## 2026-11-19 — Séance 7 : plan 3D sur téléphone
+- `FV()` dans app_gl.js : en portrait, fov vertical = 2·atan(tan(f/2)/√aspect) → champ horizontal plus large sans effet fish-eye.
+- Aide déplacée à gauche (z-index), masquée 2,5 s après le premier toucher ; fondu à droite des rangées de boutons.
+- Vérifié en émulation iPhone (390×844, tactile). Scores : plan 7 → 7,5 → **51,5 → 52/70**.

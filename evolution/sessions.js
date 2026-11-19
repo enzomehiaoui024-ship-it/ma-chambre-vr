@@ -3,6 +3,22 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 7 — plan 3D sur iPhone",
+    avant: 51.5, apres: 52,
+    scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7.5, 7.5], vr: [7, 7], plan: [7, 7.5], video: [5, 5] },
+    changements: [
+      "Écran vertical : l'angle de vue s'élargit tout seul, on voit beaucoup plus de la chambre sur le téléphone",
+      "L'aide « 1 doigt : tourner · 2 doigts : zoom » ne passe plus sous le bouton Mon évolution, et disparaît quand tu commences à toucher",
+      "Les rangées de boutons s'estompent sur la droite pour montrer qu'on peut les faire défiler"
+    ],
+    images: [
+      ["ensemble-telephone", "Vue d'ensemble sur iPhone"],
+      ["bureau-telephone", "Bureau gaming sur iPhone"]
+    ],
+    ensuite: "Refaire la vidéo de visite avec toutes les améliorations."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 6 — housse de couette, oreillers, platine vinyle",
     avant: 51, apres: 51.5,
     scores: { meubles: [9, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7.5, 7.5], vr: [7, 7], plan: [7, 7], video: [5, 5] },
