@@ -3,6 +3,27 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 2 — chaise Sihoo, pothos retombant, commode, pots",
+    avant: 48, apres: 48.5,
+    scores: { meubles: [8, 8.5], eclairage: [8, 8], coherence: [7, 7], liste: [7, 7], vr: [6, 6], plan: [7, 7], video: [5, 5] },
+    changements: [
+      "Chaise Sihoo Doro C300 refaite : dossier en filet (on voit à travers), courbe lombaire, assise avec bord arrondi, roulettes et accoudoirs 3D",
+      "Pothos sur l'étagère et sur le rebord de fenêtre : feuilles en cœur panachées et tiges qui retombent",
+      "Commode : fines ombres entre les tiroirs, comme une vraie commode",
+      "Pots : terre visible, rebord sur le pot de la monstera, pot du ficus plus réaliste",
+      "VR plus légère : ~146 k triangles au lieu de ~155 k"
+    ],
+    images: [
+      ["chaise", "Chaise Sihoo au bureau"],
+      ["pothos-etagere", "Pothos sur l'étagère"],
+      ["commode", "Tiroirs de la commode"],
+      ["monstera-pot", "Monstera près de la fenêtre"],
+      ["ficus-pot", "Pot du ficus"]
+    ],
+    ensuite: "VR : téléportation, mode assis et compteur d'images par seconde."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 1 — plantes, lampe, plaid et vêtements",
     avant: 47, apres: 48,
     scores: { meubles: [7, 8], eclairage: [8, 8], coherence: [7, 7], liste: [7, 7], vr: [6, 6], plan: [7, 7], video: [5, 5] },

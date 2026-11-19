@@ -264,22 +264,41 @@ Lathe(118,75,32,[[0,0],[3.8,0],[4,9],[3.6,9],[3.4,1],[0,1]],M(C.olive,{roughness
  const pcIn=noShadow(B(128.2,129,6,46,22,60,MB(0x000000)));R.pcIn=pcIn;
  B(140,148,48,50,58,62,metalBlk);}
 R.G.pc=[mkGlow(60,40,139,1,64,0,-Math.PI/2)];
-// chair Sihoo Doro C300 (mesh back, lumbar, 3D armrests) facing north
-{const ch=Grp(80,0,106,0);const cm=M(0x1a1a1b,{roughness:.6}),cmet=M(0x2a2a2c,{metalness:.7,roughness:.3});
- for(let i=0;i<5;i++){const a=i/5*Math.PI*2;const lg=Grp(0,0,0,a,ch);RB(-1.8,1.8,5,9,0,29,1.2,cmet,lg);S(0,3,30,3,cm,1,1,1,lg)}
+// ---------- plant helpers: pothos (heart leaves, variegated, trailing vines), soil ----------
+let _s2=7;const r2=()=>(_s2=(_s2*16807)%2147483647)/2147483647;
+const pothosT=T(128,128,(g,w,h)=>{g.clearRect(0,0,w,h);g.save();g.beginPath();g.moveTo(64,4);g.bezierCurveTo(96,24,124,58,118,90);g.bezierCurveTo(114,114,90,126,72,114);g.lineTo(64,104);g.lineTo(56,114);g.bezierCurveTo(38,126,14,114,10,90);g.bezierCurveTo(4,58,32,24,64,4);g.closePath();g.clip();const gr=g.createLinearGradient(0,0,128,128);gr.addColorStop(0,'#5a9a40');gr.addColorStop(1,'#2e6227');g.fillStyle=gr;g.fillRect(0,0,w,h);g.strokeStyle='rgba(226,214,120,.5)';g.lineWidth=2;for(let i=0;i<14;i++){const x=64+(r2()-.5)*80;g.beginPath();g.moveTo(64,104);g.quadraticCurveTo(x,70,x+(x-64)*.6,18);g.stroke()}g.strokeStyle='rgba(28,58,24,.85)';g.lineWidth=2.5;g.beginPath();g.moveTo(64,104);g.lineTo(64,10);g.stroke();g.restore()});
+const soilT=T(64,64,(g,w,h)=>{g.fillStyle='#35261b';g.fillRect(0,0,w,h);for(let i=0;i<260;i++){const c=r2();g.fillStyle=c<.5?'#22180f':c<.85?'#4a3626':'#9c8f7c';g.fillRect(r2()*w,r2()*h,1+r2()*2,1+r2()*2)}},2,2);
+const soilM=M(0xffffff,{map:soilT,roughness:1});
+const leafPlane=(w,h,t,p)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:t,alphaTest:.5,side:THREE.DoubleSide,roughness:.55}));m.castShadow=false;m.receiveShadow=true;m.userData.noTop=true;(p||sc).add(m);return m};
+function pothos(x,y,z,vines){const vm=M(0x4b7b37,{roughness:.8});
+ for(let i=0;i<14;i++){const a=r2()*6.28,rr=r2()*4.5;const g=Grp(x+Math.cos(a)*rr,y+r2()*3,z+Math.sin(a)*rr,-a+Math.PI/2);g.rotation.x=-.35-r2()*.9;const s=6+r2()*2.5;leafPlane(s,s*1.1,pothosT,g).position.y=s*.6}
+ vines.forEach(([dx,dz,drop])=>{const P=t=>{const u=1-t;return[u*u*x+2*u*t*(x+dx)+t*t*(x+dx*1.25),u*u*y+2*u*t*(y+4)+t*t*(y-drop),u*u*z+2*u*t*(z+dz)+t*t*(z+dz*1.25)]};
+  const cv=new THREE.QuadraticBezierCurve3(new THREE.Vector3(x,y,z),new THREE.Vector3(x+dx,y+4,z+dz),new THREE.Vector3(x+dx*1.25,y-drop,z+dz*1.25));add(new THREE.Mesh(new THREE.TubeGeometry(cv,14,.28,5),vm));
+  const n=Math.max(4,Math.round(drop/4.5));for(let k=1;k<=n;k++){const [px,py,pz]=P(.15+.85*k/n);const g=Grp(px,py,pz,Math.atan2(dx,dz)+(k%2?.9:-.9));g.rotation.x=2.1+r2()*.7;const s=4.5+r2()*2;leafPlane(s,s*1.1,pothosT,g).position.y=s*.5}})}
+// chair Sihoo Doro C300 (mesh back with lumbar curve, waterfall seat, 3D armrests) facing north
+{const ch=Grp(80,0,106,0);const cm=M(0x1a1a1b,{roughness:.6}),cmet=M(0x2a2a2c,{metalness:.7,roughness:.3}),fr=M(0x141415,{roughness:.4});
+ const meshT=T(64,64,(g,w,h)=>{g.fillStyle='#17171a';g.fillRect(0,0,w,h);g.fillStyle='#34343b';for(let y=0;y<h;y+=4)for(let x=(y/4%2)*2;x<w;x+=4)g.fillRect(x,y,2,2)},9,12);
+ const seatT=T(64,64,(g,w,h)=>{g.fillStyle='#1d1d20';g.fillRect(0,0,w,h);g.fillStyle='#26262b';for(let y=0;y<h;y+=3)g.fillRect(0,y,w,1)},5,5);
+ for(let i=0;i<5;i++){const a=i/5*Math.PI*2;const lg=Grp(0,0,0,a,ch);RB(-1.8,1.8,5,9,0,29,1.2,cmet,lg);const w=Cy(0,30,0,6,3,cm,null,14,lg);w.rotation.z=Math.PI/2;w.position.y=3;RB(-2,2,6,9,27,31,.8,cmet,lg)}
  Lathe(0,7,0,[[0,0],[5,0],[5,2],[2.6,4],[2.6,36],[0,36]],cmet,20,ch);
- RB(-25,25,44,52,-22,23,4,cm,ch,3);RB(-23,23,51,54,-20,21,3,M(0x26262a,{roughness:1}),ch,3);
- RB(-3,3,46,66,22,26,1,cmet,ch);
- const back=Grp(0,0,27,0,ch);back.rotation.x=-.12;RB(-23,23,58,118,-2,2,5,M(0x1b1b1d,{roughness:.6}),back,3);
- const meshB=new THREE.MeshStandardMaterial({color:0x222226,transparent:true,opacity:.78,roughness:.9});RB(-21,21,60,116,-2.4,-1.6,4,meshB,back,3);
- RB(-15,15,70,84,-3.2,-1.8,3,M(0x2a2a2c),back,3);
- [-27,27].forEach(x=>{RB(x-1.8,x+1.8,52,70,4,8,1,cmet,ch);RB(x-3.5,x+3.5,70,73,-8,16,1.4,cm,ch)})}
+ RB(-11,11,41,45,-12,13,1.5,cmet,ch);
+ RB(-25,25,45,52,-19,22,4,cm,ch,3);RB(-23,23,51.4,53.6,-17,20.5,3,M(0xffffff,{map:seatT,roughness:1}),ch,3);
+ {const wf=Cy(0,0,-25,25,4.2,cm,null,18,ch);wf.rotation.z=Math.PI/2;wf.position.set(0,49,-19)}
+ RB(-4,4,44,60,19,25,1.5,cmet,ch);
+ const back=Grp(0,58,25,0,ch);back.rotation.x=.12;
+ const meshB=new THREE.MeshStandardMaterial({color:0xffffff,map:meshT,transparent:true,opacity:.86,roughness:.9});
+ const seg=(y0,h,rx,dz)=>{const s=Grp(0,y0,dz,0,back);s.rotation.x=rx;
+  RB(-24,-21,0,h,-1.6,1.6,1.2,fr,s,2);RB(21,24,0,h,-1.6,1.6,1.2,fr,s,2);RB(-21,21,0,h,-.35,.35,.3,meshB,s,1);return s};
+ const lo=seg(2,26,-.1,0),up=seg(27.5,36,.1,-.2);
+ RB(-24,24,0,3,-1.8,1.8,1.4,fr,lo,2);RB(-25,25,33,36.5,-2.2,2,1.6,fr,up,2);
+ RB(-14,14,7,17,-1.6,-.5,3,M(0x2b2b2e,{roughness:.7}),lo,2);RB(-4,4,0,24,1.6,4.5,1.6,fr,lo,2);
+ [-27,27].forEach(x=>{RB(x-1.8,x+1.8,50,68,6,10,1,cmet,ch);RB(x-1.4,x+1.4,44,52,4,10,.8,cmet,ch);RB(x-4,x+4,68,71.5,-9,17,1.6,cm,ch,2);RB(x-3.4,x+3.4,71.3,72,-8,16,1.2,M(0x26262a,{roughness:1}),ch,1)})}
 // LACK shelf brun noir 110x26 at 157 + books, pothos, 2 frames above
 RB(25,135,157,162,0,26,.8,bnV);
 const bk=[C.olive,0xEDE5D3,C.black,0xB5562E,C.jaune,0x6b5a48];for(let i=0;i<10;i++){const hh=18+rnd()*7;RB(30+i*3.6,33.3+i*3.6,162,162+hh,4,22,.4,M(bk[i%6],{roughness:.8}),null,1)}
 RB(68,90,162,165,6,22,.6,M(0x161616));RB(70,88,165,167,7,21,.6,M(0xEDE5D3));
 Lathe(115,162,13,[[0,0],[5.5,0],[7,12],[6.4,12],[5,1],[0,1]],M(0xC56B45,{roughness:.8}),20);
-for(let i=0;i<12;i++){const a=rnd()*7;S(115+Math.cos(a)*6,174+rnd()*6,13+Math.sin(a)*5,3.2,M(i%2?C.green2:C.green,{roughness:.7}),1,.35,1.2)}
+for(let i=0;i<24;i++)rnd();pothos(115,173,13,[[-7,14,34],[5,15,46],[13,13,22]]);
 [[40,70,4],[90,120,5]].forEach(([a,b,i])=>{RB(a,b,176,216,0,2.5,.5,frM);B(a+2.5,b-2.5,178.5,213.5,2.5,2.7,M(0xffffff,{map:poster(i),roughness:.7}))});
 R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
 // laundry basket SALUDING (bamboo) under left of desk + FNISS bin
@@ -327,7 +346,7 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
 // ---------- commode 6 tiroirs 120x40x76 (dark oak, black legs) + soundbar + decor ----------
 {const Z0=199,Z1=319,X0=320,X1=360;const cmd=M(0xffffff,{map:oakT,roughness:.55}),cmd2=M(0xffffff,{map:oakT2,roughness:.5});
  [[X0+3,Z0+3],[X0+3,Z1-3],[X1-3,Z0+3],[X1-3,Z1-3],[X0+3,(Z0+Z1)/2],[X1-3,(Z0+Z1)/2]].forEach(p=>{const l=Lathe(p[0],0,p[1],[[0,0],[1.1,0],[1.6,8],[0,8]],metalBlk,12)});
- RB(X0,X1,8,76,Z0,Z1,.8,cmd,null,2);
+ RB(X0,X1,8,76,Z0,Z1,.8,cmd,null,2);B(X0-.2,X0+.05,9,75.6,Z0+.6,Z1-.6,M(0x0d0a08,{roughness:1}));
  for(let c=0;c<2;c++)for(let r=0;r<3;r++){const z0=Z0+1.2+c*59.4,y0=10+r*21.8;RB(X0-.8,X0+.6,y0,y0+20.8,z0,z0+58.2,.6,cmd2,null,1);RB(X0-2.4,X0-.8,y0+13.6,y0+15.2,z0+17,z0+41,.6,metalBlk,null,1);
   [z0+18,z0+40].forEach(zz=>B(X0-2,X0-.8,y0+13.8,y0+15,zz-.6,zz+.6,metalBlk))}
  // soundbar Ultimea Apollo S40 (front) + FADO (back right) + tray, candles, diffuser, books
@@ -356,21 +375,21 @@ const monsteraLeafT=T(256,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.mov
  g.globalCompositeOperation='destination-out';g.lineWidth=7;g.lineCap='round';for(let k=0;k<7;k++){const a=-1.1+k*.37;[1,-1].forEach(sd=>{g.beginPath();const x0=128+sd*Math.cos(a)*54,y0=140+Math.sin(a)*54;g.moveTo(x0,y0);g.lineTo(128+sd*Math.cos(a)*140,140+Math.sin(a)*140);g.stroke()})}
  for(let k=0;k<4;k++){[1,-1].forEach(sd=>{g.beginPath();g.ellipse(128+sd*(30+k*4),110+k*28,6,3.5,0,0,7);g.fill()})}
  g.globalCompositeOperation='source-over';g.strokeStyle='rgba(170,200,130,.7)';g.lineWidth=3;g.beginPath();g.moveTo(128,246);g.lineTo(128,32);g.stroke()});
-const leafPlane=(w,h,t,p)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:t,alphaTest:.5,side:THREE.DoubleSide,roughness:.55}));m.castShadow=false;m.receiveShadow=true;m.userData.noTop=true;(p||sc).add(m);return m};
+
 // ---------- plants: ficus lyrata (corner), monstera (window right), plant spots ----------
-{const potM=M(0xC9C2B6,{roughness:.85});Lathe(336,0,340,[[0,0],[13,0],[16,32],[15.2,32],[12.4,2],[0,2]],potM,28);Cy(336,340,30,31,14.8,M(0x3b2a1e));
+{const potM=M(0xC9C2B6,{roughness:.85});Lathe(336,0,340,[[0,0],[12,0],[13,1.5],[15.6,30],[16.4,30.4],[16.4,32],[15.2,32],[12.4,2],[0,2]],potM,32);Cy(336,340,30,31,14.8,soilM);
  const tr=new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,30,340),new THREE.Vector3(331,80,343),new THREE.Vector3(337,130,338)),16,1.6,8),M(0x5a3d22,{roughness:.9}));add(tr);
  const brM=M(0x5a3d22,{roughness:.9});const tips=[];for(let b=0;b<5;b++){const a=b*1.3+.4,ht=130+b*14;const e=new THREE.Vector3(336+Math.cos(a)*16,ht+16,340+Math.sin(a)*13);add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,95+b*12,340),new THREE.Vector3(336+Math.cos(a)*6,ht,340+Math.sin(a)*5),e),10,.7,6),brM));tips.push([e,a])}
  for(let i=0;i<72;i++){const[e,a0]=tips[i%5];const t=rnd(),a=a0+(rnd()-.5)*1.6,r=4+rnd()*14;const px=336+(e.x-336)*(.4+t*.6)+Math.cos(a)*r*.5,py=95+(e.y-95)*(.35+t*.65)+rnd()*10,pz=340+(e.z-340)*(.4+t*.6)+Math.sin(a)*r*.4;
   const g=Grp(px,py,pz,-a+Math.PI/2);g.rotation.x=-.9+rnd()*.7;g.rotation.z=(rnd()-.5)*.6;const lf=leafPlane(17+rnd()*6,27+rnd()*8,ficusLeafT,g);lf.position.y=12}
  // monstera at window right (x 226, z 336)
- Lathe(226,0,336,[[0,0],[10,0],[12,24],[11.4,24],[9.6,1.5],[0,1.5]],M(0xC56B45,{roughness:.8}),24);Cy(226,336,22,23,11.2,M(0x3b2a1e));
+ Lathe(226,0,336,[[0,0],[10,0],[11.6,20],[12.7,20.3],[12.9,24],[11.5,24],[11.3,21],[9.6,1.5],[0,1.5]],M(0xC56B45,{roughness:.8}),24);Cy(226,336,22,23,11.2,soilM);
  for(let i=0;i<9;i++){const a=i/9*Math.PI*2+rnd()*.4,len=40+rnd()*45;const tip=new THREE.Vector3(226+Math.cos(a)*len*.45,22+len*.9,336+Math.sin(a)*len*.35);
   add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(226,22,336),new THREE.Vector3(226+Math.cos(a)*6,22+len*.6,336+Math.sin(a)*4),tip),10,.55,6),M(0x3d6b31)));
   const g=Grp(tip.x,tip.y,tip.z,-a+Math.PI/2);g.rotation.x=-1.05+rnd()*.3;const s=26+rnd()*10;const lf=leafPlane(s,s,monsteraLeafT,g);lf.position.y=s*.42}}
 B(352,360,8,14,300,310,M(C.black,{metalness:.6}));Cy(354,305,14,20,3,M(C.black,{metalness:.6}));
 // windowsill pothos
-Lathe(150,90,368,[[0,0],[5,0],[6.4,10],[5.8,10],[4.4,1],[0,1]],M(0xEDE5D3,{roughness:.7}),18);for(let i=0;i<8;i++)S(150+Math.sin(i)*4,101+rnd()*5,368+Math.cos(i)*3,2.8,M(C.green2),1,.4,1);
+Lathe(150,90,368,[[0,0],[5,0],[6.4,10],[5.8,10],[4.4,1],[0,1]],M(0xEDE5D3,{roughness:.7}),18);for(let i=0;i<8;i++)rnd();pothos(150,100,368,[[-9,-9,26],[8,-10,18],[-14,-2,10]]);
 
 // ---------- candles (flicker in cosy mode) ----------
 R.flames=[];const candle=(x,y,z,h,r)=>{Cy(x,z,y,y+h,r||2.6,M(0xF3EBDD,{roughness:.9}),null,20);const f=noShadow(S(x,y+h+1.6,z,1.1,glow(0x000000,1),1,1.8,1));R.flames.push(f);const hl=noShadow(P(14,14,glow(0x000000,1),x,y+h+2,z,0));hl.material.map=softT;hl.userData.bb=1;R.flames.push(hl)};

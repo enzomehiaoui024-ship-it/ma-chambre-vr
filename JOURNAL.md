@@ -35,3 +35,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - VR : 0 erreur, 346 lots, ~155 k triangles.
 - Scores : meubles 7 → 8, autres inchangés → **47 → 48/70**. Images avant/après : `evolution/2026-11-19/`, page `evolution.html`.
 - Ensuite : ombres douces des lampes, ombre entre les tiroirs, chaise Sihoo.
+
+## 2026-11-19 — Séance 2 : chaise, pothos, commode, pots
+- La grille accepte maintenant les demi-points (les gros critères montent par petites marches).
+- Chaise Sihoo Doro C300 : dossier filet semi-transparent en deux parties (courbe lombaire), cadre, assise « waterfall », roulettes, accoudoirs 3D. Inclinaison du dossier corrigée (elle penchait vers l'avant).
+- Pothos (étagère + fenêtre) : texture de feuille en cœur panachée, 14 feuilles + tiges retombantes (fonction `pothos()` réutilisable pour toute la maison).
+- Commode : plan sombre derrière les façades → ombres entre tiroirs. Pots : texture de terre, rebords.
+- VR : 0 erreur, 354 lots, ~146 k triangles.
+- Scores : meubles 8 → 8,5 → **48 → 48,5/70**. Outil ajouté : `tools/evo_images.py`.
