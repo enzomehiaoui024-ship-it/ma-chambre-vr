@@ -21,8 +21,11 @@ uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal
 uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${NPL}],uPC[${NPL}];uniform float uPD[${NPL}],uPDec[${NPL}];
 vec3 lin(vec3 c){return pow(c,vec3(2.2));}
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
-float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float s=0.;float tx=1./2048.;
-for(int i=-1;i<=1;i++)for(int j=-1;j<=1;j++){float d=unpack(texture2D(uSM,p.xy+vec2(float(i),float(j))*tx*1.6));s+=(p.z-.0012>d)?0.:1.;}return s/9.;}
+float ign(){return fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))));}
+float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float tx=1./2048.;float rot=ign()*6.2832;
+float bs=0.,bn=0.;for(int i=0;i<8;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/8.)*7.;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));if(p.z-.0012>d){bs+=d;bn+=1.;}}
+if(bn<.5)return 1.;float dist=(p.z-bs/bn)*1100.;float pen=clamp(dist*.11,1.3,15.);
+float s=0.;for(int i=0;i<16;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/16.)*pen;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));s+=(p.z-.0012>d)?0.:1.;}return s/16.;}
 float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.;float r=9./420.;
 for(int i=0;i<7;i++){float a=float(i)*2.39996;float rr=r*sqrt((float(i)+.5)/7.);float d=unpack(texture2D(uTM,p.xy+vec2(cos(a),sin(a))*rr));float gap=(p.z-d)*300.;if(gap>1.5)o+=exp(-gap/85.);}return 1.-.7*o/7.;}
 void main(){vec3 base=uCol;vec2 uv=uFract==1?fract(vU*uRep):vU*uRep;vec4 tx=vec4(1.);if(uHasMap==1){tx=texture2D(uMap,uv);base*=tx.rgb;}

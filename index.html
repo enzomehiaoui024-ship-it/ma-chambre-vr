@@ -60,7 +60,7 @@ const C=[co(He[0]),co(He[1]),co(He[2])];
 const vert=(p)=>{const q=[0,1,2].map(i=>Math.max(-In[i],Math.min(In[i],p[i])));let n=[p[0]-q[0],p[1]-q[1],p[2]-q[2]];let l=Math.hypot(...n);if(l<1e-9)return null;n=n.map(v=>v/l);return{p:[q[0]+n[0]*r,q[1]+n[1]*r,q[2]+n[2]*r],n}};
 const faces=[[0,1,1,2],[0,-1,1,2],[1,1,0,2],[1,-1,0,2],[2,1,0,1],[2,-1,0,1]];
 for(const[ax,sg,ua,va]of faces){const A=C[ua],B=C[va];for(let i=0;i<A.length-1;i++)for(let j=0;j<B.length-1;j++){const pt=(a,b)=>{const p=[0,0,0];p[ax]=sg*He[ax];p[ua]=a;p[va]=b;const v=vert(p);if(!v){const n=[0,0,0];n[ax]=sg;return{p,n}}return v};
- const q=[pt(A[i],B[j]),pt(A[i+1],B[j]),pt(A[i+1],B[j+1]),pt(A[i],B[j+1])];const uv=[[i/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),(j+1)/(B.length-1)],[i/(A.length-1),(j+1)/(B.length-1)]];
+ const q=[pt(A[i],B[j]),pt(A[i+1],B[j]),pt(A[i+1],B[j+1]),pt(A[i],B[j+1])];const a0=A[0],aL=A[A.length-1]-a0,b0=B[0],bL=B[B.length-1]-b0,U_=x=>(x-a0)/aL,V_=y=>(y-b0)/bL;const uv=[[U_(A[i]),V_(B[j])],[U_(A[i+1]),V_(B[j])],[U_(A[i+1]),V_(B[j+1])],[U_(A[i]),V_(B[j+1])]];
  [0,1,2,0,2,3].forEach(k=>{P.push(...q[k].p);N.push(...q[k].n);U.push(...uv[k])})}}return fix(G(P,N,U))}
 function LatheGeometry(pts,seg){seg=seg||32;const P=[],N=[],U=[];const n=pts.length;const nr=[];for(let i=0;i<n;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(n-1,i+1)];let tx=b[0]-a[0],ty=b[1]-a[1];const l=Math.hypot(tx,ty)||1;nr.push([ty/l,-tx/l])}
 for(let i=0;i<n-1;i++)for(let k=0;k<seg;k++){const a0=k/seg*2*Math.PI,a1=(k+1)/seg*2*Math.PI;const V=(pi,a)=>{const[r,y]=pts[pi];return[r*Math.cos(a),y,r*Math.sin(a)]},Nn=(pi,a)=>{const[nx,ny]=nr[pi];return[nx*Math.cos(a),ny,nx*Math.sin(a)]};
@@ -171,7 +171,7 @@ RB(176,184,150,153,374,376,1,chrome);
 
 // ---------- rug berber 120x170 (cream, black diamonds, fringe) ----------
 const rugT2=T(512,512,(g,w,h)=>{g.fillStyle='#ECE4D3';g.fillRect(0,0,w,h);for(let i=0;i<4000;i++){g.fillStyle=`rgba(${190+rnd()*40|0},${180+rnd()*40|0},${160+rnd()*30|0},.35)`;g.fillRect(rnd()*w,rnd()*h,2,2)}
- g.strokeStyle='#1d1b19';g.lineWidth=4;for(let i=-8;i<16;i++){g.beginPath();g.moveTo(i*64,0);g.lineTo(i*64+h,h);g.stroke();g.beginPath();g.moveTo(i*64,h);g.lineTo(i*64+h,0);g.stroke()}});
+ g.strokeStyle='#1d1b19';g.lineWidth=6;g.lineJoin='round';for(let i=-6;i<12;i++){g.beginPath();g.moveTo(i*96,0);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.sin(i*3+k)*2.5,k*32);g.stroke();g.beginPath();g.moveTo(i*96,h);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.cos(i*2+k)*2.5,h-k*32);g.stroke()}});
 RB(200,320,0,1.6,158,328,.8,M(0xffffff,{map:rugT2,roughness:1}));
 {const frT=T(8,64,(g,w,h)=>{g.fillStyle='#E6DCC8';g.fillRect(0,0,w,h);g.fillStyle='#b8ad97';for(let y=0;y<h;y+=2)g.fillRect(0,y,w,1)},1,40);[[197,200],[320,323]].forEach(([a,b])=>B(a,b,0,.5,159,327,M(0xffffff,{map:frT,roughness:1})))}
 
@@ -189,9 +189,13 @@ RB(58,BX1+2,43,51,BZ0+1,BZ1-1,3.5,duv,null,3);
 RB(58,BX1+2,25,47,BZ0-.6,BZ0+3.2,1.6,duv);RB(58,BX1+2,25,47,BZ1-3.2,BZ1+.6,1.6,duv);RB(BX1-1,BX1+3.2,25,47,BZ0+1,BZ1-1,1.6,duv);
 RB(52,70,45,55,BZ0+1,BZ1-1,4.5,M(0xffffff,{map:oliveT,roughness:1}),null,3);
 // plaid SÖRBYSKOGEN folded at foot
-const plaidT=T(512,256,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);for(let i=0;i<w;i+=3){g.fillStyle='rgba(120,110,95,.13)';g.fillRect(i,0,1,h)}for(let j=0;j<h;j+=4){g.fillStyle='rgba(255,255,255,.18)';g.fillRect(0,j,w,1)}
- g.strokeStyle='#22201d';g.lineWidth=11;g.lineCap='round';g.beginPath();g.moveTo(40,200);g.bezierCurveTo(70,40,190,30,200,110);g.bezierCurveTo(210,190,120,190,140,120);g.bezierCurveTo(160,60,300,40,330,120);g.bezierCurveTo(350,180,420,200,470,80);g.stroke();
- g.lineWidth=6;g.beginPath();g.arc(230,120,26,0.4,5.6);g.stroke()},1,1);
+const plaidT=T(256,256,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);for(let i=0;i<w;i+=2){g.fillStyle='rgba(120,110,95,.12)';g.fillRect(i,0,1,h)}for(let j=0;j<h;j+=3){g.fillStyle='rgba(255,255,255,.16)';g.fillRect(0,j,w,1)}
+ g.strokeStyle='#26231f';g.lineCap='round';
+ for(const ox of[-w,0,w])for(const oy of[-h,0,h]){g.save();g.translate(ox,oy);g.lineWidth=3.2;
+  g.beginPath();g.moveTo(10,60);g.bezierCurveTo(50,10,90,110,130,60);g.bezierCurveTo(170,10,210,110,250,60);g.stroke();
+  g.beginPath();g.moveTo(20,190);g.bezierCurveTo(40,140,100,150,96,196);g.bezierCurveTo(92,240,150,250,170,200);g.stroke();
+  g.beginPath();g.arc(200,150,18,0,6.29);g.stroke();g.beginPath();g.arc(60,120,7,0,6.29);g.stroke();
+  g.lineWidth=2;g.beginPath();g.moveTo(140,110);g.lineTo(230,95);g.stroke();g.beginPath();g.moveTo(180,230);g.bezierCurveTo(200,215,230,250,250,232);g.stroke();g.restore()}},3,1.4);
 RB(158,192,51,54.5,BZ0+2,BZ1-2,1.4,M(0xffffff,{map:plaidT,roughness:1}));RB(BX1-.5,BX1+3.5,30,54.5,BZ0+2,BZ1-2,1.4,M(0xEFE8DA,{roughness:1}));{const frg=T(64,16,(g,w,h)=>{g.clearRect(0,0,w,h);g.fillStyle='#E6DDCB';for(let x=0;x<w;x+=4)g.fillRect(x,0,2,h)},20,1);const fm=new THREE.Mesh(new THREE.PlaneGeometry(BZ1-BZ0-6,6),new THREE.MeshStandardMaterial({map:frg,alphaTest:.5,side:THREE.DoubleSide,roughness:1}));fm.position.set(BX1+3.6,27,BC);fm.rotation.y=Math.PI/2;fm.castShadow=false;sc.add(fm)}
 // pillows SMÅSPORRE + cushions
 const pil=M(0xFAF7F1,{roughness:1});[[BZ0+8,BC-3],[BC+3,BZ1-8]].forEach(([a,b])=>{const m=RB(8,52,43,60,a,b,7,pil,null,3);m.rotation.z=-.12});
@@ -448,8 +452,11 @@ uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal
 uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${NPL}],uPC[${NPL}];uniform float uPD[${NPL}],uPDec[${NPL}];
 vec3 lin(vec3 c){return pow(c,vec3(2.2));}
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
-float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float s=0.;float tx=1./2048.;
-for(int i=-1;i<=1;i++)for(int j=-1;j<=1;j++){float d=unpack(texture2D(uSM,p.xy+vec2(float(i),float(j))*tx*1.6));s+=(p.z-.0012>d)?0.:1.;}return s/9.;}
+float ign(){return fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))));}
+float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float tx=1./2048.;float rot=ign()*6.2832;
+float bs=0.,bn=0.;for(int i=0;i<8;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/8.)*7.;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));if(p.z-.0012>d){bs+=d;bn+=1.;}}
+if(bn<.5)return 1.;float dist=(p.z-bs/bn)*1100.;float pen=clamp(dist*.11,1.3,15.);
+float s=0.;for(int i=0;i<16;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/16.)*pen;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));s+=(p.z-.0012>d)?0.:1.;}return s/16.;}
 float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.;float r=9./420.;
 for(int i=0;i<7;i++){float a=float(i)*2.39996;float rr=r*sqrt((float(i)+.5)/7.);float d=unpack(texture2D(uTM,p.xy+vec2(cos(a),sin(a))*rr));float gap=(p.z-d)*300.;if(gap>1.5)o+=exp(-gap/85.);}return 1.-.7*o/7.;}
 void main(){vec3 base=uCol;vec2 uv=uFract==1?fract(vU*uRep):vU*uRep;vec4 tx=vec4(1.);if(uHasMap==1){tx=texture2D(uMap,uv);base*=tx.rgb;}

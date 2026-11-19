@@ -98,7 +98,7 @@ RB(176,184,150,153,374,376,1,chrome);
 
 // ---------- rug berber 120x170 (cream, black diamonds, fringe) ----------
 const rugT2=T(512,512,(g,w,h)=>{g.fillStyle='#ECE4D3';g.fillRect(0,0,w,h);for(let i=0;i<4000;i++){g.fillStyle=`rgba(${190+rnd()*40|0},${180+rnd()*40|0},${160+rnd()*30|0},.35)`;g.fillRect(rnd()*w,rnd()*h,2,2)}
- g.strokeStyle='#1d1b19';g.lineWidth=4;for(let i=-8;i<16;i++){g.beginPath();g.moveTo(i*64,0);g.lineTo(i*64+h,h);g.stroke();g.beginPath();g.moveTo(i*64,h);g.lineTo(i*64+h,0);g.stroke()}});
+ g.strokeStyle='#1d1b19';g.lineWidth=6;g.lineJoin='round';for(let i=-6;i<12;i++){g.beginPath();g.moveTo(i*96,0);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.sin(i*3+k)*2.5,k*32);g.stroke();g.beginPath();g.moveTo(i*96,h);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.cos(i*2+k)*2.5,h-k*32);g.stroke()}});
 RB(200,320,0,1.6,158,328,.8,M(0xffffff,{map:rugT2,roughness:1}));
 {const frT=T(8,64,(g,w,h)=>{g.fillStyle='#E6DCC8';g.fillRect(0,0,w,h);g.fillStyle='#b8ad97';for(let y=0;y<h;y+=2)g.fillRect(0,y,w,1)},1,40);[[197,200],[320,323]].forEach(([a,b])=>B(a,b,0,.5,159,327,M(0xffffff,{map:frT,roughness:1})))}
 
@@ -116,9 +116,13 @@ RB(58,BX1+2,43,51,BZ0+1,BZ1-1,3.5,duv,null,3);
 RB(58,BX1+2,25,47,BZ0-.6,BZ0+3.2,1.6,duv);RB(58,BX1+2,25,47,BZ1-3.2,BZ1+.6,1.6,duv);RB(BX1-1,BX1+3.2,25,47,BZ0+1,BZ1-1,1.6,duv);
 RB(52,70,45,55,BZ0+1,BZ1-1,4.5,M(0xffffff,{map:oliveT,roughness:1}),null,3);
 // plaid SÖRBYSKOGEN folded at foot
-const plaidT=T(512,256,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);for(let i=0;i<w;i+=3){g.fillStyle='rgba(120,110,95,.13)';g.fillRect(i,0,1,h)}for(let j=0;j<h;j+=4){g.fillStyle='rgba(255,255,255,.18)';g.fillRect(0,j,w,1)}
- g.strokeStyle='#22201d';g.lineWidth=11;g.lineCap='round';g.beginPath();g.moveTo(40,200);g.bezierCurveTo(70,40,190,30,200,110);g.bezierCurveTo(210,190,120,190,140,120);g.bezierCurveTo(160,60,300,40,330,120);g.bezierCurveTo(350,180,420,200,470,80);g.stroke();
- g.lineWidth=6;g.beginPath();g.arc(230,120,26,0.4,5.6);g.stroke()},1,1);
+const plaidT=T(256,256,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);for(let i=0;i<w;i+=2){g.fillStyle='rgba(120,110,95,.12)';g.fillRect(i,0,1,h)}for(let j=0;j<h;j+=3){g.fillStyle='rgba(255,255,255,.16)';g.fillRect(0,j,w,1)}
+ g.strokeStyle='#26231f';g.lineCap='round';
+ for(const ox of[-w,0,w])for(const oy of[-h,0,h]){g.save();g.translate(ox,oy);g.lineWidth=3.2;
+  g.beginPath();g.moveTo(10,60);g.bezierCurveTo(50,10,90,110,130,60);g.bezierCurveTo(170,10,210,110,250,60);g.stroke();
+  g.beginPath();g.moveTo(20,190);g.bezierCurveTo(40,140,100,150,96,196);g.bezierCurveTo(92,240,150,250,170,200);g.stroke();
+  g.beginPath();g.arc(200,150,18,0,6.29);g.stroke();g.beginPath();g.arc(60,120,7,0,6.29);g.stroke();
+  g.lineWidth=2;g.beginPath();g.moveTo(140,110);g.lineTo(230,95);g.stroke();g.beginPath();g.moveTo(180,230);g.bezierCurveTo(200,215,230,250,250,232);g.stroke();g.restore()}},3,1.4);
 RB(158,192,51,54.5,BZ0+2,BZ1-2,1.4,M(0xffffff,{map:plaidT,roughness:1}));RB(BX1-.5,BX1+3.5,30,54.5,BZ0+2,BZ1-2,1.4,M(0xEFE8DA,{roughness:1}));{const frg=T(64,16,(g,w,h)=>{g.clearRect(0,0,w,h);g.fillStyle='#E6DDCB';for(let x=0;x<w;x+=4)g.fillRect(x,0,2,h)},20,1);const fm=new THREE.Mesh(new THREE.PlaneGeometry(BZ1-BZ0-6,6),new THREE.MeshStandardMaterial({map:frg,alphaTest:.5,side:THREE.DoubleSide,roughness:1}));fm.position.set(BX1+3.6,27,BC);fm.rotation.y=Math.PI/2;fm.castShadow=false;sc.add(fm)}
 // pillows SMÅSPORRE + cushions
 const pil=M(0xFAF7F1,{roughness:1});[[BZ0+8,BC-3],[BC+3,BZ1-8]].forEach(([a,b])=>{const m=RB(8,52,43,60,a,b,7,pil,null,3);m.rotation.z=-.12});

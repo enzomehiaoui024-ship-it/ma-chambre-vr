@@ -49,3 +49,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Mode assis (+45 cm de hauteur de vue), compteur images/s dans le menu (point vert ≥ 68, jaune ≥ 55, rouge en dessous).
 - Testé avec le casque simulé (xrmock : stick gauche immobile, inclinaison de manette `__ctlPitch`). 0 erreur.
 - Scores : VR 6 → 7 → **48,5 → 49,5/70**.
+
+## 2026-11-19 — Séance 4 : UV des boîtes arrondies, ombres douces, tapis
+- **Bug** `RoundedBoxGeometry` (shim2.js) : les UV suivaient l'indice des subdivisions, donc la partie plate d'une face n'utilisait qu'une petite tranche de la texture (motifs énormes et étirés). UV maintenant proportionnelles à la position → toutes les textures RB sont à la bonne échelle (tapis, plaid, bois…).
+- Ombres du soleil (gl2) : PCSS léger (recherche de bloqueurs 8 points + filtre 16 points en spirale tournée par pixel) → pénombre qui grandit avec la distance.
+- Plaid : motif de fines lignes répété. Tapis berbère : losanges un peu irréguliers, plus grands.
+- VR : 0 erreur, ~146 k triangles (la VR garde son filtre 4 points, plus rapide).
+- Scores : meubles 8,5 → 9, éclairage 8 → 8,5 → **49,5 → 50,5/70**.

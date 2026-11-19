@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 4 — textures corrigées, ombres douces, tapis berbère",
+    avant: 49.5, apres: 50.5,
+    scores: { meubles: [8.5, 9], eclairage: [8, 8.5], coherence: [7, 7], liste: [7, 7], vr: [7, 7], plan: [7, 7], video: [5, 5] },
+    changements: [
+      "Bug trouvé et corrigé : sur les meubles à bords arrondis, les motifs étaient étirés. Le tapis berbère montre maintenant ses vrais losanges, le bois de la commode a un grain fin",
+      "Plaid SÖRBYSKOGEN : fines lignes noires dessinées sur fond crème, comme le vrai, au lieu d'un gros trait",
+      "Ombres du soleil douces : nettes au pied des meubles et floues quand l'objet est loin (comme dans la réalité)",
+      "Tapis : losanges tracés à la main, un peu irréguliers"
+    ],
+    images: [
+      ["tapis-ombres", "Tapis berbère et ombres"],
+      ["lit-plaid", "Plaid au pied du lit"],
+      ["nuit-cosy-plaid4", "Nuit cosy"],
+      ["coucher-soleil", "Coucher de soleil"]
+    ],
+    ensuite: "Revérifier les prix de la liste, puis le lit (coutures, oreillers moelleux)."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 3 — VR : téléportation, mode assis, fluidité",
     avant: 48.5, apres: 49.5,
     scores: { meubles: [8.5, 8.5], eclairage: [8, 8], coherence: [7, 7], liste: [7, 7], vr: [6, 7], plan: [7, 7], video: [5, 5] },

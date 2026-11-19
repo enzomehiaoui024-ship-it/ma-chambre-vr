@@ -36,7 +36,7 @@ const C=[co(He[0]),co(He[1]),co(He[2])];
 const vert=(p)=>{const q=[0,1,2].map(i=>Math.max(-In[i],Math.min(In[i],p[i])));let n=[p[0]-q[0],p[1]-q[1],p[2]-q[2]];let l=Math.hypot(...n);if(l<1e-9)return null;n=n.map(v=>v/l);return{p:[q[0]+n[0]*r,q[1]+n[1]*r,q[2]+n[2]*r],n}};
 const faces=[[0,1,1,2],[0,-1,1,2],[1,1,0,2],[1,-1,0,2],[2,1,0,1],[2,-1,0,1]];
 for(const[ax,sg,ua,va]of faces){const A=C[ua],B=C[va];for(let i=0;i<A.length-1;i++)for(let j=0;j<B.length-1;j++){const pt=(a,b)=>{const p=[0,0,0];p[ax]=sg*He[ax];p[ua]=a;p[va]=b;const v=vert(p);if(!v){const n=[0,0,0];n[ax]=sg;return{p,n}}return v};
- const q=[pt(A[i],B[j]),pt(A[i+1],B[j]),pt(A[i+1],B[j+1]),pt(A[i],B[j+1])];const uv=[[i/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),j/(B.length-1)],[(i+1)/(A.length-1),(j+1)/(B.length-1)],[i/(A.length-1),(j+1)/(B.length-1)]];
+ const q=[pt(A[i],B[j]),pt(A[i+1],B[j]),pt(A[i+1],B[j+1]),pt(A[i],B[j+1])];const a0=A[0],aL=A[A.length-1]-a0,b0=B[0],bL=B[B.length-1]-b0,U_=x=>(x-a0)/aL,V_=y=>(y-b0)/bL;const uv=[[U_(A[i]),V_(B[j])],[U_(A[i+1]),V_(B[j])],[U_(A[i+1]),V_(B[j+1])],[U_(A[i]),V_(B[j+1])]];
  [0,1,2,0,2,3].forEach(k=>{P.push(...q[k].p);N.push(...q[k].n);U.push(...uv[k])})}}return fix(G(P,N,U))}
 function LatheGeometry(pts,seg){seg=seg||32;const P=[],N=[],U=[];const n=pts.length;const nr=[];for(let i=0;i<n;i++){const a=pts[Math.max(0,i-1)],b=pts[Math.min(n-1,i+1)];let tx=b[0]-a[0],ty=b[1]-a[1];const l=Math.hypot(tx,ty)||1;nr.push([ty/l,-tx/l])}
 for(let i=0;i<n-1;i++)for(let k=0;k<seg;k++){const a0=k/seg*2*Math.PI,a1=(k+1)/seg*2*Math.PI;const V=(pi,a)=>{const[r,y]=pts[pi];return[r*Math.cos(a),y,r*Math.sin(a)]},Nn=(pi,a)=>{const[nx,ny]=nr[pi];return[nx*Math.cos(a),ny,nx*Math.sin(a)]};

@@ -7,7 +7,8 @@
 - Plis du plaid et du drap (léger relief).
 
 ## Éclairage
-- Ombres douces des lampes (au moins le lampadaire et la FADO).
+- Ombres des lampes (cube map pour le lampadaire et la FADO) — le soleil a déjà des ombres douces.
+- Ombres douces aussi en VR si la fluidité le permet (mesurer d'abord).
 - Reflets légers sur le parquet et l'écran de TV.
 
 ## Liste d'achat
