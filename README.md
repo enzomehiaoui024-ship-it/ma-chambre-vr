@@ -37,3 +37,6 @@ Repère (cm) : x vers l'est (0–360), z vers le sud (0–360), y vers le haut (
 - Liste d'achat : artifact `1c516de1-9cab-47d0-b39a-d84ef1fe1eb8` (index.html = liste_achat.html)
 
 Voir `JOURNAL.md` (historique + scores) et `BACKLOG.md` (idées d'amélioration).
+
+## Évolution
+La page `evolution.html` montre chaque séance d'entraînement (avant / après, scores). Chaque séance ajoute une entrée en tête de `evolution/sessions.js` et ses images dans `evolution/<date>/avant_<nom>.jpg` / `apres_<nom>.jpg` (900 px max, JPEG 80).

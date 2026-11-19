@@ -1,10 +1,8 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Meubles 3D
-- Plaid SÖRBYSKOGEN : vrai motif et plis.
-- Vêtements du portant : formes de t-shirts/sweats (épaules, manches).
-- Lampe FORSÅ : bras articulés fidèles, abat-jour orienté vers le clavier.
-- Feuilles du ficus lyrata (forme de violon) et du monstera (découpes).
+- Plis du plaid et du drap (léger relief).
+- Pots de plantes : terre visible, texture céramique.
 - Tiroirs de la commode : légère ombre entre les façades.
 - Chaise Sihoo : courbure du dossier, appui-tête en option.
 

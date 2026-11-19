@@ -4,7 +4,7 @@ const VNL=8;
 const VVS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uM,uVP,uSL,uTL;uniform mat3 uNM;varying vec3 vW,vN;varying vec2 vU;varying vec4 vS,vT;
 void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=normalize(uNM*aN);vU=aU;vS=uSL*w;vT=uTL*(w+vec4(vN*5.,0.));gl_Position=uVP*w;}`;
 const VFS=`precision highp float;${PACK}varying vec3 vW,vN;varying vec2 vU;varying vec4 vS,vT;
-uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal,uExpo;uniform int uNL,uSpec,uBasic,uHasMap,uDbl,uFract,uSun;
+uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal,uExpo;uniform float uAT;uniform int uNL,uSpec,uBasic,uHasMap,uDbl,uFract,uSun;
 uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${VNL}],uPC[${VNL}];uniform float uPD[${VNL}],uPDec[${VNL}];
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
 float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float tx=1./2048.,s=0.;
@@ -12,7 +12,7 @@ s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(-tx,-tx))))?0.:1.;s+=(p.z-.0012>unp
 float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.,r=8./420.;
 for(int i=0;i<4;i++){float a=float(i)*1.5708+.4;float d=unpack(texture2D(uTM,p.xy+vec2(cos(a),sin(a))*r));float gap=(p.z-d)*300.;if(gap>1.5)o+=exp(-gap/85.);}return 1.-.7*o*.25;}
 void main(){vec2 uv=uFract==1?fract(vU*uRep):vU*uRep;vec4 tx=vec4(1.);vec3 base=uCol;if(uHasMap==1){tx=texture2D(uMap,uv);base*=uBasic==1?tx.rgb:pow(tx.rgb,vec3(2.2));}
-if(uBasic==1){gl_FragColor=vec4(base,uOp*tx.a);return;}
+if(uHasMap==1&&tx.a<uAT)discard;if(uBasic==1){gl_FragColor=vec4(base,uOp*tx.a);return;}
 vec3 n=normalize(vN);if(uDbl==1&&!gl_FrontFacing)n=-n;vec3 V=normalize(uCam-vW);
 float dx=min(vW.x,360.-vW.x),dz=min(vW.z,360.-vW.z),dw=min(dx,dz),dy=min(vW.y,250.-vW.y);float inR=step(-1.,vW.x)*step(vW.x,361.)*step(-1.,vW.z)*step(vW.z,361.);
 float aoc=1.-inR*(.32*(1.-smoothstep(0.,40.,dw))*(1.-smoothstep(0.,40.,dy))+.22*(1.-smoothstep(0.,45.,dx))*(1.-smoothstep(0.,45.,dz)));
@@ -43,7 +43,7 @@ function xf(m,x,y,z){return[m[0]*x+m[4]*y+m[8]*z+m[12],m[1]*x+m[5]*y+m[9]*z+m[13
 for(const[o,m]of all){if(o.userData&&(o.userData.dynamic))continue;const mt=o.material;
  if(dynamicSet.has(o)){dyn.push(o);continue}
  const isDynMat=dynamicSet.has(mt);const g=o.geometry,p=g.pos;let cx=0,cz=0;for(let i=0;i<p.length;i+=3){const w=xf(m,p[i],p[i+1],p[i+2]);cx+=w[0];cz+=w[2]}cx/=p.length/3;cz/=p.length/3;
- const big=p.length===18;const cell=big?'big'+Math.random():(Math.floor(cx/90)+','+Math.floor(cz/90));
+ let big=p.length===18;if(big){const W=[0,1,2,3,4,5].map(k=>xf(m,p[k*3],p[k*3+1],p[k*3+2]));const sp=Math.max(...[0,1,2].map(a=>Math.max(...W.map(q=>q[a]))-Math.min(...W.map(q=>q[a]))));if(sp<=150)big=false}const cell=big?'big'+Math.random():(Math.floor(cx/90)+','+Math.floor(cz/90));
  const key=(isDynMat?('D'+(mt.__id||(mt.__id=Math.random()))):mkey(mt))+'@'+cell;
  if(!groups.has(key))groups.set(key,{mt,objs:[],P:[],N:[],U:[]});const G=groups.get(key);G.objs.push(o);
  const nm=nmat(m);const tri=(a,b,c)=>{for(const k of[a,b,c]){const w=xf(m,p[k*3],p[k*3+1],p[k*3+2]);G.P.push(...w);const nx=g.nor[k*3],ny=g.nor[k*3+1],nz=g.nor[k*3+2];const N=[nm[0]*nx+nm[3]*ny+nm[6]*nz,nm[1]*nx+nm[4]*ny+nm[7]*nz,nm[2]*nx+nm[5]*ny+nm[8]*nz];const l=Math.hypot(...N)||1;G.N.push(N[0]/l,N[1]/l,N[2]/l);G.U.push(g.uv[k*2],g.uv[k*2+1])}};
@@ -83,7 +83,7 @@ api.drawView=function(VP,cam,viewport,clear){const U=PM.U;if(viewport)gl.viewpor
  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,SM.t);gl.uniform1i(U.uSM,1);gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,TM.t);gl.uniform1i(U.uTM,2);gl.uniform1i(U.uMap,0);
  let lk=null;const setL=ids=>{const k=ids.join(',');if(k===lk)return;lk=k;gl.uniform1i(U.uNL,ids.length);ids.forEach((id,i)=>{const p=frameLights[id];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],...p.c);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec)})};
  const setMat=mt=>{gl.uniform3f(U.uCol,...(mt.basic?[mt.color.r,mt.color.g,mt.color.b]:[lin(mt.color.r),lin(mt.color.g),lin(mt.color.b)]));const ei=mt.emissiveIntensity;gl.uniform3f(U.uEm,lin(mt.emissive.r)*ei,lin(mt.emissive.g)*ei,lin(mt.emissive.b)*ei);
-  gl.uniform1f(U.uOp,mt.opacity);gl.uniform1i(U.uBasic,mt.basic?1:0);gl.uniform1i(U.uDbl,mt.side===2?1:0);gl.uniform1f(U.uRough,mt.roughness);gl.uniform1f(U.uMetal,mt.metalness);gl.uniform1i(U.uSpec,mt.roughness<.75?1:0);
+  gl.uniform1f(U.uOp,mt.opacity);gl.uniform1i(U.uBasic,mt.basic?1:0);gl.uniform1i(U.uDbl,mt.side===2?1:0);gl.uniform1f(U.uRough,mt.roughness);gl.uniform1f(U.uAT,mt.alphaTest||0);gl.uniform1f(U.uMetal,mt.metalness);gl.uniform1i(U.uSpec,mt.roughness<.75?1:0);
   if(mt.map){const T=tex(mt.map);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,T.o);gl.uniform1i(U.uHasMap,1);gl.uniform1i(U.uFract,T.P2?0:1);gl.uniform2f(U.uRep,mt.map.repeat.x,mt.map.repeat.y)}else gl.uniform1i(U.uHasMap,0);
   if(mt.side===2)gl.disable(gl.CULL_FACE);else gl.enable(gl.CULL_FACE);
   if(mt.transparent){gl.enable(gl.BLEND);if(mt.blending===2)gl.blendFunc(gl.SRC_ALPHA,gl.ONE);else gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(mt.depthWrite&&mt.blending!==2)}else{gl.disable(gl.BLEND);gl.depthMask(true)}};

@@ -116,8 +116,10 @@ RB(58,BX1+2,43,51,BZ0+1,BZ1-1,3.5,duv,null,3);
 RB(58,BX1+2,25,47,BZ0-.6,BZ0+3.2,1.6,duv);RB(58,BX1+2,25,47,BZ1-3.2,BZ1+.6,1.6,duv);RB(BX1-1,BX1+3.2,25,47,BZ0+1,BZ1-1,1.6,duv);
 RB(52,70,45,55,BZ0+1,BZ1-1,4.5,M(0xffffff,{map:oliveT,roughness:1}),null,3);
 // plaid SÖRBYSKOGEN folded at foot
-const plaidT=T(256,128,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);g.strokeStyle='#22201d';g.lineWidth=7;g.beginPath();g.moveTo(40,100);g.bezierCurveTo(60,10,140,10,130,70);g.bezierCurveTo(120,110,190,110,200,40);g.stroke();for(let i=0;i<w;i+=3){g.fillStyle='rgba(120,110,95,.12)';g.fillRect(i,0,1,h)}});
-RB(158,192,51,54.5,BZ0+2,BZ1-2,1.4,M(0xffffff,{map:plaidT,roughness:1}));RB(BX1-.5,BX1+3.5,30,54.5,BZ0+2,BZ1-2,1.4,M(0xEFE8DA,{roughness:1}));
+const plaidT=T(512,256,(g,w,h)=>{g.fillStyle='#EFE8DA';g.fillRect(0,0,w,h);for(let i=0;i<w;i+=3){g.fillStyle='rgba(120,110,95,.13)';g.fillRect(i,0,1,h)}for(let j=0;j<h;j+=4){g.fillStyle='rgba(255,255,255,.18)';g.fillRect(0,j,w,1)}
+ g.strokeStyle='#22201d';g.lineWidth=11;g.lineCap='round';g.beginPath();g.moveTo(40,200);g.bezierCurveTo(70,40,190,30,200,110);g.bezierCurveTo(210,190,120,190,140,120);g.bezierCurveTo(160,60,300,40,330,120);g.bezierCurveTo(350,180,420,200,470,80);g.stroke();
+ g.lineWidth=6;g.beginPath();g.arc(230,120,26,0.4,5.6);g.stroke()},1,1);
+RB(158,192,51,54.5,BZ0+2,BZ1-2,1.4,M(0xffffff,{map:plaidT,roughness:1}));RB(BX1-.5,BX1+3.5,30,54.5,BZ0+2,BZ1-2,1.4,M(0xEFE8DA,{roughness:1}));{const frg=T(64,16,(g,w,h)=>{g.clearRect(0,0,w,h);g.fillStyle='#E6DDCB';for(let x=0;x<w;x+=4)g.fillRect(x,0,2,h)},20,1);const fm=new THREE.Mesh(new THREE.PlaneGeometry(BZ1-BZ0-6,6),new THREE.MeshStandardMaterial({map:frg,alphaTest:.5,side:THREE.DoubleSide,roughness:1}));fm.position.set(BX1+3.6,27,BC);fm.rotation.y=Math.PI/2;fm.castShadow=false;sc.add(fm)}
 // pillows SMÅSPORRE + cushions
 const pil=M(0xFAF7F1,{roughness:1});[[BZ0+8,BC-3],[BC+3,BZ1-8]].forEach(([a,b])=>{const m=RB(8,52,43,60,a,b,7,pil,null,3);m.rotation.z=-.12});
 const cush=(z,c)=>{const g=Grp(24,72,z,0);g.rotation.z=-.32;RB(-6,6,-21,21,-21,21,6,M(c,{roughness:1}),g,3);return g};cush(BC,0xDCCDB0);cush(BC-38,C.jaune);cush(BC+38,C.jaune);
@@ -167,10 +169,14 @@ R.screens.mon=noShadow(P(59.6,34.2,MB(0xffffff,{map:monT}),80,105.8,22.25));
 R.G.monGlow=[mkGlow(100,48,80,104,.8,0)];
 // desk lamp FORSÅ black
 Lathe(140,75,18,[[0,0],[7.5,0],[7.5,1.2],[6.5,2],[1,2.4],[0,2.4]],metalBlk,24);
-{const a1=new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,32,10),metalBlk);a1.position.set(140,93,20);a1.rotation.x=.25;add(a1);
- const a2=new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,22,10),metalBlk);a2.position.set(136,110,30);a2.rotation.z=1.0;add(a2)}
-{const sh=Lathe(0,0,0,[[1.5,0],[2.5,0],[7.5,11],[7.2,11.3]],M(C.black,{side:THREE.DoubleSide,metalness:.5,roughness:.35}),24);sh.position.set(128,112,32);sh.rotation.z=2.0}
-const dlBulb=S(126.5,106.5,32,2.4,M(0xffffff,{emissive:0xfff0d0,emissiveIntensity:0}));R.dlBulb=dlBulb.material;
+{const V3=(x,y,z)=>new THREE.Vector3(x,y,z);const base=V3(140,77.4,18),elb=V3(141,106,12),head=V3(124,114,30);
+ add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(base,V3(140.5,92,15),elb),8,.75,8),metalBlk));
+ add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(elb,V3(133,111,21),head),8,.75,8),metalBlk));
+ S(elb.x,elb.y,elb.z,1.6,metalBlk);S(head.x,head.y,head.z,1.5,metalBlk);
+ const sg=Grp(head.x,head.y,head.z,0);sg.rotation.z=-.55;sg.rotation.x=-.6;
+ Lathe(0,-12,0,[[7.6,0],[7.9,.3],[2.6,11.2],[1.6,12],[0,12.2]],M(C.black,{side:THREE.DoubleSide,metalness:.5,roughness:.35}),28,sg);
+ Lathe(0,-12,0,[[7.2,.2],[2.4,11]],M(0xEDEAE4,{side:THREE.DoubleSide,roughness:.6}),28,sg);
+ const dlBulb=S(0,-6,0,2.4,M(0xffffff,{emissive:0xfff0d0,emissiveIntensity:0}),1,1,1,sg);R.dlBulb=dlBulb.material}
 // headset + stand, mug
 Lathe(20,75,30,[[0,0],[5.5,0],[5.5,1],[1,1.5],[.9,24],[0,24]],metalBlk,20);
 add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(20,90,21),new THREE.Vector3(20,112,30),new THREE.Vector3(20,90,39)),20,1.1,8),M(0x1b1b1b,{roughness:.6})));
@@ -217,7 +223,11 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  const clc=[0x161515,0xEDE5D3,C.olive,0x8a8a8a,0x4F5633,0xF4F2EC,0x3b3d40,0xD8A42C,0x6b5a48,0x1D1A18];
  for(let i=0,x=X0+8;x<X1-6;x+=7.4,i++){const c=clc[i%10],L=58+(i%3)*16,hood=i%3==0;const g=Grp(x,161,20,0);
   add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,-4,-20),new THREE.Vector3(0,3,0),new THREE.Vector3(0,-4,20)),12,.5,6),M(0x111111)),g);
-  RB(-2.4,2.4,-6-L,-4,-22,22,2.2,M(c,{roughness:1}),g,2);if(hood)RB(-2.8,2.8,-14,-3,-9,9,3,M(c,{roughness:1}),g,2)}
+  const cm2=M(c,{roughness:1}),kind=i%4;
+  if(kind==3){RB(-2,2,-10,-4,-19,19,1.2,M(0x2a2a2a,{metalness:.5}),g,1);RB(-2.4,2.4,-10-L*1.2,-8,-19,-1,2.4,cm2,g,2);RB(-2.4,2.4,-10-L*1.2,-8,1,19,2.4,cm2,g,2)}
+  else{RB(-2.6,2.6,-8-L,-4,-19,19,3,cm2,g,2);RB(-2.4,2.4,-11,-3,-23,23,4,cm2,g,2);
+   [-1,1].forEach(sd=>{const sl=Grp(0,-6,sd*22,0,g);sl.rotation.x=sd*(kind==0?.18:.75);RB(-2.2,2.2,kind==0?-L*.95:-16,0,-4,4,2.2,cm2,sl,2);if(kind==0)RB(-2.4,2.4,-L*.95-6,-L*.95,-3.4,3.4,1.6,cm2,sl,1)});
+   if(kind==0){RB(-2,6,-20,-2,-10,10,4,cm2,g,2);RB(-2.8,-2.4,-36-L*.3,-28,-7,7,1.5,cm2,g,1)}}}
  [[178,0xF4F2EC,C.black],[196,C.olive,0xEDE5D3],[214,C.black,0xEDE5D3],[232,0xEDE5D3,C.jaune]].forEach(([x,c,a],i)=>{sneaker(x,14,20,c,a,0);sneaker(x+9,14,20,c,a,0)});
  Lathe(240,176,20,[[0,0],[5,0],[6.2,10],[5.6,10],[4.6,1],[0,1]],M(0xC56B45,{roughness:.8}),18);for(let i=0;i<9;i++)S(240+Math.sin(i)*5,190-i*4,20+Math.cos(i*1.3)*5,2.6,M(i%2?C.green2:C.green),1,.4,1)}
 
@@ -264,16 +274,27 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  R.G.tvLed=[mkGlow(210,140,359.3,YC,259,-Math.PI/2)];
  R.ambiPads={l:mkGlow(90,150,359.2,YC,172,-Math.PI/2),r:mkGlow(90,150,359.2,YC,346,-Math.PI/2),t:mkGlow(200,70,359.2,Y1+13,259,-Math.PI/2),b:mkGlow(200,34,359.2,Y0-10,259,-Math.PI/2)};}
 
+// leaf textures (alpha cut-out)
+const ficusLeafT=T(128,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.moveTo(64,250);g.bezierCurveTo(30,220,24,170,30,140);g.bezierCurveTo(34,118,22,104,14,80);g.bezierCurveTo(4,40,30,6,64,8);g.bezierCurveTo(98,6,124,40,114,80);g.bezierCurveTo(106,104,94,118,98,140);g.bezierCurveTo(104,170,98,220,64,250);g.closePath();
+ const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#2f5a28');gr.addColorStop(.5,'#467a3a');gr.addColorStop(1,'#2c5525');g.fillStyle=gr;g.fill();g.strokeStyle='rgba(190,215,150,.75)';g.lineWidth=3;g.beginPath();g.moveTo(64,248);g.lineTo(64,14);g.stroke();
+ g.lineWidth=1.6;for(let k=0;k<9;k++){const y=40+k*22;g.beginPath();g.moveTo(64,y+12);g.quadraticCurveTo(44,y+4,26,y-6);g.moveTo(64,y+12);g.quadraticCurveTo(84,y+4,102,y-6);g.stroke()}});
+const monsteraLeafT=T(256,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.moveTo(128,248);g.bezierCurveTo(40,236,4,160,14,100);g.bezierCurveTo(24,40,80,8,128,30);g.bezierCurveTo(176,8,232,40,242,100);g.bezierCurveTo(252,160,216,236,128,248);g.closePath();
+ const gr=g.createRadialGradient(128,140,10,128,140,140);gr.addColorStop(0,'#3f7a35');gr.addColorStop(1,'#22501f');g.fillStyle=gr;g.fill();
+ g.globalCompositeOperation='destination-out';g.lineWidth=7;g.lineCap='round';for(let k=0;k<7;k++){const a=-1.1+k*.37;[1,-1].forEach(sd=>{g.beginPath();const x0=128+sd*Math.cos(a)*54,y0=140+Math.sin(a)*54;g.moveTo(x0,y0);g.lineTo(128+sd*Math.cos(a)*140,140+Math.sin(a)*140);g.stroke()})}
+ for(let k=0;k<4;k++){[1,-1].forEach(sd=>{g.beginPath();g.ellipse(128+sd*(30+k*4),110+k*28,6,3.5,0,0,7);g.fill()})}
+ g.globalCompositeOperation='source-over';g.strokeStyle='rgba(170,200,130,.7)';g.lineWidth=3;g.beginPath();g.moveTo(128,246);g.lineTo(128,32);g.stroke()});
+const leafPlane=(w,h,t,p)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:t,alphaTest:.5,side:THREE.DoubleSide,roughness:.55}));m.castShadow=false;m.receiveShadow=true;m.userData.noTop=true;(p||sc).add(m);return m};
 // ---------- plants: ficus lyrata (corner), monstera (window right), plant spots ----------
 {const potM=M(0xC9C2B6,{roughness:.85});Lathe(336,0,340,[[0,0],[13,0],[16,32],[15.2,32],[12.4,2],[0,2]],potM,28);Cy(336,340,30,31,14.8,M(0x3b2a1e));
  const tr=new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,30,340),new THREE.Vector3(331,80,343),new THREE.Vector3(337,130,338)),16,1.6,8),M(0x5a3d22,{roughness:.9}));add(tr);
- for(let i=0;i<42;i++){const a=rnd()*7,r=5+rnd()*20,y=100+rnd()*95;const g=Grp(336+Math.cos(a)*r,y,340+Math.sin(a)*r*.8,a);g.rotation.x=-.5+rnd()*.6;
-  const lf=new THREE.Mesh(new THREE.SphereGeometry(6.5,14,10),M(i%3?0x3e6e33:0x4f8540,{roughness:.55}));lf.scale.set(.85,.12,1.35);g.add(lf);lf.castShadow=lf.receiveShadow=true}
+ const brM=M(0x5a3d22,{roughness:.9});const tips=[];for(let b=0;b<5;b++){const a=b*1.3+.4,ht=130+b*14;const e=new THREE.Vector3(336+Math.cos(a)*16,ht+16,340+Math.sin(a)*13);add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,95+b*12,340),new THREE.Vector3(336+Math.cos(a)*6,ht,340+Math.sin(a)*5),e),10,.7,6),brM));tips.push([e,a])}
+ for(let i=0;i<72;i++){const[e,a0]=tips[i%5];const t=rnd(),a=a0+(rnd()-.5)*1.6,r=4+rnd()*14;const px=336+(e.x-336)*(.4+t*.6)+Math.cos(a)*r*.5,py=95+(e.y-95)*(.35+t*.65)+rnd()*10,pz=340+(e.z-340)*(.4+t*.6)+Math.sin(a)*r*.4;
+  const g=Grp(px,py,pz,-a+Math.PI/2);g.rotation.x=-.9+rnd()*.7;g.rotation.z=(rnd()-.5)*.6;const lf=leafPlane(17+rnd()*6,27+rnd()*8,ficusLeafT,g);lf.position.y=12}
  // monstera at window right (x 226, z 336)
  Lathe(226,0,336,[[0,0],[10,0],[12,24],[11.4,24],[9.6,1.5],[0,1.5]],M(0xC56B45,{roughness:.8}),24);Cy(226,336,22,23,11.2,M(0x3b2a1e));
  for(let i=0;i<9;i++){const a=i/9*Math.PI*2+rnd()*.4,len=40+rnd()*45;const tip=new THREE.Vector3(226+Math.cos(a)*len*.45,22+len*.9,336+Math.sin(a)*len*.35);
   add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(226,22,336),new THREE.Vector3(226+Math.cos(a)*6,22+len*.6,336+Math.sin(a)*4),tip),10,.55,6),M(0x3d6b31)));
-  const g=Grp(tip.x,tip.y,tip.z,-a);g.rotation.x=.5;const lf=new THREE.Mesh(new THREE.SphereGeometry(11,16,10),M(i%2?0x2f5e2a:0x356b30,{roughness:.6,side:THREE.DoubleSide}));lf.scale.set(1,.06,1.15);g.add(lf);lf.castShadow=lf.receiveShadow=true}}
+  const g=Grp(tip.x,tip.y,tip.z,-a+Math.PI/2);g.rotation.x=-1.05+rnd()*.3;const s=26+rnd()*10;const lf=leafPlane(s,s,monsteraLeafT,g);lf.position.y=s*.42}}
 B(352,360,8,14,300,310,M(C.black,{metalness:.6}));Cy(354,305,14,20,3,M(C.black,{metalness:.6}));
 // windowsill pothos
 Lathe(150,90,368,[[0,0],[5,0],[6.4,10],[5.8,10],[4.4,1],[0,1]],M(0xEDE5D3,{roughness:.7}),18);for(let i=0;i<8;i++)S(150+Math.sin(i)*4,101+rnd()*5,368+Math.cos(i)*3,2.8,M(C.green2),1,.4,1);
@@ -306,7 +327,7 @@ const sun=new THREE.DirectionalLight(0xfff0dc,1);sun.position.set(180+150,180+42
 sun.castShadow=true;if(sun.shadow&&sun.shadow.camera){sun.shadow.mapSize.set(2048,2048);const sc2=sun.shadow.camera;sc2.left=-330;sc2.right=330;sc2.top=330;sc2.bottom=-330;sc2.near=50;sc2.far=1600;sun.shadow.bias=-.0008}
 function PL(name,c,x,y,z,d,dec){const l=new THREE.PointLight(c,0,d||300,dec||1.5);l.position.set(x,y,z);sc.add(l);R.L[name]=l;return l}
 PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0xffd09a,18,76,140,220);PL('fado',0xffd9a8,346,92,307,220);
-PL('desk',0xfff0d8,124,100,30,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
+PL('desk',0xfff0d8,118,100,36,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
 PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,80,104,40,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 return R}
 if(typeof module!=='undefined')module.exports=buildRoom;
