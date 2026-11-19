@@ -90,3 +90,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Mock XR : `window.__gpL` (manette gauche) exposée pour les tests.
 - Leçon : une opacité < 1 sur un dégradé déjà transparent se voit à peine dans le champ de vue réel ; l'intensité doit aller jusqu'à 1.
 - Scores : VR 7 → 7,5 → **54,5 → 55/70**.
+
+## 2026-11-20 — Séance 11 : reflets (essai rejeté)
+- Essai : reflet d'environnement Fresnel + reflet de la fenêtre (intersection du rayon réfléchi avec le plan z=370) dans gl2 et vrgl.
+- Résultat : différence très faible (léger brillant sur le bureau et l'écran), poignées noires devenues grises, image un peu plus « voilée ». **Pas meilleur → annulé, rien publié.**
+- Piste pour plus tard : reflet planaire du parquet seulement (rendu miroir flouté), ou un « spot » de reflet de fenêtre peint dans la texture du sol en mode jour.
