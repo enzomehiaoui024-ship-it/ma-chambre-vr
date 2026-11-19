@@ -19,4 +19,7 @@
 - Mains/manettes plus détaillées.
 
 ## Vidéo
-- Refaire la visite avec les meubles v3, l'ambiance nuit et l'Ambilight.
+- Vidéo : avancer les titres d'environ 1 s ; version verticale pour téléphone.
+
+## À demander à Enzo
+- Emplacement des étagères à pochettes MOSSLANDA, des supports vinyles muraux et du « Now Playing ».

@@ -2,6 +2,35 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-20",
+    titre: "Séance 9 — petits objets de la liste ajoutés",
+    avant: 54, apres: 54.5,
+    scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7.5], liste: [7.5, 7.5], vr: [7, 7], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Tapis de passage au bord du lit (côté bureau)",
+      "Les 2 multiprises KOPPLA (une côté lit, une sous le bureau) avec leurs câbles",
+      "Goulottes blanches : une le long du pied du bureau, une entre la TV et la commode",
+      "Spot au sol derrière la monstera (il y en avait un seul, derrière le ficus)"
+    ],
+    images: [],
+    ensuite: "À décider avec toi : où mettre les 2 étagères à pochettes MOSSLANDA, les 3 supports muraux et le support « Now Playing » (le mur au-dessus du Kallax a déjà 4 cadres)."
+  },
+  {
+    date: "2026-11-20",
+    titre: "Séance 8 — nouvelle vidéo de visite",
+    avant: 52, apres: 54,
+    scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7.5, 7.5], vr: [7, 7], plan: [7.5, 7.5], video: [5, 7] },
+    changements: [
+      "Vidéo refaite avec tous les nouveaux meubles et le même moteur que le plan 3D (ombres douces, textures corrigées)",
+      "Deux nouveaux moments : nuit cosy avec la lune, puis ciné Ambilight",
+      "Titres animés à jour (prix, modèles) + écran de début et de fin",
+      "La visite du bouton « Lancer la visite » du plan 3D suit le même parcours"
+    ],
+    video: "video/visite.mp4", poster: "video/visite_poster.jpg",
+    images: [],
+    ensuite: "Caler les titres un peu plus tôt sur les mouvements de caméra."
+  },
+  {
     date: "2026-11-19",
     titre: "Séance 7 — plan 3D sur iPhone",
     avant: 51.5, apres: 52,

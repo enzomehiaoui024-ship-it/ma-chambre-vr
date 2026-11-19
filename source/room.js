@@ -332,6 +332,17 @@ B(352,360,8,14,300,310,M(C.black,{metalness:.6}));Cy(354,305,14,20,3,M(C.black,{
 // windowsill pothos
 Lathe(150,90,368,[[0,0],[5,0],[6.4,10],[5.8,10],[4.4,1],[0,1]],M(0xEDE5D3,{roughness:.7}),18);for(let i=0;i<8;i++)rnd();pothos(150,100,368,[[-9,-9,26],[8,-10,18],[-14,-2,10]]);
 
+// ---------- small items from the list: bedside runner, power strips, cable covers, plant spot ----------
+{const runT=T(128,128,(g,w,h)=>{g.fillStyle='#E9E1CF';g.fillRect(0,0,w,h);for(let i=0;i<900;i++){g.fillStyle=`rgba(${170+(i*37)%50},${160+(i*53)%45},${140+(i*29)%40},.35)`;g.fillRect((i*71)%w,(i*113)%h,2,2)}g.fillStyle='#2a2622';for(let y=10;y<h;y+=28){g.fillRect(8,y,w-16,2)}},1,2);
+ RB(58,148,0,1,110,168,.5,M(0xffffff,{map:runT,roughness:1}),null,1);
+ const wh=M(0xF4F4F2,{roughness:.5});
+ // KOPPLA x2 (desk side, bed side) + cables
+ RB(118,148,0,4.5,3,8.5,1,wh,null,1);B(122,123,4.5,5.2,3,8.5,M(0xd04a3a));RB(4,9.5,0,4.5,96,126,1,wh,null,1);B(4,9.5,4.5,5.2,99,100,M(0xd04a3a));
+ [[133,5.5,0,72],[7,111,0,40]].forEach(([x,z,y0,y1])=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,y1-y0,6),M(0x1a1a1a));c.position.set(x,(y0+y1)/2,z);add(c)});
+ // cable covers (goulottes): desk leg to floor on north wall, TV to commode on east wall
+ RB(146,147.6,0,72,0,1.1,.3,wh,null,1);RB(358.9,360,76,105,257.6,260.4,.3,wh,null,1);
+ // plant spot behind the monstera
+ Cy(246,352,0,3,4,M(C.black,{metalness:.6}),null,16);{const sp=Cy(0,0,-3,3,2.6,M(C.black,{metalness:.6}),3.2,16,Grp(246,7,352,0));sp.rotation.x=.5}}
 // ---------- candles (flicker in cosy mode) ----------
 R.flames=[];const candle=(x,y,z,h,r)=>{Cy(x,z,y,y+h,r||2.6,M(0xF3EBDD,{roughness:.9}),null,20);const f=noShadow(S(x,y+h+1.6,z,1.1,glow(0x000000,1),1,1.8,1));R.flames.push(f);const hl=noShadow(P(14,14,glow(0x000000,1),x,y+h+2,z,0));hl.material.map=softT;hl.userData.bb=1;R.flames.push(hl)};
 candle(28,59,160,7);candle(30,59,152,4.5,2);candle(347,77.4,230,6);candle(341,77.4,237,4,2);candle(212,90,356,8,3);candle(200,90,357,5,2.2);

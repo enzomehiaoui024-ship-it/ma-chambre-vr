@@ -35,8 +35,8 @@ const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,am
 const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,
  L:{arc:[hex(0xffb877),.12],candle:[hex(0xff9a40),.3],candle2:[hex(0xff9a40),.25],candle3:[hex(0xff9a40),.2]},em:{arc:.3,pend:.02,fado:.05}});
 function blend(a,b,t){if(t<=0)return a;if(t>=1)return b;const s=st({});for(const k in a){if(k=='L'){for(const n of LN)s.L[n]=[mixc(a.L[n][0],b.L[n][0],t),mix(a.L[n][1],b.L[n][1],t)]}else if(k=='G'){for(const n of GN)s.G[n]=mixc(a.G[n],b.G[n],t)}else if(k=='em'){for(const n in a.em)s.em[n]=mix(a.em[n],b.em[n],t)}else if(Array.isArray(a[k]))s[k]=mixc(a[k],b[k],t);else s[k]=mix(a[k],b[k],t)}return s}
-const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[40.5,'GAME'],[43.5,'GAME'],[44.6,'FETE'],[47.6,'FETE'],[49.2,'EVE']];
-const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:FETE(t);
+const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[41.2,'COSY'],[46.5,'COSY'],[47.8,'CINE'],[53,'CINE'],[54.3,'GAME'],[57.3,'GAME'],[58.4,'FETE'],[61.4,'FETE'],[63,'EVE']];
+const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:n=='COSY'?COSY:n=='CINE'?CINE:FETE(t);
 function stateAt(t){for(let i=0;i<SCHED.length-1;i++){const[a,na]=SCHED[i],[b,nb]=SCHED[i+1];if(t<b)return blend(getS(na,t),getS(nb,t),ss(0,1,(t-a)/(b-a)))}return getS(SCHED[SCHED.length-1][1],t)}
 
 const setC=(c,v)=>{c.r=v[0];c.g=v[1];c.b=v[2]};
@@ -80,28 +80,34 @@ const K=[
 [31,[172,78,165],[136,30,60],48],
 [34.5,[260,150,110],[150,75,330],56],
 [38,[285,140,70],[110,80,270],58],
-[41.5,[195,148,205],[70,100,35],54],
-[45,[305,168,48],[130,60,250],60],
-[48.5,[205,330,195],[180,0,190],58],
-[52,[181,560,183],[180,0,180],52],
-[54.5,[181,570,183],[180,0,180],52]];
-const TOTAL=54.5;
+[41.5,[300,150,80],[160,125,335],54],
+[45,[250,140,140],[150,110,340],50],
+[48.5,[60,128,250],[355,128,259],58],
+[52,[45,135,259],[355,125,259],56],
+[55.5,[195,148,205],[70,100,35],54],
+[59,[305,168,48],[130,60,250],60],
+[62.5,[205,330,195],[180,0,190],58],
+[66,[181,560,183],[180,0,180],52],
+[68.5,[181,570,183],[180,0,180],52]];
+const TOTAL=68.5;
 function cr(p0,p1,p2,p3,u){const u2=u*u,u3=u2*u;return p1.map((_,i)=>.5*((2*p1[i])+(-p0[i]+p2[i])*u+(2*p0[i]-5*p1[i]+4*p2[i]-p3[i])*u2+(-p0[i]+3*p1[i]-3*p2[i]+p3[i])*u3))}
 function camAt(t){let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const a=K[Math.max(0,i-1)],b=K[i],c=K[i+1],d=K[Math.min(K.length-1,i+2)];let u=cl((t-b[0])/(c[0]-b[0]),0,1);
 if(i==0)u=u*u*(3-2*u)*.5+u*.5;const p=cr(a[1],b[1],c[1],d[1],u),q=cr(a[2],b[2],c[2],d[2],u),f=mix(b[3],c[3],ss(0,1,u));
-const hh=t<47?1:1-ss(47,49,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
+const hh=t<61?1:1-ss(61,63,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
 const CAP=[
-[3.6,9.6,'01 · LE LIT','MALM brun noir','Parure olive + coussins beige et jaune'],
-[9.8,13.4,'02 · AU-DESSUS DU LIT','Les 3 albums','Cadres noirs, éclairage LED derrière la tête de lit'],
-[13.6,17.0,'03 · NOUVEAU','Commode 6 tiroirs','Bois foncé + pieds métal noir · 195,99 €'],
-[17.2,20.6,'04 · TV','TCL 65" Mini LED au mur','144 Hz · barre de son en 2 enceintes'],
-[20.8,24.0,'05 · VINYLES','Kallax brun noir','Platine sur le dessus, cadres au mur'],
-[24.2,30.6,'06 · SETUP GAMING','Écran OLED 27" 2K · 240 Hz','Chaise ergonomique Sihoo · étagère LACK'],
+[3.6,9.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, plaid SÖRBYSKOGEN'],
+[9.8,13.4,'02 · AU-DESSUS DU LIT','Trois affiches','Cadres noirs, LED derrière la tête de lit'],
+[13.6,17.0,'03 · COMMODE','6 tiroirs · 195,99 €','Bois foncé, pieds noirs, ficus lyrata à côté'],
+[17.2,20.6,'04 · TV','TCL 65" Mini LED au mur','144 Hz · barre de son sur la commode'],
+[20.8,24.0,'05 · VINYLES','Kallax + platine AT-LP60X','Enceintes Edifier R1280DB'],
+[24.2,30.6,'06 · SETUP GAMING','MSI MAG 274QP · OLED 27" 2K 240 Hz','Chaise Sihoo Doro C300 · lampe FORSÅ'],
 [30.7,33.8,'07 · LE PC','Ryzen 7 9800X3D · RX 9070 XT','32 Go DDR5 · SSD 2 To · tour sous le bureau'],
-[34.0,38.2,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
-[39.6,43.6,'09 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
-[44.4,47.8,'10 · MODE FÊTE','Couleurs qui tournent',''],
-[49.0,52.6,'11 · LE PLAN','Vu d\'en haut','13 m² · 3,60 × 3,60 m']];
+[34.0,40.0,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
+[41.6,46.6,'09 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
+[48.2,52.8,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
+[54.4,57.4,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
+[58.4,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
+[63.0,66.6,'13 · LE PLAN','Vu d\'en haut','13 m² · 3,60 × 3,60 m']];
 
 
 // ---------- touch / mouse orbit ----------
@@ -132,7 +138,7 @@ const playB=document.getElementById('play');
 function stopTour(){if(tour){tour=null;playB.innerHTML='&#9654;&nbsp; Lancer la visite';cap.style.opacity=0;fromPos(cam.position,tgt)}}
 playB.onclick=()=>{if(tour){stopTour();return}tour={t0:performance.now()/1000};playB.innerHTML='&#10073;&#10073;&nbsp; Arrêter la visite'};
 let last=performance.now();window.addEventListener('resize',()=>{setTimeout(setup,200)});
-function frame(){requestAnimationFrame(frame);const now=performance.now();const dt=Math.min((now-last)/1000,.05);last=now;el+=dt;setup();let s;
+function frame(){requestAnimationFrame(frame);if(window.__offline)return;const now=performance.now();const dt=Math.min((now-last)/1000,.05);last=now;el+=dt;setup();let s;
  if(tour){const t=Math.min(now/1000-tour.t0+3.6,TOTAL-.01);const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);s=stateAt(t);
   let sh=null;for(const c2 of CAP)if(t>=c2[0]&&t<=c2[1])sh=c2;if(sh){capL.textContent=sh[2];capT.textContent=sh[3];capS.textContent=sh[4];cap.style.opacity=1}else cap.style.opacity=0;
   if(t>=TOTAL-.02){stopTour();setMode('cosy')}}
@@ -141,6 +147,17 @@ function frame(){requestAnimationFrame(frame);const now=performance.now();const 
  cur=s;apply(s,el);ambiUp(s,el);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
  if(window.__onframe)window.__onframe()}
+window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
+ const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=c.f;const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
+ RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
+ const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=H/720;
+ let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}
+ if(sh&&al>0){g.save();g.globalAlpha=al;const x=56*k,y=60*k;const gr=g.createLinearGradient(0,0,620*k,0);gr.addColorStop(0,'rgba(10,10,9,.55)');gr.addColorStop(1,'rgba(10,10,9,0)');g.fillStyle=gr;g.fillRect(0,y-38*k,640*k,130*k);
+  g.fillStyle='#A4AE6E';g.fillRect(x,y-28*k,5*k,104*k);g.fillStyle='#C9D19A';g.font=`600 ${15*k}px Inter, sans-serif`;g.fillText(sh[2].split('').join(String.fromCharCode(8202)),x+20*k,y-6*k);
+  g.fillStyle='#F6F2E8';g.font=`700 ${36*k}px Inter, sans-serif`;g.fillText(sh[3],x+20*k,y+34*k);g.globalAlpha=al*.85;g.font=`400 ${19*k}px Inter, sans-serif`;g.fillText(sh[4],x+20*k,y+64*k);g.restore()}
+ const ti=Math.min(1,t/.8)*(1-ss(2.6,3.4,t));if(ti>0){g.save();g.globalAlpha=ti;g.fillStyle='rgba(10,10,9,.35)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${64*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-6*k);g.fillStyle='#C9D19A';g.font=`500 ${22*k}px Inter, sans-serif`;g.fillText('NOIR & OLIVE · VISITE 3D',W/2,H/2+34*k);g.restore()}
+ const te=ss(66.2,67.4,t);if(te>0){g.save();g.globalAlpha=te;g.fillStyle='rgba(10,10,9,.6)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${52*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-10*k);g.fillStyle='#C9D19A';g.font=`500 ${21*k}px Inter, sans-serif`;g.fillText('Visite VR sur Quest 2 · plan 3D · liste d\'achat',W/2,H/2+30*k);g.restore()}
+ return o.toDataURL('image/jpeg',.92)};
 window.__jump=(k,p,q)=>{const v=k?VIEWS[k]:[p,q];cam.position.set(...v[0]);tgt.set(...v[1]);fromPos(cam.position,tgt);fly=null};window.__mode=m=>{setMode(m);blendT=1;from=MODES[m](0)};
 setup();setMode('cosy');frame();
 })();

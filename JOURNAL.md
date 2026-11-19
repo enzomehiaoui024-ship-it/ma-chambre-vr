@@ -73,3 +73,14 @@ Vues de contrôle fixes (tools/preview.py) :
 - `FV()` dans app_gl.js : en portrait, fov vertical = 2·atan(tan(f/2)/√aspect) → champ horizontal plus large sans effet fish-eye.
 - Aide déplacée à gauche (z-index), masquée 2,5 s après le premier toucher ; fondu à droite des rangées de boutons.
 - Vérifié en émulation iPhone (390×844, tactile). Scores : plan 7 → 7,5 → **51,5 → 52/70**.
+
+## 2026-11-20 — Séance 8 : vidéo de visite v3
+- Parcours de la visite allongé à 68,5 s : ajout nuit cosy (fenêtre + lune) et ciné Ambilight ; `SCHED` gère COSY et CINE ; titres mis à jour.
+- `window.__renderAt(t,W,H)` dans app_gl.js : rendu image par image + titres dessinés en 2D (pour la vidéo). Rendu 1280×720, 30 i/s, ~1,2 s/image ; rendu reprenable image par image (`frames/f_%05d.jpg`) car la machine peut redémarrer.
+- Fichier : `video/visite.mp4` (14,8 Mo), affiché sur la page Évolution.
+- Scores : vidéo 5 → 7 → **52 → 54/70**. À faire : avancer les titres de ~1 s.
+
+## 2026-11-20 — Séance 9 : cohérence plan ↔ liste
+- Ajoutés : tapis de passage, 2 multiprises KOPPLA + câbles, 2 goulottes, 2e spot plante.
+- Manquent encore (emplacement à décider avec Enzo) : MOSSLANDA ×2, supports vinyles muraux ×3, « Now Playing », brosse à vinyles, patère (cachée quand la porte est ouverte).
+- Scores : cohérence 7 → 7,5 → **54 → 54,5/70**.
