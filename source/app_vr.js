@@ -13,25 +13,29 @@ let labUntil=0;
 const ctrl=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(4,3,12),new THREE.MeshStandardMaterial({color:0x2a2a2c,roughness:.5}));m.visible=false;sc.add(m);return m});
 
 // ---------- in-VR menu panel ----------
-const mc=document.createElement('canvas');mc.width=1024;mc.height=768;const MW=64,MH=48;
+const mc=document.createElement('canvas');mc.width=1024;mc.height=800;const MW=64,MH=50;
 const menuMesh=new THREE.Mesh(new THREE.PlaneGeometry(MW,MH),new THREE.MeshBasicMaterial({color:0xffffff}));menuMesh.visible=false;menuMesh.renderOrder=11;sc.add(menuMesh);
 const rays=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(.5,.5,1),new THREE.MeshBasicMaterial({color:0xC9D19A,transparent:true,opacity:.7,depthWrite:false}));m.visible=false;m.renderOrder=12;sc.add(m);return m});
 const dots=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.9,12,8),new THREE.MeshBasicMaterial({color:0xffffff}));m.visible=false;sc.add(m);return m});
-const menu={open:false,hover:null,C:[0,0,0],N:[0,0,1],Rx:[1,0,0],btns:[]};
+const arcDots=[...Array(26)].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(1.1,8,6),new THREE.MeshBasicMaterial({color:0xC9D19A}));m.visible=false;m.renderOrder=12;sc.add(m);return m});
+const ring=new THREE.Mesh(new THREE.CylinderGeometry(16,16,.5,28),new THREE.MeshBasicMaterial({color:0xA4AE6E,transparent:true,opacity:.65,depthWrite:false}));ring.visible=false;ring.renderOrder=12;sc.add(ring);
+const tele={on:false,hit:null,ok:false};const BLOCK=[[0,205,165,333],[0,165,0,84],[314,360,193,325],[314,360,96,181],[164,262,0,42],[0,40,118,172]];window.__tele=tele;let seat=false,yBase=0,fpsS=72,fpsT=0;
+window.__menuRef=()=>menu;const menu={open:false,hover:null,C:[0,0,0],N:[0,0,1],Rx:[1,0,0],btns:[]};
 (function(){const B=[];const names=['Nuit cosy','Jour','Coucher de soleil','Soir chaud','Gaming','Fête','Ciné Ambilight'];names.forEach((n,i)=>B.push({id:'m'+i,x:48+(i%2)*474,y:150+Math.floor(i/2)*100,w:454,h:84,t:n}));
- B.push({id:'auto',x:522,y:450,w:454,h:84,t:'Défilé auto'});B.push({id:'home',x:48,y:566,w:454,h:84,t:'Revenir au départ'});B.push({id:'close',x:522,y:566,w:454,h:84,t:'Fermer le menu'});menu.btns=B})();
-menu.draw=function(){const g=mc.getContext('2d');g.fillStyle='#16150f';g.fillRect(0,0,1024,768);g.strokeStyle='#A4AE6E';g.lineWidth=6;g.strokeRect(3,3,1018,762);
- g.fillStyle='#F6F2E8';g.font='600 60px Inter, -apple-system, sans-serif';g.fillText('Ma chambre',48,92);g.font='400 30px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.65)';g.fillText('Vise un bouton et appuie sur la gâchette',48,128);
- for(const b of this.btns){const cur=(b.id==='m'+mi)||(b.id==='auto'&&auto),hov=this.hover===b.id;g.fillStyle=cur?'#A4AE6E':hov?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)';g.beginPath();g.roundRect(b.x,b.y,b.w,b.h,24);g.fill();
-  if(hov){g.strokeStyle='#F6F2E8';g.lineWidth=4;g.stroke()}g.fillStyle=cur?'#1b1d12':'#F6F2E8';g.font='500 40px Inter, -apple-system, sans-serif';const t=b.id==='auto'&&auto?'Arrêter le défilé':b.t;g.fillText(t,b.x+32,b.y+60)}
+ B.push({id:'auto',x:522,y:450,w:454,h:84,t:'Défilé auto'});B.push({id:'home',x:48,y:566,w:454,h:84,t:'Revenir au départ'});B.push({id:'seat',x:522,y:566,w:454,h:84,t:'Mode assis'});B.push({id:'close',x:48,y:672,w:454,h:84,t:'Fermer le menu'});menu.btns=B})();
+menu.draw=function(){const g=mc.getContext('2d');g.fillStyle='#16150f';g.fillRect(0,0,1024,800);g.strokeStyle='#A4AE6E';g.lineWidth=6;g.strokeRect(3,3,1018,794);
+ g.fillStyle='#F6F2E8';g.font='600 60px Inter, -apple-system, sans-serif';g.fillText('Ma chambre',48,92);g.font='400 30px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.65)';g.fillText('Gâchette : choisir · stick droit en avant : se téléporter',48,128);
+ for(const b of this.btns){const cur=(b.id==='m'+mi)||(b.id==='auto'&&auto)||(b.id==='seat'&&seat),hov=this.hover===b.id;g.fillStyle=cur?'#A4AE6E':hov?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)';g.beginPath();g.roundRect(b.x,b.y,b.w,b.h,24);g.fill();
+  if(hov){g.strokeStyle='#F6F2E8';g.lineWidth=4;g.stroke()}g.fillStyle=cur?'#1b1d12':'#F6F2E8';g.font='500 40px Inter, -apple-system, sans-serif';const t=b.id==='auto'&&auto?'Arrêter le défilé':b.id==='seat'&&seat?'Mode assis : oui':b.t;g.fillText(t,b.x+32,b.y+60)}
+ g.font='500 34px Inter, -apple-system, sans-serif';const fc=fpsS>=68?'#A4AE6E':fpsS>=55?'#D8A42C':'#E0704A';g.fillStyle=fc;g.beginPath();g.arc(560,714,12,0,7);g.fill();g.fillStyle='#F6F2E8';g.fillText('Fluidité : '+Math.round(fpsS)+' images/s',586,726);
  if(menuMesh.material.map)V.retex(menuMesh.material.map);menuMesh.material.map=new THREE.CanvasTexture(mc)};
 menu.place=function(hp,hm){const H=toRoom(hp);const f=rot([-hm[8],0,-hm[10]]);const fl=Math.hypot(f[0],f[2])||1;const fx=f[0]/fl,fz=f[2]/fl;this.C=[H[0]+fx*65,H[1]-20,H[2]+fz*65];const a=Math.atan2(-fx,-fz);this.N=[Math.sin(a),0,Math.cos(a)];this.Rx=[Math.cos(a),0,-Math.sin(a)];
  menuMesh.userData.matrix=m4mul(T4(...this.C),Ry(a))};
 menu.toggle=function(hp,hm){this.open=!this.open;menuMesh.visible=this.open;if(this.open){this.place(hp,hm);this.draw();labMesh.visible=false}};
 menu.hit=function(O,D){const dn=D[0]*this.N[0]+D[1]*this.N[1]+D[2]*this.N[2];if(dn>-1e-4)return null;const t=((this.C[0]-O[0])*this.N[0]+(this.C[1]-O[1])*this.N[1]+(this.C[2]-O[2])*this.N[2])/dn;if(t<0)return null;
  const Hh=[O[0]+D[0]*t-this.C[0],O[1]+D[1]*t-this.C[1],O[2]+D[2]*t-this.C[2]];const u=Hh[0]*this.Rx[0]+Hh[2]*this.Rx[2],v=Hh[1];if(Math.abs(u)>MW/2||Math.abs(v)>MH/2)return null;
- const px=(u/MW+.5)*1024,py=(.5-v/MH)*768;const b=this.btns.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);return{t,btn:b?b.id:null}};
-menu.click=function(id){if(id[0]==='m'&&id!=='m'){setAuto(false);setMode(+id.slice(1),false)}else if(id==='auto')setAuto(!auto);else if(id==='home')resetPos();else if(id==='close'){this.open=false;menuMesh.visible=false}this.draw()};
+ const px=(u/MW+.5)*1024,py=(.5-v/MH)*800;const b=this.btns.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);return{t,btn:b?b.id:null}};
+menu.click=function(id){if(id[0]==='m'&&id!=='m'){setAuto(false);setMode(+id.slice(1),false)}else if(id==='auto')setAuto(!auto);else if(id==='home')resetPos();else if(id==='seat'){seat=!seat;yOff=yBase+(seat?45:0)}else if(id==='close'){this.open=false;menuMesh.visible=false}this.draw()};
 const RD={updateShadows:(s,sd)=>V.updateShadows(sd)};
 const hex=h=>[((h>>16)&255)/255,((h>>8)&255)/255,(h&255)/255];
 const mix=(a,b,t)=>a+(b-a)*t,mixc=(a,b,t)=>[mix(a[0],b[0],t),mix(a[1],b[1],t),mix(a[2],b[2],t)];
@@ -96,7 +100,7 @@ return s}
 
 
 let lastSun='';
-const dyn=new Set([R.platter,R.label,labMesh,menuMesh,...rays,...dots,...ctrl,...R.shafts,...R.dust]);
+const dyn=new Set([R.platter,R.label,labMesh,menuMesh,...rays,...dots,...arcDots,ring,...ctrl,...R.shafts,...R.dust]);
 [...Object.values(R.G).flat().map(m=>m.material),...Object.values(R.ambiPads).map(m=>m.material),R.screens.tv.material,R.screens.mon.material,...R.flames.map(m=>m.material),...R.cityLit.map(m=>m.material),...R.out.map(m=>m.material),
  R.sky.material,R.skyN.material,R.moon.material,R.moonHalo.material,R.tree.material,R.tree2.material,R.pend,R.arcBulb,R.nsShade,R.fado,R.dlBulb,...R.pcFans.map(m=>m.material),R.pcIn.material,R.ceil.material].forEach(m=>dyn.add(m));
 [R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
@@ -110,7 +114,7 @@ document.getElementById('auto').onclick=()=>setAuto(!auto);
 function step(dt){el+=dt;if(auto){autoT+=dt;if(autoT>7){autoT=0;setMode(mi+1,true)}}blendT=Math.min(1,blendT+dt/1.2);const s=blend(from,MODES[mi][2](el),ss(0,1,blendT));cur=s;apply(s,el);ambiUp(s,el);R.dust.forEach(d=>d.visible=false);
  if(labMesh.visible&&performance.now()>labUntil)labMesh.visible=false;V.begin(s.expo);return s}
 // ---------- room <-> XR transforms ----------
-const P={x:250,z:110};let th=Math.atan2(120,-170);
+const P={x:250,z:110};window.__P=P;let th=Math.atan2(120,-170);
 const Ry=a=>{const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1])};
 const T4=(x,y,z)=>new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1]),S4=k=>new Float32Array([k,0,0,0,0,k,0,0,0,0,k,0,0,0,0,1]);
 let yOff=0;const W2M=()=>m4mul(S4(.01),m4mul(Ry(-th),T4(-P.x,-yOff,-P.z))),M2W=()=>m4mul(T4(P.x,yOff,P.z),m4mul(Ry(th),S4(100)));
@@ -121,11 +125,11 @@ function resetPos(){P.x=250;P.z=110;th=Math.atan2(120,-170)}
 let session=null,ref=null;const prevB={left:[],right:[]};let snapLatch=false;
 async function enterVR(){try{session=await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});
  await gl.makeXRCompatible();const layer=new XRWebGLLayer(session,gl,{framebufferScaleFactor:.9,antialias:true});try{layer.fixedFoveation=1}catch(e){}session.updateRenderState({baseLayer:layer,depthNear:.04,depthFar:40});
- try{ref=await session.requestReferenceSpace('local-floor');yOff=0}catch(e){ref=await session.requestReferenceSpace('local');yOff=160}
+ try{ref=await session.requestReferenceSpace('local-floor');yBase=0}catch(e){ref=await session.requestReferenceSpace('local');yBase=160}yOff=yBase+(seat?45:0);
  session.addEventListener('end',()=>{session=null;$('vr').textContent='Entrer en VR';requestAnimationFrame(loop)});$('vr').textContent='Quitter la VR';menu.pendingOpen=true;session.requestAnimationFrame(xrFrame)}
  catch(e){$('msg').textContent='Impossible de lancer la VR : '+e.message}}
 let lastT=0;
-function xrFrame(t,frame){session.requestAnimationFrame(xrFrame);const dt=lastT?Math.min((t-lastT)/1000,.05):.016;lastT=t;
+function xrFrame(t,frame){session.requestAnimationFrame(xrFrame);const rdt=lastT?(t-lastT)/1000:.014;const dt=Math.min(rdt,.05);lastT=t;if(rdt>0&&rdt<1)fpsS=fpsS*.95+(1/rdt)*.05;fpsT+=dt;if(fpsT>1){fpsT=0;if(menu.open)menu.draw()}
  const pose=frame.getViewerPose(ref);if(!pose)return;const hm=pose.transform.matrix,hp=pose.transform.position;if(menu.pendingOpen){menu.pendingOpen=false;menu.open=false;menu.toggle(hp,hm)}
  // input
  const w2r=M2W();let anyHit=false;
@@ -133,7 +137,8 @@ function xrFrame(t,frame){session.requestAnimationFrame(xrFrame);const dt=lastT?
   const ax=gp.axes.length>=4?[gp.axes[2],gp.axes[3]]:[gp.axes[0]||0,gp.axes[1]||0];const ci=hd==='left'?0:1;
   // ray vs menu panel
   let hitBtn=null;const rp=src.targetRaySpace&&frame.getPose(src.targetRaySpace,ref);
-  if(rp&&menu.open){const M=m4mul(w2r,rp.transform.matrix);const O=[M[12],M[13],M[14]];let D=[-M[8],-M[9],-M[10]];const dl=Math.hypot(...D);D=D.map(x=>x/dl);
+  let M=null,O=null,D=null;if(rp){M=m4mul(w2r,rp.transform.matrix);O=[M[12],M[13],M[14]];D=[-M[8],-M[9],-M[10]];const dl=Math.hypot(...D);D=D.map(x=>x/dl)}
+  if(rp&&menu.open){
    const h=menu.hit(O,D);let L=200;if(h){L=h.t;hitBtn=h.btn;anyHit=true;if(hitBtn!==menu.hover){menu.hover=hitBtn;menu.draw()}}
    rays[ci].visible=true;rays[ci].userData.matrix=m4mul(m4mul(M,S4(.01)),new Float32Array([1,0,0,0,0,1,0,0,0,0,L,0,0,0,-L/2,1]));
    if(h){dots[ci].visible=true;dots[ci].userData.matrix=T4(O[0]+D[0]*L,O[1]+D[1]*L,O[2]+D[2]*L)}else dots[ci].visible=false}
@@ -141,7 +146,15 @@ function xrFrame(t,frame){session.requestAnimationFrame(xrFrame);const dt=lastT?
   if(menu.open&&hitBtn&&pr(0)){menu.click(hitBtn)}
   else if(hd==='left'){if(Math.hypot(ax[0],ax[1])>.15){const f=[-hm[8],0,-hm[10]],r=[hm[0],0,hm[2]];const fl=Math.hypot(f[0],f[2])||1,rl=Math.hypot(r[0],r[2])||1;const mv=[(f[0]/fl)*-ax[1]+(r[0]/rl)*ax[0],0,(f[2]/fl)*-ax[1]+(r[2]/rl)*ax[0]];const w=rot(mv);P.x+=w[0]*140*dt;P.z+=w[2]*140*dt}
    if(pr(4))resetPos();if(pr(0)&&!menu.open)setAuto(!auto);if(pr(5))menu.toggle(hp,hm)}
-  else{if(Math.abs(ax[0])>.7&&!snapLatch){snapLatch=true;const H=toRoom(hp);th+=ax[0]>0?-Math.PI/6:Math.PI/6;const r=rot([hp.x*100,0,hp.z*100]);P.x=H[0]-r[0];P.z=H[2]-r[2];if(menu.open)menu.place(hp,hm)}if(Math.abs(ax[0])<.3)snapLatch=false;
+  else{if(ax[1]<-.6&&rp&&!menu.open){tele.on=true;tele.hit=null;const v=[D[0]*560,D[1]*560,D[2]*560];let q=O,n=0;
+    for(let i=1;i<60;i++){const t=i*.03;const p=[O[0]+v[0]*t,O[1]+v[1]*t-490*t*t,O[2]+v[2]*t];
+     if(p[0]<6||p[0]>354||p[2]<6||p[2]>354||p[1]>248){tele.hit=[Math.max(20,Math.min(340,q[0])),0,Math.max(20,Math.min(340,q[2]))];break}
+     if(p[1]<=0){const f=q[1]/(q[1]-p[1]);const x=q[0]+(p[0]-q[0])*f,z=q[2]+(p[2]-q[2])*f;tele.hit=[Math.max(20,Math.min(340,x)),0,Math.max(20,Math.min(340,z))];break}
+     q=p;if(n<arcDots.length){arcDots[n].visible=true;arcDots[n].userData.matrix=T4(p[0],p[1],p[2]);n++}}
+    for(let k=n;k<arcDots.length;k++)arcDots[k].visible=false;
+    ring.visible=!!tele.hit;tele.ok=false;if(tele.hit){const[hx,,hz]=tele.hit;tele.ok=!BLOCK.some(b=>hx>b[0]&&hx<b[1]&&hz>b[2]&&hz<b[3]);ring.material.color.set(tele.ok?0xA4AE6E:0xD0583A);arcDots.forEach(d=>d.material.color.set(tele.ok?0xC9D19A:0xE07a5a));ring.userData.matrix=T4(hx,tele.ok?1:80,hz)}}
+   else if(tele.on&&ax[1]>-.3){tele.on=false;if(tele.hit&&tele.ok){const H=toRoom(hp);P.x+=tele.hit[0]-H[0];P.z+=tele.hit[2]-H[2]}arcDots.forEach(d=>d.visible=false);ring.visible=false}
+   if(Math.abs(ax[0])>.7&&!snapLatch&&!tele.on){snapLatch=true;const H=toRoom(hp);th+=ax[0]>0?-Math.PI/6:Math.PI/6;const r=rot([hp.x*100,0,hp.z*100]);P.x=H[0]-r[0];P.z=H[2]-r[2];if(menu.open)menu.place(hp,hm)}if(Math.abs(ax[0])<.3)snapLatch=false;
    if((pr(0)&&!menu.open)||pr(4)){setAuto(false);setMode(mi+1,true)}if(pr(5)){setAuto(false);setMode(mi-1,true)}}
   prevB[hd]=b;
   const gs=src.gripSpace&&frame.getPose(src.gripSpace,ref);const cm=ctrl[ci];if(gs){cm.visible=true;cm.userData.matrix=m4mul(w2r,m4mul(gs.transform.matrix,S4(.01)))}else cm.visible=false}

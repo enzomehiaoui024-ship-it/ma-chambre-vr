@@ -43,3 +43,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Commode : plan sombre derrière les façades → ombres entre tiroirs. Pots : texture de terre, rebords.
 - VR : 0 erreur, 354 lots, ~146 k triangles.
 - Scores : meubles 8 → 8,5 → **48 → 48,5/70**. Outil ajouté : `tools/evo_images.py`.
+
+## 2026-11-19 — Séance 3 : VR (téléportation, mode assis, fluidité)
+- Téléportation au stick droit (arc parabolique, atterrissage au pied du mur si l'arc touche un mur, zones interdites = meubles → arc rouge).
+- Mode assis (+45 cm de hauteur de vue), compteur images/s dans le menu (point vert ≥ 68, jaune ≥ 55, rouge en dessous).
+- Testé avec le casque simulé (xrmock : stick gauche immobile, inclinaison de manette `__ctlPitch`). 0 erreur.
+- Scores : VR 6 → 7 → **48,5 → 49,5/70**.

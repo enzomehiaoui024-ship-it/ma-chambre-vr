@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 3 — VR : téléportation, mode assis, fluidité",
+    avant: 48.5, apres: 49.5,
+    scores: { meubles: [8.5, 8.5], eclairage: [8, 8], coherence: [7, 7], liste: [7, 7], vr: [6, 7], plan: [7, 7], video: [5, 5] },
+    changements: [
+      "Téléportation : pousse le stick droit vers l'avant, vise le sol, relâche. L'arc est vert si l'endroit est libre, rouge sur un meuble (lit, bureau, commode…)",
+      "Mode assis dans le menu : la chambre se met à la bonne hauteur quand tu joues assis",
+      "Compteur de fluidité (images par seconde) dans le menu, avec un point vert, jaune ou rouge",
+      "Le menu est réorganisé avec un bouton de plus"
+    ],
+    images: [
+      ["menu-vr", "Menu dans le casque"],
+      ["teleportation", "Arc de téléportation (rouge : on ne se pose pas sur le lit)"]
+    ],
+    ensuite: "Éclairage : ombres plus douces et reflets légers sur le parquet ; revérifier les prix."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 2 — chaise Sihoo, pothos retombant, commode, pots",
     avant: 48, apres: 48.5,
     scores: { meubles: [8, 8.5], eclairage: [8, 8], coherence: [7, 7], liste: [7, 7], vr: [6, 6], plan: [7, 7], video: [5, 5] },

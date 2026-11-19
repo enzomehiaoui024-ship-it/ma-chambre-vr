@@ -16,9 +16,9 @@
 - Trouver les prix réels des articles « estimés » (matelas, alimentation, boîtier, périphériques, casque, chaise).
 
 ## VR
-- Téléportation (en plus du stick).
-- Mode assis (hauteur fixe).
-- Mesurer la fluidité (images/s) et l'afficher dans le menu.
+- Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
+- Vignette de confort pendant le déplacement au stick.
+- Mains/manettes plus détaillées.
 
 ## Vidéo
 - Refaire la visite avec les meubles v3, l'ambiance nuit et l'Ambilight.
