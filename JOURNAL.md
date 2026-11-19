@@ -1,5 +1,9 @@
 # Journal des améliorations
 
+**Objectif** : s'entraîner sur la chambre jusqu'à un niveau pro. Plus tard, le projet s'étendra à toute la maison : garder le code propre et réutilisable (meubles en fonctions, pièce paramétrable).
+
+Séances : amélioration chaque nuit à 2h41 (heure de Paris), compte rendu à Enzo à 6h52.
+
 Règle : **chaque version doit être meilleure que la précédente.** Chaque séance note son score sur la grille ci-dessous (avant / après, sur les mêmes vues de contrôle). On ne publie que si le score total augmente et qu'aucun critère ne baisse.
 
 ## Grille de score (sur 10 chacun)
