@@ -18,7 +18,7 @@ const VS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uM,uVP,uSL,uTL;uni
 void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=normalize(uNM*aN);vU=aU;vS=uSL*w;vT=uTL*(w+vec4(vN*5.,0.));gl_Position=uVP*w;}`;
 const FS=`precision highp float;${PACK}varying vec3 vW,vN;varying vec2 vU;varying vec4 vS,vT;
 uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal,uExpo,uAO;uniform float uAT;uniform int uNL,uSpec,uBasic,uHasMap,uDbl,uFract;
-uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${NPL}],uPC[${NPL}];uniform float uPD[${NPL}],uPDec[${NPL}];
+uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${NPL}],uPC[${NPL}];uniform float uPD[${NPL}],uPDec[${NPL}];uniform vec4 uPS[${NPL}];
 vec3 lin(vec3 c){return pow(c,vec3(2.2));}
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
 float ign(){return fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))));}
@@ -39,7 +39,7 @@ vec3 amb=lin(mix(uGnd,uSky,.5*n.y+.5))*uHI*ao*aoc;
 float sh=4.+(1.-uRough)*(1.-uRough)*180.;float ks=mix(.04,1.,uMetal)*(1.-uRough)*(1.-uRough)*1.6;
 vec3 dif=vec3(0.),spc=vec3(0.);
 float nl=max(dot(n,uSD),0.);if(nl>0.&&uSC.r+uSC.g>.001){float s=sunSh();vec3 h=normalize(uSD+V);dif+=uSC*nl*s;spc+=uSC*pow(max(dot(n,h),0.),sh)*s*nl;}
-for(int i=0;i<${NPL};i++){if(i>=uNL)break;vec3 d=uPP[i]-vW;float ds=length(d);if(ds>uPD[i])continue;vec3 L=d/ds;float f=pow(clamp(1.-ds/uPD[i],0.,1.),uPDec[i]);float nd=max(dot(n,L),0.);dif+=uPC[i]*f*nd;if(uSpec==1){vec3 h=normalize(L+V);spc+=uPC[i]*f*pow(max(dot(n,h),0.),sh)*nd;}}
+for(int i=0;i<${NPL};i++){if(i>=uNL)break;vec3 d=uPP[i]-vW;float ds=length(d);if(ds>uPD[i])continue;vec3 L=d/ds;float f=pow(clamp(1.-ds/uPD[i],0.,1.),uPDec[i]);if(uPS[i].w>-1.5){float cc=dot(-L,uPS[i].xyz);f*=mix(.14,1.,smoothstep(uPS[i].w,uPS[i].w+.3,cc));}float nd=max(dot(n,L),0.);dif+=uPC[i]*f*nd;if(uSpec==1){vec3 h=normalize(L+V);spc+=uPC[i]*f*pow(max(dot(n,h),0.),sh)*nd;}}
 vec3 sc=mix(vec3(1.),base,uMetal);vec3 col=base*(amb+dif)*(1.-uMetal*.5)+spc*ks*sc+base*uMetal*amb*.6+lin(uEm);
 col=aces(col*uExpo);gl_FragColor=vec4(pow(col,vec3(1./2.2)),uOp);}`;
 const QVS=`attribute vec2 aQ;varying vec2 vU;void main(){vU=aQ*.5+.5;gl_Position=vec4(aQ,0.,1.);}`;
@@ -91,8 +91,8 @@ gl.uniform3f(U.uCam,cam.position.x,cam.position.y,cam.position.z);gl.uniform1f(U
 gl.uniform3f(U.uSky,hemi.color.r,hemi.color.g,hemi.color.b);gl.uniform3f(U.uGnd,hemi.groundColor.r,hemi.groundColor.g,hemi.groundColor.b);gl.uniform1f(U.uHI,hemi.intensity);
 let d=[dir.position.x-dir.target.position.x,dir.position.y-dir.target.position.y,dir.position.z-dir.target.position.z];const l=Math.hypot(...d);gl.uniform3f(U.uSD,d[0]/l,d[1]/l,d[2]/l);
 const lin=v=>Math.pow(v,2.2);gl.uniform3f(U.uSC,lin(dir.color.r)*dir.intensity,lin(dir.color.g)*dir.intensity,lin(dir.color.b)*dir.intensity);
-const act=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay}));
-let lastKey=null;function setLights(sel){const key=sel.join(',');if(key===lastKey)return;lastKey=key;gl.uniform1i(U.uNL,sel.length);sel.forEach((k,i)=>{const p=act[k];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],p.c[0],p.c[1],p.c[2]);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec)})}
+const act=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,s:(p.userData&&p.userData.spot)||[0,0,0,-2]}));
+let lastKey=null;function setLights(sel){const key=sel.join(',');if(key===lastKey)return;lastKey=key;gl.uniform1i(U.uNL,sel.length);sel.forEach((k,i)=>{const p=act[k];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],p.c[0],p.c[1],p.c[2]);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec);gl.uniform4f(U[`uPS[${i}]`],p.s[0],p.s[1],p.s[2],p.s[3])})}
 function bsph(o,m){const g=o.geometry;if(!g.bs){const p=g.pos;let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];for(let i=0;i<p.length;i+=3)for(let k=0;k<3;k++){mn[k]=Math.min(mn[k],p[i+k]);mx[k]=Math.max(mx[k],p[i+k])}const c=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];g.bs={c,r:Math.hypot(mx[0]-c[0],mx[1]-c[1],mx[2]-c[2])}}
 const c=g.bs.c,sx=Math.hypot(m[0],m[1],m[2]),sy=Math.hypot(m[4],m[5],m[6]),sz=Math.hypot(m[8],m[9],m[10]);return{x:m[0]*c[0]+m[4]*c[1]+m[8]*c[2]+m[12],y:m[1]*c[0]+m[5]*c[1]+m[9]*c[2]+m[13],z:m[2]*c[0]+m[6]*c[1]+m[10]*c[2]+m[14],r:g.bs.r*Math.max(sx,sy,sz)}}
 gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,SM.t);gl.uniform1i(U.uSM,1);gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,TM.t);gl.uniform1i(U.uTM,2);gl.uniform1i(U.uMap,0);

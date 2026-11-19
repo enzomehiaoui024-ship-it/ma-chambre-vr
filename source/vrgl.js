@@ -5,7 +5,7 @@ const VVS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uM,uVP,uSL,uTL;un
 void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=normalize(uNM*aN);vU=aU;vS=uSL*w;vT=uTL*(w+vec4(vN*5.,0.));gl_Position=uVP*w;}`;
 const VFS=`precision highp float;${PACK}varying vec3 vW,vN;varying vec2 vU;varying vec4 vS,vT;
 uniform vec3 uCol,uEm,uSky,uGnd,uSD,uSC,uCam;uniform float uOp,uHI,uRough,uMetal,uExpo;uniform float uAT;uniform int uNL,uSpec,uBasic,uHasMap,uDbl,uFract,uSun;
-uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${VNL}],uPC[${VNL}];uniform float uPD[${VNL}],uPDec[${VNL}];
+uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${VNL}],uPC[${VNL}];uniform float uPD[${VNL}],uPDec[${VNL}];uniform vec4 uPS[${VNL}];
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
 float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float tx=1./2048.,s=0.;
 s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(-tx,-tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(tx,-tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(-tx,tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(tx,tx))))?0.:1.;return s*.25;}
@@ -19,7 +19,7 @@ float aoc=1.-inR*(.32*(1.-smoothstep(0.,40.,dw))*(1.-smoothstep(0.,40.,dy))+.22*
 vec3 amb=mix(uGnd,uSky,.5*n.y+.5)*uHI*topAO()*aoc;
 float sh=4.+(1.-uRough)*(1.-uRough)*180.;float ks=mix(.04,1.,uMetal)*(1.-uRough)*(1.-uRough)*1.6;vec3 dif=vec3(0.),spc=vec3(0.);
 if(uSun==1){float nl=max(dot(n,uSD),0.);if(nl>0.){float s=sunSh();dif+=uSC*nl*s;if(uSpec==1)spc+=uSC*pow(max(dot(n,normalize(uSD+V)),0.),sh)*s*nl;}}
-for(int i=0;i<${VNL};i++){if(i>=uNL)break;vec3 d=uPP[i]-vW;float ds=length(d);if(ds>uPD[i])continue;vec3 L=d/ds;float f=pow(1.-ds/uPD[i],uPDec[i]);float nd=max(dot(n,L),0.);dif+=uPC[i]*f*nd;if(uSpec==1)spc+=uPC[i]*f*pow(max(dot(n,normalize(L+V)),0.),sh)*nd;}
+for(int i=0;i<${VNL};i++){if(i>=uNL)break;vec3 d=uPP[i]-vW;float ds=length(d);if(ds>uPD[i])continue;vec3 L=d/ds;float f=pow(1.-ds/uPD[i],uPDec[i]);if(uPS[i].w>-1.5){float cc=dot(-L,uPS[i].xyz);f*=mix(.14,1.,smoothstep(uPS[i].w,uPS[i].w+.3,cc));}float nd=max(dot(n,L),0.);dif+=uPC[i]*f*nd;if(uSpec==1)spc+=uPC[i]*f*pow(max(dot(n,normalize(L+V)),0.),sh)*nd;}
 vec3 col=base*(amb+dif)*(1.-uMetal*.5)+spc*ks*mix(vec3(1.),base,uMetal)+base*uMetal*amb*.6+uEm;
 gl_FragColor=vec4(pow(aces(col*uExpo),vec3(1./2.2)),uOp);}`;
 function makeVRRenderer(gl,scene,dynamicSet){
@@ -71,7 +71,7 @@ const api={batches,dyn};api.retex=t=>{const r=texs.get(t);if(r){gl.deleteTexture
 api.updateShadows=function(sd){const c={x:180,y:90,z:180};SL=m4mul(ortho(-300,300,-300,300,200,1300),look({x:c.x+sd[0]*700,y:c.y+sd[1]*700,z:c.z+sd[2]*700},c));shadowPass(SM,SL,false);
  if(!TL){TL=m4mul(ortho(-210,210,-210,210,10,310),look({x:180,y:260,z:180},{x:180,y:-40,z:180.0001}));shadowPass(TM,TL,true)}};
 let frameLights=[],frameSun=null;
-api.begin=function(expo){const {pts,hemi,dir}=collect();frameLights=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,w:p.intensity*(p.color.r+p.color.g+p.color.b)}));
+api.begin=function(expo){const {pts,hemi,dir}=collect();frameLights=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,s:(p.userData&&p.userData.spot)||[0,0,0,-2],w:p.intensity*(p.color.r+p.color.g+p.color.b)}));
  for(const b of batches){const sel=[];frameLights.forEach((p,k)=>{const dd=Math.hypot(p.x-b.ctr[0],p.y-b.ctr[1],p.z-b.ctr[2]);if(dd<p.d+b.r)sel.push([k,p.w*Math.pow(Math.max(.05,1-Math.max(0,dd-b.r)/p.d),p.dec)])});sel.sort((a,b2)=>b2[1]-a[1]);b.lights=sel.slice(0,VNL).map(s=>s[0]);b.lkey=b.lights.join(',')}
  let d=[dir.position.x-dir.target.position.x,dir.position.y-dir.target.position.y,dir.position.z-dir.target.position.z];const l=Math.hypot(...d);frameSun={dir:d.map(v=>v/l),col:[lin(dir.color.r)*dir.intensity,lin(dir.color.g)*dir.intensity,lin(dir.color.b)*dir.intensity],hemi,expo}};
 // draw one view: VP maps world(cm)->clip, cam = eye pos in cm
@@ -81,7 +81,7 @@ api.drawView=function(VP,cam,viewport,clear){const U=PM.U;if(viewport)gl.viewpor
  const h=frameSun.hemi;gl.uniform3f(U.uSky,lin(h.color.r),lin(h.color.g),lin(h.color.b));gl.uniform3f(U.uGnd,lin(h.groundColor.r),lin(h.groundColor.g),lin(h.groundColor.b));gl.uniform1f(U.uHI,h.intensity);
  gl.uniform3f(U.uSD,...frameSun.dir);gl.uniform3f(U.uSC,...frameSun.col);gl.uniform1i(U.uSun,frameSun.col[0]+frameSun.col[1]>.002?1:0);
  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,SM.t);gl.uniform1i(U.uSM,1);gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,TM.t);gl.uniform1i(U.uTM,2);gl.uniform1i(U.uMap,0);
- let lk=null;const setL=ids=>{const k=ids.join(',');if(k===lk)return;lk=k;gl.uniform1i(U.uNL,ids.length);ids.forEach((id,i)=>{const p=frameLights[id];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],...p.c);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec)})};
+ let lk=null;const setL=ids=>{const k=ids.join(',');if(k===lk)return;lk=k;gl.uniform1i(U.uNL,ids.length);ids.forEach((id,i)=>{const p=frameLights[id];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],...p.c);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec);gl.uniform4f(U[`uPS[${i}]`],p.s[0],p.s[1],p.s[2],p.s[3])})};
  const setMat=mt=>{gl.uniform3f(U.uCol,...(mt.basic?[mt.color.r,mt.color.g,mt.color.b]:[lin(mt.color.r),lin(mt.color.g),lin(mt.color.b)]));const ei=mt.emissiveIntensity;gl.uniform3f(U.uEm,lin(mt.emissive.r)*ei,lin(mt.emissive.g)*ei,lin(mt.emissive.b)*ei);
   gl.uniform1f(U.uOp,mt.opacity);gl.uniform1i(U.uBasic,mt.basic?1:0);gl.uniform1i(U.uDbl,mt.side===2?1:0);gl.uniform1f(U.uRough,mt.roughness);gl.uniform1f(U.uAT,mt.alphaTest||0);gl.uniform1f(U.uMetal,mt.metalness);gl.uniform1i(U.uSpec,mt.roughness<.75?1:0);
   if(mt.map){const T=tex(mt.map);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,T.o);gl.uniform1i(U.uHasMap,1);gl.uniform1i(U.uFract,T.P2?0:1);gl.uniform2f(U.uRep,mt.map.repeat.x,mt.map.repeat.y)}else gl.uniform1i(U.uHasMap,0);

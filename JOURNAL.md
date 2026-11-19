@@ -95,3 +95,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Essai : reflet d'environnement Fresnel + reflet de la fenêtre (intersection du rayon réfléchi avec le plan z=370) dans gl2 et vrgl.
 - Résultat : différence très faible (léger brillant sur le bureau et l'écran), poignées noires devenues grises, image un peu plus « voilée ». **Pas meilleur → annulé, rien publié.**
 - Piste pour plus tard : reflet planaire du parquet seulement (rendu miroir flouté), ou un « spot » de reflet de fenêtre peint dans la texture du sol en mode jour.
+
+## 2026-11-20 — Séance 12 : lampes directionnelles
+- `userData.spot=[dx,dy,dz,cosOuter]` sur les PointLight (room.js) ; uniforme `uPS[]` dans gl2 et vrgl : atténuation `mix(.14,1,smoothstep(cos,cos+.3,dot(-L,dir)))` (14 % de lumière hors du cône = abat-jour qui diffuse un peu).
+- Cônes : arc (bas, .15), FORSÅ (vers le clavier, .45), spot plante (haut, .55), LED sneakers (bas, .1).
+- Mode jour inchangé ; soir/cosy plus contrastés, plafond moins brûlé. VR : 0 erreur.
+- Scores : éclairage 8,5 → 9 → **55 → 55,5/70**.

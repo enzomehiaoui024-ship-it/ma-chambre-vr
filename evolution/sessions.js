@@ -3,6 +3,26 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 12 — lumière des lampes plus réaliste",
+    avant: 55, apres: 55.5,
+    scores: { meubles: [9.5, 9.5], eclairage: [8.5, 9], coherence: [7.5, 7.5], liste: [7.5, 7.5], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Le lampadaire arc éclaire maintenant vers le bas, comme un vrai abat-jour : flaque de lumière sur le lit et le tapis, plafond au-dessus plus sombre",
+      "La lampe FORSÅ éclaire vers le clavier au lieu de toute la pièce",
+      "Le spot au sol éclaire le ficus par en dessous, les LED des étagères à sneakers éclairent vers le bas",
+      "Même amélioration dans le casque VR"
+    ],
+    images: [
+      ["nuit-cosy-lumiere", "Nuit cosy"],
+      ["lampadaire-arc", "Lampadaire arc (soir)"],
+      ["ficus-spot", "Ficus éclairé par le spot"],
+      ["bureau-soir", "Bureau le soir"],
+      ["soir-lit", "Lit le soir"]
+    ],
+    ensuite: "Revoir la vidéo avec la nouvelle lumière et des titres mieux calés."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 10 — confort en VR",
     avant: 54.5, apres: 55,
     scores: { meubles: [9.5, 9.5], eclairage: [8.5, 8.5], coherence: [7.5, 7.5], liste: [7.5, 7.5], vr: [7, 7.5], plan: [7.5, 7.5], video: [7, 7] },
