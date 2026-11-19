@@ -1,10 +1,7 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Meubles 3D
-- Lit : piqûres/coutures de la housse de couette, oreillers plus moelleux.
 - Tapis : relief des poils (texture normale simulée).
-- Platine vinyle : bras de lecture et vinyle qui tourne en VR.
-- Plis du plaid et du drap (léger relief).
 
 ## Éclairage
 - Ombres des lampes (cube map pour le lampadaire et la FADO) — le soleil a déjà des ombres douces.

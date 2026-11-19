@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-19",
+    titre: "Séance 6 — housse de couette, oreillers, platine vinyle",
+    avant: 51, apres: 51.5,
+    scores: { meubles: [9, 9.5], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7.5, 7.5], vr: [7, 7], plan: [7, 7], video: [5, 5] },
+    changements: [
+      "Housse de couette olive : plis doux de tissu (comme une vraie housse en percale)",
+      "Oreillers plus moelleux, bombés au centre avec une couture tout autour",
+      "Platine AT-LP60X : vinyle avec ses sillons et reflet, couvercle transparent ouvert, contrepoids du bras et repose-bras",
+      "Correction : on voit maintenant la platine même en gros plan"
+    ],
+    images: [
+      ["platine-gros-plan", "Platine vinyle de près"],
+      ["platine-kallax", "Platine sur le Kallax"],
+      ["housse-plis", "Housse de couette"],
+      ["lit-oreillers", "Oreillers et coussins"]
+    ],
+    ensuite: "Plan 3D sur téléphone : vérifier les boutons et la fluidité ; puis la vidéo de visite."
+  },
+  {
+    date: "2026-11-19",
     titre: "Séance 5 — prix de la liste revérifiés",
     avant: 50.5, apres: 51,
     scores: { meubles: [9, 9], eclairage: [8.5, 8.5], coherence: [7, 7], liste: [7, 7.5], vr: [7, 7], plan: [7, 7], video: [5, 5] },

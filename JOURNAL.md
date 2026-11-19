@@ -61,3 +61,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - SSD 2 To 200 → 299,99 € (Predator GM9000, Black November ; marché 300-360 €). Alimentation → Corsair RM850e (2025) 134,95 € LDLC. Chaise Sihoo 300 → 309,99 €. GPU : prix gardé à 899,90 €, confirmé (847,92 € à 889,99 € vus aujourd'hui, jusqu'à 1 400 € sur certaines fiches).
 - **Total : 7 214,67 → 7 349,60 €** (gaming 3 858,71 €).
 - Scores : liste 7 → 7,5 → **50,5 → 51/70**. Restent estimés : boîtier, périphériques, casque.
+
+## 2026-11-19 — Séance 6 : lit et platine
+- Housse : texture `quiltT` (plis doux : ellipses à dégradé, générateur local pour ne pas décaler `rnd`). Essai de matelassage rejeté (une housse en percale n'est pas matelassée).
+- Oreillers : base RB + ellipsoïde pour le bombé + passepoil. Essai d'ellipsoïde sur les coussins rejeté (cercle visible).
+- Platine : disque à sillons (plan alphaTest), couvercle acrylique ouvert contre le mur, contrepoids, repose-bras.
+- VR : 0 erreur, 361 lots, ~149 k triangles.
+- Scores : meubles 9 → 9,5 → **51 → 51,5/70**.
