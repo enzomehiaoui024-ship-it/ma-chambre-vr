@@ -34,7 +34,7 @@ ul{padding-left:18px;margin:6px 0 12px}li{margin:3px 0;font-size:15px}
 <script src="evolution/sessions.js"></script>
 <script>
 const S=window.SESSIONS||[],K=[["meubles","Meubles"],["eclairage","Éclairage"],["coherence","Plan ↔ liste"],["liste","Liste d'achat"],["vr","VR Quest 2"],["plan","Plan 3D"],["video","Vidéo"]];
-const fr=v=>v==null?'':String(Math.round(v*10)/10).replace('.',',');const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fr=v=>v==null?'':String(Math.round(v*100)/100).replace('.',',');const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const last=S[0];document.getElementById('big').innerHTML=last?`${fr(last.apres)}<small> / 70</small>`:'';
 // courbe
 (()=>{const pts=S.slice().reverse().map(s=>s.apres);if(pts.length<1)return;const W=600,H=150,p=28,mn=Math.min(...pts)-2,mx=Math.max(...pts)+2;
