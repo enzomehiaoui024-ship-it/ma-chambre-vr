@@ -15,7 +15,6 @@
 
 ## VR
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
-- Mains/manettes plus détaillées.
 
 ## Vidéo
 - Vidéo : avancer les titres d'environ 1 s ; version verticale pour téléphone.

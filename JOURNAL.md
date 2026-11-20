@@ -117,3 +117,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Titres de la visite recalés sur les images clés (sujet ±1,2 s).
 - Les meubles approchent du maximum : notation au quart de point pour ce critère.
 - Scores : meubles 9,5 → 9,75 → **56,5 → 56,75/70**.
+
+## 2026-11-20 — Séance 16 : manettes VR
+- `ctrl` = 8 pièces par main (poignée, tête, anneau, stick + capuchon, 2 boutons, gâchette), matrices locales multipliées par la pose `gripSpace` ; légère émission pour rester lisibles la nuit. Design générique (pas de copie de marque).
+- Mock XR : `__ctlPos` / `__ctlYaw` pour placer la manette devant les yeux.
+- Scores : VR 7,5 → 8 → **56,75 → 57,25/70**.

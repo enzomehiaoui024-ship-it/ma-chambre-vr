@@ -3,6 +3,18 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 16 — manettes visibles dans le casque",
+    avant: 56.75, apres: 57.25,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 8], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Dans le casque, tes manettes ne sont plus des boîtes : poignée inclinée, tête ronde avec stick, deux boutons et gâchette",
+      "Elles restent visibles même dans le noir (mode nuit cosy)"
+    ],
+    images: [["manettes-vr", "Manette dans le casque (nuit cosy)"]],
+    ensuite: "Vidéo refaite avec toutes les améliorations de la nuit."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 15 — suspension GULLSUDARE en papier de riz",
     avant: 56.5, apres: 56.75,
     scores: { meubles: [9.5, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
