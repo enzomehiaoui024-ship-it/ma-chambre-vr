@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 20 — fiches produit aussi dans le casque VR",
+    avant: 59.25, apres: 59.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8], liste: [8.5, 8.5], vr: [8, 8.5], plan: [8, 8], video: [7.5, 7.5] },
+    changements: [
+      "En VR, vise un meuble et serre la poignée (bouton sous le majeur) : un rayon le touche, il s'entoure d'un cadre vert et sa fiche apparaît devant toi (magasin, nom, modèle, prix)",
+      "« Aussi ici » liste les autres articles au même endroit",
+      "La fiche reste 5 secondes après avoir relâché la poignée",
+      "Mêmes données que le plan 3D et la liste : un prix changé dans la liste change partout"
+    ],
+    images: [
+      ["vr-fiche-rideaux", "Rideaux visés depuis le casque"],
+      ["vr-fiche-lit", "Lit : housse, couette, matelas…"]
+    ],
+    ensuite: "Vidéo verticale pour téléphone."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 19 — liste : périphériques et coussins au vrai prix",
     avant: 58.75, apres: 59.25,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8], liste: [8, 8.5], vr: [8, 8], plan: [8, 8], video: [7.5, 7.5] },

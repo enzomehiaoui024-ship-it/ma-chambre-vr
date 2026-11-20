@@ -140,3 +140,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - `coussins2` : PROFETBLOMMA ikea.fr 4,49 € (3,99 € sur la fiche, 4,49 € sur la liste des coussins ; on garde le plus haut). Lien ikea.fr.
 - Reste estimé : spots plantes (25 €).
 - Total : 7 388,50 → **7 325,34 €**. Scores : liste 8 → 8,5 → **58,75 → 59,25/70**.
+
+## 2026-11-20 — Séance 20 : fiches produit en VR
+- `vr.html` charge `items.js` + `catalog.js` (inlinés par build.py). Poignée (buttons[1]) d'une manette, menu fermé : rayon → `pickCat` (même règle que le plan 3D : la plus proche, la plus petite à 5 cm près) → 12 arêtes vertes + panneau 56×23 cm (canvas 1024×420) à ≤ 70 cm devant la tête, tourné vers elle ; disparaît 5 s après.
+- Sous-titre du menu et aide de la page mis à jour. Mock : `__gp.buttons[1]` + `__ctlPitch`.
+- VR : 0 erreur. Scores : VR 8 → 8,5 → **59,25 → 59,75/70**.
