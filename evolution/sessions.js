@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 19 — liste : périphériques et coussins au vrai prix",
+    avant: 58.75, apres: 59.25,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8], liste: [8, 8.5], vr: [8, 8], plan: [8, 8], video: [7.5, 7.5] },
+    changements: [
+      "Clavier + souris + tapis : proposition précise au lieu d'un prix estimé (Corsair K70 Core TKL, Logitech G305, tapis 90×40) → 147,84 € au lieu de 200 €",
+      "Coussins moutarde PROFETBLOMMA : lien ikea.fr (au lieu de la Suisse) et vrai prix 4,49 € au lieu de 9,99 €",
+      "Total de la liste : 7 388,50 € → 7 325,34 €",
+      "Les fiches du plan 3D affichent automatiquement ces nouveaux prix"
+    ],
+    images: [
+      ["liste-peripheriques", "Clavier, souris et tapis"],
+      ["liste-coussins", "Coussins moutarde"]
+    ],
+    ensuite: "Les périphériques sont une proposition : Enzo peut garder d'autres modèles."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 18 — touche un meuble dans le plan 3D pour voir sa fiche",
     avant: 57.75, apres: 58.75,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 8], liste: [8, 8], vr: [8, 8], plan: [7.5, 8], video: [7.5, 7.5] },

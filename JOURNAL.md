@@ -134,3 +134,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Non cliquables : pochettes, supports vinyles, « Now Playing » (emplacement à décider), étagères flottantes Action, chevilles.
 - Publication du plan 3D : ajouter `items.js` et `catalog.js` aux fichiers de l'artifact.
 - Scores : cohérence 7,5 → 8, plan 3D 7,5 → 8 → **57,75 → 58,75/70**.
+
+## 2026-11-20 — Séance 19 : prix des périphériques et des coussins
+- `periph` : proposition Corsair K70 Core TKL 92,95 € (LDLC) + Logitech G305 39,99 € (logitech.fr, promo ; 66,95 € LDLC) + The G-Lab Pad Selenium 90x40 14,90 € (Grosbill) = 147,84 € (au lieu de 200 € estimés). **À valider par Enzo.**
+- `coussins2` : PROFETBLOMMA ikea.fr 4,49 € (3,99 € sur la fiche, 4,49 € sur la liste des coussins ; on garde le plus haut). Lien ikea.fr.
+- Reste estimé : spots plantes (25 €).
+- Total : 7 388,50 → **7 325,34 €**. Scores : liste 8 → 8,5 → **58,75 → 59,25/70**.
