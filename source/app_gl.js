@@ -107,7 +107,7 @@ const CAP=[
 [47.6,53.0,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
 [54.6,57.6,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
 [58.2,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
-[63.0,66.0,'13 · LE PLAN','Vu d\'en haut','13 m² · 3,60 × 3,60 m']];
+[63.0,66.0,'13 · LE PLAN','Cotes et passages','3,60 × 3,60 m · passages de 91 à 133 cm']];
 
 
 // ---------- touch / mouse orbit ----------
@@ -148,9 +148,9 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
  if(window.__onframe)window.__onframe()}
 window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
- const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
+ const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);if(window.__mesVis)window.__mesVis(t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
- const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;
+ const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
  let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}
  if(sh&&al>0){g.save();g.globalAlpha=al;const x=56*k,y=60*k;const gr=g.createLinearGradient(0,0,620*k,0);gr.addColorStop(0,'rgba(10,10,9,.55)');gr.addColorStop(1,'rgba(10,10,9,0)');g.fillStyle=gr;g.fillRect(0,y-38*k,640*k,130*k);
   g.fillStyle='#A4AE6E';g.fillRect(x,y-28*k,5*k,104*k);g.fillStyle='#C9D19A';g.font=`600 ${15*k}px Inter, sans-serif`;g.fillText(sh[2].split('').join(String.fromCharCode(8202)),x+20*k,y-6*k);
@@ -202,5 +202,10 @@ setup();setMode('cosy');frame();
  const uiE=document.getElementById('ui');function upd(){if(!on)return;requestAnimationFrame(upd);const r=cv.getBoundingClientRect();const yMax=(uiE?uiE.getBoundingClientRect().top:r.bottom)-14,yMin=r.top+48;for(const m of els){const q=proj(m.p);const y=q&&r.top+(1-q[1])/2*r.height;if(!q||Math.abs(q[0])>1.05||y<yMin||y>yMax){m.el.style.display='none';continue}m.el.style.display='';const w=m.el.offsetWidth||80;m.el.style.left=Math.max(r.left+w/2+4,Math.min(r.right-w/2-4,r.left+(q[0]+1)/2*r.width))+'px';m.el.style.top=y+'px'}}
  btn.onclick=()=>{on=!on;btn.classList.toggle('on',on);g.visible=on;lay.style.display=on?'':'none';if(on){flyTo('dessus');upd()}};lay.style.display='none';
  window.__mesures=v=>{if(v!==on)btn.onclick()};
+ const mA=t=>ss(62.6,63.4,t)*(1-ss(66.0,66.6,t));window.__mesVis=t=>{g.visible=on||mA(t)>0};
+ window.__mesDraw=(t,ctx,W,H,k)=>{const a=mA(t);if(a<=0)return;ctx.save();ctx.globalAlpha=a;
+  for(const m of els){const q=proj(m.p);if(!q||Math.abs(q[0])>1||Math.abs(q[1])>1)continue;const x=(q[0]+1)/2*W,y=(1-q[1])/2*H;const n=m.el.querySelector('small').textContent,v=m.el.textContent.slice(n.length);
+   ctx.font=`500 ${11*k}px Inter, sans-serif`;const w0=ctx.measureText(n).width;ctx.font=`700 ${12.5*k}px Inter, sans-serif`;const w1=ctx.measureText(v).width;const w=w0+w1+22*k,h=22*k;
+   ctx.fillStyle=m.el.className==='p'?'#F6F2E8':'#D8E48A';ctx.beginPath();ctx.roundRect(x-w/2,y-h/2,w,h,h/2);ctx.fill();ctx.fillStyle='rgba(27,29,18,.75)';ctx.font=`500 ${11*k}px Inter, sans-serif`;ctx.fillText(n,x-w/2+8*k,y+4*k);ctx.fillStyle='#1b1d12';ctx.font=`700 ${12.5*k}px Inter, sans-serif`;ctx.fillText(v,x-w/2+14*k+w0,y+4.5*k)}ctx.restore()};
 })();
 })();

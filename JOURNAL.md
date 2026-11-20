@@ -159,3 +159,8 @@ Vues de contrôle fixes (tools/preview.py) :
 ## 2026-11-20 — Séance 23 : mesures en VR
 - Menu VR agrandi (canvas 1024×900, MH 56,25) avec « Afficher les mesures ». Barres (MeshBasic) + étiquettes canvas 512×128 (plan 32×8 cm) tournées vers la tête à chaque image, agrandies au-delà de 1,1 m (`k = dist/110`). 30 objets dynamiques de plus seulement quand c'est affiché.
 - VR : 0 erreur. Scores : VR 8,5 → 8,75 → **61,25 → 61,5/70**.
+
+## 2026-11-20 — Séance 24 : derniers prix estimés
+- Suspension GULLSUDARE/HAVSDJUP 45 cm : 8,49 € (ikea.fr ; 70 cm à 11,99 €) au lieu de 30 € estimés. Spots plantes : lot de 2 spots de sol 3 W, télécommande, 32,59 € (Leroy Merlin, vendeur partenaire).
+- Restent non confirmés cette semaine : carte mère + AIO (B850 Gaming Plus WiFi vue à 209,99 € chez TopAchat), barre de son Ultimea Apollo S40 (89,99 € en promo Cdiscount en juin, 129,99 € prix public).
+- Total : 7 295,34 → **7 281,42 €**. Scores : liste 8,75 → 9 → **61,5 → 61,75/70**.

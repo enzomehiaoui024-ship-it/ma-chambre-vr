@@ -15,7 +15,7 @@
 ## Liste d'achat
 - Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11).
 - Remplacer le ruban LED TV par un kit Ambilight à caméra (si l'utilisateur valide).
-- Trouver le prix réel des spots pour plantes (seul article encore estimé).
+- Confirmer le prix de la carte mère + AIO et de la barre de son Ultimea.
 
 ## VR
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).

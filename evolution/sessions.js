@@ -3,6 +3,22 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 24 — plus aucun prix estimé dans la liste",
+    avant: 61.5, apres: 61.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.5], liste: [8.75, 9], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Suspension boule papier GULLSUDARE + monture HAVSDJUP 45 cm : 8,49 € sur ikea.fr (elle était comptée 30 €)",
+      "Spots pour les plantes : un vrai lot de 2 spots de sol 3 W avec télécommande, 32,59 € chez Leroy Merlin",
+      "Total de la liste : 7 295,34 € → 7 281,42 €"
+    ],
+    images: [
+      ["liste-suspension", "Suspension papier"],
+      ["liste-spots", "Spots pour les plantes"]
+    ],
+    ensuite: "Revérifier la carte mère + watercooling et la barre de son (derniers prix pas encore confirmés cette semaine)."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 23 — les mesures aussi dans le casque VR",
     avant: 61.25, apres: 61.5,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.5], liste: [8.75, 8.75], vr: [8.5, 8.75], plan: [8.5, 8.5], video: [8, 8] },
