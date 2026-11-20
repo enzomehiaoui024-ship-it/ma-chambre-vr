@@ -3,6 +3,21 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 23 — les mesures aussi dans le casque VR",
+    avant: 61.25, apres: 61.5,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.5], liste: [8.75, 8.75], vr: [8.5, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Nouveau bouton « Afficher les mesures » dans le menu VR : les mêmes cotes que le plan 3D apparaissent en vrai dans la chambre",
+      "Les étiquettes se tournent toujours vers toi et grossissent quand elles sont loin, pour rester lisibles",
+      "Les passages (lit ↔ commode, bureau ↔ lit, portant) sont en blanc : tu peux vérifier en marchant que ça passe"
+    ],
+    images: [
+      ["vr-mesures", "Cotes du lit vues depuis le casque"]
+    ],
+    ensuite: "Vidéo v5 avec les mesures et les fiches produit."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 22 — bouton « Mesures » dans le plan 3D",
     avant: 60.5, apres: 61.25,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.25, 8.5], liste: [8.75, 8.75], vr: [8.5, 8.5], plan: [8, 8.5], video: [8, 8] },

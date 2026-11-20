@@ -155,3 +155,7 @@ Vues de contrôle fixes (tools/preview.py) :
 - `source/mesures.js` : 15 cotes `[x1,y1,z1,x2,y2,z2,nom]` (longueur calculée, « Passage » en blanc). `app_gl.js` : barres + talons 3D (MeshBasic, sans ombre), étiquettes HTML projetées à chaque image, cachées sous la barre de boutons et bornées à l'écran ; le bouton vole vers la vue de dessus.
 - Passages vérifiés : lit ↔ commode 121 cm, bureau ↔ lit 91 cm, portant ↔ lit 133 cm (≥ 80 cm partout).
 - Scores : cohérence 8,25 → 8,5, plan 3D 8 → 8,5 → **60,5 → 61,25/70**.
+
+## 2026-11-20 — Séance 23 : mesures en VR
+- Menu VR agrandi (canvas 1024×900, MH 56,25) avec « Afficher les mesures ». Barres (MeshBasic) + étiquettes canvas 512×128 (plan 32×8 cm) tournées vers la tête à chaque image, agrandies au-delà de 1,1 m (`k = dist/110`). 30 objets dynamiques de plus seulement quand c'est affiché.
+- VR : 0 erreur. Scores : VR 8,5 → 8,75 → **61,25 → 61,5/70**.
