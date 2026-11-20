@@ -105,3 +105,9 @@ Vues de contrôle fixes (tools/preview.py) :
 ## 2026-11-20 — Séance 13 : prix
 - Boîtier → Lian Li LANCOOL 207 noir 89,95 € (LDLC). Casque → Arctis Nova 5 Wireless 139,95 € (LDLC). Matelas VALEVÅG 250 → 279 € (ikea.fr, 140x200 : **taille 140x190 à confirmer avec Enzo**).
 - Total : 7 349,60 → **7 388,50 €**. Scores : liste 7,5 → 8 → **55,5 → 56/70**.
+
+## 2026-11-20 — Séance 14 : extérieur et sneakers
+- `facT(lit,k)` : 4 styles de façade (pierre, gris, brique, blanc), cadres, rideaux, balcons, bandeaux ; fenêtres allumées en dégradé. Ciel 512² avec nuages en dégradés radiaux. Arbres texturés (feuillage).
+- Générateurs locaux + simulation de l'ancienne consommation de `rnd()` (`for(i<56)rnd()` et boucle des fenêtres) → le reste de la chambre garde exactement la même disposition aléatoire.
+- Sneakers : nouvelle fonction `sneaker()` (semelle 2 couches, bout ellipsoïde, col, languette, lacets, talon). VR ~152 k triangles.
+- Scores : éclairage/ambiances 9 → 9,5 → **56 → 56,5/70**.

@@ -3,6 +3,26 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 14 — vue par la fenêtre et sneakers",
+    avant: 56, apres: 56.5,
+    scores: { meubles: [9.5, 9.5], eclairage: [9, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "Immeubles dehors refaits : façades en pierre, en brique ou claires, fenêtres avec cadres, rebords, rideaux, balcons",
+      "La nuit, les fenêtres allumées ont une lumière dégradée plus naturelle",
+      "Ciel de jour plus profond avec des nuages doux, arbres avec un vrai feuillage",
+      "Sneakers refaites : semelle en deux couches, bout arrondi, col, languette, lacets et languette au talon"
+    ],
+    images: [
+      ["fenetre-jour", "Vue par la fenêtre, le jour"],
+      ["fenetre-nuit", "Vue par la fenêtre, la nuit"],
+      ["fenetre-coucher", "Coucher de soleil"],
+      ["sneakers-mur", "Étagères à sneakers"],
+      ["sneakers-portant", "Sneakers sur le portant"]
+    ],
+    ensuite: "Refaire la vidéo avec toutes les améliorations de la nuit."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 13 — derniers prix estimés remplacés",
     avant: 55.5, apres: 56,
     scores: { meubles: [9.5, 9.5], eclairage: [9, 9], coherence: [7.5, 7.5], liste: [7.5, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
