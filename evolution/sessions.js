@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 18 — touche un meuble dans le plan 3D pour voir sa fiche",
+    avant: 57.75, apres: 58.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 8], liste: [8, 8], vr: [8, 8], plan: [7.5, 8], video: [7.5, 7.5] },
+    changements: [
+      "Dans le plan 3D, touche n'importe quel meuble ou objet : il s'entoure d'un cadre vert et sa fiche s'ouvre (nom, modèle, magasin, prix, lien vers le produit)",
+      "« Aussi ici » : les autres articles au même endroit (ex. sur le lit : housse, couette, matelas, drap, protège-matelas)",
+      "Les prix des fiches viennent directement de la liste d'achat : une seule source, toujours à jour",
+      "73 articles de la liste sont maintenant cliquables dans la chambre"
+    ],
+    images: [
+      ["fiche-commode", "Commode : fiche et cadre de sélection"],
+      ["fiche-ecran", "Écran gaming"],
+      ["fiche-pc", "Boîtier du PC sous le bureau"],
+      ["fiche-plaid", "Plaid sur le lit"]
+    ],
+    ensuite: "Placer les étagères à pochettes, les supports vinyles et le « Now Playing » (à décider avec Enzo)."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 17 — vidéo de visite v4",
     avant: 57.25, apres: 57.75,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [8, 8], plan: [7.5, 7.5], video: [7, 7.5] },

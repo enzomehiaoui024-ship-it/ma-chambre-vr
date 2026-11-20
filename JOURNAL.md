@@ -127,3 +127,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Même parcours, titres recalés, toutes les améliorations des séances 10 à 16. Rendu en 6 lots reprenables (~50 min, la machine a redémarré pendant le dernier lot sans perte grâce aux images sur disque).
 - `video/visite.mp4` = v4 ; la v3 est gardée (`video/visite_v3.mp4`) pour comparer sur la page Évolution.
 - Scores : vidéo 7 → 7,5 → **57,25 → 57,75/70**.
+
+## 2026-11-20 — Séance 18 : fiches produit dans le plan 3D
+- `source/catalog.js` : 50 boîtes cliquables (cm) → ids de la liste ; `source/items.js` généré par `tools/build.py` depuis `liste_achat.html` (une seule source pour les prix ; le build signale les ids inconnus).
+- `app_gl.js` : tap court (< 9 px, < 450 ms) → rayon caméra, intersection des boîtes, la plus proche (et la plus petite si deux boîtes se touchent à 5 cm près). Cadre vert (12 arêtes + remplissage additif) + fiche (magasin, nom, modèle, prix × qté, « prix vérifié », note, lien produit ou recherche magasin, « Aussi ici »).
+- Non cliquables : pochettes, supports vinyles, « Now Playing » (emplacement à décider), étagères flottantes Action, chevilles.
+- Publication du plan 3D : ajouter `items.js` et `catalog.js` aux fichiers de l'artifact.
+- Scores : cohérence 7,5 → 8, plan 3D 7,5 → 8 → **57,75 → 58,75/70**.

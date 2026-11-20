@@ -1,5 +1,9 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
+## Plan 3D
+- Bouton « Liste » dans le plan : ouvrir la liste d'achat filtrée sur la zone touchée.
+- Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
+
 ## Meubles 3D
 - Tapis : relief des poils (texture normale simulée).
 

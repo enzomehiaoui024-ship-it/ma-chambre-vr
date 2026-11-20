@@ -116,13 +116,13 @@ function fromPos(p,q){const dx=p.x-q.x,dy=p.y-q.y,dz=p.z-q.z;sph.r=Math.hypot(dx
 function toPos(){const s=Math.sin(sph.ph);cam.position.set(tgt.x+sph.r*s*Math.sin(sph.th),tgt.y+sph.r*Math.cos(sph.ph),tgt.z+sph.r*s*Math.cos(sph.th));cam.lookAt(tgt)}
 fromPos({x:310,y:155,z:70},tgt);
 let ctlOn=true;const pts=new Map();let pd=0,pc=null;
-cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});fly=null;if(tour)stopTour()});
-cv.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId)||!ctlOn)return;const p=pts.get(e.pointerId);const dx=e.clientX-p.x,dy=e.clientY-p.y;
+let tap=null;cv.addEventListener('pointerdown',e=>{tap=pts.size===0?{x:e.clientX,y:e.clientY,t:performance.now()}:null;cv.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});fly=null;if(tour)stopTour()});
+cv.addEventListener('pointermove',e=>{if(tap&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>=9)tap=null;if(!pts.has(e.pointerId)||!ctlOn)return;const p=pts.get(e.pointerId);const dx=e.clientX-p.x,dy=e.clientY-p.y;
  if(pts.size===1){sph.th-=dx*.006;sph.ph=Math.max(.08,Math.min(3.0,sph.ph-dy*.006))}
  else if(pts.size===2){const a=[...pts.values()];p.x=e.clientX;p.y=e.clientY;const b=[...pts.values()];const d=Math.hypot(b[0].x-b[1].x,b[0].y-b[1].y);const c={x:(b[0].x+b[1].x)/2,y:(b[0].y+b[1].y)/2};
   if(pd){sph.r=Math.max(25,Math.min(1100,sph.r*pd/d));if(pc){const s=sph.r*.0016;const rx=Math.cos(sph.th),rz=-Math.sin(sph.th);tgt.x-=(c.x-pc.x)*s*rx;tgt.z-=(c.x-pc.x)*s*rz;tgt.y+=(c.y-pc.y)*s}}pd=d;pc=c;return}
  p.x=e.clientX;p.y=e.clientY});
-const up=e=>{pts.delete(e.pointerId);pd=0;pc=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+const up=e=>{if(tap&&e.type==='pointerup'&&pts.size===1&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<9&&performance.now()-tap.t<450&&window.__pick)window.__pick(e.clientX,e.clientY);tap=null;pts.delete(e.pointerId);pd=0;pc=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 cv.addEventListener('wheel',e=>{e.preventDefault();sph.r=Math.max(25,Math.min(1100,sph.r*Math.exp(e.deltaY*.001)))},{passive:false});
 // ---------- UI ----------
 const MODES={cosy:()=>COSY,jour:()=>DAY,coucher:()=>GOLD,soir:()=>EVE,gaming:()=>GAME,fete:t=>FETE(t),cine:()=>CINE};
@@ -160,4 +160,32 @@ window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H
  return o.toDataURL('image/jpeg',.92)};
 window.__jump=(k,p,q)=>{const v=k?VIEWS[k]:[p,q];cam.position.set(...v[0]);tgt.set(...v[1]);fromPos(cam.position,tgt);fly=null};window.__mode=m=>{setMode(m);blendT=1;from=MODES[m](0)};
 setup();setMode('cosy');frame();
+
+// ---------- fiche produit : touche un meuble pour voir l'article de la liste ----------
+(function(){const CAT=window.CATALOG||[],IT={};(window.ITEMS||[]).forEach(d=>IT[d[0]]=d);const ST=window.STORES||{};
+ const SQ={ikea:'https://www.ikea.com/fr/fr/search/?q=',amazon:'https://www.amazon.fr/s?k=',fnac:'https://www.fnac.com/SearchResult/ResultList.aspx?Search=',leroy:'https://www.leroymerlin.fr/resultats/?q=',darty:'https://www.darty.com/nav/recherche?text=',action:'https://www.action.com/fr-fr/search/?q=',ldlc:'https://www.ldlc.com/recherche/',materiel:'https://www.materiel.net/recherche/',vente:'https://www.vente-unique.com/recherche?q='};
+ const card=document.getElementById('card');if(!card||!CAT.length)return;
+ const hl=new THREE.Group();sc.add(hl);hl.visible=false;const hlF=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0x1f250c,transparent:true,opacity:1,blending:THREE.AdditiveBlending,depthWrite:false}));hlF.castShadow=false;hlF.userData.noTop=true;hlF.renderOrder=20;hl.add(hlF);
+ const hlE=[...Array(12)].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xD8E48A}));m.castShadow=false;m.userData.noTop=true;m.renderOrder=21;hl.add(m);return m});
+ function setHL(b){const c=[(b[0]+b[1])/2,(b[2]+b[3])/2,(b[4]+b[5])/2],s=[b[1]-b[0]+2,b[3]-b[2]+2,b[5]-b[4]+2],w=.7;hl.position.set(...c);hlF.scale.set(...s);let k=0;
+  for(const a of[0,1,2])for(const u of[-1,1])for(const v of[-1,1]){const o=[0,0,0],sz=[w,w,w];sz[a]=s[a]+w;const[i,j]=[0,1,2].filter(q=>q!==a);o[i]=u*s[i]/2;o[j]=v*s[j]/2;hlE[k].position.set(...o);hlE[k].scale.set(...sz);k++}hl.visible=true}
+ const eur=n=>n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:n%1?2:0});
+ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ function ray(cx,cy){const r=cv.getBoundingClientRect();const x=((cx-r.left)/r.width)*2-1,y=1-((cy-r.top)/r.height)*2;const P=cam.position,T=cam.target;
+  let f=[T.x-P.x,T.y-P.y,T.z-P.z];let l=Math.hypot(...f);f=f.map(v=>v/l);let rt=[-f[2],0,f[0]];l=Math.hypot(...rt)||1;rt=rt.map(v=>v/l);const u=[rt[1]*f[2]-rt[2]*f[1],rt[2]*f[0]-rt[0]*f[2],rt[0]*f[1]-rt[1]*f[0]];
+  const th=Math.tan(cam.fov*Math.PI/360);const d=[0,1,2].map(i=>f[i]+rt[i]*x*th*cam.aspect+u[i]*y*th);l=Math.hypot(...d);return{o:[P.x,P.y,P.z],d:d.map(v=>v/l)}}
+ function hit(o,d,b){let t0=-1e9,t1=1e9;for(let i=0;i<3;i++){const lo=b[i*2],hi=b[i*2+1];if(Math.abs(d[i])<1e-9){if(o[i]<lo||o[i]>hi)return null;continue}let a=(lo-o[i])/d[i],c=(hi-o[i])/d[i];if(a>c)[a,c]=[c,a];t0=Math.max(t0,a);t1=Math.min(t1,c);if(t0>t1)return null}return t0>0?t0:null}
+ function line(d,main){const q=d[3]||1,p=d[4];const tot=p*q;const url=d[11]||(SQ[d[7]]?SQ[d[7]]+encodeURIComponent(d[8])+(d[7]==='ldlc'||d[7]==='materiel'?'/':''):'');
+  return main?`<div class="cz">${esc(ST[d[7]]||d[7])}</div><div class="cn">${esc(d[1])}</div><div class="cm">${esc(d[2])}</div><div class="cp">${q>1?q+' × '+eur(p)+' = ':''}<b>${eur(tot)}</b>${d[10]?' <span class="ok">prix vérifié</span>':''}</div>${d[9]?`<div class="cnote">${esc(d[9])}</div>`:''}${url?`<a class="cl" href="${esc(url)}" target="_blank" rel="noopener">${d[11]?'Voir le produit':'Chercher sur '+esc(ST[d[7]]||d[7])} →</a>`:''}`
+  :`<button class="ca" data-id="${esc(d[0])}">${esc(d[1])} · ${eur(tot)}</button>`}
+ function show(ids,b){const m=IT[ids[0]];if(!m)return;const rest=ids.slice(1).map(i=>IT[i]).filter(Boolean);
+  card.innerHTML=`<button class="cx" aria-label="Fermer">×</button>${line(m,true)}${rest.length?`<div class="cal">Aussi ici</div><div class="cas">${rest.map(d=>line(d,false)).join('')}</div>`:''}`;
+  card.classList.add('on');card.querySelector('.cx').onclick=close;card.querySelectorAll('.ca').forEach(x=>x.onclick=()=>show([x.dataset.id,...ids.filter(i=>i!==x.dataset.id)],b));
+  if(b)setHL(b)}
+ function close(){card.classList.remove('on');hl.visible=false}
+ window.__pick=(cx,cy)=>{const {o,d}=ray(cx,cy);const H=[];for(const [b,ids] of CAT){const t=hit(o,d,b);if(t!=null)H.push({t,b,ids,v:(b[1]-b[0])*(b[3]-b[2])*(b[5]-b[4])})}H.sort((p,q)=>p.t-q.t);let best=H[0]||null;for(const h of H)if(best&&h.t<best.t+5&&h.v<best.v)best=h;
+  if(best)show(best.ids,best.b);else close()};
+ window.__card=(id)=>{const e=CAT.find(c=>c[1][0]===id);if(e)show(e[1],e[0])};
+ const h=document.getElementById('hint');if(h)h.textContent='1 doigt : tourner · 2 doigts : zoom · touche un meuble : sa fiche';
+})();
 })();
