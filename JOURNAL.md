@@ -122,3 +122,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - `ctrl` = 8 pièces par main (poignée, tête, anneau, stick + capuchon, 2 boutons, gâchette), matrices locales multipliées par la pose `gripSpace` ; légère émission pour rester lisibles la nuit. Design générique (pas de copie de marque).
 - Mock XR : `__ctlPos` / `__ctlYaw` pour placer la manette devant les yeux.
 - Scores : VR 7,5 → 8 → **56,75 → 57,25/70**.
+
+## 2026-11-20 — Séance 17 : vidéo v4
+- Même parcours, titres recalés, toutes les améliorations des séances 10 à 16. Rendu en 6 lots reprenables (~50 min, la machine a redémarré pendant le dernier lot sans perte grâce aux images sur disque).
+- `video/visite.mp4` = v4 ; la v3 est gardée (`video/visite_v3.mp4`) pour comparer sur la page Évolution.
+- Scores : vidéo 7 → 7,5 → **57,25 → 57,75/70**.

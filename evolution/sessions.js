@@ -3,6 +3,19 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 17 — vidéo de visite v4",
+    avant: 57.25, apres: 57.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [8, 8], plan: [7.5, 7.5], video: [7, 7.5] },
+    changements: [
+      "Les titres apparaissent pile quand la caméra arrive sur le meuble (avant, ils avaient une seconde de retard)",
+      "La vidéo montre toutes les améliorations de la nuit : lumière des lampes, vue par la fenêtre, suspension en papier, sneakers, tapis, platine…"
+    ],
+    video: "video/visite.mp4", poster: "video/visite_poster.jpg",
+    images: [],
+    ensuite: "Version verticale de la vidéo pour le téléphone."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 16 — manettes visibles dans le casque",
     avant: 56.75, apres: 57.25,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 8], plan: [7.5, 7.5], video: [7, 7] },
@@ -125,7 +138,7 @@ window.SESSIONS = [
       "Titres animés à jour (prix, modèles) + écran de début et de fin",
       "La visite du bouton « Lancer la visite » du plan 3D suit le même parcours"
     ],
-    video: "video/visite.mp4", poster: "video/visite_poster.jpg",
+    video: "video/visite_v3.mp4", poster: "video/visite_v3_poster.jpg",
     images: [],
     ensuite: "Caler les titres un peu plus tôt sur les mouvements de caméra."
   },
