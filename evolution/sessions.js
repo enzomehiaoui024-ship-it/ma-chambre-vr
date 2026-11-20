@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 22 — bouton « Mesures » dans le plan 3D",
+    avant: 60.5, apres: 61.25,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.25, 8.5], liste: [8.75, 8.75], vr: [8.5, 8.5], plan: [8, 8.5], video: [8, 8] },
+    changements: [
+      "Nouveau bouton « 📏 Mesures » : la caméra passe au-dessus et les cotes apparaissent (pièce 3,60 m, lit 199 × 156 cm, bureau 160 × 80, commode 120, Kallax 77, portant 90, porte 79, bas de la TV à 105 cm…)",
+      "Les passages libres sont en blanc : 121 cm entre le lit et la commode, 91 cm derrière la chaise, 133 cm devant le portant",
+      "Les étiquettes suivent la caméra quand tu tournes, et se cachent derrière les boutons",
+      "Les cotes sont dans source/mesures.js : faciles à ajouter quand on fera le reste de la maison"
+    ],
+    images: [
+      ["mesures-dessus", "Vue de dessus avec les cotes"],
+      ["mesures-lit", "Cotes du lit en vue 3D"]
+    ],
+    ensuite: "Revoir la vidéo avec la nouvelle chaise et les fiches ; spots pour plantes."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 21 — vidéo pour téléphone et matelas à la bonne taille",
     avant: 59.75, apres: 60.5,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8.25], liste: [8.5, 8.75], vr: [8.5, 8.5], plan: [8, 8], video: [7.5, 8] },

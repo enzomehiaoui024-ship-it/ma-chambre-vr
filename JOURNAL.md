@@ -150,3 +150,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Vidéo verticale 720×1280 (2 055 images, rendu reprenable `framesV/`, x264 veryfast CRF 23, faststart) → `video/visite_vertical.mp4` (17,5 Mo) + affiche. Page Évolution : champ `vertical` et `videoCap`.
 - MALM haut 140x190 revérifié sur ikea.fr : 199 × 156 cm, tête 100 cm (= modèle 3D). VALEVÅG ferme 140x190 existe : 249 € (promo depuis le 9/11, 279 € avant). Question à Enzo retirée.
 - Total : 7 325,34 → **7 295,34 €**. Scores : cohérence 8 → 8,25, liste 8,5 → 8,75, vidéo 7,5 → 8 → **59,75 → 60,5/70**.
+
+## 2026-11-20 — Séance 22 : mode Mesures du plan 3D
+- `source/mesures.js` : 15 cotes `[x1,y1,z1,x2,y2,z2,nom]` (longueur calculée, « Passage » en blanc). `app_gl.js` : barres + talons 3D (MeshBasic, sans ombre), étiquettes HTML projetées à chaque image, cachées sous la barre de boutons et bornées à l'écran ; le bouton vole vers la vue de dessus.
+- Passages vérifiés : lit ↔ commode 121 cm, bureau ↔ lit 91 cm, portant ↔ lit 133 cm (≥ 80 cm partout).
+- Scores : cohérence 8,25 → 8,5, plan 3D 8 → 8,5 → **60,5 → 61,25/70**.

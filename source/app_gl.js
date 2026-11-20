@@ -188,4 +188,19 @@ setup();setMode('cosy');frame();
  window.__card=(id)=>{const e=CAT.find(c=>c[1][0]===id);if(e)show(e[1],e[0])};
  const h=document.getElementById('hint');if(h)h.textContent='1 doigt : tourner · 2 doigts : zoom · touche un meuble : sa fiche';
 })();
+
+// ---------- mode Mesures : cotes en cm + passages ----------
+(function(){const MS=window.MESURES||[],btn=document.getElementById('mes'),lay=document.getElementById('mesL');if(!btn||!lay||!MS.length)return;
+ const g=new THREE.Group();g.visible=false;sc.add(g);const mm=new THREE.MeshBasicMaterial({color:0xD8E48A}),mp=new THREE.MeshBasicMaterial({color:0xF6F2E8});
+ const els=MS.map(m=>{const[a,b,c,d,e,f,n]=m;const L=Math.hypot(d-a,e-b,f-c);const pas=/passage/i.test(n);const mat=pas?mp:mm;
+  const ax=Math.abs(d-a)>.5?0:Math.abs(e-b)>.5?1:2;const sz=[.8,.8,.8];sz[ax]=L;const bar=new THREE.Mesh(new THREE.BoxGeometry(...sz),mat);bar.position.set((a+d)/2,(b+e)/2,(c+f)/2);
+  [[a,b,c],[d,e,f]].forEach(p=>{const t=[6,6,6];t[ax]=.8;const tk=new THREE.Mesh(new THREE.BoxGeometry(...t),mat);tk.position.set(...p);g.add(tk)});g.add(bar);
+  [bar,...g.children].forEach(o=>{o.castShadow=false;o.userData.noTop=true;o.renderOrder=19});
+  const el=document.createElement('div');if(pas)el.className='p';const txt=L>=300?(L/100).toFixed(2).replace('.',',')+' m':Math.round(L)+' cm';el.innerHTML=`<small>${n}</small>${txt}`;lay.appendChild(el);return{el,p:[(a+d)/2,(b+e)/2,(c+f)/2]}});
+ let on=false;function proj(p){const P=cam.position,T=cam.target;let f=[T.x-P.x,T.y-P.y,T.z-P.z];let l=Math.hypot(...f);f=f.map(v=>v/l);let rt=[-f[2],0,f[0]];l=Math.hypot(...rt)||1;rt=rt.map(v=>v/l);const u=[rt[1]*f[2]-rt[2]*f[1],rt[2]*f[0]-rt[0]*f[2],rt[0]*f[1]-rt[1]*f[0]];
+  const v=[p[0]-P.x,p[1]-P.y,p[2]-P.z];const z=v[0]*f[0]+v[1]*f[1]+v[2]*f[2];if(z<5)return null;const th=Math.tan(cam.fov*Math.PI/360);return[(v[0]*rt[0]+v[1]*rt[1]+v[2]*rt[2])/(z*th*cam.aspect),(v[0]*u[0]+v[1]*u[1]+v[2]*u[2])/(z*th)]}
+ const uiE=document.getElementById('ui');function upd(){if(!on)return;requestAnimationFrame(upd);const r=cv.getBoundingClientRect();const yMax=(uiE?uiE.getBoundingClientRect().top:r.bottom)-14,yMin=r.top+48;for(const m of els){const q=proj(m.p);const y=q&&r.top+(1-q[1])/2*r.height;if(!q||Math.abs(q[0])>1.05||y<yMin||y>yMax){m.el.style.display='none';continue}m.el.style.display='';const w=m.el.offsetWidth||80;m.el.style.left=Math.max(r.left+w/2+4,Math.min(r.right-w/2-4,r.left+(q[0]+1)/2*r.width))+'px';m.el.style.top=y+'px'}}
+ btn.onclick=()=>{on=!on;btn.classList.toggle('on',on);g.visible=on;lay.style.display=on?'':'none';if(on){flyTo('dessus');upd()}};lay.style.display='none';
+ window.__mesures=v=>{if(v!==on)btn.onclick()};
+})();
 })();
