@@ -3,6 +3,20 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 21 — vidéo pour téléphone et matelas à la bonne taille",
+    avant: 59.75, apres: 60.5,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8.25], liste: [8.5, 8.75], vr: [8.5, 8.5], plan: [8, 8], video: [7.5, 8] },
+    changements: [
+      "Nouvelle vidéo de visite en vertical (720×1280), faite pour l'écran du téléphone : mêmes 68 secondes, titres adaptés à la largeur",
+      "Matelas VALEVÅG : il existe bien en 140×190 (la taille du lit MALM, vérifiée : 199×156 cm). Lien corrigé et prix en promo 249 € au lieu de 279 €",
+      "Total de la liste : 7 325,34 € → 7 295,34 €"
+    ],
+    video: "video/visite_vertical.mp4", poster: "video/visite_vertical_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone (verticale, 1 min 08)",
+    images: [],
+    ensuite: "Spots pour plantes : trouver le vrai prix ; placer les supports vinyles (à décider avec Enzo)."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 20 — fiches produit aussi dans le casque VR",
     avant: 59.25, apres: 59.75,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8, 8], liste: [8.5, 8.5], vr: [8, 8.5], plan: [8, 8], video: [7.5, 7.5] },

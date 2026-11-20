@@ -145,3 +145,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - `vr.html` charge `items.js` + `catalog.js` (inlinés par build.py). Poignée (buttons[1]) d'une manette, menu fermé : rayon → `pickCat` (même règle que le plan 3D : la plus proche, la plus petite à 5 cm près) → 12 arêtes vertes + panneau 56×23 cm (canvas 1024×420) à ≤ 70 cm devant la tête, tourné vers elle ; disparaît 5 s après.
 - Sous-titre du menu et aide de la page mis à jour. Mock : `__gp.buttons[1]` + `__ctlPitch`.
 - VR : 0 erreur. Scores : VR 8 → 8,5 → **59,25 → 59,75/70**.
+
+## 2026-11-20 — Séance 21 : vidéo verticale + matelas 140x190
+- Vidéo verticale 720×1280 (2 055 images, rendu reprenable `framesV/`, x264 veryfast CRF 23, faststart) → `video/visite_vertical.mp4` (17,5 Mo) + affiche. Page Évolution : champ `vertical` et `videoCap`.
+- MALM haut 140x190 revérifié sur ikea.fr : 199 × 156 cm, tête 100 cm (= modèle 3D). VALEVÅG ferme 140x190 existe : 249 € (promo depuis le 9/11, 279 € avant). Question à Enzo retirée.
+- Total : 7 325,34 → **7 295,34 €**. Scores : cohérence 8 → 8,25, liste 8,5 → 8,75, vidéo 7,5 → 8 → **59,75 → 60,5/70**.
