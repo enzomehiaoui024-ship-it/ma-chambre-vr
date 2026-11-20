@@ -376,8 +376,10 @@ Cy(214,262,204,208,2.2,metalBlk);
 const arcBulb=noShadow(S(214,186,262,6,M(0xffffff,{emissive:0xffd9a0,emissiveIntensity:.05})));R.arcBulb=arcBulb.material;
 // pendant GULLSUDARE 45 cm (ribbed paper globe)
 Cy(180,180,226,250,.35,M(C.white));Cy(180,180,224,227,1.8,M(C.white));
-const ribT=T(256,64,(g,w,h)=>{g.fillStyle='#fff';g.fillRect(0,0,w,h);for(let i=0;i<h;i+=5){g.fillStyle='rgba(180,170,150,.35)';g.fillRect(0,i,w,1.2)}});
-const pend=noShadow(S(180,202,180,22.5,M(0xffffff,{map:ribT,emissive:0xffe6c0,emissiveIntensity:.05,roughness:1}),1,.98,1,null,32));R.pend=pend.material;
+const ribT=T(256,256,(g,w,h)=>{g.fillStyle='#fff';g.fillRect(0,0,w,h);let s7=5;const q=()=>(s7=(s7*16807)%2147483647)/2147483647;for(let i=0;i<500;i++){g.strokeStyle=`rgba(200,190,170,${.08+q()*.12})`;g.lineWidth=.6+q();g.beginPath();const x=q()*w,y=q()*h;g.moveTo(x,y);g.lineTo(x+(q()-.5)*30,y+(q()-.5)*8);g.stroke()}});
+const pend=(()=>{const R0=22.5,nr=34,pts=[];const f0=Math.asin(7.5/R0),f1=Math.asin(5/R0);const N=nr*4;for(let i=0;i<=N;i++){const f=f0+(Math.PI-f0-f1)*i/N;const u=(f/Math.PI*nr)%1;const dip=.022*(1-4*(u-.5)*(u-.5));pts.push([R0*Math.sin(f)*(1-dip),-R0*Math.cos(f)*.97])}
+ const m=Lathe(180,202,180,pts,M(0xffffff,{map:ribT,emissive:0xffe6c0,emissiveIntensity:.05,roughness:1,side:THREE.DoubleSide}),36);m.castShadow=false;
+ Cy(180,180,202+R0*.97*Math.cos(f1)-.4,202+R0*.97*Math.cos(f1)+.4,5.2,M(0xEDEDEA,{metalness:.3}),null,20);return m})();R.pend=pend.material;
 
 // ---------- dust motes + sun shafts ----------
 R.dust=[];const dm=glow(0xfff1d0,.9);for(let i=0;i<70;i++){const d=noShadow(B(-.35,.35,-.35,.35,-.35,.35,dm));d.position.set(125+rnd()*110,40+rnd()*170,180+rnd()*170);d.userData.seed=rnd()*100;R.dust.push(d)}

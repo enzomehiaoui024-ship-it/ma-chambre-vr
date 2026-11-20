@@ -95,19 +95,19 @@ function camAt(t){let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const a=K[Math.max
 if(i==0)u=u*u*(3-2*u)*.5+u*.5;const p=cr(a[1],b[1],c[1],d[1],u),q=cr(a[2],b[2],c[2],d[2],u),f=mix(b[3],c[3],ss(0,1,u));
 const hh=t<61?1:1-ss(61,63,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
 const CAP=[
-[3.6,9.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, plaid SÖRBYSKOGEN'],
-[9.8,13.4,'02 · AU-DESSUS DU LIT','Trois affiches','Cadres noirs, LED derrière la tête de lit'],
-[13.6,17.0,'03 · COMMODE','6 tiroirs · 195,99 €','Bois foncé, pieds noirs, ficus lyrata à côté'],
-[17.2,20.6,'04 · TV','TCL 65" Mini LED au mur','144 Hz · barre de son sur la commode'],
-[20.8,24.0,'05 · VINYLES','Kallax + platine AT-LP60X','Enceintes Edifier R1280DB'],
-[24.2,30.6,'06 · SETUP GAMING','MSI MAG 274QP · OLED 27" 2K 240 Hz','Chaise Sihoo Doro C300 · lampe FORSÅ'],
-[30.7,33.8,'07 · LE PC','Ryzen 7 9800X3D · RX 9070 XT','32 Go DDR5 · SSD 2 To · tour sous le bureau'],
-[34.0,40.0,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
-[41.6,46.6,'09 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
-[48.2,52.8,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
-[54.4,57.4,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
-[58.4,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
-[63.0,66.6,'13 · LE PLAN','Vu d\'en haut','13 m² · 3,60 × 3,60 m']];
+[3.4,8.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, plaid SÖRBYSKOGEN'],
+[9.4,12.0,'02 · AU-DESSUS DU LIT','Trois affiches','Cadres noirs, LED derrière la tête de lit'],
+[12.9,15.6,'03 · COMMODE','6 tiroirs · 195,99 €','Bois foncé, pieds noirs, ficus lyrata à côté'],
+[16.4,19.1,'04 · TV','TCL 65" Mini LED au mur','144 Hz · barre de son sur la commode'],
+[19.9,22.6,'05 · VINYLES','Kallax + platine AT-LP60X','Enceintes Edifier R1280DB'],
+[23.4,29.4,'06 · SETUP GAMING','MSI MAG 274QP · OLED 27" 2K 240 Hz','Chaise Sihoo Doro C300 · lampe FORSÅ'],
+[30.0,32.6,'07 · LE PC','Ryzen 7 9800X3D · RX 9070 XT','32 Go DDR5 · SSD 2 To · tour sous le bureau'],
+[33.6,39.6,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
+[40.6,46.0,'09 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
+[47.6,53.0,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
+[54.6,57.6,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
+[58.2,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
+[63.0,66.0,'13 · LE PLAN','Vu d\'en haut','13 m² · 3,60 × 3,60 m']];
 
 
 // ---------- touch / mouse orbit ----------

@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 15 — suspension GULLSUDARE en papier de riz",
+    avant: 56.5, apres: 56.75,
+    scores: { meubles: [9.5, 9.75], eclairage: [9.5, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },
+    changements: [
+      "La boule du plafond ressemble enfin à la vraie GULLSUDARE : papier de riz tendu sur un fil en spirale (34 nervures), ouverture en bas et anneau en haut",
+      "Texture de papier fibreux",
+      "Les titres de la visite (bouton « Lancer la visite ») apparaissent maintenant au bon moment"
+    ],
+    images: [
+      ["suspension-jour", "Suspension, le jour"],
+      ["suspension-dessous", "Vue de dessous"],
+      ["suspension-cosy", "Nuit cosy"]
+    ],
+    ensuite: "Vidéo refaite avec toutes les améliorations de la nuit."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 14 — vue par la fenêtre et sneakers",
     avant: 56, apres: 56.5,
     scores: { meubles: [9.5, 9.5], eclairage: [9, 9.5], coherence: [7.5, 7.5], liste: [8, 8], vr: [7.5, 7.5], plan: [7.5, 7.5], video: [7, 7] },

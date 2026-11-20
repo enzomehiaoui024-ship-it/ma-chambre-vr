@@ -111,3 +111,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Générateurs locaux + simulation de l'ancienne consommation de `rnd()` (`for(i<56)rnd()` et boucle des fenêtres) → le reste de la chambre garde exactement la même disposition aléatoire.
 - Sneakers : nouvelle fonction `sneaker()` (semelle 2 couches, bout ellipsoïde, col, languette, lacets, talon). VR ~152 k triangles.
 - Scores : éclairage/ambiances 9 → 9,5 → **56 → 56,5/70**.
+
+## 2026-11-20 — Séance 15 : suspension GULLSUDARE
+- Lathe 36 segments, 34 nervures (creux de 2,2 % entre les fils), ouvertures haut (5 cm) et bas (7,5 cm), anneau métallique, texture fibres de papier, DoubleSide.
+- Titres de la visite recalés sur les images clés (sujet ±1,2 s).
+- Les meubles approchent du maximum : notation au quart de point pour ce critère.
+- Scores : meubles 9,5 → 9,75 → **56,5 → 56,75/70**.
