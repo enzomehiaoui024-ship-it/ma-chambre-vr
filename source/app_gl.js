@@ -148,13 +148,13 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
  if(window.__onframe)window.__onframe()}
 window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
- const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=c.f;const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
+ const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
- const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=H/720;
+ const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;
  let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}
  if(sh&&al>0){g.save();g.globalAlpha=al;const x=56*k,y=60*k;const gr=g.createLinearGradient(0,0,620*k,0);gr.addColorStop(0,'rgba(10,10,9,.55)');gr.addColorStop(1,'rgba(10,10,9,0)');g.fillStyle=gr;g.fillRect(0,y-38*k,640*k,130*k);
   g.fillStyle='#A4AE6E';g.fillRect(x,y-28*k,5*k,104*k);g.fillStyle='#C9D19A';g.font=`600 ${15*k}px Inter, sans-serif`;g.fillText(sh[2].split('').join(String.fromCharCode(8202)),x+20*k,y-6*k);
-  g.fillStyle='#F6F2E8';g.font=`700 ${36*k}px Inter, sans-serif`;g.fillText(sh[3],x+20*k,y+34*k);g.globalAlpha=al*.85;g.font=`400 ${19*k}px Inter, sans-serif`;g.fillText(sh[4],x+20*k,y+64*k);g.restore()}
+  const fit=(txt,base,wt)=>{let fs=base*k;g.font=`${wt} ${fs}px Inter, sans-serif`;while(fs>8&&g.measureText(txt).width>W-x-48*k){fs*=.93;g.font=`${wt} ${fs}px Inter, sans-serif`}};g.fillStyle='#F6F2E8';fit(sh[3],36,700);g.fillText(sh[3],x+20*k,y+34*k);g.globalAlpha=al*.85;fit(sh[4],19,400);g.fillText(sh[4],x+20*k,y+64*k);g.restore()}
  const ti=Math.min(1,t/.8)*(1-ss(2.6,3.4,t));if(ti>0){g.save();g.globalAlpha=ti;g.fillStyle='rgba(10,10,9,.35)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${64*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-6*k);g.fillStyle='#C9D19A';g.font=`500 ${22*k}px Inter, sans-serif`;g.fillText('NOIR & OLIVE · VISITE 3D',W/2,H/2+34*k);g.restore()}
  const te=ss(66.2,67.4,t);if(te>0){g.save();g.globalAlpha=te;g.fillStyle='rgba(10,10,9,.6)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${52*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-10*k);g.fillStyle='#C9D19A';g.font=`500 ${21*k}px Inter, sans-serif`;g.fillText('Visite VR sur Quest 2 · plan 3D · liste d\'achat',W/2,H/2+30*k);g.restore()}
  return o.toDataURL('image/jpeg',.92)};
