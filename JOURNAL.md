@@ -164,3 +164,7 @@ Vues de contrôle fixes (tools/preview.py) :
 - Suspension GULLSUDARE/HAVSDJUP 45 cm : 8,49 € (ikea.fr ; 70 cm à 11,99 €) au lieu de 30 € estimés. Spots plantes : lot de 2 spots de sol 3 W, télécommande, 32,59 € (Leroy Merlin, vendeur partenaire).
 - Restent non confirmés cette semaine : carte mère + AIO (B850 Gaming Plus WiFi vue à 209,99 € chez TopAchat), barre de son Ultimea Apollo S40 (89,99 € en promo Cdiscount en juin, 129,99 € prix public).
 - Total : 7 295,34 → **7 281,42 €**. Scores : liste 8,75 → 9 → **61,5 → 61,75/70**.
+
+## 2026-11-20 — Séance 25 : prix de la carte mère
+- `cm` comptait 309,90 € (= prix carte + AIO), alors que l'AIO MSI MAG Coreliquid A13 360 est offert avec VIVACOOLING : la carte seule est à 219,95 € chez Materiel.net (offre jusqu'au 30/11/2026). Lien produit ajouté.
+- Total : 7 281,42 → **7 191,47 €**. Scores : liste 9 → 9,25 → **61,75 → 62/70**.

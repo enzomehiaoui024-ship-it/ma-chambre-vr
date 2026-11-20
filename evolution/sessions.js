@@ -3,6 +3,19 @@
 window.SESSIONS = [
   {
     date: "2026-11-20",
+    titre: "Séance 25 — carte mère : le watercooling est vraiment offert",
+    avant: 61.75, apres: 62,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.5], liste: [9, 9.25], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Erreur corrigée : la liste comptait 309,90 € pour la carte mère MSI B850 Gaming Plus WiFi + watercooling A13 360, alors que le watercooling est offert",
+      "Vrai prix : 219,95 € chez Materiel.net avec le code VIVACOOLING (jusqu'au 30/11/2026) → 89,95 € économisés",
+      "Total de la liste : 7 281,42 € → 7 191,47 €"
+    ],
+    images: [["liste-carte-mere", "Carte mère + watercooling"]],
+    ensuite: "Commander la carte mère avant le 30/11 pour garder le watercooling offert."
+  },
+  {
+    date: "2026-11-20",
     titre: "Séance 24 — plus aucun prix estimé dans la liste",
     avant: 61.5, apres: 61.75,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.5], liste: [8.75, 9], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },

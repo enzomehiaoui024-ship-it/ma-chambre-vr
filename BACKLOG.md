@@ -15,7 +15,7 @@
 ## Liste d'achat
 - Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11).
 - Remplacer le ruban LED TV par un kit Ambilight à caméra (si l'utilisateur valide).
-- Confirmer le prix de la carte mère + AIO et de la barre de son Ultimea.
+- Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
@@ -24,5 +24,6 @@
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
+- Offre carte mère + watercooling offert valable jusqu'au 30/11 : commander avant ?
 - Périphériques proposés (K70 Core TKL, G305, tapis 90x40) : ok ou autres modèles ?
 - Emplacement des étagères à pochettes MOSSLANDA, des supports vinyles muraux et du « Now Playing ».
