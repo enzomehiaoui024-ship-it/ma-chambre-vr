@@ -247,3 +247,5 @@ Vues de contrôle fixes (tools/preview.py) :
 - Echo Show 5 : façade 3,2 cm + dos demi-cylindre en tissu (r 4,1 cm) + pied, au lieu d'une boîte. VR : 412 lots, ~166 k triangles.
 - Câbles des écrans (tubes r 0,32) : bras → mât → dessous du bureau (4 attaches scratch) → arrière du PC. Pas de goulotte (ce serait un achat en plus : à proposer à Enzo). VR : 415 lots, ~168 k triangles.
 - Ensuite : couette avec un vrai drapé ; reflets légers sur le parquet.
+
+- 21/11 05:45 : Enzo a déjà une licence Windows (rien à ajouter) ; iPhone 14 → chargeur Qi2 proposé, panier inchangé en attendant son accord.

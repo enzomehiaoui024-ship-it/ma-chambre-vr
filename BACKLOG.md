@@ -29,9 +29,8 @@
 ## À demander à Enzo
 - Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
-- Windows 11 : licence à acheter (pas dans la liste) ou déjà une ?
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).
-- Modèle d'iPhone pour choisir le chargeur sans fil Qi2/MagSafe (table de chevet).
+- Chargeur : Enzo a un iPhone 14 (Qi2 15 W depuis iOS 17.2). Proposé : Belkin BoostCharge Pro Qi2 15 W noir + adaptateur 20 W, 59,95 € LDLC → attendre son accord avant panier/3D.
 - Mur en lattes derrière le lit : le garder (il est seulement dans le plan 3D, pas dans la liste) ?
 - Offre carte mère + watercooling offert valable jusqu'au 30/11 : commander avant ?
 - Emplacement des étagères à pochettes MOSSLANDA, des supports vinyles muraux et du « Now Playing ».
