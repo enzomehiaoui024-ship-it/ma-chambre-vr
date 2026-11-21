@@ -19,6 +19,7 @@ let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
 const noShadow=m=>{m.castShadow=false;return m};
 const glow=(c,op)=>MB(c,{transparent:true,opacity:op==null?1:op,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
 const R={scene:sc,L:{},G:{},anim:{},screens:{}};
+R.strips=[];const strip=(x0,x1,y0,y1,z0,z1,k,g)=>{const m=noShadow(B(x0,x1,y0,y1,z0,z1,MB(0x000000)));R.strips.push({m,k,g:g||2.4});return m};
 
 // ---------- textures ----------
 const floorT=T(1024,1024,(g,w,h)=>{const pw=51;for(let x=0;x<w;x+=pw){let y=-rnd()*300;while(y<h){const L=180+rnd()*260;const t=rnd();g.fillStyle=`rgb(${190+t*30|0},${148+t*26|0},${104+t*20|0})`;g.fillRect(x,y,pw,L);g.strokeStyle='rgba(120,80,45,.18)';g.lineWidth=1;for(let k=0;k<7;k++){g.beginPath();const ox=x+4+rnd()*(pw-8);g.moveTo(ox,y);g.bezierCurveTo(ox+6,y+L*.3,ox-6,y+L*.6,ox+2,y+L);g.stroke()}g.fillStyle='rgba(70,45,25,.45)';g.fillRect(x,y,pw,1.5);y+=L}g.fillStyle='rgba(70,45,25,.5)';g.fillRect(x,0,1.5,h)}});
@@ -155,6 +156,8 @@ if(LAT){const felt=M(0x141312,{roughness:1});B(0,1.2,0,250,150,350,felt);
  const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#4a3324';g.fillRect(0,0,w,h);for(let i=0;i<90;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(30,18,10,.35)':'rgba(120,85,55,.25)';g.lineWidth=.6+Math.random()*1.6;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.33,x+(Math.random()-.5)*6,h*.66,x+(Math.random()-.5)*4,h);g.stroke()}},1,1);
  const wood=M(0xffffff,{map:woodT,roughness:.55});for(let z=151;z+2.7<=349.5;z+=4)B(1.2,3.3,0,250,z,z+2.7,wood)}
 R.G.headLed=[mkGlow(220,170,.8+WX,116,BC,Math.PI/2)];
+// rubans LED visibles sous le lit (côté pied et côtés) : la ligne lumineuse elle-même, pas seulement le halo
+strip(197.2,198.2,3.6,4.4,BZ0+4,BZ1-4,'bedLed');strip(12,197,3.6,4.4,BZ0+1.2,BZ0+2.2,'bedLed');strip(12,197,3.6,4.4,BZ1-2.2,BZ1-1.2,'bedLed');
 
 // ---------- 3 frames RÖDALM 50x70 above bed (album posters, original art) ----------
 const albT=(i)=>T(200,280,(g,w,h)=>{g.fillStyle='#F3EFE6';g.fillRect(0,0,w,h);const cols=[['#8a5a3a','#d9b48a'],['#2d2724','#8c1d1d'],['#6b4a7a','#e6b8c9']][i];g.fillStyle=cols[0];g.fillRect(20,20,160,160);g.fillStyle=cols[1];
@@ -190,7 +193,7 @@ function sneaker(x,y,z,c,acc,ry,p){const g=Grp(x,y,z,ry||0,p);const mc=M(c,{roug
  RB(-1.1,1.1,6,10.6,-14.2,-13.3,.4,ma,g,1);return g}
 const tb=M(0xE8F0F2,{transparent:true,opacity:.2,roughness:.08});
 [[0,0xEDE5D3,C.olive],[22.5,C.black,0xEDE5D3],[45,C.olive,0xF4F2EC],[67.5,0xEDE5D3,C.black]].forEach(([y,c,a])=>{noShadow(RB(0,36,y,y+22,90,118,.8,tb));B(0,36,y,y+.6,90,118,M(0xF4F4F2,{transparent:true,opacity:.35}));sneaker(18,y+1,104,c,a,Math.PI/2+.05)});
-const shelfM=M(0xF4F2EE,{roughness:.5});[[120,0x1D1A18,0xEDE5D3],[150,C.olive,0xF4F2EC],[180,0xF4F2EC,C.jaune]].forEach(([y,c,a])=>{RB(0,23.5,y,y+2.5,88,145,.5,shelfM);sneaker(12,y+2.5,104,c,a,Math.PI/2);sneaker(12,y+2.5,128,c,a,Math.PI/2)});
+const shelfM=M(0xF4F2EE,{roughness:.5});[[120,0x1D1A18,0xEDE5D3],[150,C.olive,0xF4F2EC],[180,0xF4F2EC,C.jaune]].forEach(([y,c,a])=>{RB(0,23.5,y,y+2.5,88,145,.5,shelfM);strip(21.4,22.8,y-.45,y,90,143,'sneak',2.2);sneaker(12,y+2.5,104,c,a,Math.PI/2);sneaker(12,y+2.5,128,c,a,Math.PI/2)});
 R.G.sneak=[mkGlow(46,110,.8,150,116,Math.PI/2)];
 
 // ---------- desk TROTTEN 160x80 white/anthracite ----------

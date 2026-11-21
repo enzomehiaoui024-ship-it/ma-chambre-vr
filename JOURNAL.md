@@ -221,3 +221,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Liste : écran 34" 656,99 € (TopAchat, code VISOR), écran vertical 189,99 €, étagère d'écrans 39,95 €, barre lumineuse 49,99 €, ruban 16,99 €, lampe 35,90 € (bientôt dispo), ampoule 6,99 € (prix DE, à vérifier), 2 étagères 13,90 €, panneau lattes 32,69 €, 4 succulentes (prix à vérifier) ; FORSÅ, E14, LACK retirés, cadres 6 → 4. Total 7 328,49 € → **7 772,90 €**.
 - VR : 0 erreur, 394 lots, ~169 k triangles. Scores : éclairage 9,75 → 10, cohérence 8,75 → 9 → **62,75 → 63,25/70**.
 - Mise à jour 04:35 : à la demande d'Enzo, l'étagère d'écrans en bois est retirée et remplacée par 2 bras AOC AM400B (un par écran, pince à l'arrière du bureau, 39,99 € pièce chez TopAchat). Lampe reposée sur le bureau. Total 7 772,90 € → **7 812,93 €**.
+
+## 2026-11-21 — Clavier/souris blancs + Séance 30 : effets de lumière
+- Liste : périphériques en blanc (Designed by GG Red Blade TKL blanc 84,95 € LDLC + G305 blanche 39,99 € logitech.fr + tapis 14,90 €) → total **7 804,93 €**. 3D : clavier et souris blancs.
+- Rubans LED visibles : `R.strips` (barres MB) sous le lit (3 côtés) et sous les 3 étagères à sneakers ; couleur = couleur G de l'ambiance × gain (2,2–2,4), mise à jour dans `apply()` de app_gl et app_vr (matériaux ajoutés à la liste dynamique VR).
+- Lumière d'écran `mon` bleutée (0x9fb6ff, couleur de l'image) ; GAME : mon .9 → .5 et lumière d'étagère violette pour garder le néon.
+- Vues de contrôle : aucune régression. VR : 0 erreur. Scores : plan 8,5 → 8,75 → **63,25 → 63,5/70**.

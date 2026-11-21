@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 30 — effets de lumière : rubans LED visibles, lumière des écrans",
+    avant: 63.25, apres: 63.5,
+    scores: { meubles: [9.75, 9.75], eclairage: [10, 10], coherence: [9, 9], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.75], video: [8, 8] },
+    changements: [
+      "On voit maintenant la ligne lumineuse des rubans LED sous le lit et sous les étagères à sneakers (pas seulement le halo), dans la couleur de l'ambiance",
+      "La lumière des écrans prend la couleur de l'image affichée (bleu nuit) au lieu d'un violet fixe",
+      "En gaming, la lumière des étagères du bureau passe au violet pour garder l'ambiance néon",
+      "Clavier et souris blancs ajoutés (liste + 3D)"
+    ],
+    images: [
+      ["led-lit-cosy", "Lit en nuit cosy : la ligne LED sous le lit"],
+      ["led-lit-gaming", "Lit en gaming"],
+      ["led-bureau-gaming", "Bureau en gaming"],
+      ["led-sneakers", "Étagères à sneakers le soir"]
+    ],
+    ensuite: "Rayons de lune par la fenêtre la nuit ; reflets doux des LED sur le parquet."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 29 — nouveau bureau d'après les photos d'Enzo",
     avant: 62.75, apres: 63.25,
     scores: { meubles: [9.75, 9.75], eclairage: [9.75, 10], coherence: [8.75, 9], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },

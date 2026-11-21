@@ -15,22 +15,22 @@ L:{},G:{},em:{pend:.05,arc:.05,ns:0,fado:.05,dl:0},tv:0,mon:0,shaft:0,dust:0,pcI
 for(const k in o){if(k=='L'||k=='G'||k=='em')Object.assign(s[k],o[k]);else s[k]=o[k]}return s}
 const amber=hex(0xff8a2a),warm=hex(0xffcf94);
 const DAY=st({night:0,moon:0,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),sunI:2.0,sunC:hex(0xfff1dc),elev:38,ambI:.62,skyC:hex(0xfff7ec),gndC:hex(0xa58b70),sky:hex(0xffffff),expo:1.05,mon:.95,shaft:.07,dust:1,
- L:{mon:[hex(0x8f7dff),.25],spot:[hex(0xfff3dc),.15]},G:{monGlow:mixc([0,0,0],hex(0x6a5cff),.25)}});
+ L:{mon:[hex(0x9fb6ff),.25],spot:[hex(0xfff3dc),.15]},G:{monGlow:mixc([0,0,0],hex(0x6f8cff),.22)}});
 const GOLD=st({night:.12,moon:0,sunI:1.35,sunC:hex(0xffa860),elev:16,az:-30,ambI:.32,skyC:hex(0xffd0a0),gndC:hex(0x8a6448),sky:hex(0xffb488),expo:1.0,mon:.9,shaft:.07,dust:.9,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),
- L:{arc:[warm,.5],mon:[hex(0x8f7dff),.3]},em:{arc:.5},G:{monGlow:[.1,.08,.25]}});
+ L:{arc:[warm,.5],mon:[hex(0x9fb6ff),.3]},em:{arc:.5},G:{monGlow:[.08,.11,.25]}});
 const EVE=st({sunI:0,ambI:.12,sky:hex(0x1e2848),expo:1.0,tv:.95,mon:.25,pcIn:mixc([0,0,0],hex(0xff8a2a),.5),
- L:{pend:[hex(0xffe1b8),.3],arc:[warm,.8],ns:[warm,.6],fado:[hex(0xffd9a8),.55],desk:[hex(0xfff0d8),.35],deskLed:[amber,.6],bed:[amber,.85],head:[amber,.6],tv:[amber,.7],tvs:[hex(0xffb080),.35],sneak:[hex(0xfff0d8),.35],spot:[hex(0xfff3dc),.35],mon:[hex(0x8f7dff),.12]},
+ L:{pend:[hex(0xffe1b8),.3],arc:[warm,.8],ns:[warm,.6],fado:[hex(0xffd9a8),.55],desk:[hex(0xfff0d8),.35],deskLed:[amber,.6],bed:[amber,.85],head:[amber,.6],tv:[amber,.7],tvs:[hex(0xffb080),.35],sneak:[hex(0xfff0d8),.35],spot:[hex(0xfff3dc),.35],mon:[hex(0x9fb6ff),.12]},
  em:{pend:.5,arc:1.2,ns:.8,fado:.9,dl:1},G:{deskLed:mixc([0,0,0],amber,.42),bedLed:mixc([0,0,0],amber,.45),headLed:mixc([0,0,0],amber,.28),tvLed:mixc([0,0,0],amber,.32),sneak:[.25,.22,.18],shelf:[0,0,0]}});
 const vio=hex(0x8a3dff),cya=hex(0x22d8ff),mag=hex(0xff2fa8);
 const GAME=st({sunI:0,ambI:.08,skyC:hex(0x6a60a8),sky:hex(0x141a36),expo:1.1,tv:.25,mon:1,
- L:{deskLed:[vio,.9],arc:[vio,.6],ns:[cya,.5],bed:[vio,1.3],head:[cya,1.0],tv:[cya,1.0],mon:[hex(0xa07cff),.9],pc:[mag,1.2],shelf:[hex(0xdfe8ff),.3],sneak:[cya,.6],spot:[vio,.4]},
+ L:{deskLed:[vio,.9],arc:[vio,.6],ns:[cya,.5],bed:[vio,1.3],head:[cya,1.0],tv:[cya,1.0],mon:[hex(0x9fb6ff),.5],pc:[mag,1.2],shelf:[hex(0xb89cff),.3],sneak:[cya,.6],spot:[vio,.4]},
  em:{arc:.6,ns:.5},G:{deskLed:mixc([0,0,0],vio,.6),bedLed:mixc([0,0,0],vio,.75),headLed:mixc([0,0,0],cya,.45),tvLed:mixc([0,0,0],cya,.5),monGlow:mixc([0,0,0],hex(0x8a5cff),.3),pc:mixc([0,0,0],mag,.5),shelf:[.07,.08,.1],sneak:mixc([0,0,0],cya,.35)},pcIn:mag});
 function FETE(t){const s=st(GAME);const h=t*.22;const c=k=>hsl((h+k)%1,1,.55);
  s.L.bed=[c(0),1.4];s.L.head=[c(.25),1.1];s.L.tv=[c(.5),1.1];s.L.arc=[c(.75),.9];s.L.ns=[c(.1),.7];s.L.pc=[c(.6),1.2];s.L.sneak=[c(.4),.7];s.L.spot=[c(.85),.5];s.L.pend=[c(.3),.3];
  s.G.bedLed=mixc([0,0,0],c(0),.8);s.L.deskLed=[c(.15),.9];s.G.deskLed=mixc([0,0,0],c(.15),.6);s.G.headLed=mixc([0,0,0],c(.25),.5);s.G.tvLed=mixc([0,0,0],c(.5),.55);s.G.pc=mixc([0,0,0],c(.6),.6);s.G.sneak=mixc([0,0,0],c(.4),.4);s.pcIn=c(.6);s.em.arc=.9;s.tv=.6;return s}
 const ora=hex(0xffb877),ora2=hex(0xffc28a);
 const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.06,skyC:hex(0x55669e),gndC:hex(0x3a2216),sky:hex(0x262c48),expo:1.05,tv:0,mon:.35,shaft:.035,dust:0,pcIn:mixc([0,0,0],ora,.25),fadoC:hex(0xff9a45),
- L:{deskLed:[hex(0xff7a2a),.55],arc:[ora,.85],ns:[ora,.7],fado:[ora2,.8],desk:[hex(0xffd2a0),.45],shelf:[hex(0xffd2a0),.3],bed:[hex(0xff7a2a),.6],head:[hex(0xff8a3a),.4],tv:[hex(0xff8a3a),.3],mon:[hex(0xa8b4ff),.12],pc:[ora,.25],sneak:[hex(0xffb070),.3],spot:[hex(0xffa860),.55],candle:[hex(0xff9a40),.55],candle2:[hex(0xff9a40),.5],candle3:[hex(0xff9a40),.45]},
+ L:{deskLed:[hex(0xff7a2a),.55],arc:[ora,.85],ns:[ora,.7],fado:[ora2,.8],desk:[hex(0xffd2a0),.45],shelf:[hex(0xffd2a0),.3],bed:[hex(0xff7a2a),.6],head:[hex(0xff8a3a),.4],tv:[hex(0xff8a3a),.3],mon:[hex(0x9fb6ff),.12],pc:[ora,.25],sneak:[hex(0xffb070),.3],spot:[hex(0xffa860),.55],candle:[hex(0xff9a40),.55],candle2:[hex(0xff9a40),.5],candle3:[hex(0xff9a40),.45]},
  em:{pend:.03,arc:1.5,ns:1.1,fado:1.25,dl:1},G:{deskLed:mixc([0,0,0],hex(0xff6a1a),.4),bedLed:mixc([0,0,0],hex(0xff6a1a),.42),headLed:mixc([0,0,0],hex(0xff7a2a),.22),tvLed:mixc([0,0,0],hex(0xff7a2a),.18),shelf:[.14,.07,.02],sneak:[.16,.09,.04],pc:mixc([0,0,0],ora,.15)}});
 const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,
  L:{arc:[hex(0xffb877),.12],candle:[hex(0xff9a40),.3],candle2:[hex(0xff9a40),.25],candle3:[hex(0xff9a40),.2]},em:{arc:.3,pend:.02,fado:.05}});
@@ -47,7 +47,7 @@ R.amb.intensity=s.ambI;setC(R.amb.color,s.skyC);setC(R.amb.groundColor,s.gndC);
 setC(R.sky.material.color,s.sky);const so=mixc(s.sky,[1,1,1],.0);R.out.forEach(o=>{const c=hex(o.userData.c0||(o.userData.c0=o.material.color.getHex()));setC(o.material.color,[c[0]*s.sky[0],c[1]*s.sky[1],c[2]*s.sky[2]])});
 [R.tree,R.tree2].forEach(o=>{const c=hex(o.userData.c0||(o.userData.c0=o.material.color.getHex()));setC(o.material.color,[c[0]*s.sky[0],c[1]*s.sky[1],c[2]*s.sky[2]])});
 LN.forEach(n=>{setC(R.L[n].color,s.L[n][0]);R.L[n].intensity=s.L[n][1]});
-GN.forEach(n=>R.G[n].forEach(m=>setC(m.material.color,s.G[n])));
+GN.forEach(n=>R.G[n].forEach(m=>setC(m.material.color,s.G[n])));(R.strips||[]).forEach(o=>{const c=s.G[o.k];setC(o.m.material.color,[Math.min(1,c[0]*o.g),Math.min(1,c[1]*o.g),Math.min(1,c[2]*o.g)])});
 R.pend.emissiveIntensity=s.em.pend;R.arcBulb.emissiveIntensity=s.em.arc;R.nsShade.emissiveIntensity=s.em.ns;R.fado.emissiveIntensity=s.em.fado;R.dlBulb.emissiveIntensity=s.em.dl;
 setC(R.arcBulb.emissive,s.L.arc[1]>0?mixc(s.L.arc[0],[1,1,1],.35):hex(0xffd9a0));setC(R.nsShade.emissive,mixc(s.L.ns[0],[1,1,1],.3));
 setC(R.screens.tv.material.color,[s.tv,s.tv,s.tv]);setC(R.screens.mon.material.color,[s.mon,s.mon,s.mon]);
