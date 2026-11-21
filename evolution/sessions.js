@@ -3,19 +3,22 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
-    titre: "Séance 32 — bureau : vrai clavier TKL, souris G305, plante ZZ",
+    titre: "Séance 32 — bureau (clavier TKL, souris G305, plante ZZ) et plante du portant",
     avant: 63.75, apres: 64,
     scores: { meubles: [9.75, 10], eclairage: [10, 10], coherence: [9.25, 9.25], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.75, 8.75], video: [8, 8] },
     changements: [
       "Le clavier blanc a maintenant la vraie disposition d'un TKL 87 touches : rangée F séparée, Tab, Maj, Entrée, barre d'espace et bloc des flèches",
       "La souris a la forme bombée de la G305 (11,6 x 6,2 cm) avec sa molette, au lieu d'une simple boule",
       "La plante du bureau devient une plante ZZ réaliste (tiges arquées, feuilles brillantes par paires) au lieu de boules vertes",
-      "VR : 0 erreur, moins de triangles qu'avant (~169 k)"
+      "La plante en haut du portant (des boules vertes) devient un vrai pothos dont les tiges retombent devant les vêtements",
+      "VR : 0 erreur, moins de triangles qu'avant (~165 k)"
     ],
     images: [
       ["bureau32", "Bureau (jour)"],
       ["bureau32-cosy", "Bureau (nuit cosy)"],
-      ["plante32", "Plante ZZ"]
+      ["plante32", "Plante ZZ"],
+      ["plante-portant33", "Pothos du portant"],
+      ["portant33", "Portant (vue de face)"]
     ],
     ensuite: "Câbles des écrans le long des bras ; reflets légers sur le parquet."
   },

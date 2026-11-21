@@ -242,4 +242,5 @@ Vues de contrôle fixes (tools/preview.py) :
 - Souris G305 : coque `Lathe` mise à l'échelle (3,1 x 3,6 x 5,7) + molette. Attention : `SphereGeometry` partielle (theta) s'affiche mal avec le tri des faces de gl2 → utiliser `Lathe`. `rotation.set` n'existe pas dans shim2 → affecter x/y/z.
 - Plante du bureau : ZZ (7 tiges arquées, 5 paires de feuilles ovales brillantes, texture `zzT`) + terreau.
 - Vues de contrôle : seules les vues du bureau changent. VR : 0 erreur, 404 lots, ~169 k triangles. Scores : meubles 9,75 → 10 → **63,75 → 64/70**.
-- Ensuite : câbles des écrans le long des bras ; reflets légers sur le parquet.
+- Même séance : plante en haut du portant (9 sphères) → pot avancé en z 30 + `pothos()` dont 3 tiges retombent devant (elles ne traversent plus le plateau). Plus aucune plante en sphères dans la scène. VR : 405 lots, ~165 k triangles.
+- Ensuite : câbles des écrans le long des bras ; vêtements du portant plus variés (épaisseur, capuches) ; reflets légers sur le parquet.
