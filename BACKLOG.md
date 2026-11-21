@@ -5,6 +5,8 @@
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
 ## Meubles 3D
+- Couette : vrai drapé doux (grille déformée) au lieu d'un bloc arrondi.
+- Câbles des écrans le long des bras + goulotte sous le bureau.
 - Tapis : relief des poils (texture normale simulée).
 
 ## Éclairage
