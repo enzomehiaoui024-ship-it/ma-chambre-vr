@@ -205,3 +205,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - Demande d'Enzo : le voir sur le plan 3D, pas en VR. Activé par `window.__LATTES=true` dans `plan_gl.html` uniquement (la VR ne change pas).
 - Lattes noyer foncé 2,7 cm, espacées de 1,3 cm, sur feutre noir, du sol au plafond, z 150 → 350 ; cadres et halo LED avancés de 3,4 cm.
 - Panier inchangé : en attente de son avis.
+
+## 2026-11-21 — Test : setups du bureau d'après 2 photos d'Enzo (plan 3D seulement)
+- Boutons « BUREAU (test) » dans le plan 3D : Bureau actuel / Setup photo 1 / Setup photo 2 (3 écrans). Activé par `window.__SETUPS=true` dans `plan_gl.html` seulement (VR inchangée). `R.setSetup(k)` masque/affiche les objets.
+- Commun aux 2 versions : pan de lattes derrière les écrans, 2 étagères blanches en décalé avec succulentes et pothos retombants, lampe ampoule à filament sur socle bois, clavier crème sur support, grand tapis noir, souris blanche, bougie, plante, halo LED (suit les LED d'ambiance).
+- V1 : écran vertical posé + écran principal sur bras. V2 : écran vertical + écran principal sur socle bois + 2e écran au-dessus sur bras. Images des écrans inventées (ville sous la neige).
+- Panier inchangé : il faudrait 1 écran (V1) ou 2 écrans (V2) en plus, un bras, la lampe, les étagères.

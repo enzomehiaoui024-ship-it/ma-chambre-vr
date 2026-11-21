@@ -197,6 +197,7 @@ R.G.sneak=[mkGlow(46,110,.8,150,116,Math.PI/2)];
 RB(0,160,72.5,75,0,80,.8,M(0xF2F1ED,{roughness:.42}));
 [[5],[155]].forEach(([x])=>{RB(x-2.5,x+2.5,0,4,2,78,1,anthM);RB(x-2,x+2,4,72.5,36,44,1,anthM);RB(x-2,x+2,68,72.5,6,74,1,anthM);B(x-3,x+3,0,1,4,8,metalBlk);B(x-3,x+3,0,1,72,76,metalBlk)});
 RB(6,154,62,66,4,9,1,anthM);
+const _d0=sc.children.length;
 // desk mat, keyboard TKL, mouse
 RB(35,125,75,75.4,30,70,1.5,M(0x141414,{roughness:1}));
 RB(58,94,75.4,77.6,46,60,1,M(0x1d1d1f,{roughness:.55}));for(let r=0;r<5;r++)for(let k=0;k<14;k++)RB(59.2+k*2.48,61.2+k*2.48,77.6,78.6,47+r*2.55,48.9+r*2.55,.35,M(r==0&&k<1?C.olive:0x2b2b2e,{roughness:.5}),null,1);
@@ -222,6 +223,7 @@ Lathe(20,75,30,[[0,0],[5.5,0],[5.5,1],[1,1.5],[.9,24],[0,24]],metalBlk,20);
 add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(20,90,21),new THREE.Vector3(20,112,30),new THREE.Vector3(20,90,39)),20,1.1,8),M(0x1b1b1b,{roughness:.6})));
 [[21],[39]].forEach(([z])=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,3,20),M(0x222222,{roughness:.8}));c.rotation.x=Math.PI/2;c.position.set(20,89,z);add(c)});
 Lathe(118,75,32,[[0,0],[3.8,0],[4,9],[3.6,9],[3.4,1],[0,1]],M(C.olive,{roughness:.5}),20);
+const _d1=sc.children.length;
 // PC tower (front +z) with mesh front, 3 RGB fans, glass side
 {const pcM=M(0x0f0f10,{roughness:.35,metalness:.4});RB(128,150,2,50,18,64,1.2,pcM);[[130,20],[130,62],[148,20],[148,62]].forEach(p=>RB(p[0]-1.4,p[0]+1.4,0,2,p[1]-1.4,p[1]+1.4,.6,M(0x222222)));
  const meshT=T(64,64,(g,w,h)=>{g.fillStyle='#0d0d0e';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2c';for(let y=0;y<h;y+=4)for(let x=(y/4%2)*2;x<w;x+=4)g.fillRect(x,y,2,2)},4,8);
@@ -260,6 +262,7 @@ function pothos(x,y,z,vines){const vm=M(0x4b7b37,{roughness:.8});
  RB(-24,24,0,3,-1.8,1.8,1.4,fr,lo,2);RB(-25,25,33,36.5,-2.2,2,1.6,fr,up,2);
  RB(-14,14,7,17,-1.6,-.5,3,M(0x2b2b2e,{roughness:.7}),lo,2);RB(-4,4,0,24,1.6,4.5,1.6,fr,lo,2);
  [-27,27].forEach(x=>{RB(x-1.8,x+1.8,50,68,6,10,1,cmet,ch);RB(x-1.4,x+1.4,44,52,4,10,.8,cmet,ch);RB(x-4,x+4,68,71.5,-9,17,1.6,cm,ch,2);RB(x-3.4,x+3.4,71.3,72,-8,16,1.2,M(0x26262a,{roughness:1}),ch,1)})}
+const _l0=sc.children.length;
 // LACK shelf brun noir 110x26 at 157 + books, pothos, 2 frames above
 RB(25,135,157,162,0,26,.8,bnV);
 const bk=[C.olive,0xEDE5D3,C.black,0xB5562E,C.jaune,0x6b5a48];for(let i=0;i<10;i++){const hh=18+rnd()*7;RB(30+i*3.6,33.3+i*3.6,162,162+hh,4,22,.4,M(bk[i%6],{roughness:.8}),null,1)}
@@ -267,7 +270,65 @@ RB(68,90,162,165,6,22,.6,M(0x161616));RB(70,88,165,167,7,21,.6,M(0xEDE5D3));
 Lathe(115,162,13,[[0,0],[5.5,0],[7,12],[6.4,12],[5,1],[0,1]],M(0xC56B45,{roughness:.8}),20);
 for(let i=0;i<24;i++)rnd();pothos(115,173,13,[[-7,14,34],[5,15,46],[13,13,22]]);
 [[40,70,4],[90,120,5]].forEach(([a,b,i])=>{RB(a,b,176,216,0,2.5,.5,frM);B(a+2.5,b-2.5,178.5,213.5,2.5,2.7,M(0xffffff,{map:poster(i),roughness:.7}))});
+const _l1=sc.children.length;
 R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
+// ---------- TEST (plan 3D seulement) : setups du bureau d'après les photos d'Enzo ----------
+// « actuel » = bureau de la liste ; « v1 » = setup photo 1 (écran vertical + écran sur bras) ; « v2 » = même déco, écrans de la photo 2 (vertical + 2 écrans superposés)
+R.setups={actuel:sc.children.slice(_d0,_d1).concat(sc.children.slice(_l0,_l1)).filter(o=>o!==R.screens.mon&&!R.G.monGlow.includes(o)).concat([R.screens.mon]),v1:[],v2:[],com:[]};
+R.setSetup=()=>{};
+if(typeof window!=='undefined'&&window.__SETUPS){
+ const mk=()=>sc.children.length;
+ // écran : cadre + dalle ; art = texture (dalle éclairée) ; w,h en cm
+ const scrM=M(0x101113,{roughness:.3,metalness:.3});
+ const artT=(w,h,seed)=>T(w*4,h*4,(g,W,H)=>{let s=seed;const rr=()=>(s=(s*16807)%2147483647)/2147483647;const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#0b1430');gr.addColorStop(.6,'#24345e');gr.addColorStop(1,'#3a3550');g.fillStyle=gr;g.fillRect(0,0,W,H);
+  for(let i=0;i<14;i++){const bw=W*(.06+rr()*.12),bh=H*(.25+rr()*.55),bx=rr()*W;g.fillStyle=['#0d1224','#111a33','#161f3b'][i%3];g.fillRect(bx,H-bh,bw,bh);for(let k=0;k<40;k++){if(rr()<.55){g.fillStyle=rr()<.8?'#ffcf7a':'#fff2c8';g.fillRect(bx+rr()*bw*.9,H-bh+rr()*bh*.95,W*.012,H*.01)}}}
+  g.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<260;i++){const r0=.6+rr()*1.8;g.beginPath();g.arc(rr()*W,rr()*H,r0,0,7);g.fill()}
+  const mg=g.createRadialGradient(W*.75,H*.18,2,W*.75,H*.18,W*.25);mg.addColorStop(0,'rgba(255,214,160,.55)');mg.addColorStop(1,'rgba(255,214,160,0)');g.fillStyle=mg;g.fillRect(0,0,W,H)},1,1);
+ const screen=(p,w,h,mt)=>{RB(-w/2,w/2,-h/2,h/2,-1.4,0,.5,scrM,p,2);RB(-w*.22,w*.22,-h*.28,h*.22,-3.4,-1.3,1.2,scrM,p,2);const s=noShadow(P(w-1.2,h-1.2,mt,0,0,.06,0,0,p));return s};
+ const wood=M(0xC8A57A,{roughness:.6}),blk=M(0x151515,{roughness:.45,metalness:.4});
+ // --- éléments communs aux 2 versions ---
+ let a=mk();
+ // pan de lattes derrière les écrans
+ {const felt=M(0x141312,{roughness:1});B(42,90,75,192,0,1.2,felt);const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#6b4a30';g.fillRect(0,0,w,h);for(let i=0;i<70;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(40,24,12,.35)':'rgba(150,110,70,.25)';g.lineWidth=.6+Math.random()*1.4;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.4,x+(Math.random()-.5)*6,h*.7,x,h);g.stroke()}},1,1);const wm=M(0xffffff,{map:woodT,roughness:.55});for(let x=43;x+2.7<=89.5;x+=4)B(x,x+2.7,75,192,1.2,3.3,wm)}
+ // 2 étagères blanches flottantes en décalé + plantes
+ const shW=M(0xF4F3EF,{roughness:.45});RB(18,92,192,195.5,0,24,.6,shW);RB(86,156,170,173.5,0,24,.6,shW);
+ const potW=M(0xEDEBE6,{roughness:.6}),leaf=M(0x2f5a2c,{roughness:.8});
+ const succ=(x,y,z,h)=>{Lathe(x,y,z,[[0,0],[4,0],[4.6,h],[4.2,h],[3.6,1],[0,1]],potW,18);for(let i=0;i<9;i++){const g=Grp(x,y+h-.5,z,i*.7);g.rotation.z=.25+.25*(i%3);Cy(0,0,0,5+i%3*2,.9,leaf,.1,6,g)}};
+ succ(58,195.5,10,7);succ(74,195.5,12,6);succ(116,173.5,10,8);succ(132,173.5,12,6);
+ Lathe(28,195.5,12,[[0,0],[4.5,0],[5.5,9],[5,9],[4,1],[0,1]],potW,18);pothos(28,204,12,[[-4,12,58],[3,14,74],[8,10,40]]);
+ Lathe(148,173.5,12,[[0,0],[5,0],[6,10],[5.4,10],[4.4,1],[0,1]],potW,18);pothos(148,183,12,[[5,13,70],[-3,15,52],[9,9,36]]);
+ // lampe ampoule à filament (cadre noir) sur socle bois + petite plante
+ RB(38,58,75,77.5,6,22,.6,wood);Cy(42,10,77.5,118,.6,blk);RB(41,55,117.5,119,9.4,10.6,.4,blk);Cy(53,10,104,118,.15,M(0x111111));
+ Cy(53,10,101,104.5,1.2,M(0x2a2a2a,{metalness:.6,roughness:.3}));
+ {const bulbM=R.dlBulb;const b=S(53,95.5,10,4.6,bulbM,1,1.15,1);b.castShadow=false;S(53,95.5,10,4.9,M(0xffa040,{transparent:true,opacity:.35,roughness:.05}),1,1.2,1).castShadow=false}
+ Lathe(49,77.5,17,[[0,0],[2.6,0],[3,5],[2.7,5],[2.2,.6],[0,.6]],potW,14);for(let i=0;i<6;i++){const g=Grp(49,82,17,i*1.05);g.rotation.z=.6;leafPlane(4,5,pothosT,g).position.y=2.5}
+ // clavier crème sur support, grand tapis noir, souris blanche
+ RB(44,82,75,76.4,46,62,.6,M(0xD9D2C4,{transparent:true,opacity:.55,roughness:.2}));RB(46,80,76.4,78.4,47,61,1,M(0xEDE6D6,{roughness:.5}));for(let rr=0;rr<5;rr++)for(let k=0;k<13;k++)RB(47+k*2.55,49+k*2.55,78.4,79.3,48+rr*2.5,49.9+rr*2.5,.35,M(0xF2EDE1,{roughness:.55}),null,1);
+ RB(86,150,75,75.4,34,76,1.2,M(0x121212,{roughness:1}));{const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0xF4F2EE,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(116,76.3,58);add(m)}
+ // dessous de verre, bougie en pot, plante à droite
+ Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
+ Cy(140,24,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(140,24,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);{const f=noShadow(S(140,82.6,24,.7,MB(0xffb35a),1,1.8,1));R.flames&&R.flames.push(f)}
+ Lathe(150,75,66,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);for(let i=0;i<10;i++)S(150+Math.cos(i*1.9)*4,90+(i%3)*2.5,66+Math.sin(i*1.9)*4,3,leaf,1,.8,1);
+ // halo LED orange derrière les écrans (suit les LED d'ambiance)
+ {(R.G.headLed=R.G.headLed||[]).push(mkGlow(170,110,85,120,3.6,0),mkGlow(110,70,85,115,3.7,0))}
+ R.setups.com=sc.children.slice(a);
+ // --- version 1 : écran vertical posé + écran principal sur bras ---
+ a=mk();
+ {const g=Grp(20,78,15,.28);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
+ {RB(124,132,73,77,1,7,.6,blk);Cy(128,4,77,104,1.3,blk);const a1=Grp(128,102,4,0);RB(-1.5,1.5,-1.5,1.5,0,18,1,blk,a1);a1.rotation.y=-.9;
+  const g=Grp(98,110,24,-.1);screen(g,61.4,36.4,R.screens.mon.material)}
+ R.setups.v1=sc.children.slice(a);
+ // --- version 2 : écran vertical + écran principal bas + 2e écran au-dessus ---
+ a=mk();
+ {const g=Grp(20,78,15,.28);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
+ {RB(84,112,75,76.4,10,24,.8,wood);RB(95,101,76.4,86,14,17,.8,blk);const g=Grp(98,101,22,0);screen(g,61.4,36.4,R.screens.mon.material)}
+ {RB(124,132,73,77,1,7,.6,blk);Cy(128,4,77,146,1.3,blk);const a1=Grp(128,140,4,0);RB(-1.5,1.5,-1.5,1.5,0,20,1,blk,a1);a1.rotation.y=-.75;
+  const g=Grp(98,139.5,20,0);g.rotation.x=.12;screen(g,61.4,36.4,MB(0xffffff,{map:artT(62,37,29)}))}
+ R.setups.v2=sc.children.slice(a);
+ R.setSetup=k=>{const on=new Set(k==='actuel'?R.setups.actuel:R.setups.com.concat(R.setups[k]||[]));['actuel','v1','v2','com'].forEach(n=>R.setups[n].forEach(o=>o.visible=on.has(o)));
+  const L=R.L&&R.L.desk;if(L){if(k==='actuel')L.position.set(118,100,36);else L.position.set(53,96,16)}R.curSetup=k};
+ R.setSetup('actuel');
+}
 // laundry basket SALUDING (bamboo) under left of desk + FNISS bin
 {const bamT=T(64,64,(g,w,h)=>{g.fillStyle='#b48c5a';g.fillRect(0,0,w,h);g.strokeStyle='#8a6438';g.lineWidth=2;for(let i=-64;i<128;i+=8){g.beginPath();g.moveTo(i,0);g.lineTo(i+64,64);g.stroke()}},6,3);
  Lathe(24,0,58,[[0,0],[15,0],[17,48],[16.4,48],[14.4,1],[0,1]],M(0xffffff,{map:bamT,roughness:.9}),28)}
