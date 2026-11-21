@@ -291,17 +291,18 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  succ(58,195.5,10,6);succ(72,195.5,12,6);succ(116,173.5,10,6);succ(132,173.5,12,6);
  Lathe(32,195.5,12,[[0,0],[4.5,0],[5.5,9],[5,9],[4,1],[0,1]],potW,18);pothos(32,204,12,[[-4,12,58],[3,14,74],[8,10,40]]);
  Lathe(142,173.5,12,[[0,0],[5,0],[6,10],[5.4,10],[4.4,1],[0,1]],potW,18);pothos(142,183,12,[[5,13,70],[-3,15,52],[9,9,36]]);
- // étagère d'écrans 100 x 27 x 15 cm, LED Tapo derrière les écrans et dessous
- RB(10,110,87.5,90,0,27,.6,wal);[13,60,107].forEach(x=>RB(x-2,x+2,75,87.5,1,26,.5,wal));
+ // 2 bras d'écran AOC AM400B (un par écran), fixés par pince à l'arrière du bureau
+ const arm=(cx,cz,top,tx,ty,tz)=>{RB(cx-4,cx+4,71,77,0,8,.6,blk);Lathe(cx,77,cz,[[0,0],[1.6,0],[1.6,top-77],[0,top-77]],blk,14);S(cx,top,cz,2,blk);
+  const V3=(x,y,z)=>new THREE.Vector3(x,y,z);const e=V3((cx+tx)/2,top+6,(cz+tz)/2+6);add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(V3(cx,top,cz),V3(cx,top+6,cz+4),e),8,1.5,8),blk));add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(e,V3(tx,ty+3,tz-2),V3(tx,ty,tz)),8,1.3,8),blk));S(e.x,e.y,e.z,2.2,blk);S(tx,ty,tz,2,blk)};
  // lampe à ampoule apparente (cadre noir, socle bois, H 33,5 cm) + petite plante, sur l'étagère
- {const y=90;RB(38,56,y,y+2.5,6,22,.6,wood);Cy(41,10,y+2.5,y+33,.6,blk);RB(40,52,y+32.5,y+34,9.4,10.6,.4,blk);Cy(50,10,y+22,y+33,.15,M(0x111111));
+ {const y=75;RB(38,56,y,y+2.5,6,22,.6,wood);Cy(41,10,y+2.5,y+33,.6,blk);RB(40,52,y+32.5,y+34,9.4,10.6,.4,blk);Cy(50,10,y+22,y+33,.15,M(0x111111));
   Cy(50,10,y+19.5,y+22.5,1.1,M(0x2a2a2a,{metalness:.6,roughness:.3}));
   const b=S(50,y+14.5,10,4.6,R.dlBulb,1,1.15,1);b.castShadow=false;S(50,y+14.5,10,4.9,M(0xffa040,{transparent:true,opacity:.35,roughness:.05}),1,1.2,1).castShadow=false;
   Lathe(45,y+2.5,17,[[0,0],[2.6,0],[3,5],[2.7,5],[2.2,.6],[0,.6]],potW,14);for(let i=0;i<6;i++){const g=Grp(45,y+7,17,i*1.05);g.rotation.z=.6;leafPlane(4,5,pothosT,g).position.y=2.5}}
- // écran vertical 27" (iiyama, pivot) sur l'étagère
- {const g=Grp(22,93,12,.15);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
+ // écran vertical 27" (iiyama) tourné en portrait, sur son bras
+ {const g=Grp(22,126,14,.15);RB(-5,5,-5,5,-4,-1.4,.5,blk,g);screen(g,36.6,62,MB(0xffffff,{map:artT(37,62,11)}));arm(14,4,100,22,126,10)}
  // écran principal 34" ultra-large incurvé (MSI MAG 341CQP, 81 x 36,5 cm) + barre lumineuse Xiaomi
- {const m=Grp(98,113.3,14,0);RB(-12,12,-23.3,-22.1,-7,4,.6,blk,m);RB(-2.5,2.5,-22.1,-8,-3.6,-1.6,.8,blk,m);
+ {const m=Grp(98,113.3,16,0);RB(-5,5,-5,5,-4,-1.4,.5,blk,m);arm(128,4,100,98,113.3,12);
   const sm=screen(m,81,36.5,R.screens.mon.material);R.screens.mon.material.map=artT(81,36,47);R.screens.mon=sm;
   RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
  // tapis XXL noir, clavier Corsair K70 Core TKL noir, souris G305 noire (comme la liste)
@@ -312,9 +313,9 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
  Cy(148,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(148,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);noShadow(S(148,82.6,30,.7,MB(0xffb35a),1,1.8,1));
  Lathe(146,75,64,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);for(let i=0;i<10;i++)S(146+Math.cos(i*1.9)*4,90+(i%3)*2.5,64+Math.sin(i*1.9)*4,3,leaf,1,.8,1);
- // halo du ruban LED Tapo derrière les écrans (mur) et sous l'étagère d'écrans (bureau) : suit les ambiances (« deskLed »)
+ // halo du ruban LED Tapo collé derrière les écrans (sur le mur) : suit les ambiances (« deskLed »)
  R.G.monGlow.forEach(m=>m.position.set(98,113,3.8));R.G.shelf[0].position.set(120,150,3.8);
- R.G.deskLed=[mkGlow(170,110,72,122,3.6,0),mkGlow(110,70,72,115,3.7,0),mkGlow(100,40,60,75.4,14,0,-Math.PI/2)];
+ R.G.deskLed=[mkGlow(170,110,72,122,3.6,0),mkGlow(110,70,72,115,3.7,0)];
 }
 // laundry basket SALUDING (bamboo) under left of desk + FNISS bin
 {const bamT=T(64,64,(g,w,h)=>{g.fillStyle='#b48c5a';g.fillRect(0,0,w,h);g.strokeStyle='#8a6438';g.lineWidth=2;for(let i=-64;i<128;i+=8){g.beginPath();g.moveTo(i,0);g.lineTo(i+64,64);g.stroke()}},6,3);
@@ -454,7 +455,7 @@ const sun=new THREE.DirectionalLight(0xfff0dc,1);sun.position.set(180+150,180+42
 sun.castShadow=true;if(sun.shadow&&sun.shadow.camera){sun.shadow.mapSize.set(2048,2048);const sc2=sun.shadow.camera;sc2.left=-330;sc2.right=330;sc2.top=330;sc2.bottom=-330;sc2.near=50;sc2.far=1600;sun.shadow.bias=-.0008}
 function PL(name,c,x,y,z,d,dec){const l=new THREE.PointLight(c,0,d||300,dec||1.5);l.position.set(x,y,z);sc.add(l);R.L[name]=l;return l}
 PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0xffd09a,18,76,140,220);PL('fado',0xffd9a8,346,92,307,220);
-PL('desk',0xfff0d8,50,104,16,170);PL('deskLed',0xff8a30,72,110,10,150,1.3);PL('shelf',0xf4f7ff,90,166,12,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
+PL('desk',0xfff0d8,50,89,16,170);PL('deskLed',0xff8a30,72,110,10,150,1.3);PL('shelf',0xf4f7ff,90,166,12,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
 PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 {const sp=(n,d,c)=>{const l=Math.hypot(...d);R.L[n].userData.spot=[d[0]/l,d[1]/l,d[2]/l,c]};sp('arc',[0,-1,0],.15);sp('desk',[-23,-24,16],.45);sp('spot',[.15,1,.2],.55);sp('sneak',[0,-1,0],.1)}
 ['arc','fado','ns','spot'].forEach(n=>R.L[n].userData.sh=1);R.L.ns.userData.shO=[0,9,0];
