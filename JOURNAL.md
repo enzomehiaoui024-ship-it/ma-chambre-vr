@@ -231,3 +231,8 @@ Vues de contrôle fixes (tools/preview.py) :
 ## 2026-11-21 — Séance 31 : écran de l'Echo Show qui suit l'ambiance
 - `R.echoSet(k)` redessine le canvas de l'écran (heure + « Ambiance : … » + bouton actif) et incrémente `ver` ; appelé par `setMode` dans app_gl et app_vr ; matériau ajouté à la liste dynamique VR.
 - VR : 0 erreur. Scores : cohérence 9 → 9,25 → **63,5 → 63,75/70**.
+
+## 2026-11-21 — Audit complet (demande d'Enzo)
+- Compatibilités vérifiées : bras AM400B (pince 1,5–5 cm, 9 kg) ↔ plateau TROTTEN 2 cm et MSI 341CQP (8,8 kg avec pied) ; Lancool 207 (GPU 375 mm max, AIO 360 au-dessus, alim 160 mm max) ↔ RX 9070 XT, AIO 360, RM850e.
+- Corrigé : ligne RENBERGET (qté 0) retirée ; casque Arctis remis en 3D, accroché au crochet du TROTTEN.
+- Points ouverts → BACKLOG « À demander » (prises, type de murs, Windows, remplaçants arc/NOOLI). À vérifier au montage : barre arrière du TROTTEN vs pinces des bras.

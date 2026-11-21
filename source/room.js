@@ -316,6 +316,10 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
  RB(52,88,75.4,77.6,46,60,1,M(0xEEEEEA,{roughness:.5}));for(let rr=0;rr<5;rr++)for(let k=0;k<14;k++)RB(53.2+k*2.48,55.2+k*2.48,77.6,78.6,47+rr*2.55,48.9+rr*2.55,.35,M(0xF7F6F2,{roughness:.6}),null,1);
  {const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0xF4F3EF,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
+ // casque Arctis Nova 5 accroché au crochet sur le côté droit du TROTTEN
+ {const hm=M(0x1b1b1b,{roughness:.6});RB(160,162.5,70,72,38,42,.4,blk);const g=Grp(163.5,58,40,Math.PI/2);
+  add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(-9,0,0),new THREE.Vector3(0,14,0),new THREE.Vector3(9,0,0)),16,1,8),hm),g);
+  [-9,9].forEach(x=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(4.3,4.3,3,20),M(0x222222,{roughness:.8}));c.rotation.z=Math.PI/2;c.position.set(x,-3,0);add(c,g)})}
  // dessous de verre, bougie en pot, plante à droite
  Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
  Cy(148,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(148,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);noShadow(S(148,82.6,30,.7,MB(0xffb35a),1,1.8,1));
