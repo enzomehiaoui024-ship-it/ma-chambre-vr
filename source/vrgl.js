@@ -38,7 +38,7 @@ function collect(){const meshes=[],pts=[];let hemi=null,dir=null;(function walk(
 const lin=v=>Math.pow(v,2.2);
 // ---------- build static batches ----------
 const {meshes:all}=collect();const batches=[],dyn=[];const groups=new Map();
-const mkey=mt=>[mt.map?(mt.map.__id||(mt.map.__id=Math.random())):0,mt.map?mt.map.repeat.x+','+mt.map.repeat.y:'',mt.color.getHex(),mt.emissive.getHex(),mt.emissiveIntensity.toFixed(3),mt.roughness,mt.metalness,mt.transparent,mt.opacity,mt.side,mt.blending,mt.basic,mt.depthWrite].join('|');
+const mkey=mt=>[mt.map?(mt.map.__id||(mt.map.__id=Math.random())):0,mt.map?mt.map.repeat.x+','+mt.map.repeat.y:'',mt.color.getHex(),mt.emissive.getHex(),mt.emissiveIntensity.toFixed(3),mt.roughness,mt.metalness,mt.transparent,mt.opacity,mt.side,mt.blending,mt.basic,mt.depthWrite,mt.noSun||0].join('|');
 function xf(m,x,y,z){return[m[0]*x+m[4]*y+m[8]*z+m[12],m[1]*x+m[5]*y+m[9]*z+m[13],m[2]*x+m[6]*y+m[10]*z+m[14]]}
 for(const[o,m]of all){if(o.userData&&(o.userData.dynamic))continue;const mt=o.material;
  if(dynamicSet.has(o)){dyn.push(o);continue}
@@ -71,7 +71,7 @@ const api={batches,dyn};api.retex=t=>{const r=texs.get(t);if(r){gl.deleteTexture
 api.updateShadows=function(sd){const c={x:180,y:90,z:180};SL=m4mul(ortho(-300,300,-300,300,200,1300),look({x:c.x+sd[0]*700,y:c.y+sd[1]*700,z:c.z+sd[2]*700},c));shadowPass(SM,SL,false);
  if(!TL){TL=m4mul(ortho(-210,210,-210,210,10,310),look({x:180,y:260,z:180},{x:180,y:-40,z:180.0001}));shadowPass(TM,TL,true)}};
 let frameLights=[],frameSun=null;
-api.begin=function(expo){const {pts,hemi,dir}=collect();frameLights=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,s:(p.userData&&p.userData.spot)||[0,0,0,-2],w:p.intensity*(p.color.r+p.color.g+p.color.b)}));
+let LC=null;api.begin=function(expo){if(!LC)LC=collect();const {pts,hemi,dir}=LC;frameLights=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,s:(p.userData&&p.userData.spot)||[0,0,0,-2],w:p.intensity*(p.color.r+p.color.g+p.color.b)}));
  for(const b of batches){const sel=[];frameLights.forEach((p,k)=>{const dd=Math.hypot(p.x-b.ctr[0],p.y-b.ctr[1],p.z-b.ctr[2]);if(dd<p.d+b.r)sel.push([k,p.w*Math.pow(Math.max(.05,1-Math.max(0,dd-b.r)/p.d),p.dec)])});sel.sort((a,b2)=>b2[1]-a[1]);b.lights=sel.slice(0,VNL).map(s=>s[0]);b.lkey=b.lights.join(',')}
  let d=[dir.position.x-dir.target.position.x,dir.position.y-dir.target.position.y,dir.position.z-dir.target.position.z];const l=Math.hypot(...d);frameSun={dir:d.map(v=>v/l),col:[lin(dir.color.r)*dir.intensity,lin(dir.color.g)*dir.intensity,lin(dir.color.b)*dir.intensity],hemi,expo}};
 // draw one view: VP maps world(cm)->clip, cam = eye pos in cm
@@ -79,21 +79,23 @@ api.drawView=function(VP,cam,viewport,clear){const U=PM.U;if(viewport)gl.viewpor
  gl.useProgram(PM.p);for(let i=0;i<8;i++)gl.disableVertexAttribArray(i);[attr.P,attr.N,attr.U].forEach(a=>gl.enableVertexAttribArray(a));gl.enable(gl.DEPTH_TEST);
  gl.uniformMatrix4fv(U.uVP,false,VP);gl.uniformMatrix4fv(U.uSL,false,SL);gl.uniformMatrix4fv(U.uTL,false,TL);gl.uniform3f(U.uCam,cam[0],cam[1],cam[2]);gl.uniform1f(U.uExpo,frameSun.expo);
  const h=frameSun.hemi;gl.uniform3f(U.uSky,lin(h.color.r),lin(h.color.g),lin(h.color.b));gl.uniform3f(U.uGnd,lin(h.groundColor.r),lin(h.groundColor.g),lin(h.groundColor.b));gl.uniform1f(U.uHI,h.intensity);
- gl.uniform3f(U.uSD,...frameSun.dir);gl.uniform3f(U.uSC,...frameSun.col);gl.uniform1i(U.uSun,frameSun.col[0]+frameSun.col[1]>.002?1:0);
+ gl.uniform3f(U.uSD,...frameSun.dir);gl.uniform3f(U.uSC,...frameSun.col);const sunOn=frameSun.col[0]+frameSun.col[1]>.002?1:0;gl.uniform1i(U.uSun,sunOn);
  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,SM.t);gl.uniform1i(U.uSM,1);gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,TM.t);gl.uniform1i(U.uTM,2);gl.uniform1i(U.uMap,0);
  let lk=null;const setL=ids=>{const k=ids.join(',');if(k===lk)return;lk=k;gl.uniform1i(U.uNL,ids.length);ids.forEach((id,i)=>{const p=frameLights[id];gl.uniform3f(U[`uPP[${i}]`],p.x,p.y,p.z);gl.uniform3f(U[`uPC[${i}]`],...p.c);gl.uniform1f(U[`uPD[${i}]`],p.d);gl.uniform1f(U[`uPDec[${i}]`],p.dec);gl.uniform4f(U[`uPS[${i}]`],p.s[0],p.s[1],p.s[2],p.s[3])})};
  const setMat=mt=>{gl.uniform3f(U.uCol,...(mt.basic?[mt.color.r,mt.color.g,mt.color.b]:[lin(mt.color.r),lin(mt.color.g),lin(mt.color.b)]));const ei=mt.emissiveIntensity;gl.uniform3f(U.uEm,lin(mt.emissive.r)*ei,lin(mt.emissive.g)*ei,lin(mt.emissive.b)*ei);
-  gl.uniform1f(U.uOp,mt.opacity);gl.uniform1i(U.uBasic,mt.basic?1:0);gl.uniform1i(U.uDbl,mt.side===2?1:0);gl.uniform1f(U.uRough,mt.roughness);gl.uniform1f(U.uAT,mt.alphaTest||0);gl.uniform1f(U.uMetal,mt.metalness);gl.uniform1i(U.uSpec,mt.roughness<.75?1:0);
+  gl.uniform1f(U.uOp,mt.opacity);gl.uniform1i(U.uSun,mt.noSun?0:sunOn);gl.uniform1i(U.uBasic,mt.basic?1:0);gl.uniform1i(U.uDbl,mt.side===2?1:0);gl.uniform1f(U.uRough,mt.roughness);gl.uniform1f(U.uAT,mt.alphaTest||0);gl.uniform1f(U.uMetal,mt.metalness);gl.uniform1i(U.uSpec,mt.roughness<.75?1:0);
   if(mt.map){const T=tex(mt.map);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,T.o);gl.uniform1i(U.uHasMap,1);gl.uniform1i(U.uFract,T.P2?0:1);gl.uniform2f(U.uRep,mt.map.repeat.x,mt.map.repeat.y)}else gl.uniform1i(U.uHasMap,0);
   if(mt.side===2)gl.disable(gl.CULL_FACE);else gl.enable(gl.CULL_FACE);
   if(mt.transparent){gl.enable(gl.BLEND);if(mt.blending===2)gl.blendFunc(gl.SRC_ALPHA,gl.ONE);else gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(mt.depthWrite&&mt.blending!==2)}else{gl.disable(gl.BLEND);gl.depthMask(true)}};
  const skip=mt=>(mt.transparent&&mt.opacity<=.001)||(mt.blending===2&&mt.color.r+mt.color.g+mt.color.b<.003);
  const bind=(b)=>{gl.bindBuffer(gl.ARRAY_BUFFER,b.p);gl.vertexAttribPointer(attr.P,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,b.n);gl.vertexAttribPointer(attr.N,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,b.u);gl.vertexAttribPointer(attr.U,2,gl.FLOAT,false,0,0)};
- const items=[];for(const b of batches){if(b.objs[0].visible===false)continue;items.push({b,tr:b.mt.transparent,ro:b.objs[0].renderOrder||0,d:(b.ctr[0]-cam[0])**2+(b.ctr[1]-cam[1])**2+(b.ctr[2]-cam[2])**2})}
+ const FP=[];for(let k=0;k<3;k++)for(const sg of[1,-1]){const a=VP[3]+sg*VP[k],bb=VP[7]+sg*VP[4+k],c=VP[11]+sg*VP[8+k],d=VP[15]+sg*VP[12+k],l=Math.hypot(a,bb,c)||1;FP.push([a/l,bb/l,c/l,d/l])}
+ const vis=b=>{for(const q of FP)if(q[0]*b.ctr[0]+q[1]*b.ctr[1]+q[2]*b.ctr[2]+q[3]<-b.r)return false;return true};
+ const items=[];let nD=0;for(const b of batches){if(b.objs[0].visible===false||!vis(b))continue;nD++;items.push({b,tr:b.mt.transparent,ro:b.objs[0].renderOrder||0,d:(b.ctr[0]-cam[0])**2+(b.ctr[1]-cam[1])**2+(b.ctr[2]-cam[2])**2})}
  for(const o of dyn){if(o.visible===false)continue;const m=o.userData.matrix||compose(o);let M=m;let par=o.parent;while(par&&par.parent){M=m4mul(compose(par),M);par=par.parent}items.push({o,M,tr:o.material.transparent,ro:o.renderOrder||0,d:(M[12]-cam[0])**2+(M[13]-cam[1])**2+(M[14]-cam[2])**2})}
  const op=items.filter(i=>!i.tr).sort((a,b)=>a.d-b.d),tr=items.filter(i=>i.tr).sort((a,b)=>(a.ro-b.ro)||(b.d-a.d));
  for(const it of op.concat(tr)){const mt=it.b?it.b.mt:it.o.material;if(skip(mt))continue;setMat(mt);
   if(it.b){gl.uniformMatrix4fv(U.uM,false,I4);gl.uniformMatrix3fv(U.uNM,false,I3);if(!mt.basic)setL(it.b.lights);bind(it.b);gl.drawArrays(gl.TRIANGLES,0,it.b.c)}
   else{const g=geo(it.o.geometry);gl.uniformMatrix4fv(U.uM,false,it.M);gl.uniformMatrix3fv(U.uNM,false,nmat(it.M));if(!mt.basic){const p=[it.M[12],it.M[13],it.M[14]];const sel=frameLights.map((L,k)=>[k,Math.hypot(L.x-p[0],L.y-p[1],L.z-p[2])]).filter(x=>x[1]<frameLights[x[0]].d+30).sort((a,b)=>a[1]-b[1]).slice(0,VNL).map(x=>x[0]);setL(sel)}bind(g);gl.drawArrays(gl.TRIANGLES,0,g.c)}}
- gl.depthMask(true);gl.disable(gl.BLEND)};
+ gl.depthMask(true);gl.disable(gl.BLEND);api.drawn=nD};
 return api}

@@ -5,9 +5,7 @@
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
 ## Meubles 3D
-- Couette : vrai drapé doux (grille déformée) au lieu d'un bloc arrondi.
 - Proposer à Enzo une goulotte sous le bureau (achat, ~10 €) : les câbles sont pour l'instant tenus par des attaches.
-- Tapis : relief des poils (texture normale simulée).
 
 ## Éclairage
 - Ombres des lampes aussi en VR (fait dans le plan 3D, séance 28) : seulement si le Quest 2 reste ≥ 68 i/s (mesurer d'abord).

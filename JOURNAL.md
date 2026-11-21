@@ -249,3 +249,13 @@ Vues de contrôle fixes (tools/preview.py) :
 - Ensuite : couette avec un vrai drapé ; reflets légers sur le parquet.
 
 - 21/11 05:45 : Enzo a déjà une licence Windows (rien à ajouter) ; iPhone 14 → chargeur Qi2 proposé, panier inchangé en attendant son accord.
+
+## 2026-11-21 — Séance 33 : bugs VR, optimisation VR, couette et tapis (demande d'Enzo)
+- Nouvel outil `tools/vrshots.py` : captures du rendu VR (casque simulé) à des positions données (`[[x,z,yaw,ambiance],...]`, œil gauche), affiche le nombre de lots dessinés.
+- Bug 1 (liseré bleu en haut des murs) : fuite de lumière de la lune dans l'ombre au ras du plafond (plafond = plan sans épaisseur, biais d'ombre ~1 cm). Plafond remplacé par une dalle de 12 cm (`B`, toujours `R.ceil`, noTop), murs montés à 251,5 et prolongés de 0,5 cm aux coins.
+- Bug 2 (couloir) : mur du fond en `MB` (non éclairé) → blanc la nuit ; remplacé par un matériau éclairé + 2 murs latéraux + plafond du couloir (enfant de `R.ceil`). Ligne bleue verticale = rayon de lune fenêtre → porte → mur du couloir : matériaux du couloir marqués `noSun` (vrgl : `uSun` par matériau, clé de lot incluse).
+- Optimisation VR (`vrgl.js`) : élimination des lots hors du champ de vision (6 plans tirés de VP, sphère englobante de chaque lot) ; liste des lumières mise en cache au lieu de parcourir toute la scène à chaque image. Lots dessinés par œil : 47–163 au lieu de 415–433.
+- Couette : dessus en surface maillée 44 x 36 (gonflant + 7 plis gaussiens) posée sur le volume arrondi ; texture d'ombrage des plis calculée depuis le relief ; plis peints retirés de `quiltT`.
+- Tapis berbère : 50 franges par bout (4,2–5,6 cm).
+- Vues de contrôle : couette, couloir (plus sombre et réaliste), tapis ; rien d'autre ne change. VR : 0 erreur, 433 lots, ~172 k triangles. Scores : VR 8,75 → 9 → **64 → 64,25/70**.
+- Ensuite : reflets du parquet seulement après mesure des images/s sur le vrai Quest 2.

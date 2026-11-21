@@ -47,11 +47,13 @@ for(let i=0;i<56;i++)rnd();
 
 // ---------- shell ----------
 const fl=P(360,360,M(0xffffff,{map:floorT,roughness:.55}),180,0,180,0,-Math.PI/2);
-const ce=P(360,360,M(C.ceil,{roughness:1}),180,250,180,0,Math.PI/2);ce.userData.noTop=true;R.ceil=ce;
+// plafond en dalle épaisse (12 cm) : bloque vraiment la lumière de la lune/du soleil → plus de liseré lumineux en haut des murs
+const ce=B(-7,367,250,262,-7,367,M(C.ceil,{roughness:1}));B(60,190,-6,6,-305,-180,M(C.ceil,{roughness:1}),ce);ce.userData.noTop=true;R.ceil=ce;
 const wm=M(C.wall,{roughness:.95});
-W('N',0,265,0,250,wm);W('N',345,360,0,250,wm);W('N',265,345,205,250,wm);
-W('S',0,120,0,250,wm);W('S',240,360,0,250,wm);W('S',120,240,0,90,wm);W('S',120,240,210,250,wm);
-W('W',0,360,0,250,wm);W('E',0,360,0,250,wm);
+// murs montés 1,5 cm au-dessus du plafond et prolongés de 0,5 cm aux coins : plus de fente lumineuse aux arêtes en VR
+W('N',-.5,265,0,251.5,wm);W('N',345,360.5,0,251.5,wm);W('N',265,345,205,251.5,wm);
+W('S',-.5,120,0,251.5,wm);W('S',240,360.5,0,251.5,wm);W('S',120,240,0,90,wm);W('S',120,240,210,251.5,wm);
+W('W',-.5,360.5,0,251.5,wm);W('E',-.5,360.5,0,251.5,wm);
 const pl=M(C.white,{roughness:.6});B(0,265,0,8,0,1.2,pl);B(0,120,0,8,358.8,360,pl);B(240,360,0,8,358.8,360,pl);B(0,1.2,0,8,0,360,pl);B(358.8,360,0,8,0,360,pl);
 // window reveal (wall thickness)
 const rv=M(C.wall);B(118,120,90,210,360,384,rv);B(240,242,90,210,360,384,rv);B(118,242,210,212,360,384,rv);B(110,250,86,90,352,384,pl);
@@ -105,7 +107,7 @@ const pl2=M(C.white,{roughness:.55});B(261,265,0,209,-4,3,pl2);B(345,349,0,209,-
 const doorM=M(0xF6F5F1,{roughness:.45});RB(342.5,346.5,0,203,4,83,.8,doorM);
 B(342,342.6,20,90,14,73,M(0xEFEDE8,{roughness:.5}));B(342,342.6,110,185,14,73,M(0xEFEDE8,{roughness:.5}));
 Cy(340.5,76,99,101,1.6,chrome);{const h=new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,12,12),chrome);h.rotation.x=Math.PI/2;h.position.set(339.4,100,70.5);add(h)}
-noShadow(P(220,250,MB(0xD6D1C8),305,125,-120));const hf=noShadow(P(120,130,M(0x9d7a55,{map:floorT}),305,0,-60,0,-Math.PI/2));R.hall=[hf];
+const hwl=M(0xD6D1C8,{roughness:1});hwl.noSun=1;P(220,250,hwl,305,125,-120);P(120,250,hwl,248,125,-60,Math.PI/2);P(120,250,hwl,362,125,-60,-Math.PI/2);const hf=noShadow(P(120,130,M(0x9d7a55,{map:floorT}),305,0,-60,0,-Math.PI/2));hf.material.noSun=1;R.hall=[hf];
 const hw=M(0xE9E5DE,{roughness:.95});[[0,265],[345,360]].forEach(([a,b])=>P(b-a,250,hw,(a+b)/2,125,-1,Math.PI));P(80,45,hw,305,227.5,-1,Math.PI);
 P(120,250,hw,245,125,-60,Math.PI/2);P(120,250,hw,365,125,-60,-Math.PI/2);const hc=P(120,120,M(0xF2F0EC),305,250,-60,0,Math.PI/2);hc.userData.noTop=true;
 // window handle
@@ -115,6 +117,8 @@ RB(176,184,150,153,374,376,1,chrome);
 const rugT2=T(512,512,(g,w,h)=>{g.fillStyle='#ECE4D3';g.fillRect(0,0,w,h);for(let i=0;i<4000;i++){g.fillStyle=`rgba(${190+rnd()*40|0},${180+rnd()*40|0},${160+rnd()*30|0},.35)`;g.fillRect(rnd()*w,rnd()*h,2,2)}
  g.strokeStyle='#1d1b19';g.lineWidth=6;g.lineJoin='round';for(let i=-6;i<12;i++){g.beginPath();g.moveTo(i*96,0);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.sin(i*3+k)*2.5,k*32);g.stroke();g.beginPath();g.moveTo(i*96,h);for(let k=1;k<=16;k++)g.lineTo(i*96+k*32+Math.cos(i*2+k)*2.5,h-k*32);g.stroke()}});
 RB(200,320,0,1.6,158,328,.8,M(0xffffff,{map:rugT2,roughness:1}));
+// franges en coton aux deux bouts du tapis berbère
+{const fm=M(0xE6DCC6,{roughness:1});for(let x=203,i=0;x<318;x+=2.3,i++){const L=4.2+((i*7)%5)*.35;B(x-.4,x+.4,0,.45,158-L,158.2,fm);B(x-.4,x+.4,0,.45,327.8,328+L,fm)}}
 {const frT=T(8,64,(g,w,h)=>{g.fillStyle='#E6DCC8';g.fillRect(0,0,w,h);g.fillStyle='#b8ad97';for(let y=0;y<h;y+=2)g.fillRect(0,y,w,1)},1,40);[[197,200],[320,323]].forEach(([a,b])=>B(a,b,0,.5,159,327,M(0xffffff,{map:frT,roughness:1})))}
 
 // ---------- bed MALM high 140x190 brun noir (x 0-199, z 171-327) ----------
@@ -127,10 +131,26 @@ B(6,BX1-3,10,22,BZ0+3,BZ1-3,M(0x2a2421));// under-bed boxes area (dark)
 RB(7,BX1-3.5,20,45,BZ0+3,BZ1-3,4,M(0xE9DFCB,{roughness:1}),null,3);
 // duvet olive (top + side drapes) + folded top
 const quiltT=T(256,256,(g,w,h)=>{let s3=11;const r3=()=>(s3=(s3*16807)%2147483647)/2147483647;g.fillStyle='#6E7547';g.fillRect(0,0,w,h);for(let i=0;i<1800;i++){g.fillStyle=`rgba(${r3()<.5?30:150},${r3()<.5?40:160},20,.10)`;g.fillRect(r3()*w,r3()*h,2,1)}
- for(let k=0;k<9;k++){const x0=r3()*w,y0=r3()*h,a=r3()*3.14,L=60+r3()*120,wd=10+r3()*16;g.save();g.translate(x0,y0);g.rotate(a);
+ for(let k=0;k<0;k++){const x0=r3()*w,y0=r3()*h,a=r3()*3.14,L=60+r3()*120,wd=10+r3()*16;g.save();g.translate(x0,y0);g.rotate(a);
   for(const[ox,oy]of[[0,0]]){const gr=g.createLinearGradient(0,-wd,0,wd);gr.addColorStop(0,'rgba(255,255,235,0)');gr.addColorStop(.42,'rgba(255,255,235,.10)');gr.addColorStop(.5,'rgba(20,24,8,.12)');gr.addColorStop(.62,'rgba(20,24,8,.05)');gr.addColorStop(1,'rgba(20,24,8,0)');g.fillStyle=gr;g.beginPath();g.ellipse(0,0,L/2,wd,0,0,6.29);g.fill()}g.restore()}},1,1);
 const duv=M(0xffffff,{map:quiltT,roughness:1});
-RB(58,BX1+2,43,51,BZ0+1,BZ1-1,3.5,duv,null,3);
+RB(58,BX1+2,43,49.6,BZ0+1,BZ1-1,3.2,duv,null,3);
+// dessus de couette drapé : surface en relief (gonflant + plis doux), bords qui retombent sur le volume
+{const X0=58.6,X1=BX1+1.4,Z0=BZ0+1.6,Z1=BZ1-1.6,NX=44,NZ=36,W=X1-X0,D=Z1-Z0;
+ const sm=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t)};
+ const folds=[[0.35,0.30,0.9,-.6,2.6,4.5],[0.62,0.55,0.4,.5,2.0,6],[0.80,0.25,1.2,-.2,1.6,4],[0.50,0.78,0.2,.9,2.2,5],[0.25,0.68,.7,.3,1.5,4],[0.70,0.85,1.4,.2,1.3,4],[0.15,0.40,1.0,.1,1.2,3.5]];
+ const H=(x,z)=>{const u=(x-X0)/W,v=(z-Z0)/D;const e=sm(0,.07,Math.min(u,1-u)*W/D)*sm(0,.06,Math.min(v,1-v));
+  let f=1.1*Math.sin(u*3.1)*Math.sin(v*3.14)+.35*Math.sin(u*9+v*4)*Math.sin(v*7);
+  for(const[cu,cv,a,b,amp,wd]of folds){const dx=(u-cu)*W,dz=(v-cv)*D,c=Math.cos(a),s2=Math.sin(a),along=dx*c+dz*s2,acr=-dx*s2+dz*c;f+=amp*Math.exp(-(acr*acr)/(wd*wd))*Math.exp(-(along*along)/(40*40))*(1+b*.2)}
+  return 48.9+e*(2.0+f)};
+ const P=[],N=[],U=[],pt=(i,k)=>{const x=X0+W*i/NX,z=Z0+D*k/NZ,y=H(x,z),hx=(H(x+.5,z)-H(x-.5,z)),hz=(H(x,z+.5)-H(x,z-.5)),l=Math.hypot(hx,1,hz);return[[x,y,z],[-hx/l,1/l,-hz/l],[i/NX,k/NZ]]};
+ for(let i=0;i<NX;i++)for(let k=0;k<NZ;k++){const a=pt(i,k),b=pt(i+1,k),c=pt(i+1,k+1),d=pt(i,k+1);for(const q of[a,d,c,a,c,b]){P.push(...q[0]);N.push(...q[1]);U.push(...q[2])}}
+ // texture : olive + ombrage des plis calculé depuis le relief (creux plus sombres, crêtes éclairées), lisible même en lumière douce
+ const dT=T(256,256,(g,w,h)=>{const im=g.createImageData(w,h),d=im.data;let s5=7;const r5=()=>(s5=(s5*16807)%2147483647)/2147483647;
+  for(let j=0;j<h;j++)for(let i=0;i<w;i++){const x=X0+W*i/(w-1),z=Z0+D*(1-j/(h-1)),hc=H(x,z),hx=H(x+1,z)-H(x-1,z),hz=H(x,z+1)-H(x,z-1),lap=(H(x+3,z)+H(x-3,z)+H(x,z+3)+H(x,z-3)-4*hc)/9;
+   const sh=Math.max(.62,Math.min(1.25,1-.55*hx-.35*hz-1.6*lap))*(0.96+r5()*.08);const k=(j*w+i)*4;d[k]=110*sh;d[k+1]=117*sh;d[k+2]=71*sh;d[k+3]=255}
+  g.putImageData(im,0,0)},1,1);
+ const geo={pos:new Float32Array(P),nor:new Float32Array(N),uv:new Float32Array(U)};add(new THREE.Mesh(geo,M(0xffffff,{map:dT,roughness:1})))}
 RB(58,BX1+2,25,47,BZ0-.6,BZ0+3.2,1.6,duv);RB(58,BX1+2,25,47,BZ1-3.2,BZ1+.6,1.6,duv);RB(BX1-1,BX1+3.2,25,47,BZ0+1,BZ1-1,1.6,duv);
 RB(52,70,45,55,BZ0+1,BZ1-1,4.5,M(0xffffff,{map:oliveT,roughness:1}),null,3);
 // plaid SÖRBYSKOGEN folded at foot

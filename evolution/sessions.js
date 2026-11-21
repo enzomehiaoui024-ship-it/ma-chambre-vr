@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 33 — bugs VR corrigés, VR plus légère, couette drapée, franges du tapis",
+    avant: 64, apres: 64.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.25, 9.25], liste: [9.5, 9.5], vr: [8.75, 9], plan: [8.75, 8.75], video: [8, 8] },
+    changements: [
+      "Bug VR corrigé : le liseré lumineux bleu en haut des murs, sous le plafond (la lumière de la lune passait à travers l'arête)",
+      "Bug VR corrigé : la ligne bleue verticale dans le couloir, et le mur du couloir qui restait blanc et éclairé en pleine nuit",
+      "VR plus fluide : le casque ne dessine plus que ce qui est dans ton champ de vision (environ 2 à 8 fois moins d'objets à dessiner selon où tu regardes)",
+      "Couette avec un vrai drapé : gonflant et plis doux en relief, au lieu de plis peints en triangles",
+      "Franges en coton aux deux bouts du tapis berbère"
+    ],
+    images: [
+      ["vr-plafond33", "VR : arête du plafond et couloir"],
+      ["couette33", "Couette drapée"],
+      ["tapis33", "Franges du tapis"]
+    ],
+    ensuite: "Reflets légers sur le parquet (seulement si le Quest 2 reste fluide) ; tester la VR sur le vrai casque."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 32 — bureau (clavier TKL, souris G305, plante ZZ) et plante du portant",
     avant: 63.75, apres: 64,
     scores: { meubles: [9.75, 10], eclairage: [10, 10], coherence: [9.25, 9.25], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.75, 8.75], video: [8, 8] },
