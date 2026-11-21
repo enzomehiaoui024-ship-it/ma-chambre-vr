@@ -340,7 +340,7 @@ const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(WX,WX
 
 // ---------- Echo Show 5 (3e gén.) sur la table de chevet : écran de contrôle des lumières ----------
 {const g=Grp(15,59,161,.3);const fab=M(0x2b2c2e,{roughness:.95}),gls=M(0x0b0b0c,{roughness:.15,metalness:.2});
- RB(-7.4,7.4,0,8.6,-3.6,2.4,2.4,fab,g,3);RB(-7.4,7.4,.2,8.6,2.2,3.7,.7,gls,g,2);
+ RB(-7.4,7.4,0,8.6,-.8,2.4,.9,fab,g,3);{const bk=new THREE.Mesh(new THREE.CylinderGeometry(4.1,4.1,14.2,28),fab);bk.rotation.z=Math.PI/2;bk.position.set(0,4.1,-.6);add(bk,g);B(-7.1,7.1,0,.6,-4.6,0,M(0x1d1e20,{roughness:1}),g)}RB(-7.4,7.4,.2,8.6,2.2,3.7,.7,gls,g,2);
  // écran de l'Echo Show : heure + ambiance en cours (mis à jour par R.echoSet depuis les pages)
  const EC={cosy:['23:10','Nuit cosy',1],jour:['14:20','Jour',0],coucher:['18:40','Coucher de soleil',0],soir:['21:30','Soir chaud',1],gaming:['22:00','Gaming',2],fete:['23:45','Fête',-1],cine:['21:00','Ciné',3]};
  const drawEcho=(c,w,h,k)=>{const e=EC[k]||EC.cosy;const gr=c.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#20231b');gr.addColorStop(1,'#0d0e0b');c.fillStyle=gr;c.fillRect(0,0,w,h);
