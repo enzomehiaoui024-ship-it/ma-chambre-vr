@@ -177,10 +177,14 @@ const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(WX,WX
 // ---------- Echo Show 5 (3e gén.) sur la table de chevet : écran de contrôle des lumières ----------
 {const g=Grp(15,59,161,.3);const fab=M(0x2b2c2e,{roughness:.95}),gls=M(0x0b0b0c,{roughness:.15,metalness:.2});
  RB(-7.4,7.4,0,8.6,-3.6,2.4,2.4,fab,g,3);RB(-7.4,7.4,.2,8.6,2.2,3.7,.7,gls,g,2);
- const st=T(256,160,(c,w,h)=>{const gr=c.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#20231b');gr.addColorStop(1,'#0d0e0b');c.fillStyle=gr;c.fillRect(0,0,w,h);
-  c.fillStyle='#F3EFE4';c.font='600 58px Inter, Arial, sans-serif';c.textAlign='center';c.fillText('22:30',w/2,72);c.font='16px Arial';c.fillStyle='#A9A594';c.fillText('Ambiance : Cosy',w/2,96);
-  const lab=['Jour','Cosy','Gaming','Ciné'];lab.forEach((t,i)=>{const x=10+i*61,on=i===1;c.fillStyle=on?'#A4AE6E':'rgba(255,255,255,.12)';c.beginPath();c.roundRect?c.roundRect(x,112,56,32,16):c.rect(x,112,56,32);c.fill();c.fillStyle=on?'#1b1d12':'#F3EFE4';c.font='600 15px Arial';c.fillText(t,x+28,133)})},1,1);
- const sm=new THREE.Mesh(new THREE.PlaneGeometry(11.6,7),MB(0xffffff,{map:st}));sm.position.set(0,4.5,3.75);g.add(sm);
+ // écran de l'Echo Show : heure + ambiance en cours (mis à jour par R.echoSet depuis les pages)
+ const EC={cosy:['23:10','Nuit cosy',1],jour:['14:20','Jour',0],coucher:['18:40','Coucher de soleil',0],soir:['21:30','Soir chaud',1],gaming:['22:00','Gaming',2],fete:['23:45','Fête',-1],cine:['21:00','Ciné',3]};
+ const drawEcho=(c,w,h,k)=>{const e=EC[k]||EC.cosy;const gr=c.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#20231b');gr.addColorStop(1,'#0d0e0b');c.fillStyle=gr;c.fillRect(0,0,w,h);
+  c.fillStyle='#F3EFE4';c.font='600 58px Inter, Arial, sans-serif';c.textAlign='center';c.fillText(e[0],w/2,72);c.font='16px Arial';c.fillStyle='#A9A594';c.fillText('Ambiance : '+e[1],w/2,96);
+  ['Jour','Cosy','Gaming','Ciné'].forEach((t,i)=>{const x=10+i*61,on=i===e[2];c.fillStyle=on?'#A4AE6E':'rgba(255,255,255,.12)';c.beginPath();c.roundRect?c.roundRect(x,112,56,32,16):c.rect(x,112,56,32);c.fill();c.fillStyle=on?'#1b1d12':'#F3EFE4';c.font='600 15px Arial';c.fillText(t,x+28,133)})};
+ const st=T(256,160,(c,w,h)=>drawEcho(c,w,h,'cosy'),1,1);st.ver=st.ver||1;
+ R.echoSet=k=>{const cv=st.image;if(!cv||!cv.getContext)return;drawEcho(cv.getContext('2d'),cv.width,cv.height,k);st.ver=(st.ver||1)+1;st.needsUpdate=true};
+ const sm=new THREE.Mesh(new THREE.PlaneGeometry(11.6,7),MB(0xffffff,{map:st}));R.echoScreen=sm;sm.position.set(0,4.5,3.75);g.add(sm);
  const cam=S(5.4,7.9,3.72,.22,M(0x050505,{roughness:.1}),1,1,.4,g,8)}
 
 // ---------- sneaker wall: clear boxes + 3 floating shelves with Tapo L900-5 LED ----------

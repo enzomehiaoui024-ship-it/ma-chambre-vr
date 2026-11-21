@@ -128,7 +128,7 @@ cv.addEventListener('wheel',e=>{e.preventDefault();sph.r=Math.max(25,Math.min(11
 const MODES={cosy:()=>COSY,jour:()=>DAY,coucher:()=>GOLD,soir:()=>EVE,gaming:()=>GAME,fete:t=>FETE(t),cine:()=>CINE};
 let mode='cosy',from=COSY,blendT=1,tour=null,fly=null,cur=COSY,el=0;
 const cap=document.getElementById('cap'),capT=document.getElementById('capT'),capS=document.getElementById('capS'),capL=document.getElementById('capL');
-function setMode(m){from=cur;mode=m;blendT=0;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===m))}
+function setMode(m){from=cur;mode=m;blendT=0;if(R.echoSet)R.echoSet(m);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===m))}
 let auto=false,autoT=0;const KEYS=['cosy','jour','coucher','soir','gaming','fete','cine'];const autoB=document.getElementById('auto');function setAuto(on){auto=on;autoT=0;autoB.classList.toggle('on',on);autoB.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}autoB.onclick=()=>{stopTour();setAuto(!auto);if(auto)setMode(KEYS[(KEYS.indexOf(mode)+1)%7])};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{stopTour();setAuto(false);setMode(b.dataset.mode)});
 const VIEWS={ambi:[[35,140,259],[355,125,259]],fenetre:[[310,155,70],[150,120,330]],ens:[[560,470,640],[180,70,180]],lit:[[300,150,120],[60,60,268]],tv:[[200,135,240],[352,80,259]],vinyle:[[230,130,152],[350,72,138]],bureau:[[160,145,195],[75,92,30]],dessus:[[181,640,183],[180,0,180]]};

@@ -227,3 +227,7 @@ Vues de contrôle fixes (tools/preview.py) :
 - Rubans LED visibles : `R.strips` (barres MB) sous le lit (3 côtés) et sous les 3 étagères à sneakers ; couleur = couleur G de l'ambiance × gain (2,2–2,4), mise à jour dans `apply()` de app_gl et app_vr (matériaux ajoutés à la liste dynamique VR).
 - Lumière d'écran `mon` bleutée (0x9fb6ff, couleur de l'image) ; GAME : mon .9 → .5 et lumière d'étagère violette pour garder le néon.
 - Vues de contrôle : aucune régression. VR : 0 erreur. Scores : plan 8,5 → 8,75 → **63,25 → 63,5/70**.
+
+## 2026-11-21 — Séance 31 : écran de l'Echo Show qui suit l'ambiance
+- `R.echoSet(k)` redessine le canvas de l'écran (heure + « Ambiance : … » + bouton actif) et incrémente `ver` ; appelé par `setMode` dans app_gl et app_vr ; matériau ajouté à la liste dynamique VR.
+- VR : 0 erreur. Scores : cohérence 9 → 9,25 → **63,5 → 63,75/70**.

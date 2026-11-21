@@ -16,17 +16,16 @@
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
 - Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11).
-- Remplacer le ruban LED TV par un kit Ambilight à caméra (si l'utilisateur valide).
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
-- Écran de l'Echo Show qui affiche l'ambiance en cours dans le plan 3D et la VR.
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
+- Modèle d'iPhone pour choisir le chargeur sans fil Qi2/MagSafe (table de chevet).
+- Mur en lattes derrière le lit : le garder (il est seulement dans le plan 3D, pas dans la liste) ?
 - Offre carte mère + watercooling offert valable jusqu'au 30/11 : commander avant ?
-- Périphériques proposés (K70 Core TKL, G305, tapis 90x40) : ok ou autres modèles ?
 - Emplacement des étagères à pochettes MOSSLANDA, des supports vinyles muraux et du « Now Playing ».

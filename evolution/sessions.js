@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 31 — l'écran de l'Echo Show suit l'ambiance",
+    avant: 63.5, apres: 63.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [10, 10], coherence: [9, 9.25], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.75, 8.75], video: [8, 8] },
+    changements: [
+      "L'écran de l'Echo Show 5 affiche l'ambiance en cours (Nuit cosy, Jour, Gaming, Ciné…) avec le bon bouton allumé, comme une vraie routine Alexa",
+      "L'heure change avec l'ambiance : 14:20 le jour, 22:00 en gaming, 23:10 en nuit cosy…",
+      "Marche dans le plan 3D et dans la VR (quand tu changes d'ambiance avec le menu ou les boutons A/B)"
+    ],
+    images: [
+      ["echo-cosy", "Nuit cosy"],
+      ["echo-gaming", "Gaming"],
+      ["echo-jour", "Jour"]
+    ],
+    ensuite: "Reflets légers des LED sur le parquet ; remplacer le lampadaire arc épuisé (à valider avec Enzo)."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 30 — effets de lumière : rubans LED visibles, lumière des écrans",
     avant: 63.25, apres: 63.5,
     scores: { meubles: [9.75, 9.75], eclairage: [10, 10], coherence: [9, 9], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.75], video: [8, 8] },

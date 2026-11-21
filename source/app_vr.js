@@ -140,13 +140,13 @@ let mesOn=false;const MES=(window.MESURES||[]).map(m=>{const[a,b,c,d,e,f,n]=m;co
 function setMes(v){mesOn=v;MES.forEach(m=>{m.bar.visible=v;m.lab.visible=v})}
 window.__setMes=setMes;
 const dyn=new Set([...MES.map(m=>m.bar),...MES.map(m=>m.lab),vig,R.platter,R.label,labMesh,infMesh,...selE,menuMesh,...rays,...dots,...arcDots,ring,...ctrlParts,...R.shafts,...R.dust]);
-[...Object.values(R.G).flat().map(m=>m.material),...(R.strips||[]).map(o=>o.m.material),...Object.values(R.ambiPads).map(m=>m.material),R.screens.tv.material,R.screens.mon.material,...R.flames.map(m=>m.material),...R.cityLit.map(m=>m.material),...R.out.map(m=>m.material),
+[...Object.values(R.G).flat().map(m=>m.material),...(R.echoScreen?[R.echoScreen.material]:[]),...(R.strips||[]).map(o=>o.m.material),...Object.values(R.ambiPads).map(m=>m.material),R.screens.tv.material,R.screens.mon.material,...R.flames.map(m=>m.material),...R.cityLit.map(m=>m.material),...R.out.map(m=>m.material),
  R.sky.material,R.skyN.material,R.moon.material,R.moonHalo.material,R.tree.material,R.tree2.material,R.pend,R.arcBulb,R.nsShade,R.fado,R.dlBulb,...R.pcFans.map(m=>m.material),R.pcIn.material,R.ceil.material].forEach(m=>dyn.add(m));
 [R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
 const V=makeVRRenderer(gl,sc,dyn);const ambiUp=makeAmbi(R,THREE);window.__V=V;
 const MODES=[['cosy','Nuit cosy',()=>COSY],['jour','Jour',()=>DAY],['coucher','Coucher de soleil',()=>GOLD],['soir','Soir chaud',()=>EVE],['gaming','Gaming néon',()=>GAME],['fete','Fête',t=>FETE(t)],['cine','Ciné Ambilight',()=>CINE]];
 let mi=0,from=COSY,blendT=1,cur=COSY,el=0;
-function setMode(i,show){mi=(i+MODES.length)%MODES.length;if(typeof menu!=='undefined'&&menu.open){menu.draw();show=false}from=cur;blendT=0;document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));if(show)setLabel(MODES[mi][1],'A : ambiance suivante · B : précédente')}
+function setMode(i,show){mi=(i+MODES.length)%MODES.length;if(R.echoSet)R.echoSet(MODES[mi][0]);if(typeof menu!=='undefined'&&menu.open){menu.draw();show=false}from=cur;blendT=0;document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));if(show)setLabel(MODES[mi][1],'A : ambiance suivante · B : précédente')}
 document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{if(auto)setAuto(false);setMode(+b.dataset.m,false)});
 let auto=false,autoT=0;function setAuto(on){auto=on;autoT=0;const b=document.getElementById('auto');if(b){b.classList.toggle('on',on);b.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}if(!menu.open)setLabel(on?'Défilé auto activé':'Défilé auto arrêté',on?'Une nouvelle ambiance toutes les 7 s':'Gâchette gauche : relancer');else menu.draw()}
 document.getElementById('auto').onclick=()=>setAuto(!auto);
