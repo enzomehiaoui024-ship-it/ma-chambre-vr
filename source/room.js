@@ -314,8 +314,19 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
   RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
  // tapis XXL noir, clavier TKL blanc (Red Blade), souris G305 blanche
  RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
- RB(52,88,75.4,77.6,46,60,1,M(0xEEEEEA,{roughness:.5}));for(let rr=0;rr<5;rr++)for(let k=0;k<14;k++)RB(53.2+k*2.48,55.2+k*2.48,77.6,78.6,47+rr*2.55,48.9+rr*2.55,.35,M(0xF7F6F2,{roughness:.6}),null,1);
- {const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0xF4F3EF,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
+ // clavier TKL 87 touches (36 x 14 cm) : rangée F séparée, grandes touches (Tab, Maj, Entrée, espace), bloc flèches
+ RB(52,88.4,75.4,77.4,45.6,59.8,1,M(0xEEEEEA,{roughness:.5}));
+ {const kc=M(0xF7F6F2,{roughness:.6}),km=M(0xE4E2DC,{roughness:.6}),u=1.905,x0=52.75,z0=46.3,cap=(x,z,w,m)=>RB(x+.13,x+w*u-.13,77.4,78.5,z+.13,z+u-.13,.32,m||kc,null,1);
+  const rows=[[[1,1],[1,0],[1,1],[1,1],[1,1],[1,1],[.5,0],[1,1],[1,1],[1,1],[1,1],[.5,0],[1,1],[1,1],[1,1],[1,1]],
+   [[1,2],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[2,2]],
+   [[1.5,2],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1.5,2]],
+   [[1.75,2],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[2.25,2]],
+   [[2.25,2],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[2.75,2]],
+   [[1.25,2],[1.25,2],[1.25,2],[6.25,1],[1.25,2],[1.25,2],[1.25,2],[1.25,2]]];
+  rows.forEach((r,ri)=>{let x=x0;const z=z0+(ri?ri*u+.35:0);r.forEach(([w,k])=>{if(k)cap(x,z,w,k==2?km:kc);x+=w*u})});
+  const nx=x0+15.25*u;[0,1,2].forEach(c=>{cap(nx+c*u,z0,1);cap(nx+c*u,z0+u+.35,1,km);cap(nx+c*u,z0+2*u+.35,1,km);cap(nx+c*u,z0+5*u+.35,1,km)});cap(nx+u,z0+4*u+.35,1,km)}
+ // souris Logitech G305 blanche (11,6 x 6,2 x 3,8 cm) : coque bombée, molette sombre
+ {const mw=M(0xF4F3EF,{roughness:.35});  const sh=Lathe(108,75.4,55.2,[[0,0],[1,0],[1,.12],[.97,.4],[.86,.66],[.64,.86],[.34,.97],[0,1]],mw,28);sh.scale.set(3.1,3.6,5.7);const wh=new THREE.Mesh(new THREE.CylinderGeometry(.85,.85,.6,16),M(0x3a3a3a,{roughness:.5}));wh.rotation.z=Math.PI/2;wh.position.set(108,78.1,52.4);add(wh)}
  // casque Arctis Nova 5 accroché au crochet sur le côté droit du TROTTEN
  {const hm=M(0x1b1b1b,{roughness:.6});RB(160,162.5,70,72,38,42,.4,blk);const g=Grp(163.5,58,40,Math.PI/2);
   add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(-9,0,0),new THREE.Vector3(0,14,0),new THREE.Vector3(9,0,0)),16,1,8),hm),g);
@@ -323,7 +334,13 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  // dessous de verre, bougie en pot, plante à droite
  Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
  Cy(148,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(148,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);noShadow(S(148,82.6,30,.7,MB(0xffb35a),1,1.8,1));
- Lathe(146,75,64,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);for(let i=0;i<10;i++)S(146+Math.cos(i*1.9)*4,90+(i%3)*2.5,64+Math.sin(i*1.9)*4,3,leaf,1,.8,1);
+ // plante ZZ (Zamioculcas) en pot noir : tiges arquées, feuilles ovales brillantes par paires
+ Lathe(146,75,64,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);Cy(146,64,85,85.6,4.7,M(0x3b2c22,{roughness:1}),null,14);
+ {const zzT=T(64,128,(g,w,h)=>{g.clearRect(0,0,w,h);g.save();g.beginPath();g.moveTo(32,4);g.bezierCurveTo(58,30,60,92,32,124);g.bezierCurveTo(4,92,6,30,32,4);g.closePath();g.clip();const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#1f4a1c');gr.addColorStop(.45,'#3f7a2e');gr.addColorStop(1,'#163a14');g.fillStyle=gr;g.fillRect(0,0,w,h);g.fillStyle='rgba(255,255,230,.22)';g.beginPath();g.ellipse(24,48,6,26,-.15,0,7);g.fill();g.strokeStyle='rgba(20,40,16,.7)';g.lineWidth=1.6;g.beginPath();g.moveTo(32,124);g.lineTo(32,8);g.stroke();g.restore()},1,1);
+  const stM=M(0x56763a,{roughness:.6});
+  for(let i=0;i<7;i++){const L=11+(i*5)%7,g=Grp(146+Math.cos(i*2.4)*1.6,85.5,64+Math.sin(i*2.4)*1.6,i*2.4),s=Grp(0,0,0,0,g);s.rotation.z=.2+.11*(i%4);Cy(0,0,0,L,.32,stM,.22,6,s);
+   for(let j=0;j<5;j++){const y=L*(.26+j*.16),sc2=1-j*.1;[-1,1].forEach(d=>{const lg=Grp(0,y,0,0,s);lg.rotation.y=j*.5;const m=leafPlane(2.3*sc2,3.9*sc2,zzT,lg);m.position.set(d*1.7*sc2,.9,0);m.rotation.x=-.35;m.rotation.z=-d*1.05})}
+   const tl=leafPlane(2,3.4,zzT,s);tl.position.y=L+1.4}}
  // halo du ruban LED Tapo collé derrière les écrans (sur le mur) : suit les ambiances (« deskLed »)
  R.G.monGlow.forEach(m=>m.position.set(98,113,3.8));R.G.shelf[0].position.set(120,150,3.8);
  R.G.deskLed=[mkGlow(170,110,72,122,3.6,0),mkGlow(110,70,72,115,3.7,0)];

@@ -3,6 +3,24 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 32 — bureau : vrai clavier TKL, souris G305, plante ZZ",
+    avant: 63.75, apres: 64,
+    scores: { meubles: [9.75, 10], eclairage: [10, 10], coherence: [9.25, 9.25], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.75, 8.75], video: [8, 8] },
+    changements: [
+      "Le clavier blanc a maintenant la vraie disposition d'un TKL 87 touches : rangée F séparée, Tab, Maj, Entrée, barre d'espace et bloc des flèches",
+      "La souris a la forme bombée de la G305 (11,6 x 6,2 cm) avec sa molette, au lieu d'une simple boule",
+      "La plante du bureau devient une plante ZZ réaliste (tiges arquées, feuilles brillantes par paires) au lieu de boules vertes",
+      "VR : 0 erreur, moins de triangles qu'avant (~169 k)"
+    ],
+    images: [
+      ["bureau32", "Bureau (jour)"],
+      ["bureau32-cosy", "Bureau (nuit cosy)"],
+      ["plante32", "Plante ZZ"]
+    ],
+    ensuite: "Câbles des écrans le long des bras ; reflets légers sur le parquet."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 31 — l'écran de l'Echo Show suit l'ambiance",
     avant: 63.5, apres: 63.75,
     scores: { meubles: [9.75, 9.75], eclairage: [10, 10], coherence: [9, 9.25], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.75, 8.75], video: [8, 8] },

@@ -236,3 +236,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Compatibilités vérifiées : bras AM400B (pince 1,5–5 cm, 9 kg) ↔ plateau TROTTEN 2 cm et MSI 341CQP (8,8 kg avec pied) ; Lancool 207 (GPU 375 mm max, AIO 360 au-dessus, alim 160 mm max) ↔ RX 9070 XT, AIO 360, RM850e.
 - Corrigé : ligne RENBERGET (qté 0) retirée ; casque Arctis remis en 3D, accroché au crochet du TROTTEN.
 - Points ouverts → BACKLOG « À demander » (prises, type de murs, Windows, remplaçants arc/NOOLI). À vérifier au montage : barre arrière du TROTTEN vs pinces des bras.
+
+## 2026-11-21 — Séance 32 : clavier, souris et plante du bureau
+- Clavier TKL 87 touches en vraie disposition (pas de 1,905 cm, rangée F séparée, touches larges, bloc flèches/navigation, modificateurs gris clair) ; 2 matériaux partagés au lieu de 70.
+- Souris G305 : coque `Lathe` mise à l'échelle (3,1 x 3,6 x 5,7) + molette. Attention : `SphereGeometry` partielle (theta) s'affiche mal avec le tri des faces de gl2 → utiliser `Lathe`. `rotation.set` n'existe pas dans shim2 → affecter x/y/z.
+- Plante du bureau : ZZ (7 tiges arquées, 5 paires de feuilles ovales brillantes, texture `zzT`) + terreau.
+- Vues de contrôle : seules les vues du bureau changent. VR : 0 erreur, 404 lots, ~169 k triangles. Scores : meubles 9,75 → 10 → **63,75 → 64/70**.
+- Ensuite : câbles des écrans le long des bras ; reflets légers sur le parquet.
