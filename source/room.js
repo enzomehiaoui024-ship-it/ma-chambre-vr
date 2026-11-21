@@ -149,13 +149,18 @@ R.G.bedLed=[];const gb=noShadow(P(214,174,glow(0x000000,1),100,.6,BC,0,-Math.PI/
 const softT=gb.material.map;
 const mkGlow=(w,h,x,y,z,ry,rx)=>{const m=noShadow(P(w,h,glow(0x000000,1),x,y,z,ry,rx));m.material.map=softT;return m};
 R.moonHalo.material.map=softT;
-R.G.headLed=[mkGlow(220,170,.8,116,BC,Math.PI/2)];
+// ---------- TEST (plan 3D seulement) : mur en lattes de bois derrière la tête de lit ----------
+const LAT=typeof window!=='undefined'&&!!window.__LATTES;const WX=LAT?3.4:0;
+if(LAT){const felt=M(0x141312,{roughness:1});B(0,1.2,0,250,150,350,felt);
+ const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#4a3324';g.fillRect(0,0,w,h);for(let i=0;i<90;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(30,18,10,.35)':'rgba(120,85,55,.25)';g.lineWidth=.6+Math.random()*1.6;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.33,x+(Math.random()-.5)*6,h*.66,x+(Math.random()-.5)*4,h);g.stroke()}},1,1);
+ const wood=M(0xffffff,{map:woodT,roughness:.55});for(let z=151;z+2.7<=349.5;z+=4)B(1.2,3.3,0,250,z,z+2.7,wood)}
+R.G.headLed=[mkGlow(220,170,.8+WX,116,BC,Math.PI/2)];
 
 // ---------- 3 frames RÖDALM 50x70 above bed (album posters, original art) ----------
 const albT=(i)=>T(200,280,(g,w,h)=>{g.fillStyle='#F3EFE6';g.fillRect(0,0,w,h);const cols=[['#8a5a3a','#d9b48a'],['#2d2724','#8c1d1d'],['#6b4a7a','#e6b8c9']][i];g.fillStyle=cols[0];g.fillRect(20,20,160,160);g.fillStyle=cols[1];
  if(i==0){g.beginPath();g.arc(100,100,46,0,7);g.fill()}else if(i==1){g.fillRect(55,55,90,90)}else{for(let k=0;k<5;k++){g.beginPath();g.moveTo(20,180-k*30);g.lineTo(180,120-k*30);g.lineWidth=8;g.strokeStyle=cols[1];g.stroke()}}
  g.fillStyle='#2b2724';g.fillRect(20,200,110,9);g.fillRect(20,218,70,6);g.fillStyle='#8f877c';for(let k=0;k<4;k++)g.fillRect(20,236+k*9,150-k*20,4)});
-const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(0,3,112,182,zc-25,zc+25,.6,frM);B(3,3.2,115,179,zc-22,zc+22,M(0xffffff,{map:albT(i),roughness:.6}));noShadow(P(44,64,new THREE.MeshStandardMaterial({color:0xffffff,transparent:true,opacity:.06,roughness:.05}),3.6,147,zc,Math.PI/2))});
+const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(WX,WX+3,112,182,zc-25,zc+25,.6,frM);B(WX+3,WX+3.2,115,179,zc-22,zc+22,M(0xffffff,{map:albT(i),roughness:.6}));noShadow(P(44,64,new THREE.MeshStandardMaterial({color:0xffffff,transparent:true,opacity:.06,roughness:.05}),WX+3.6,147,zc,Math.PI/2))});
 
 // ---------- nightstand GRÅFJÄLLET anthracite 45x36x59 + FADO + candles ----------
 {const NZ0=123,NZ1=168,NX=36;const g=Grp(0,0,0,0);

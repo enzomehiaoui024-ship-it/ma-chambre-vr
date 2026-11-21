@@ -200,3 +200,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Score : 62,5 → 62,75/70 (éclairage 9,5 → 9,75), aucun critère en baisse.
 - Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
 - À décider : commander la carte mère avant le 30/11 (watercooling offert) ? Nouveau lampadaire arc (l'OMBRAGE est épuisé) ? Périphériques K70/G305/tapis ok ? Emplacement MOSSLANDA, supports vinyles et « Now Playing ».
+
+## 2026-11-21 — Test : mur en lattes de bois derrière la tête de lit (plan 3D seulement)
+- Demande d'Enzo : le voir sur le plan 3D, pas en VR. Activé par `window.__LATTES=true` dans `plan_gl.html` uniquement (la VR ne change pas).
+- Lattes noyer foncé 2,7 cm, espacées de 1,3 cm, sur feutre noir, du sol au plafond, z 150 → 350 ; cadres et halo LED avancés de 3,4 cm.
+- Panier inchangé : en attente de son avis.
