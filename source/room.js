@@ -272,71 +272,49 @@ for(let i=0;i<24;i++)rnd();pothos(115,173,13,[[-7,14,34],[5,15,46],[13,13,22]]);
 [[40,70,4],[90,120,5]].forEach(([a,b,i])=>{RB(a,b,176,216,0,2.5,.5,frM);B(a+2.5,b-2.5,178.5,213.5,2.5,2.7,M(0xffffff,{map:poster(i),roughness:.7}))});
 const _l1=sc.children.length;
 R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
-// ---------- TEST (plan 3D seulement) : setups du bureau d'après les photos d'Enzo ----------
-// « actuel » = bureau de la liste ; « v1 » = setup photo 1 (écran vertical + écran sur bras) ; « v2 » = même déco, écrans de la photo 2 (vertical + 2 écrans superposés)
-R.setups={v3:[],actuel:sc.children.slice(_d0,_d1).concat(sc.children.slice(_l0,_l1)).filter(o=>o!==R.screens.mon&&!R.G.monGlow.includes(o)).concat([R.screens.mon]),v1:[],v2:[],com:[]};
-R.setSetup=()=>{};
-if(typeof window!=='undefined'&&window.__SETUPS){
- const mk=()=>sc.children.length;
- // écran : cadre + dalle ; art = texture (dalle éclairée) ; w,h en cm
- const scrM=M(0x101113,{roughness:.3,metalness:.3});
+// ---------- BUREAU FINAL (choisi par Enzo le 21/11/2026, d'après ses photos 1 et 3) ----------
+// L'ancien bureau (tapis, clavier, souris, écran 27", lampe FORSÅ, casque, mug, étagère LACK + livres + cadres) est retiré de la scène.
+{const old=sc.children.slice(_d0,_d1).concat(sc.children.slice(_l0,_l1)).filter(o=>!R.G.monGlow.includes(o));old.forEach(o=>sc.remove(o))}
+{const scrM=M(0x101113,{roughness:.3,metalness:.3});
  const artT=(w,h,seed)=>T(w*4,h*4,(g,W,H)=>{let s=seed;const rr=()=>(s=(s*16807)%2147483647)/2147483647;const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#0b1430');gr.addColorStop(.6,'#24345e');gr.addColorStop(1,'#3a3550');g.fillStyle=gr;g.fillRect(0,0,W,H);
   for(let i=0;i<14;i++){const bw=W*(.06+rr()*.12),bh=H*(.25+rr()*.55),bx=rr()*W;g.fillStyle=['#0d1224','#111a33','#161f3b'][i%3];g.fillRect(bx,H-bh,bw,bh);for(let k=0;k<40;k++){if(rr()<.55){g.fillStyle=rr()<.8?'#ffcf7a':'#fff2c8';g.fillRect(bx+rr()*bw*.9,H-bh+rr()*bh*.95,W*.012,H*.01)}}}
   g.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<260;i++){const r0=.6+rr()*1.8;g.beginPath();g.arc(rr()*W,rr()*H,r0,0,7);g.fill()}
   const mg=g.createRadialGradient(W*.75,H*.18,2,W*.75,H*.18,W*.25);mg.addColorStop(0,'rgba(255,214,160,.55)');mg.addColorStop(1,'rgba(255,214,160,0)');g.fillStyle=mg;g.fillRect(0,0,W,H)},1,1);
- const screen=(p,w,h,mt)=>{RB(-w/2,w/2,-h/2,h/2,-1.4,0,.5,scrM,p,2);RB(-w*.22,w*.22,-h*.28,h*.22,-3.4,-1.3,1.2,scrM,p,2);const s=noShadow(P(w-1.2,h-1.2,mt,0,0,.06,0,0,p));return s};
- const wood=M(0xC8A57A,{roughness:.6}),blk=M(0x151515,{roughness:.45,metalness:.4});
- // --- éléments communs aux 2 versions ---
- let a=mk();
- // pan de lattes derrière les écrans
- {const felt=M(0x141312,{roughness:1});B(42,90,75,192,0,1.2,felt);const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#6b4a30';g.fillRect(0,0,w,h);for(let i=0;i<70;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(40,24,12,.35)':'rgba(150,110,70,.25)';g.lineWidth=.6+Math.random()*1.4;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.4,x+(Math.random()-.5)*6,h*.7,x,h);g.stroke()}},1,1);const wm=M(0xffffff,{map:woodT,roughness:.55});for(let x=43;x+2.7<=89.5;x+=4)B(x,x+2.7,75,192,1.2,3.3,wm)}
- // 2 étagères blanches flottantes en décalé + plantes
- const shW=M(0xF4F3EF,{roughness:.45});RB(18,92,192,195.5,0,24,.6,shW);RB(86,156,170,173.5,0,24,.6,shW);
+ const screen=(p,w,h,mt)=>{RB(-w/2,w/2,-h/2,h/2,-1.4,0,.5,scrM,p,2);RB(-w*.22,w*.22,-h*.28,h*.22,-3.4,-1.3,1.2,scrM,p,2);return noShadow(P(w-1.2,h-1.2,mt,0,0,.06,0,0,p))};
+ const wood=M(0xC8A57A,{roughness:.6}),blk=M(0x151515,{roughness:.45,metalness:.4}),wal=M(0x4a3324,{roughness:.5});
+ // pan de lattes noyer 60 x 117 cm (1 panneau acoustique 120x60 recoupé) derrière les écrans
+ {const felt=M(0x141312,{roughness:1});B(38,98,75,192,0,1.2,felt);const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#6b4a30';g.fillRect(0,0,w,h);for(let i=0;i<70;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(40,24,12,.35)':'rgba(150,110,70,.25)';g.lineWidth=.6+Math.random()*1.4;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.4,x+(Math.random()-.5)*6,h*.7,x,h);g.stroke()}},1,1);const wm=M(0xffffff,{map:woodT,roughness:.55});for(let x=39;x+2.7<=97.5;x+=4)B(x,x+2.7,75,192,1.2,3.3,wm)}
+ // 2 étagères blanches flottantes 57 x 23,5 cm en décalé + plantes
+ const shW=M(0xF4F3EF,{roughness:.45});RB(24,81,192,195.5,0,23.5,.6,shW);RB(92,149,170,173.5,0,23.5,.6,shW);
  const potW=M(0xEDEBE6,{roughness:.6}),leaf=M(0x2f5a2c,{roughness:.8});
- const succ=(x,y,z,h)=>{Lathe(x,y,z,[[0,0],[4,0],[4.6,h],[4.2,h],[3.6,1],[0,1]],potW,18);for(let i=0;i<9;i++){const g=Grp(x,y+h-.5,z,i*.7);g.rotation.z=.25+.25*(i%3);Cy(0,0,0,5+i%3*2,.9,leaf,.1,6,g)}};
- succ(58,195.5,10,7);succ(74,195.5,12,6);succ(116,173.5,10,8);succ(132,173.5,12,6);
- Lathe(28,195.5,12,[[0,0],[4.5,0],[5.5,9],[5,9],[4,1],[0,1]],potW,18);pothos(28,204,12,[[-4,12,58],[3,14,74],[8,10,40]]);
- Lathe(148,173.5,12,[[0,0],[5,0],[6,10],[5.4,10],[4.4,1],[0,1]],potW,18);pothos(148,183,12,[[5,13,70],[-3,15,52],[9,9,36]]);
- // lampe ampoule à filament (cadre noir) sur socle bois + petite plante
- const edison=y=>{RB(38,58,y,y+2.5,6,22,.6,wood);Cy(42,10,y+2.5,y+43,.6,blk);RB(41,55,y+42.5,y+44,9.4,10.6,.4,blk);Cy(53,10,y+29,y+43,.15,M(0x111111));
-  Cy(53,10,y+26,y+29.5,1.2,M(0x2a2a2a,{metalness:.6,roughness:.3}));
-  const b=S(53,y+20.5,10,4.6,R.dlBulb,1,1.15,1);b.castShadow=false;S(53,y+20.5,10,4.9,M(0xffa040,{transparent:true,opacity:.35,roughness:.05}),1,1.2,1).castShadow=false;
-  Lathe(49,y+2.5,17,[[0,0],[2.6,0],[3,5],[2.7,5],[2.2,.6],[0,.6]],potW,14);for(let i=0;i<6;i++){const g=Grp(49,y+7,17,i*1.05);g.rotation.z=.6;leafPlane(4,5,pothosT,g).position.y=2.5}};
- // clavier crème sur support, grand tapis noir, souris blanche
- RB(44,82,75,76.4,46,62,.6,M(0xD9D2C4,{transparent:true,opacity:.55,roughness:.2}));RB(46,80,76.4,78.4,47,61,1,M(0xEDE6D6,{roughness:.5}));for(let rr=0;rr<5;rr++)for(let k=0;k<13;k++)RB(47+k*2.55,49+k*2.55,78.4,79.3,48+rr*2.5,49.9+rr*2.5,.35,M(0xF2EDE1,{roughness:.55}),null,1);
- RB(86,150,75,75.4,34,76,1.2,M(0x121212,{roughness:1}));{const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0xF4F2EE,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(116,76.3,58);add(m)}
+ const succ=(x,y,z,h)=>{Lathe(x,y,z,[[0,0],[3,0],[3.4,h],[3.1,h],[2.6,1],[0,1]],potW,18);for(let i=0;i<9;i++){const g=Grp(x,y+h-.5,z,i*.7);g.rotation.z=.25+.25*(i%3);Cy(0,0,0,4+i%3*2,.8,leaf,.1,6,g)}};
+ succ(58,195.5,10,6);succ(72,195.5,12,6);succ(116,173.5,10,6);succ(132,173.5,12,6);
+ Lathe(32,195.5,12,[[0,0],[4.5,0],[5.5,9],[5,9],[4,1],[0,1]],potW,18);pothos(32,204,12,[[-4,12,58],[3,14,74],[8,10,40]]);
+ Lathe(142,173.5,12,[[0,0],[5,0],[6,10],[5.4,10],[4.4,1],[0,1]],potW,18);pothos(142,183,12,[[5,13,70],[-3,15,52],[9,9,36]]);
+ // étagère d'écrans 100 x 27 x 15 cm, LED Tapo derrière les écrans et dessous
+ RB(10,110,87.5,90,0,27,.6,wal);[13,60,107].forEach(x=>RB(x-2,x+2,75,87.5,1,26,.5,wal));
+ // lampe à ampoule apparente (cadre noir, socle bois, H 33,5 cm) + petite plante, sur l'étagère
+ {const y=90;RB(38,56,y,y+2.5,6,22,.6,wood);Cy(41,10,y+2.5,y+33,.6,blk);RB(40,52,y+32.5,y+34,9.4,10.6,.4,blk);Cy(50,10,y+22,y+33,.15,M(0x111111));
+  Cy(50,10,y+19.5,y+22.5,1.1,M(0x2a2a2a,{metalness:.6,roughness:.3}));
+  const b=S(50,y+14.5,10,4.6,R.dlBulb,1,1.15,1);b.castShadow=false;S(50,y+14.5,10,4.9,M(0xffa040,{transparent:true,opacity:.35,roughness:.05}),1,1.2,1).castShadow=false;
+  Lathe(45,y+2.5,17,[[0,0],[2.6,0],[3,5],[2.7,5],[2.2,.6],[0,.6]],potW,14);for(let i=0;i<6;i++){const g=Grp(45,y+7,17,i*1.05);g.rotation.z=.6;leafPlane(4,5,pothosT,g).position.y=2.5}}
+ // écran vertical 27" (iiyama, pivot) sur l'étagère
+ {const g=Grp(22,93,12,.15);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
+ // écran principal 34" ultra-large incurvé (MSI MAG 341CQP, 81 x 36,5 cm) + barre lumineuse Xiaomi
+ {const m=Grp(98,113.3,14,0);RB(-12,12,-23.3,-22.1,-7,4,.6,blk,m);RB(-2.5,2.5,-22.1,-8,-3.6,-1.6,.8,blk,m);
+  const sm=screen(m,81,36.5,R.screens.mon.material);R.screens.mon.material.map=artT(81,36,47);R.screens.mon=sm;
+  RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
+ // tapis XXL noir, clavier Corsair K70 Core TKL noir, souris G305 noire (comme la liste)
+ RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
+ RB(52,88,75.4,77.6,46,60,1,M(0x1d1d1f,{roughness:.55}));for(let rr=0;rr<5;rr++)for(let k=0;k<14;k++)RB(53.2+k*2.48,55.2+k*2.48,77.6,78.6,47+rr*2.55,48.9+rr*2.55,.35,M(0x2b2b2e,{roughness:.5}),null,1);
+ {const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0x161616,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
  // dessous de verre, bougie en pot, plante à droite
  Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
- Cy(152,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(152,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);{const f=noShadow(S(152,82.6,30,.7,MB(0xffb35a),1,1.8,1));R.flames&&R.flames.push(f)}
- Lathe(150,75,66,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);for(let i=0;i<10;i++)S(150+Math.cos(i*1.9)*4,90+(i%3)*2.5,66+Math.sin(i*1.9)*4,3,leaf,1,.8,1);
- // halo LED orange derrière les écrans (suit les LED d'ambiance)
- {(R.G.headLed=R.G.headLed||[]).push(mkGlow(170,110,85,120,3.6,0),mkGlow(110,70,85,115,3.7,0))}
- R.setups.com=sc.children.slice(a);
- // --- version 1 : écran vertical posé + écran principal sur bras ---
- a=mk();edison(75);
- {const g=Grp(20,78,15,.28);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
- {RB(124,132,73,77,1,7,.6,blk);Cy(128,4,77,104,1.3,blk);const a1=Grp(128,102,4,0);RB(-1.5,1.5,-1.5,1.5,0,18,1,blk,a1);a1.rotation.y=-.9;
-  const g=Grp(98,110,24,-.1);screen(g,61.4,36.4,R.screens.mon.material)}
- R.setups.v1=sc.children.slice(a);
- // --- version 2 : écran vertical + écran principal bas + 2e écran au-dessus ---
- a=mk();edison(75);
- {const g=Grp(20,78,15,.28);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}))}
- {RB(84,112,75,76.4,10,24,.8,wood);RB(95,101,76.4,86,14,17,.8,blk);const g=Grp(98,101,22,0);screen(g,61.4,36.4,R.screens.mon.material)}
- {RB(124,132,73,77,1,7,.6,blk);Cy(128,4,77,146,1.3,blk);const a1=Grp(128,140,4,0);RB(-1.5,1.5,-1.5,1.5,0,20,1,blk,a1);a1.rotation.y=-.75;
-  const g=Grp(98,139.5,20,0);g.rotation.x=.12;screen(g,61.4,36.4,MB(0xffffff,{map:artT(62,37,29)}))}
- R.setups.v2=sc.children.slice(a);
- // --- version 3 (photo 3) : étagère d'écrans en noyer sur tout le bureau, LED dessous ; écran vertical + écran principal posés dessus, barre lumineuse ---
- a=mk();edison(87);
- {const wal=M(0x4a3324,{roughness:.5});RB(4,156,84,87,0,24,.6,wal);[8,80,152].forEach(x=>RB(x-2,x+2,75,84,1,23,.5,wal));
-  (R.G.headLed=R.G.headLed||[]).push(mkGlow(150,46,80,75.4,16,0,-Math.PI/2));
-  const g=Grp(20,90,12,.15);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}));
-  // écran principal 34" ultra-large 21:9 (81 x 36,5 cm)
-  const m=Grp(101,110.3,14,0);RB(-12,12,-23.3,-22.1,-7,4,.6,blk,m);RB(-2.5,2.5,-22.1,-8,-3.6,-1.6,.8,blk,m);screen(m,81,36.5,MB(0xffffff,{map:artT(81,36,47)}));
-  RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
- R.setups.v3=sc.children.slice(a);
- R.setSetup=k=>{const on=new Set(k==='actuel'?R.setups.actuel:R.setups.com.concat(R.setups[k]||[]));['actuel','v1','v2','v3','com'].forEach(n=>R.setups[n].forEach(o=>o.visible=on.has(o)));
-  const L=R.L&&R.L.desk;if(L){if(k==='actuel')L.position.set(118,100,36);else L.position.set(53,k==='v3'?108:96,16)}R.curSetup=k};
- R.setSetup('actuel');
+ Cy(148,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(148,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);noShadow(S(148,82.6,30,.7,MB(0xffb35a),1,1.8,1));
+ Lathe(146,75,64,[[0,0],[4.5,0],[5.2,11],[4.8,11],[4,1],[0,1]],M(0x2a2a2a,{roughness:.7}),18);for(let i=0;i<10;i++)S(146+Math.cos(i*1.9)*4,90+(i%3)*2.5,64+Math.sin(i*1.9)*4,3,leaf,1,.8,1);
+ // halo du ruban LED Tapo derrière les écrans (mur) et sous l'étagère d'écrans (bureau) : suit les ambiances (« deskLed »)
+ R.G.monGlow.forEach(m=>m.position.set(98,113,3.8));R.G.shelf[0].position.set(120,150,3.8);
+ R.G.deskLed=[mkGlow(170,110,72,122,3.6,0),mkGlow(110,70,72,115,3.7,0),mkGlow(100,40,60,75.4,14,0,-Math.PI/2)];
 }
 // laundry basket SALUDING (bamboo) under left of desk + FNISS bin
 {const bamT=T(64,64,(g,w,h)=>{g.fillStyle='#b48c5a';g.fillRect(0,0,w,h);g.strokeStyle='#8a6438';g.lineWidth=2;for(let i=-64;i<128;i+=8){g.beginPath();g.moveTo(i,0);g.lineTo(i+64,64);g.stroke()}},6,3);
@@ -476,8 +454,8 @@ const sun=new THREE.DirectionalLight(0xfff0dc,1);sun.position.set(180+150,180+42
 sun.castShadow=true;if(sun.shadow&&sun.shadow.camera){sun.shadow.mapSize.set(2048,2048);const sc2=sun.shadow.camera;sc2.left=-330;sc2.right=330;sc2.top=330;sc2.bottom=-330;sc2.near=50;sc2.far=1600;sun.shadow.bias=-.0008}
 function PL(name,c,x,y,z,d,dec){const l=new THREE.PointLight(c,0,d||300,dec||1.5);l.position.set(x,y,z);sc.add(l);R.L[name]=l;return l}
 PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0xffd09a,18,76,140,220);PL('fado',0xffd9a8,346,92,307,220);
-PL('desk',0xfff0d8,118,100,36,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
-PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,80,104,40,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
+PL('desk',0xfff0d8,50,104,16,170);PL('deskLed',0xff8a30,72,110,10,150,1.3);PL('shelf',0xf4f7ff,90,166,12,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
+PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 {const sp=(n,d,c)=>{const l=Math.hypot(...d);R.L[n].userData.spot=[d[0]/l,d[1]/l,d[2]/l,c]};sp('arc',[0,-1,0],.15);sp('desk',[-23,-24,16],.45);sp('spot',[.15,1,.2],.55);sp('sneak',[0,-1,0],.1)}
 ['arc','fado','ns','spot'].forEach(n=>R.L[n].userData.sh=1);R.L.ns.userData.shO=[0,9,0];
 return R}

@@ -213,3 +213,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Panier inchangé : il faudrait 1 écran (V1) ou 2 écrans (V2) en plus, un bras, la lampe, les étagères.
 - Ajout V3 (photo 3) : étagère d'écrans en noyer sur tout le bureau (LED dessous), écran vertical + écran MSI posés dessus, barre lumineuse sur l'écran principal ; lampe à filament montée sur l'étagère (fonction `edison(y)`), bougie déplacée en x 152.
 - V3 : écran principal passé en 34" ultra-large 21:9 (81 x 36,5 cm, plat dans la 3D), centré en x 101 ; barre lumineuse élargie.
+
+## 2026-11-21 — Séance 29 : bureau final d'après les photos d'Enzo (demande d'Enzo)
+- Enzo valide le « setup photo 3 » avec un écran principal 34" : il devient le vrai bureau partout (plan 3D, VR, liste). Les versions de test et leurs boutons sont retirés ; l'ancien bureau (27" sur pied, FORSÅ, casque, mug, LACK + livres + 2 cadres) est enlevé de la scène.
+- 3D : étagère d'écrans 100 x 27 x 15 cm, écran vertical 27" (iiyama, pivot), MSI MAG 341CQP 34" (81 x 36,5 cm), barre Xiaomi, lampe NOOLI (H 33,5 cm) + LUNNOM, pan de lattes 60 x 117 cm, 2 étagères Action 57 x 23,5 blanches, 4 succulentes + 2 pothos, clavier/souris noirs (comme la liste).
+- Nouvel éclairage `deskLed` (lumière + 3 halos) = ruban Tapo L900-5 derrière les écrans, piloté par Alexa ; couleurs par ambiance (soir ambre, cosy orange, gaming violet, fête arc-en-ciel). Ajouté dans LN/GN de app_gl et app_vr.
+- Liste : écran 34" 656,99 € (TopAchat, code VISOR), écran vertical 189,99 €, étagère d'écrans 39,95 €, barre lumineuse 49,99 €, ruban 16,99 €, lampe 35,90 € (bientôt dispo), ampoule 6,99 € (prix DE, à vérifier), 2 étagères 13,90 €, panneau lattes 32,69 €, 4 succulentes (prix à vérifier) ; FORSÅ, E14, LACK retirés, cadres 6 → 4. Total 7 328,49 € → **7 772,90 €**.
+- VR : 0 erreur, 394 lots, ~169 k triangles. Scores : éclairage 9,75 → 10, cohérence 8,75 → 9 → **62,75 → 63,25/70**.

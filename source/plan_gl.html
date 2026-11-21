@@ -30,14 +30,11 @@ button.on{background:#A4AE6E;border-color:#A4AE6E;color:#1b1d12}
 <div id="ui">
 <div class="lbl">ÉCLAIRAGE</div>
 <div class="row"><button data-mode="cosy">Nuit cosy</button><button data-mode="jour">Jour</button><button data-mode="coucher">Coucher de soleil</button><button data-mode="soir">Soir chaud</button><button data-mode="gaming">Gaming</button><button data-mode="fete">Fête</button><button data-mode="cine">Ciné Ambilight</button><button id="auto">Défilé de toutes les ambiances</button></div>
-<div class="lbl">BUREAU (test)</div>
-<div class="row"><button data-setup="actuel" class="on">Bureau actuel</button><button data-setup="v1">Setup photo 1</button><button data-setup="v2">Setup photo 2 (3 écrans)</button><button data-setup="v3">Setup photo 3</button></div>
 <div class="lbl">VUES</div>
 <div class="row"><button id="mes">📏 Mesures</button><button data-view="ens">Ensemble</button><button data-view="fenetre">Fenêtre et lune</button><button data-view="lit">Lit</button><button data-view="ambi">TV Ambilight</button><button data-view="tv">Commode et TV</button><button data-view="vinyle">Vinyles</button><button data-view="bureau">Bureau gaming</button><button data-view="dessus">Vu de dessus</button></div>
 <button id="play">&#9654;&nbsp; Lancer la visite</button>
 </div>
-<script src="items.js"></script><script src="catalog.js"></script><script src="mesures.js"></script><script>window.__LATTES=true;window.__SETUPS=true</script><script src="shim2.js"></script><script src="room.js"></script><script src="gl2.js"></script><script src="ambi.js"></script>
+<script src="items.js"></script><script src="catalog.js"></script><script src="mesures.js"></script><script>window.__LATTES=true</script><script src="shim2.js"></script><script src="room.js"></script><script src="gl2.js"></script><script src="ambi.js"></script>
 <script src="app_gl.js"></script>
 <script>(function(){const h=document.getElementById('hint');if(!h)return;const off=()=>{setTimeout(()=>h.classList.add('off'),2500)};addEventListener('pointerdown',off,{once:true});setTimeout(()=>h.classList.add('off'),9000)})()</script>
-<script>document.querySelectorAll("[data-setup]").forEach(b=>b.onclick=()=>{__R.setSetup(b.dataset.setup);document.querySelectorAll("[data-setup]").forEach(x=>x.classList.toggle("on",x===b));if(window.__jump)__jump("bureau")});</script>
 </body></html>

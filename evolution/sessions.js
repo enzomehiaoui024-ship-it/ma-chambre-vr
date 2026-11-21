@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 29 — nouveau bureau d'après les photos d'Enzo",
+    avant: 62.75, apres: 63.25,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.75, 10], coherence: [8.75, 9], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Bureau choisi par Enzo : écran vertical 27\" à gauche + écran principal 34\" ultra-large, posés sur une étagère d'écrans en bois",
+      "Ruban LED Tapo derrière les écrans et sous l'étagère, piloté par l'Echo Show 5 : orange le soir, violet en gaming, couleurs en fête",
+      "Pan de lattes noyer, 2 étagères blanches avec plantes grasses et pothos retombants, lampe à ampoule apparente, barre lumineuse sur l'écran",
+      "Plan 3D, VR et liste d'achat mis à jour ensemble (total 7 328,49 € → 7 772,90 €)"
+    ],
+    images: [
+      ["bureau-cosy", "Bureau en nuit cosy : avant → après"],
+      ["bureau-gaming", "Bureau en mode gaming : la LED passe au violet"]
+    ],
+    ensuite: "Vérifier sur ikea.fr le prix de l'ampoule LUNNOM et des plantes grasses ; surveiller le retour en stock de la lampe NOOLI."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 28 — les lampes font enfin des ombres",
     avant: 62.5, apres: 62.75,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.75], coherence: [8.75, 8.75], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
