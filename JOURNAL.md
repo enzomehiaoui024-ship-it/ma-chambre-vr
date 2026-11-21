@@ -185,3 +185,18 @@ Vues de contrôle fixes (tools/preview.py) :
 - VR : 0 erreur, 384 lots, ~161 k triangles. Scores : éclairage 9,5 → 9,75 → **62,5 → 62,75/70**.
 
 - Mise à jour 03:40 : Enzo abandonne l'idée (« on oublie »). Ambiance `cine2` retirée du plan 3D et de la VR (code ramené à f2168c1), score ramené à **62,5/70**. Panier toujours inchangé. L'outil `preview.py` (5e élément JS) est gardé.
+
+## 2026-11-21 — Séance 28 : ombres des lampes
+- `gl2.js` : ombres de 4 lampes ponctuelles (`userData.sh` dans room.js : arc, FADO, chevet, spot plantes). Atlas « cube » 3×8 tuiles de 448 px (6 faces par lampe, distance linéaire empaquetée RGBA), rendu une seule fois (clé = positions). Faces à 2·atan(1/0,9) pour garder une marge de filtrage ; les petits objets qui entourent la lampe (abat-jour, globe : rayon < 45 cm) ne projettent pas ; les feuilles en alphaTest projettent leur vraie découpe.
+- Ombres douces façon PCSS (4 points de recherche de bloqueurs, lampe de 12 cm, 4 → 14 points de filtre seulement dans la pénombre, ordre des points mélangé). Décalage selon la normale (0,3 cm + 0,5 %). Chevet : origine de l'ombre 9 cm plus haut (`shO`, haut du globe) pour ne pas assombrir les oreillers.
+- `app_gl.js` : si les images dépassent 45 ms pendant 3 s, les ombres des lampes se coupent (`?ombres=0` pour forcer l'arrêt, `?ombres=1` pour les garder). `tools/preview.py` charge `?ombres=1` et refait le saut de caméra deux fois (le cadrage alternait d'une capture à l'autre).
+- Attention : en mode soir, la TV allumée fait varier la lumière d'une capture à l'autre → comparer les ombres en nuit cosy.
+- Vues de jour identiques (écart = grain). Coût SwiftShader 646 → 1 030 ms/image (CPU, pas représentatif du téléphone, d'où la coupure auto). VR inchangée : 0 erreur.
+- Scores : éclairage 9,5 → 9,75 → **62,5 → 62,75/70**.
+- Ensuite : mêmes ombres en VR seulement si la mesure d'images/s sur le vrai Quest 2 le permet ; reflet planaire du parquet.
+
+### Compte rendu (pour 7h20)
+- Mieux : les lampes (arc, FADO, chevet, spot plantes) font maintenant de vraies ombres douces le soir : feuilles du ficus et du monstera au mur, étagères, TV. Le jour ne change pas.
+- Score : 62,5 → 62,75/70 (éclairage 9,5 → 9,75), aucun critère en baisse.
+- Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
+- À décider : commander la carte mère avant le 30/11 (watercooling offert) ? Nouveau lampadaire arc (l'OMBRAGE est épuisé) ? Périphériques K70/G305/tapis ok ? Emplacement MOSSLANDA, supports vinyles et « Now Playing ».

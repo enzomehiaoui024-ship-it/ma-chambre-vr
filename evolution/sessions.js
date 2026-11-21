@@ -3,6 +3,26 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 28 — les lampes font enfin des ombres",
+    avant: 62.5, apres: 62.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.75], coherence: [8.75, 8.75], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Le lampadaire arc, la lampe FADO de la commode, la lampe de chevet et le spot des plantes projettent maintenant de vraies ombres (avant, seul le soleil en faisait)",
+      "Le soir, les feuilles du ficus et du monstera dessinent leurs ombres sur le mur et les rideaux, la TV et les étagères à sneakers aussi",
+      "Ombres douces : plus l'objet est loin du mur, plus le bord de l'ombre est flou, comme avec une vraie lampe",
+      "Sur un téléphone trop lent, le plan 3D coupe ces ombres tout seul pour rester fluide (le mode jour ne change pas)"
+    ],
+    images: [
+      ["ombres-ficus-commode", "Ficus et monstera près de la commode (nuit cosy)"],
+      ["ombres-coin-ficus", "Coin du ficus : ombres des feuilles au mur"],
+      ["ombres-fenetre", "Vers la fenêtre : lampadaire, monstera, rideaux"],
+      ["ombres-bureau", "Bureau : étagères à sneakers et casque"],
+      ["ombres-lit", "Vue de contrôle du lit (nuit cosy)"]
+    ],
+    ensuite: "Essayer les mêmes ombres en VR si le Quest 2 reste fluide, et revérifier les prix des composants avant la fin de l'offre carte mère (30/11)."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 27 — « Ciné immersif » testé puis retiré",
     avant: 62.5, apres: 62.5,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.75, 8.75], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },

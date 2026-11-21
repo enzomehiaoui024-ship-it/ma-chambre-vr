@@ -8,8 +8,8 @@
 - Tapis : relief des poils (texture normale simulée).
 
 ## Éclairage
-- Ombres des lampes (cube map pour le lampadaire et la FADO) — le soleil a déjà des ombres douces.
-- Ombres douces aussi en VR si la fluidité le permet (mesurer d'abord).
+- Ombres des lampes aussi en VR (fait dans le plan 3D, séance 28) : seulement si le Quest 2 reste ≥ 68 i/s (mesurer d'abord).
+- Ombres des bougies et de la lampe de bureau FORSÅ (ajouter une 5e tuile à l'atlas si le téléphone suit).
 - Reflets légers sur le parquet et l'écran de TV.
 
 ## Liste d'achat

@@ -7,9 +7,10 @@ R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));out=sys.argv[1];cf
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--allow-file-access-from-files'])
     pg=b.new_page(viewport={'width':800,'height':600});errs=[];pg.on('pageerror',lambda e:errs.append(str(e)))
-    pg.goto('file://'+os.path.join(R,'source','plan_gl.html'));pg.wait_for_timeout(5000);pg.add_style_tag(content='#ui,#hint,#evo{display:none!important}')
+    pg.goto('file://'+os.path.join(R,'source','plan_gl.html')+'?ombres=1');pg.wait_for_timeout(5000);pg.add_style_tag(content='#ui,#hint,#evo{display:none!important}')
     for i,e in enumerate(cfg):
         m,v,pp,qq=e[:4]
         if len(e)>4 and e[4]:pg.evaluate(e[4])
-        pg.evaluate(f"__mode('{m}')");pg.evaluate(f"__jump({json.dumps(v)},{json.dumps(pp)},{json.dumps(qq)})");pg.wait_for_timeout(4000);pg.screenshot(path=f'{out}_{i}.png')
+        J=f"__jump({json.dumps(v)},{json.dumps(pp)},{json.dumps(qq)})"
+        pg.evaluate(f"__mode('{m}')");pg.evaluate(J);pg.wait_for_timeout(1500);pg.evaluate(J);pg.wait_for_timeout(2500);pg.screenshot(path=f'{out}_{i}.png')
     print('erreurs JS:',errs[:5]);b.close()

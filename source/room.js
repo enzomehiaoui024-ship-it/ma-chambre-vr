@@ -404,5 +404,6 @@ PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0
 PL('desk',0xfff0d8,118,100,36,170);PL('shelf',0xf4f7ff,80,152,14,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
 PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,80,104,40,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 {const sp=(n,d,c)=>{const l=Math.hypot(...d);R.L[n].userData.spot=[d[0]/l,d[1]/l,d[2]/l,c]};sp('arc',[0,-1,0],.15);sp('desk',[-23,-24,16],.45);sp('spot',[.15,1,.2],.55);sp('sneak',[0,-1,0],.1)}
+['arc','fado','ns','spot'].forEach(n=>R.L[n].userData.sh=1);R.L.ns.userData.shO=[0,9,0];
 return R}
 if(typeof module!=='undefined')module.exports=buildRoom;
