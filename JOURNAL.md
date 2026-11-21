@@ -211,3 +211,4 @@ Vues de contrôle fixes (tools/preview.py) :
 - Commun aux 2 versions : pan de lattes derrière les écrans, 2 étagères blanches en décalé avec succulentes et pothos retombants, lampe ampoule à filament sur socle bois, clavier crème sur support, grand tapis noir, souris blanche, bougie, plante, halo LED (suit les LED d'ambiance).
 - V1 : écran vertical posé + écran principal sur bras. V2 : écran vertical + écran principal sur socle bois + 2e écran au-dessus sur bras. Images des écrans inventées (ville sous la neige).
 - Panier inchangé : il faudrait 1 écran (V1) ou 2 écrans (V2) en plus, un bras, la lampe, les étagères.
+- Ajout V3 (photo 3) : étagère d'écrans en noyer sur tout le bureau (LED dessous), écran vertical + écran MSI posés dessus, barre lumineuse sur l'écran principal ; lampe à filament montée sur l'étagère (fonction `edison(y)`), bougie déplacée en x 152.
