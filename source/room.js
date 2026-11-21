@@ -361,8 +361,9 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
   add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0,-4,-20),new THREE.Vector3(0,3,0),new THREE.Vector3(0,-4,20)),12,.5,6),M(0x111111)),g);
   const cm2=M(c,{roughness:1}),kind=i%4;
   if(kind==3){RB(-2,2,-10,-4,-19,19,1.2,M(0x2a2a2a,{metalness:.5}),g,1);RB(-2.4,2.4,-10-L*1.2,-8,-19,-1,2.4,cm2,g,2);RB(-2.4,2.4,-10-L*1.2,-8,1,19,2.4,cm2,g,2)}
-  else{RB(-2.6,2.6,-8-L,-4,-19,19,3,cm2,g,2);RB(-2.4,2.4,-11,-3,-23,23,4,cm2,g,2);
-   [-1,1].forEach(sd=>{const sl=Grp(0,-6,sd*22,0,g);sl.rotation.x=sd*(kind==0?.18:.75);RB(-2.2,2.2,kind==0?-L*.95:-16,0,-4,4,2.2,cm2,sl,2);if(kind==0)RB(-2.4,2.4,-L*.95-6,-L*.95,-3.4,3.4,1.6,cm2,sl,1)});
+  else{const th=[3.8,1.5,3.1][kind],Lk=kind==1?Math.min(L,64):L;RB(-th,th,-8-Lk,-4,-19,19,Math.min(3,th*.95),cm2,g,2);RB(-th-.3,th+.3,-11,-3,-23,23,Math.min(4,th+.2),cm2,g,2);
+   if(kind!=1){const dk=((c>>16&255)*.8<<16)|((c>>8&255)*.8<<8)|((c&255)*.8|0);RB(-th-.25,th+.25,-8-Lk,-2-Lk,-18.6,18.6,Math.min(1.6,th),M(dk,{roughness:1}),g,1)}
+   [-1,1].forEach(sd=>{const sl=Grp(0,-6,sd*22,0,g);sl.rotation.x=sd*(kind==0?.18:.75);RB(-2.2-(kind==0)*.8,2.2+(kind==0)*.8,kind==0?-L*.95:-16,0,-4,4,2.2,cm2,sl,2);if(kind==0)RB(-3.2,3.2,-L*.95-6,-L*.95,-3.4,3.4,1.6,cm2,sl,1)});
    if(kind==0){RB(-2,6,-20,-2,-10,10,4,cm2,g,2);RB(-2.8,-2.4,-36-L*.3,-28,-7,7,1.5,cm2,g,1)}}}
  [[178,0xF4F2EC,C.black],[196,C.olive,0xEDE5D3],[214,C.black,0xEDE5D3],[232,0xEDE5D3,C.jaune]].forEach(([x,c,a],i)=>{sneaker(x,14,20,c,a,0);sneaker(x+9,14,20,c,a,0)});
  Lathe(240,176,30,[[0,0],[5,0],[6.2,10],[5.6,10],[4.6,1],[0,1]],M(0xC56B45,{roughness:.8}),18);Cy(240,30,184.6,185.2,5.5,M(0x3b2c22,{roughness:1}),null,14);pothos(240,185,30,[[-6,16,42],[5,18,58],[10,15,30]])}

@@ -11,7 +11,8 @@ window.SESSIONS = [
       "La souris a la forme bombée de la G305 (11,6 x 6,2 cm) avec sa molette, au lieu d'une simple boule",
       "La plante du bureau devient une plante ZZ réaliste (tiges arquées, feuilles brillantes par paires) au lieu de boules vertes",
       "La plante en haut du portant (des boules vertes) devient un vrai pothos dont les tiges retombent devant les vêtements",
-      "VR : 0 erreur, moins de triangles qu'avant (~165 k)"
+      "Vêtements du portant plus réalistes : t-shirts fins, sweats et vestes plus épais, bord-côte plus foncé en bas des sweats",
+      "VR : 0 erreur, moins de triangles qu'avant (~166 k)"
     ],
     images: [
       ["bureau32", "Bureau (jour)"],
