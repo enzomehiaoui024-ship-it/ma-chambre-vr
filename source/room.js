@@ -330,8 +330,9 @@ if(typeof window!=='undefined'&&window.__SETUPS){
  {const wal=M(0x4a3324,{roughness:.5});RB(4,156,84,87,0,24,.6,wal);[8,80,152].forEach(x=>RB(x-2,x+2,75,84,1,23,.5,wal));
   (R.G.headLed=R.G.headLed||[]).push(mkGlow(150,46,80,75.4,16,0,-Math.PI/2));
   const g=Grp(20,90,12,.15);RB(-9,9,-3,-1.5,-6,6,.6,blk,g);RB(-1.8,1.8,-1.5,22,-4.5,-2,.6,blk,g);const sg=Grp(0,33,0,0,g);screen(sg,36.6,62,MB(0xffffff,{map:artT(37,62,11)}));
-  const m=Grp(98,110.5,14,0);RB(-10,10,-23.5,-22.3,-7,4,.6,blk,m);RB(-2.5,2.5,-22.3,-8,-3.6,-1.6,.8,blk,m);screen(m,61.4,36.4,R.screens.mon.material);
-  RB(-23,23,18.6,20.6,-3.2,.4,.9,blk,m);noShadow(P(44,1.4,MB(0xfff1dc),0,18.55,-1.4,0,Math.PI/2,m))}
+  // écran principal 34" ultra-large 21:9 (81 x 36,5 cm)
+  const m=Grp(101,110.3,14,0);RB(-12,12,-23.3,-22.1,-7,4,.6,blk,m);RB(-2.5,2.5,-22.1,-8,-3.6,-1.6,.8,blk,m);screen(m,81,36.5,MB(0xffffff,{map:artT(81,36,47)}));
+  RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
  R.setups.v3=sc.children.slice(a);
  R.setSetup=k=>{const on=new Set(k==='actuel'?R.setups.actuel:R.setups.com.concat(R.setups[k]||[]));['actuel','v1','v2','v3','com'].forEach(n=>R.setups[n].forEach(o=>o.visible=on.has(o)));
   const L=R.L&&R.L.desk;if(L){if(k==='actuel')L.position.set(118,100,36);else L.position.set(53,k==='v3'?108:96,16)}R.curSetup=k};

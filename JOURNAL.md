@@ -212,3 +212,4 @@ Vues de contrôle fixes (tools/preview.py) :
 - V1 : écran vertical posé + écran principal sur bras. V2 : écran vertical + écran principal sur socle bois + 2e écran au-dessus sur bras. Images des écrans inventées (ville sous la neige).
 - Panier inchangé : il faudrait 1 écran (V1) ou 2 écrans (V2) en plus, un bras, la lampe, les étagères.
 - Ajout V3 (photo 3) : étagère d'écrans en noyer sur tout le bureau (LED dessous), écran vertical + écran MSI posés dessus, barre lumineuse sur l'écran principal ; lampe à filament montée sur l'étagère (fonction `edison(y)`), bougie déplacée en x 152.
+- V3 : écran principal passé en 34" ultra-large 21:9 (81 x 36,5 cm, plat dans la 3D), centré en x 101 ; barre lumineuse élargie.
