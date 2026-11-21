@@ -245,4 +245,5 @@ Vues de contrôle fixes (tools/preview.py) :
 - Même séance : plante en haut du portant (9 sphères) → pot avancé en z 30 + `pothos()` dont 3 tiges retombent devant (elles ne traversent plus le plateau). Plus aucune plante en sphères dans la scène. VR : 405 lots, ~165 k triangles.
 - Vêtements : épaisseur selon le type (sweat 7,6 cm, t-shirt 3 cm et plus court, veste 6,2 cm), bord-côte 20 % plus foncé en bas des sweats/vestes, manches des sweats plus épaisses. VR : 411 lots, ~166 k triangles.
 - Echo Show 5 : façade 3,2 cm + dos demi-cylindre en tissu (r 4,1 cm) + pied, au lieu d'une boîte. VR : 412 lots, ~166 k triangles.
-- Ensuite : câbles des écrans le long des bras ; couette avec un vrai drapé ; reflets légers sur le parquet.
+- Câbles des écrans (tubes r 0,32) : bras → mât → dessous du bureau (4 attaches scratch) → arrière du PC. Pas de goulotte (ce serait un achat en plus : à proposer à Enzo). VR : 415 lots, ~168 k triangles.
+- Ensuite : couette avec un vrai drapé ; reflets légers sur le parquet.

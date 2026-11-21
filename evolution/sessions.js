@@ -13,7 +13,8 @@ window.SESSIONS = [
       "La plante en haut du portant (des boules vertes) devient un vrai pothos dont les tiges retombent devant les vêtements",
       "Vêtements du portant plus réalistes : t-shirts fins, sweats et vestes plus épais, bord-côte plus foncé en bas des sweats",
       "L'Echo Show 5 a sa vraie forme : façade plate et dos arrondi en tissu (avant : une simple boîte)",
-      "VR : 0 erreur, moins de triangles qu'avant (~166 k)"
+      "Câbles des écrans rangés : ils suivent les bras, longent le dessous du bureau avec des attaches et descendent proprement au PC",
+      "VR : 0 erreur (~168 k triangles)"
     ],
     images: [
       ["bureau32", "Bureau (jour)"],
@@ -21,9 +22,10 @@ window.SESSIONS = [
       ["plante32", "Plante ZZ"],
       ["plante-portant33", "Pothos du portant"],
       ["portant33", "Portant (vue de face)"],
-      ["echo32", "Echo Show 5"]
+      ["echo32", "Echo Show 5"],
+      ["cables32", "Câbles sous le bureau"]
     ],
-    ensuite: "Câbles des écrans le long des bras ; reflets légers sur le parquet."
+    ensuite: "Couette avec un vrai drapé ; reflets légers sur le parquet."
   },
   {
     date: "2026-11-21",

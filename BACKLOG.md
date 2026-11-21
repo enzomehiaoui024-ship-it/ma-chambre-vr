@@ -6,7 +6,7 @@
 
 ## Meubles 3D
 - Couette : vrai drapé doux (grille déformée) au lieu d'un bloc arrondi.
-- Câbles des écrans le long des bras + goulotte sous le bureau.
+- Proposer à Enzo une goulotte sous le bureau (achat, ~10 €) : les câbles sont pour l'instant tenus par des attaches.
 - Tapis : relief des poils (texture normale simulée).
 
 ## Éclairage

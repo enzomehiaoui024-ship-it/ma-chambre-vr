@@ -312,6 +312,11 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  {const m=Grp(98,113.3,16,0);RB(-5,5,-5,5,-4,-1.4,.5,blk,m);arm(128,4,100,98,113.3,12);
   const sm=screen(m,81,36.5,R.screens.mon.material);R.screens.mon.material.map=artT(81,36,47);R.screens.mon=sm;
   RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
+ // câbles des écrans : le long des bras, descendent le mât, longent le dessous du bureau (attaches scratch), puis vont au PC
+ {const cm=M(0x0e0e0e,{roughness:.8}),V=(x,y,z)=>new THREE.Vector3(x,y,z),cab=(a,b,c)=>add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(V(...a),V(...b),V(...c)),12,.32,5),cm));
+  cab([100,110,11],[120,104,7.5],[126.6,99,5.8]);cab([126.6,99,5.8],[126.6,88,5.8],[126.6,77.5,5.8]);
+  cab([24,118,9.5],[18,104,7.5],[15.6,99,5.8]);cab([15.6,99,5.8],[15.6,88,5.8],[15.6,77.5,5.8]);cab([15.6,71,5],[16,72.3,5],[22,72.5,5]);cab([22,72.5,5],[73,72.5,5],[124,72.5,5]);cab([124,72.5,5],[128,58,8],[132.5,47,17.6]);cab([126.6,71,5.8],[128,57,9],[134.5,47,17.6]);
+  [30,55,80,105].forEach(x=>RB(x-.8,x+.8,72,73,3.6,6.4,.3,M(0x1a1a1a)))}
  // tapis XXL noir, clavier TKL blanc (Red Blade), souris G305 blanche
  RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
  // clavier TKL 87 touches (36 x 14 cm) : rangée F séparée, grandes touches (Tab, Maj, Entrée, espace), bloc flèches
