@@ -2,6 +2,25 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-21",
+    titre: "Séance 26 — écran Echo Show 5 et lumières toutes compatibles Alexa",
+    avant: 62, apres: 62.5,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.75], liste: [9.25, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Echo Show 5 ajouté sur la table de chevet (3D + liste) : réveil et boutons des ambiances",
+      "Chaque lumière vérifiée : rubans Action et Paulmann (télécommande seulement) remplacés par des Tapo L900-5 compatibles Alexa, et moins chers",
+      "5 prises Tapo P100 pour les 2 FADO, la FORSÅ, les spots des plantes et le ruban du bureau",
+      "Erreur corrigée : la FORSÅ prend une ampoule E14, pas E27 ; seulement 1 lot d'E27 pour les 2 FADO",
+      "Lampadaire arc : culot E27 confirmé, mais affiché « épuisé » à 109,99 € → à remplacer",
+      "Total de la liste : 7 191,47 € → 7 328,49 €"
+    ],
+    images: [
+      ["echo-jour", "Table de chevet en journée"],
+      ["echo-cosy", "Table de chevet en nuit cosy"]
+    ],
+    ensuite: "Trouver un lampadaire arc noir et marbre en stock ; régler les ambiances de l'Echo Show (routines Alexa)."
+  },
+  {
     date: "2026-11-20",
     titre: "Séance 25 — carte mère : le watercooling est vraiment offert",
     avant: 61.75, apres: 62,

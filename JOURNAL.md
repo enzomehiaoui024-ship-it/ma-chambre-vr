@@ -168,3 +168,11 @@ Vues de contrôle fixes (tools/preview.py) :
 ## 2026-11-20 — Séance 25 : prix de la carte mère
 - `cm` comptait 309,90 € (= prix carte + AIO), alors que l'AIO MSI MAG Coreliquid A13 360 est offert avec VIVACOOLING : la carte seule est à 219,95 € chez Materiel.net (offre jusqu'au 30/11/2026). Lien produit ajouté.
 - Total : 7 281,42 → **7 191,47 €**. Scores : liste 9 → 9,25 → **61,75 → 62/70**.
+
+## 2026-11-21 — Séance 26 : Echo Show 5 et compatibilité Alexa (demande d'Enzo)
+- Enzo choisit l'Echo Show 5 (3e gén.) pour piloter l'éclairage. Ajouté en 3D sur la table de chevet (écran 22:30 + boutons d'ambiance inventés) et dans la liste (109,99 €, souvent 59,99–74,99 € en promo).
+- Vérification de chaque lumière : Tapo L920-5, L530E, L900-5, P100 = compatibles Alexa (FAQ TP-Link). Rubans Action et Paulmann = télécommande seule → remplacés par 2 × Tapo L900-5 (16,99 €). FADO ×2, FORSÅ, spots plantes, ruban bureau → prises Tapo P100 (pack de 4 à 34,99 € + 1 à 12,90 €). Ruban TV USB : s'allume avec la TV. Bougies LED : à la main.
+- Erreur corrigée : FORSÅ = culot E14 → SOLHETTA E14 ; SOLHETTA E27 ramenées à 1 lot (2 FADO, culot E27 confirmé).
+- Lampadaire OMBRAGE : E27 confirmé mais « épuisé » (109,99 €) → à remplacer (décision Enzo).
+- Total 7 191,47 € → 7 328,49 €. VR : 0 erreur, 384 lots, ~161 k triangles.
+- Scores : cohérence 8,5 → 8,75, liste 9,25 → 9,5 → **62 → 62,5/70**.

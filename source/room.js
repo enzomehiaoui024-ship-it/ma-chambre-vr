@@ -164,9 +164,18 @@ const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(0,3,1
  RB(1,NX-1,14,16,NZ0+1.5,NZ1-1.5,.4,M(0x2f3134,{roughness:.55}),g);
  Lathe(18,59,140,[[0,0],[6,0],[6.2,.6],[5,2.6],[3,3.2],[0,3.2]],M(0xF7F6F2,{roughness:.3}),24);
  const fg=S(18,74.5,140,12.5,M(0xffffff,{emissive:0xffd9a0,emissiveIntensity:0,roughness:.15}),1,1,1,null,28);R.nsShade=fg.material;
- B(4,14,59,60,NZ1-10,NZ1-2,M(0x1a1a1a,{roughness:.3}))}
+ B(3,11,59,60,NZ0+2,NZ0+10,M(0x1a1a1a,{roughness:.3}))}
 
-// ---------- sneaker wall: clear boxes + 3 floating shelves with Paulmann LED ----------
+// ---------- Echo Show 5 (3e gén.) sur la table de chevet : écran de contrôle des lumières ----------
+{const g=Grp(15,59,161,.3);const fab=M(0x2b2c2e,{roughness:.95}),gls=M(0x0b0b0c,{roughness:.15,metalness:.2});
+ RB(-7.4,7.4,0,8.6,-3.6,2.4,2.4,fab,g,3);RB(-7.4,7.4,.2,8.6,2.2,3.7,.7,gls,g,2);
+ const st=T(256,160,(c,w,h)=>{const gr=c.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#20231b');gr.addColorStop(1,'#0d0e0b');c.fillStyle=gr;c.fillRect(0,0,w,h);
+  c.fillStyle='#F3EFE4';c.font='600 58px Inter, Arial, sans-serif';c.textAlign='center';c.fillText('22:30',w/2,72);c.font='16px Arial';c.fillStyle='#A9A594';c.fillText('Ambiance : Cosy',w/2,96);
+  const lab=['Jour','Cosy','Gaming','Ciné'];lab.forEach((t,i)=>{const x=10+i*61,on=i===1;c.fillStyle=on?'#A4AE6E':'rgba(255,255,255,.12)';c.beginPath();c.roundRect?c.roundRect(x,112,56,32,16):c.rect(x,112,56,32);c.fill();c.fillStyle=on?'#1b1d12':'#F3EFE4';c.font='600 15px Arial';c.fillText(t,x+28,133)})},1,1);
+ const sm=new THREE.Mesh(new THREE.PlaneGeometry(11.6,7),MB(0xffffff,{map:st}));sm.position.set(0,4.5,3.75);g.add(sm);
+ const cam=S(5.4,7.9,3.72,.22,M(0x050505,{roughness:.1}),1,1,.4,g,8)}
+
+// ---------- sneaker wall: clear boxes + 3 floating shelves with Tapo L900-5 LED ----------
 function sneaker(x,y,z,c,acc,ry,p){const g=Grp(x,y,z,ry||0,p);const mc=M(c,{roughness:.75}),ma=M(acc,{roughness:.65});
  RB(-5,5,0,.8,-14,14,.5,M(0xd9d3c6,{roughness:.9}),g,1);RB(-5.1,5.1,.6,3,-14.2,14.2,1.2,M(0xF7F6F2,{roughness:.8}),g,1);
  S(0,2.6,6.5,1,mc,4.4,3.9,7.2,g,12);RB(-4.7,4.7,2.6,9.8,-13.6,1.5,3,mc,g,2);

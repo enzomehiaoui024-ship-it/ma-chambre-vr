@@ -13,11 +13,14 @@
 - Reflets légers sur le parquet et l'écran de TV.
 
 ## Liste d'achat
+- Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
+- Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
 - Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11).
 - Remplacer le ruban LED TV par un kit Ambilight à caméra (si l'utilisateur valide).
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
+- Écran de l'Echo Show qui affiche l'ambiance en cours dans le plan 3D et la VR.
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
