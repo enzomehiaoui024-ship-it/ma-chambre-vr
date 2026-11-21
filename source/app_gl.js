@@ -11,7 +11,7 @@ function hsl(h,s,l){const f=n=>{const k=(n+h*12)%12,a=s*Math.min(l,1-l);return l
 const LN=['pend','arc','ns','fado','desk','shelf','bed','head','tv','tvs','mon','pc','sneak','spot','candle','candle2','candle3'];
 const GN=['bedLed','headLed','tvLed','monGlow','pc','shelf','sneak'];
 function st(o){const s={sunI:0,sunC:hex(0xfff0dc),elev:40,az:-17,ambI:.12,skyC:hex(0x8a96b8),gndC:hex(0x3a3040),sky:hex(0x26314f),expo:1.25,
-L:{},G:{},em:{pend:.05,arc:.05,ns:0,fado:.05,dl:0},tv:0,mon:0,shaft:0,dust:0,pcIn:hex(0),night:1,moon:.8,cand:0,fadoC:hex(0xffe2b0),ambi:0,ambiRoom:0};LN.forEach(k=>s.L[k]=[hex(0xffd8a0),0]);GN.forEach(k=>s.G[k]=hex(0));
+L:{},G:{},em:{pend:.05,arc:.05,ns:0,fado:.05,dl:0},tv:0,mon:0,shaft:0,dust:0,pcIn:hex(0),night:1,moon:.8,cand:0,fadoC:hex(0xffe2b0),ambi:0};LN.forEach(k=>s.L[k]=[hex(0xffd8a0),0]);GN.forEach(k=>s.G[k]=hex(0));
 for(const k in o){if(k=='L'||k=='G'||k=='em')Object.assign(s[k],o[k]);else s[k]=o[k]}return s}
 const amber=hex(0xff8a2a),warm=hex(0xffcf94);
 const DAY=st({night:0,moon:0,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),sunI:2.0,sunC:hex(0xfff1dc),elev:38,ambI:.62,skyC:hex(0xfff7ec),gndC:hex(0xa58b70),sky:hex(0xffffff),expo:1.05,mon:.95,shaft:.07,dust:1,
@@ -34,8 +34,6 @@ const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,am
  em:{pend:.03,arc:1.5,ns:1.1,fado:1.25,dl:1},G:{bedLed:mixc([0,0,0],hex(0xff6a1a),.42),headLed:mixc([0,0,0],hex(0xff7a2a),.22),tvLed:mixc([0,0,0],hex(0xff7a2a),.18),shelf:[.14,.07,.02],sneak:[.16,.09,.04],pc:mixc([0,0,0],ora,.15)}});
 const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,
  L:{arc:[hex(0xffb877),.12],candle:[hex(0xff9a40),.3],candle2:[hex(0xff9a40),.25],candle3:[hex(0xff9a40),.2]},em:{arc:.3,pend:.02,fado:.05}});
-const CINE2=st({night:1,moon:.7,cand:.25,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.03,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,ambiRoom:1,
- L:{candle:[hex(0xff9a40),.15],candle2:[hex(0xff9a40),.12],candle3:[hex(0xff9a40),.1]},em:{arc:.3,pend:.02,fado:.05}});
 function blend(a,b,t){if(t<=0)return a;if(t>=1)return b;const s=st({});for(const k in a){if(k=='L'){for(const n of LN)s.L[n]=[mixc(a.L[n][0],b.L[n][0],t),mix(a.L[n][1],b.L[n][1],t)]}else if(k=='G'){for(const n of GN)s.G[n]=mixc(a.G[n],b.G[n],t)}else if(k=='em'){for(const n in a.em)s.em[n]=mix(a.em[n],b.em[n],t)}else if(Array.isArray(a[k]))s[k]=mixc(a[k],b[k],t);else s[k]=mix(a[k],b[k],t)}return s}
 const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[41.2,'COSY'],[46.5,'COSY'],[47.8,'CINE'],[53,'CINE'],[54.3,'GAME'],[57.3,'GAME'],[58.4,'FETE'],[61.4,'FETE'],[63,'EVE']];
 const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:n=='COSY'?COSY:n=='CINE'?CINE:FETE(t);
@@ -127,11 +125,11 @@ cv.addEventListener('pointermove',e=>{if(tap&&Math.hypot(e.clientX-tap.x,e.clien
 const up=e=>{if(tap&&e.type==='pointerup'&&pts.size===1&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<9&&performance.now()-tap.t<450&&window.__pick)window.__pick(e.clientX,e.clientY);tap=null;pts.delete(e.pointerId);pd=0;pc=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 cv.addEventListener('wheel',e=>{e.preventDefault();sph.r=Math.max(25,Math.min(1100,sph.r*Math.exp(e.deltaY*.001)))},{passive:false});
 // ---------- UI ----------
-const MODES={cosy:()=>COSY,jour:()=>DAY,coucher:()=>GOLD,soir:()=>EVE,gaming:()=>GAME,fete:t=>FETE(t),cine:()=>CINE,cine2:()=>CINE2};
+const MODES={cosy:()=>COSY,jour:()=>DAY,coucher:()=>GOLD,soir:()=>EVE,gaming:()=>GAME,fete:t=>FETE(t),cine:()=>CINE};
 let mode='cosy',from=COSY,blendT=1,tour=null,fly=null,cur=COSY,el=0;
 const cap=document.getElementById('cap'),capT=document.getElementById('capT'),capS=document.getElementById('capS'),capL=document.getElementById('capL');
 function setMode(m){from=cur;mode=m;blendT=0;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===m))}
-let auto=false,autoT=0;const KEYS=['cosy','jour','coucher','soir','gaming','fete','cine','cine2'];const autoB=document.getElementById('auto');function setAuto(on){auto=on;autoT=0;autoB.classList.toggle('on',on);autoB.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}autoB.onclick=()=>{stopTour();setAuto(!auto);if(auto)setMode(KEYS[(KEYS.indexOf(mode)+1)%KEYS.length])};
+let auto=false,autoT=0;const KEYS=['cosy','jour','coucher','soir','gaming','fete','cine'];const autoB=document.getElementById('auto');function setAuto(on){auto=on;autoT=0;autoB.classList.toggle('on',on);autoB.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}autoB.onclick=()=>{stopTour();setAuto(!auto);if(auto)setMode(KEYS[(KEYS.indexOf(mode)+1)%7])};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{stopTour();setAuto(false);setMode(b.dataset.mode)});
 const VIEWS={ambi:[[35,140,259],[355,125,259]],fenetre:[[310,155,70],[150,120,330]],ens:[[560,470,640],[180,70,180]],lit:[[300,150,120],[60,60,268]],tv:[[200,135,240],[352,80,259]],vinyle:[[230,130,152],[350,72,138]],bureau:[[160,145,195],[75,92,30]],dessus:[[181,640,183],[180,0,180]]};
 function flyTo(k){stopTour();const v=VIEWS[k];fly={t:0,p0:cam.position.clone(),q0:tgt.clone(),p1:new THREE.Vector3(...v[0]),q1:new THREE.Vector3(...v[1])}}
@@ -144,7 +142,7 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
  if(tour){const t=Math.min(now/1000-tour.t0+3.6,TOTAL-.01);const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);s=stateAt(t);
   let sh=null;for(const c2 of CAP)if(t>=c2[0]&&t<=c2[1])sh=c2;if(sh){capL.textContent=sh[2];capT.textContent=sh[3];capS.textContent=sh[4];cap.style.opacity=1}else cap.style.opacity=0;
   if(t>=TOTAL-.02){stopTour();setMode('cosy')}}
- else{if(auto){autoT+=dt;if(autoT>6){autoT=0;setMode(KEYS[(KEYS.indexOf(mode)+1)%KEYS.length])}}blendT=Math.min(1,blendT+dt/1.2);s=blend(from,MODES[mode](el),ss(0,1,blendT));cam.fov=FV(52);
+ else{if(auto){autoT+=dt;if(autoT>6){autoT=0;setMode(KEYS[(KEYS.indexOf(mode)+1)%7])}}blendT=Math.min(1,blendT+dt/1.2);s=blend(from,MODES[mode](el),ss(0,1,blendT));cam.fov=FV(52);
   if(fly){fly.t=Math.min(1,fly.t+dt/1.6);const u=ss(0,1,fly.t);cam.position.lerpVectors(fly.p0,fly.p1,u);tgt.x=mix(fly.q0.x,fly.q1.x,u);tgt.y=mix(fly.q0.y,fly.q1.y,u);tgt.z=mix(fly.q0.z,fly.q1.z,u);cam.lookAt(tgt);if(fly.t>=1){fly=null;fromPos(cam.position,tgt)}}else toPos()}
  cur=s;apply(s,el);ambiUp(s,el);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});

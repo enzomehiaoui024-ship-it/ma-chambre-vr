@@ -183,3 +183,5 @@ Vues de contrôle fixes (tools/preview.py) :
 - Nouvelle ambiance `cine2` dans le plan 3D (bouton) et la VR (menu réorganisé : 8 ambiances).
 - `preview.py` : 5e élément facultatif = code JS (ex. `window.__ambiFix=10` pour figer l'image du film).
 - VR : 0 erreur, 384 lots, ~161 k triangles. Scores : éclairage 9,5 → 9,75 → **62,5 → 62,75/70**.
+
+- Mise à jour 03:40 : Enzo abandonne l'idée (« on oublie »). Ambiance `cine2` retirée du plan 3D et de la VR (code ramené à f2168c1), score ramené à **62,5/70**. Panier toujours inchangé. L'outil `preview.py` (5e élément JS) est gardé.
