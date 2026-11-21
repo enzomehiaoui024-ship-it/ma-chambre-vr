@@ -3,6 +3,23 @@
 window.SESSIONS = [
   {
     date: "2026-11-21",
+    titre: "Séance 27 — « Ciné immersif » : toute la chambre suit le film",
+    avant: 62.5, apres: 62.75,
+    scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.75], coherence: [8.75, 8.75], liste: [9.5, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },
+    changements: [
+      "Nouvelle ambiance « Ciné immersif » dans le plan 3D et dans la VR (menu du casque)",
+      "Les rubans (sous le lit, tête de lit, sneakers), le lampadaire et la suspension prennent les couleurs de l'image, côté par côté, comme le système Govee DreamView",
+      "Les couleurs changent en douceur, comme avec de vraies lumières Wi-Fi",
+      "Aperçu seulement : la liste d'achat n'a pas changé"
+    ],
+    images: [
+      ["cine-tv", "Vers la TV : Ciné Ambilight → Ciné immersif"],
+      ["cine-lit", "Vers le lit : toute la chambre suit le film"]
+    ],
+    ensuite: "Si Enzo valide : passer les lumières colorées en Govee dans la liste (caméra TV T2, 3 rubans, 2 ampoules)."
+  },
+  {
+    date: "2026-11-21",
     titre: "Séance 26 — écran Echo Show 5 et lumières toutes compatibles Alexa",
     avant: 62, apres: 62.5,
     scores: { meubles: [9.75, 9.75], eclairage: [9.5, 9.5], coherence: [8.5, 8.75], liste: [9.25, 9.5], vr: [8.75, 8.75], plan: [8.5, 8.5], video: [8, 8] },

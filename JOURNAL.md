@@ -176,3 +176,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Lampadaire OMBRAGE : E27 confirmé mais « épuisé » (109,99 €) → à remplacer (décision Enzo).
 - Total 7 191,47 € → 7 328,49 €. VR : 0 erreur, 384 lots, ~161 k triangles.
 - Scores : cohérence 8,5 → 8,75, liste 9,25 → 9,5 → **62 → 62,5/70**.
+
+## 2026-11-21 — Séance 27 : ambiance « Ciné immersif » (demande d'Enzo, aperçu)
+- Enzo veut l'Ambilight sur tout l'éclairage. Tapo ne synchronise pas l'écran → proposition Govee (caméra Envisual T2 car les applis de la TV Google TV ne passent pas par une box HDMI ; rubans RGBIC ; ampoules E27 ; DreamView). **Panier inchangé à sa demande** : il veut d'abord voir le rendu.
+- `ambi.js` : si `ambiRoom` > 0, les zones de l'image pilotent les lumières (gauche → sneakers, droite → lampadaire, haut → suspension, bas+droite → ruban sous le lit, moyenne → tête de lit) avec un lissage (k = 1 − e^(−5·dt)) ; halos et ampoules suivent aussi.
+- Nouvelle ambiance `cine2` dans le plan 3D (bouton) et la VR (menu réorganisé : 8 ambiances).
+- `preview.py` : 5e élément facultatif = code JS (ex. `window.__ambiFix=10` pour figer l'image du film).
+- VR : 0 erreur, 384 lots, ~161 k triangles. Scores : éclairage 9,5 → 9,75 → **62,5 → 62,75/70**.
