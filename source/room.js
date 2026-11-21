@@ -305,10 +305,10 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  {const m=Grp(98,113.3,16,0);RB(-5,5,-5,5,-4,-1.4,.5,blk,m);arm(128,4,100,98,113.3,12);
   const sm=screen(m,81,36.5,R.screens.mon.material);R.screens.mon.material.map=artT(81,36,47);R.screens.mon=sm;
   RB(-25,25,18.9,20.9,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,18.85,-1.4,0,Math.PI/2,m))}
- // tapis XXL noir, clavier Corsair K70 Core TKL noir, souris G305 noire (comme la liste)
+ // tapis XXL noir, clavier TKL blanc (Red Blade), souris G305 blanche
  RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
- RB(52,88,75.4,77.6,46,60,1,M(0x1d1d1f,{roughness:.55}));for(let rr=0;rr<5;rr++)for(let k=0;k<14;k++)RB(53.2+k*2.48,55.2+k*2.48,77.6,78.6,47+rr*2.55,48.9+rr*2.55,.35,M(0x2b2b2e,{roughness:.5}),null,1);
- {const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0x161616,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
+ RB(52,88,75.4,77.6,46,60,1,M(0xEEEEEA,{roughness:.5}));for(let rr=0;rr<5;rr++)for(let k=0;k<14;k++)RB(53.2+k*2.48,55.2+k*2.48,77.6,78.6,47+rr*2.55,48.9+rr*2.55,.35,M(0xF7F6F2,{roughness:.6}),null,1);
+ {const m=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,12),M(0xF4F3EF,{roughness:.35}));m.scale.set(1,.45,1.75);m.position.set(108,76.3,54);add(m)}
  // dessous de verre, bougie en pot, plante à droite
  Cy(22,50,75,75.5,4.2,M(0xB08a5c,{roughness:.8}),null,20);
  Cy(148,30,75,84,4,M(0xffffff,{transparent:true,opacity:.35,roughness:.05}),null,20);Cy(148,30,75.2,81,3.6,M(0xEFE6D8,{roughness:.9}),null,20);noShadow(S(148,82.6,30,.7,MB(0xffb35a),1,1.8,1));
