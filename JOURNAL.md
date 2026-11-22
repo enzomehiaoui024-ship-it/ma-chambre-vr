@@ -276,3 +276,14 @@ Vues de contrôle fixes (tools/preview.py) :
 - Score : 64,5 → 65,25/70 (cohérence, liste, plan 3D en hausse ; aucun critère en baisse). Le total affiché avant (64,25) avait une erreur de calcul de 0,25, corrigée.
 - Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
 - À décider : commander écran (code VISIONBF) et carte mère (watercooling offert jusqu'au 30/11) avant la fin des offres ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA/supports vinyles.
+
+## 2026-11-22 — Demande d'Enzo : PS VR2 (pas de PC pour l'instant)
+- Enzo ne prend pas de PC pour l'instant (trop cher pour les perfs) ; il a déjà une PS5 → VR avec un **PlayStation VR2**.
+- `room.js` : PS VR2 posé sur la commode côté nord (visière x 331–341, z 200–221 ; serre-tête en anneau jusqu'à x 359 ; manettes Sense à plat entre le plateau et le diffuseur, z 245–265). Façade noire + 4 caméras, joint facial noir, molette arrière. `catalog.js` : 2 boîtes → `psvr2`.
+- Liste : `psvr2` 349,99 € (Fnac depuis le 16/11, prix normal 449,99 € ; Amazon 349 € le 19/11 — sources hivr.fr 17/11, big-n.fr 19/11), zone « Commode et TV ». Nouvelle priorité **L = « Plus tard »** : visible, pointillés, hors du total et du budget. cpu, cm, ram, gpu, ssd, alim, boitier → L (2 573,87 €). Écrans, clavier/souris, casque micro et chaise restent dans le total (à confirmer avec Enzo).
+- Total : 7 683,04 → **5 459,16 €** (+ 2 573,87 € plus tard).
+- Note moteur (déjà là avant) : dans le plan 3D, les objets à moins d'environ 75 % de la distance caméra → cible sont coupés (plan proche) ; pour les captures, viser l'objet lui-même.
+- Vues de contrôle : seules celles qui voient la commode changent (casque visible) ; le reste est identique (< 2/255). VR : 0 erreur, 436 lots, ~177 k triangles.
+- Scores : inchangés (demande d'Enzo, pas une séance d'entraînement ; aucun critère en baisse) → **65,25/70**.
+- Ensuite : placer la PS5 d'Enzo dans le plan quand on saura où elle est ; zone de jeu debout sur le tapis berbère (~1 m x 1,1 m ; l'abat-jour du lampadaire arc est au-dessus, à 1,60 m).
+

@@ -434,6 +434,21 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  Lathe(349,76,268,[[0,0],[3.6,0],[3.8,7],[2,9.5],[1.2,10],[0,10]],M(0x5b4636,{transparent:true,opacity:.8,roughness:.1}),18);for(let i=0;i<5;i++){const s=B(348.6,349.4,86,99,267.6,268.4,M(0x3a2a1a));s.rotation.x=(i-2)*.14}
  RB(336,356,76,79.5,278,292,.4,M(C.olive));RB(337,355,79.5,82.5,279,291,.4,M(0xEDE5D3))}
 
+// ---------- PlayStation VR2 (casque 21x16x28 + 2 manettes Sense) posé sur la commode, côté nord (22/11/2026) ----------
+{const W=M(0xF3F2EE,{roughness:.32}),K=M(0x161618,{roughness:.45}),K2=M(0x0c0c0e,{roughness:.2,metalness:.2});const Y=76;
+ // bloc visière : coque blanche, façade noire brillante avec 4 caméras, joint facial noir derrière
+ RB(331,341,Y+.4,Y+11,200.2,221,3.8,W,null,2);RB(330.2,333,Y+3.4,Y+7.8,205.4,215.8,.9,K2);
+ [[204.4,Y+7.6],[216.8,Y+7.6],[204.4,Y+3.6],[216.8,Y+3.6]].forEach(([z,y])=>S(329.8,y,z,.75,K,.6,1,1,null,10));
+ RB(340.5,343.5,Y+1.6,Y+9.8,202,219.2,2.2,K);
+ // serre-tête : anneau blanc (doublure noire) qui descend vers le coussin arrière + molette
+ const ring={getPoint:t=>{const a=t*Math.PI*2;const c=Math.cos(a);return new THREE.Vector3(349.4-9.8*c,Y+8.3+1.3*c,210.6+9.4*Math.sin(a))}};
+ add(new THREE.Mesh(new THREE.TubeGeometry(ring,40,1.25,10),W));
+ RB(355.6,359.4,Y+.6,Y+10.2,205,216.2,2.4,K);const dial=new THREE.Mesh(new THREE.CylinderGeometry(2.6,2.6,1.2,20),W);dial.rotation.z=Math.PI/2;dial.position.set(359.6,Y+6.2,210.6);add(dial);
+ // manettes Sense : poignée + anneau de suivi (posées à plat entre le plateau et le diffuseur)
+ [[247.6,1],[261.4,-1]].forEach(([z,s])=>{const g=new THREE.Mesh(new THREE.LatheGeometry([[0,-5.4],[1.6,-5.2],[2.4,-4.2],[2.7,-1],[2.5,2.6],[2.1,4.6],[1.2,5.4],[0,5.6]],16),W);g.rotation.z=Math.PI/2;g.position.set(346,Y+2.7,z);add(g);
+  const tip=new THREE.Mesh(new THREE.CylinderGeometry(.9,1,1.2,12),K);tip.position.set(342.8,Y+5.2,z);add(tip);
+  const arc={getPoint:t=>{const a=t*Math.PI;return new THREE.Vector3(346-5.6*Math.cos(a),Y+1.6,z+s*(0.6+6.2*Math.sin(a)))}};
+  add(new THREE.Mesh(new THREE.TubeGeometry(arc,20,1.35,8),W));RB(341,351,Y+.2,Y+1.2,s>0?z+.4:z-6.4,s>0?z+6.4:z-.4,.4,K)})}
 // ---------- TV TCL 65C69K on wall (bottom at 105 cm) + Meliconi mount ----------
 {const Y0=105,Y1=188.2,Z0=186.6,Z1=331.4,YC=(Y0+Y1)/2;
  B(355,359.8,YC-28,YC+28,240,278,M(0x1a1a1a,{metalness:.6}));

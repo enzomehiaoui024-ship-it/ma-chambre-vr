@@ -16,10 +16,11 @@
 ## Liste d'achat
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
-- Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11). Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
+- Revérifier chaque semaine : écran, PS VR2 (349,99 € Black Friday, fin non annoncée). Composants du PC : « plus tard », plus besoin de les suivre chaque semaine. Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
+- PS VR2 : demander où est la PS5 (la modéliser) ; zone de jeu debout sur le tapis berbère (~1 m x 1,1 m) : l'abat-jour du lampadaire arc est au-dessus (bas à 1,60 m) → proposer de le déplacer ou un modèle qui reste contre le mur.
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
@@ -27,6 +28,7 @@
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
+- Sans PC : les écrans du bureau, le clavier/souris, le casque micro et la chaise passent-ils aussi en « plus tard » ?
 - Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).

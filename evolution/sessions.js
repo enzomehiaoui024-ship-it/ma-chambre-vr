@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — PS VR2 sur la commode, PC gaming mis « plus tard »",
+    avant: 65.25, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
+    changements: [
+      "Nouveau : le casque PlayStation VR2 et ses 2 manettes Sense, posés sur la commode côté porte (vraies dimensions : 21 x 16 x 28 cm), avec leur fiche dans le plan 3D et en VR",
+      "Liste d'achat : PS VR2 ajouté à 349,99 € (Fnac, Black Friday ; prix normal 449,99 €). Il se branche sur ta PS5 avec un seul câble",
+      "Le PC gaming (processeur, carte mère, mémoire, carte graphique, SSD, alimentation, boîtier = 2 573,87 €) passe en « Plus tard » : toujours visible dans la liste, mais hors du total",
+      "Total de la liste : 7 683,04 € → 5 459,16 €",
+      "VR : 0 erreur (~177 k triangles)"
+    ],
+    images: [
+      ["psvr2_jour", "Le PS VR2 et les manettes sur la commode"],
+      ["psvr2_gaming", "Même coin en ambiance Gaming"],
+      ["commode_tv", "Commode et TV (vue de contrôle)"]
+    ],
+    ensuite: "Placer ta PS5 dans le plan 3D (où est-elle ?) ; décider si les écrans, le clavier et la chaise du bureau passent aussi en « plus tard »."
+  },
+  {
+    date: "2026-11-22",
     titre: "Séance 34 — fiches du bureau justes, bouton « Dans ma liste », prix Black Friday",
     avant: 64.5, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.25, 9.5], liste: [9.5, 9.75], vr: [9, 9], plan: [8.75, 9], video: [8, 8] },
