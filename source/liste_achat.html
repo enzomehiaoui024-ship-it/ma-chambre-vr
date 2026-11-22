@@ -65,6 +65,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{ou
 .ghead small{color:var(--muted);font-variant-numeric:tabular-nums}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
 .card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.card.hl{outline:3px solid var(--olive);outline-offset:2px;box-shadow:0 0 0 7px color-mix(in srgb,var(--olive) 22%,transparent)}.card .from{font-size:12px;font-weight:600;color:var(--olive)}
 .card.E{border-left-color:var(--accent)} .card.I{border-left-color:#d9a92a} .card.B{border-left-color:var(--muted)}
 .card.done{opacity:.62}
 .card.done .nm{text-decoration:line-through}
@@ -159,7 +160,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{ou
 <script>
 const Z={lit:"Coin lit",tv:"Commode et TV",vinyles:"Coin vinyles",centre:"Centre de la pièce",bureau:"Bureau",murs:"Murs et fenêtre",plantes:"Plantes",pratique:"Pratique et rangement",gaming:"Setup gaming"};
 const P={E:"Essentiel",I:"Important",B:"Bonus"};
-const S={ikea:"IKEA",amazon:"Amazon",fnac:"Fnac",leroy:"Leroy Merlin",darty:"Darty",action:"Action",cdiscount:"Cdiscount",ldlc:"LDLC",materiel:"Materiel.net",vente:"Vente-unique",boulanger:"Boulanger",auchan:"Auchan",topachat:"TopAchat",grosbill:"Grosbill",laredoute:"La Redoute",xiaomi:"Xiaomi"};
+const S={ikea:"IKEA",amazon:"Amazon",fnac:"Fnac",leroy:"Leroy Merlin",darty:"Darty",action:"Action",cdiscount:"Cdiscount",ldlc:"LDLC",materiel:"Materiel.net",vente:"Vente-unique",boulanger:"Boulanger",auchan:"Auchan",topachat:"TopAchat",grosbill:"Grosbill",laredoute:"La Redoute",xiaomi:"Xiaomi",alternate:"Alternate",pccomp:"PC Componentes"};
 const U={
  ikea:q=>"https://www.ikea.com/fr/fr/search/?q="+encodeURIComponent(q),
  amazon:q=>"https://www.amazon.fr/s?k="+encodeURIComponent(q),
@@ -177,6 +178,8 @@ const U={
  grosbill:q=>"https://www.grosbill.com/catv2.cgi?mode=recherche&recherche="+encodeURIComponent(q),
  laredoute:q=>"https://www.laredoute.fr/psrch/psrch.aspx?kwrd="+encodeURIComponent(q),
  xiaomi:q=>"https://www.mi.com/fr/search/"+encodeURIComponent(q),
+ alternate:q=>"https://www.alternate.fr/listing.xhtml?q="+encodeURIComponent(q),
+ pccomp:q=>"https://www.pccomponentes.fr/search/?query="+encodeURIComponent(q),
  gshop:q=>"https://www.google.com/search?tbm=shop&q="+encodeURIComponent(q),
  lbc:q=>"https://www.leboncoin.fr/recherche?text="+encodeURIComponent(q)
 };
@@ -195,16 +198,16 @@ const D=[
 ["coussins2", "Coussins moutarde", "IKEA PROFETBLOMMA jaune 50x50", 2, 4.49, "I", "lit", "ikea", "profetblomma coussin jaune", "Prix ikea.fr relevé le 20/11/2026 (coussin garni, entre 3,99 et 4,49 € selon la page)", 1, "https://www.ikea.com/fr/fr/p/profetblomma-coussin-jaune-20614201/"],
 ["plaid", "Plaid crème à motif", "IKEA SÖRBYSKOGEN blanc cassé", 1, 29.99, "I", "lit", "ikea", "plaid crème motif noir", "", 1, "https://www.ikea.com/fr/fr/p/soerbyskogen-plaid-blanc-casse-60623208/"],
 ["led", "Ruban LED sous le lit", "TP-Link Tapo L920-5, 5 m, Wi-Fi multicolore", 1, 29.99, "B", "lit", "cdiscount", "tapo l920-5", "Pilotable avec l'appli Tapo, sans hub. Prix vu à 29,99 € (promo)", 1, "https://www.cdiscount.com/maison/r-led.html"],
-["ecran", "Écran principal 34\" OLED ultra-large", "MSI MAG 341CQP QD-OLED, 3440x1440 (21:9), incurvé 1800R, 175 Hz", 1, 656.99, "E", "gaming", "topachat", "msi mag 341cqp qd-oled", "Choisi par Enzo le 21/11/2026 (setup photo 3) à la place du MSI 274QP 27\". 656,99 € chez TopAchat avec le code VISOR (prix le plus bas avant : 729,99 €). 175 Hz au lieu de 240 Hz, mais bien plus large ; la RX 9070 XT gère bien le 3440x1440", 1, "https://www.topachat.com/pages/detail2_cat_est_peripheriques_puis_rubrique_est_w_moni_puis_ref_est_in20023815.html"],
+["ecran", "Écran principal 34\" OLED ultra-large", "MSI MAG 341CQP QD-OLED, 3440x1440 (21:9), incurvé 1800R, 175 Hz", 1, 539.96, "E", "gaming", "materiel", "msi mag 341cqp qd-oled", "Choisi par Enzo le 21/11/2026 (setup photo 3). Même écran, moins cher : 539,96 € chez Materiel.net avec le code VISIONBF (-10 %, Black Friday), relevé le 22/11/2026 sur leDénicheur. Avant : 656,99 € chez TopAchat (code VISOR). Cdiscount : 594,95 €. 175 Hz, la RX 9070 XT gère bien le 3440x1440", 1, "https://ledenicheur.fr/product.php?p=13325435"],
 ["ecran2", "Écran vertical 27\"", "iiyama ProLite XB2792QSU-B1, 27\" QHD IPS 120 Hz, pied pivot (portrait)", 1, 189.99, "I", "gaming", "grosbill", "iiyama xb2792qsu-b1", "À gauche, tourné en vertical. Une dalle IPS est mieux qu'un OLED pour un écran vertical souvent fixe (pas de marquage)", 1, "https://www.grosbill.com/iiyama-prolite-xb2792qsu-b1-157264"],
 ["bras", "Bras d'écran (un par écran)", "AOC AM400B, ressort à gaz, pince de bureau, jusqu'à 34\" et 9 kg, VESA 75/100, rotation 360°", 2, 39.99, "I", "bureau", "topachat", "aoc am400b", "Remplace l'étagère d'écrans en bois. 1 bras pour le 34\" MSI (VESA 100) et 1 pour l'iiyama en vertical (la rotation 360° permet le portrait). 39,99 € pièce chez TopAchat", 1, "https://www.topachat.com/pages/detail2_cat_est_peripheriques_puis_rubrique_est_w_acc_mon_puis_ref_est_in20022503.html"],
 ["lightbar", "Barre lumineuse d'écran", "Xiaomi Mi Computer Monitor Light Bar", 1, 49.99, "B", "bureau", "xiaomi", "mi computer monitor light bar", "Compatible écrans incurvés. 49,99 € chez Xiaomi (comparateur KultureGeek)", 1, "https://www.mi.com/fr/product/mi-computer-monitor-light-bar/"],
 ["ledecran", "Ruban LED derrière les écrans", "TP-Link Tapo L900-5, 5 m, Wi-Fi multicolore", 1, 16.99, "I", "bureau", "amazon", "tapo l900-5", "Collé derrière les écrans. Pilotable par l'Echo Show 5 (Alexa) : orange le soir, violet en gaming, couleurs en fête", 1, "https://ledenicheur.fr/product.php?p=5979508"],
-["cpu", "Processeur", "AMD Ryzen 7 9800X3D", 1, 416.9, "E", "gaming", "ldlc", "ryzen 7 9800x3d", "Le meilleur CPU gaming. Prix qui bouge chaque semaine (390-450 €)", 1, "https://www.ldlc.com/fiche/PB00664304.html"],
-["cm", "Carte mère + watercooling", "MSI B850 Gaming Plus WiFi 7 + AIO MSI MAG Coreliquid A13 360 offert", 1, 219.95, "E", "gaming", "materiel", "msi b850 gaming plus wifi", "219,95 € chez Materiel.net, l'AIO A13 360 (valeur 89,95 €) est offert avec le code VIVACOOLING jusqu'au 30/11/2026. Relevé le 20/11. Sinon : Asus TUF B850-Plus WiFi + ventirad", 1, "https://www.materiel.net/produit/202412100062.html"],
-["ram", "Mémoire", "32 Go DDR5-6000 CL30 (2 x 16 Go), ex. V-Color Manta XSky", 1, 517.09, "E", "gaming", "amazon", "ddr5 32go 6000 cl30", "Bon plan vu à 504,10 € + 12,99 € de port. Sinon compte 640 à 670 € (Corsair Vengeance)", 1, "https://www.dealabs.com/bons-plans/v-color-manta-xsky-rgb-ddr5-6000-ram-cl30-expo-32-gb-dual-kit-black-3450027"],
-["gpu", "Carte graphique", "AMD Radeon RX 9070 XT 16 Go", 1, 899.9, "E", "gaming", "ldlc", "rx 9070 xt", "Prix relevés le 19/11/2026 : XFX Swift vue à 847,92 € (offre expirée), Sapphire Nitro+ 889,99 € chez Grosbill, certaines fiches LDLC jusqu'à 1 400 €. Compte environ 850-900 €. Option NVIDIA : RTX 5070 Ti (~1330 €)", 1, "https://www.dealabs.com/bons-plans/grosbill-carte-graphique-sapphire-nitro-amd-radeon-rx-9070-xt-16-go-3431959"],
-["ssd", "SSD", "NVMe 2 To, ex. Acer Predator GM9000 (Gen5, avec DRAM)", 1, 299.99, "E", "gaming", "ldlc", "ssd nvme 2 to gen4", "Les SSD ont beaucoup augmenté en 2026 (pénurie de mémoire) : un 2 To se vend 300 à 360 €. Offre Black November vue à 299,99 € avec une clé USB offerte", 1, "https://www.dealabs.com/bons-plans/predator-gm9000-heatsink-ssd-gen-5-2tb-cle-udb-32go-offerte-3445472"],
+["cpu", "Processeur", "AMD Ryzen 7 9800X3D", 1, 359, "E", "gaming", "amazon", "ryzen 7 9800x3d", "Le meilleur CPU gaming. 359 € sur Amazon (relevé le 21/11/2026, prixometre.fr) ; LDLC 449,95 €, Fnac 439,99 €. Le prix Amazon bouge beaucoup : vérifie le vendeur (Amazon lui-même) avant de commander", 1, "https://prixometre.fr/prix-du-jour/processeurs/amd-ryzen-7-9800x3d/"],
+["cm", "Carte mère + watercooling", "MSI B850 Gaming Plus WiFi 7 + AIO MSI MAG Coreliquid A13 360 offert", 1, 219.95, "E", "gaming", "materiel", "msi b850 gaming plus wifi", "219,95 € chez Materiel.net, l'AIO A13 360 (valeur 89,95 €) est offert avec le code VIVACOOLING jusqu'au 30/11/2026. Offre toujours affichée le 22/11. Sinon : Asus TUF B850-Plus WiFi + ventirad", 1, "https://www.materiel.net/produit/202412100062.html"],
+["ram", "Mémoire", "32 Go DDR5-6000 CL30 (2 x 16 Go), ex. Patriot", 1, 519, "E", "gaming", "alternate", "ddr5 32go 6000 cl30", "Bon plan Black November 2026 : Patriot 32 Go DDR5-6000 CL30 à 519 € chez Alternate (Dealabs, 22/11). Prix médian de novembre sur Amazon : 559 € (pénurie de mémoire). L'ancien bon plan V-Color à 517 € n'est plus trouvable", 1, "https://www.dealabs.com/bons-plans/patriot-32-go-ddr5-6000-cl30-2x16-go-3464007"],
+["gpu", "Carte graphique", "AMD Radeon RX 9070 XT 16 Go, ex. ASUS PRIME OC", 1, 932.41, "E", "gaming", "pccomp", "rx 9070 xt", "Prix en hausse : le moins cher le 21/11/2026 est l'ASUS PRIME OC à 932,41 € (PC Componentes), puis XFX Swift 991,73 €, Sapphire Nitro+ 1 010,99 € (labonneconfig.fr). Les offres à 850-890 € de début novembre sont finies. Option NVIDIA : RTX 5070 Ti (~1330 €)", 1, "https://labonneconfig.fr/cartes-graphiques/rx-9070-xt"],
+["ssd", "SSD", "NVMe 2 To, ex. Samsung 990 EVO Plus", 1, 318.61, "E", "gaming", "ldlc", "ssd nvme 2 to samsung 990 evo plus", "Les SSD ont beaucoup augmenté en 2026 (pénurie de mémoire). Samsung 990 EVO Plus 2 To dès 318,61 € (leDénicheur, 22/11/2026) : marque sûre, assez rapide pour les jeux. L'offre Predator GM9000 à 299,99 € est terminée ; WD SN850X 2 To : 446 €", 1, "https://ledenicheur.fr/s/nvme-ssd-m2-2to/"],
 ["alim", "Alimentation", "Corsair RM850e (2025), 850 W, 80+ Gold, modulaire", 1, 134.95, "E", "gaming", "ldlc", "alimentation 850w 80+ gold", "Prix LDLC relevé le 19/11/2026. Largement suffisant pour une RX 9070 XT, silencieuse (ventilateur à l'arrêt au repos)", 1, "https://www.ldlc.com/fiche/PB00663406.html"],
 ["boitier", "Boîtier", "Lian Li LANCOOL 207 noir (façade mesh, 4 ventilateurs inclus)", 1, 89.95, "I", "gaming", "ldlc", "boitier atx airflow", "Prix LDLC relevé le 20/11/2026. En noir : délai de plus de 15 jours (le blanc est en stock au même prix). Carte graphique jusqu'à 37,5 cm : la RX 9070 XT rentre. Posé au sol à droite sous le bureau", 1, "https://www.ldlc.com/fiche/PB00651655.html"],
 ["chaise2", "Chaise ergonomique", "Sihoo Doro C300 (remplace la RENBERGET)", 1, 309.99, "I", "gaming", "amazon", "sihoo doro c300", "Prix de référence 309,99 € ; selon le vendeur entre 285 et 380 €. Mesh respirant, lombaire et accoudoirs réglables. Option moins chère : Symino MP-001 (~160 €)", 1, "https://info.fr/comparateurs/produit/sihoo-doro-c300/"],
@@ -290,7 +293,8 @@ function chips(){
 }
 function card(d){
   const done=!!st.done[d[0]];
-  return `<article class="card ${d[5]} ${done?"done":""}">
+  const hl=st.hl===d[0];
+  return `<article class="card ${d[5]} ${done?"done":""}${hl?" hl":""}" id="i-${d[0]}">${hl?`<div class="from">Touché dans le plan 3D</div>`:""}
     <div class="row"><div><div class="nm">${esc(d[1])}</div>${d[2]?`<div class="md">${esc(d[2])}</div>`:""}</div><span class="pill ${d[5]}">${P[d[5]]}</span></div>
     ${d[9]?`<div class="note">${esc(d[9])}</div>`:""}
     <div class="price">
@@ -352,8 +356,19 @@ copyBtn.addEventListener("click",async()=>{
   try{await navigator.clipboard.writeText(txt);toast("Liste copiée, colle-la dans tes notes");}catch(err){toast("Copie impossible ici");}
 });
 let ti=0;function tip(){document.getElementById("tip").textContent="Astuce : "+TIPS[ti++%TIPS.length];}
+// lien depuis le plan 3D : #item=<id> (ouvre la zone de l'article et le met en avant) ou #zone=<zone>
+function fromHash(){let h;try{h=new URLSearchParams(location.hash.slice(1))}catch(e){return false}
+  const id=h.get("item"),z=h.get("zone"),d=id&&D.find(x=>x[0]===id);
+  if(!d&&!(z&&Z[z]))return false;
+  st.zone=d?d[6]:z;st.prio=null;st.q="";q.value="";st.links=false;onlyLinks.checked=false;st.hl=d?d[0]:null;
+  if(d&&st.done[d[0]]){st.hide=false;hideDone.checked=false}
+  render();
+  if(d){const el=document.getElementById("i-"+d[0]);if(el)setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"center"}),200)}
+  else list.scrollIntoView({behavior:"smooth",block:"start"});
+  return true}
+window.addEventListener("hashchange",fromHash);
 load();q.value=st.q;sort.value=st.sort;hideDone.checked=st.hide;budget.value=st.budget||"";
-tip();setInterval(tip,7000);render();
+tip();setInterval(tip,7000);if(!fromHash())render();
 </script>
 </body>
 </html>

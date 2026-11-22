@@ -259,3 +259,20 @@ Vues de contrôle fixes (tools/preview.py) :
 - Tapis berbère : 50 franges par bout (4,2–5,6 cm).
 - Vues de contrôle : couette, couloir (plus sombre et réaliste), tapis ; rien d'autre ne change. VR : 0 erreur, 433 lots, ~172 k triangles. Scores : VR 8,75 → 9 → **64 → 64,25/70**.
 - Ensuite : reflets du parquet seulement après mesure des images/s sur le vrai Quest 2.
+
+## 2026-11-22 — Séance 34 : fiches du bureau, lien vers la liste, prix Black Friday
+- **Correction du total** : depuis la séance 21 (+1 noté +0,75), le total du journal avait 0,25 de retard sur la somme des 7 critères. Somme réelle après la séance 33 : 10 + 10 + 9,25 + 9,5 + 9 + 8,75 + 8 = **64,5/70** (les critères sont justes, seul le total était faux).
+- `catalog.js` : les boîtes du bureau dataient de l'ancien bureau (écran 27" sur pied, FORSÅ à droite, casque sur la gauche, LACK + cadres). Boîtes refaites d'après `room.js` : 34" (x 57–139, y 94–133), écran vertical, 2 bras, barre lumineuse, pan de lattes, lampe NOOLI (x 37–57), casque sur le crochet (x 154–168), 2 étagères Action, succulentes, pothos ; Echo Show 5 sur le chevet. Cadres au-dessus du bureau retirés du catalogue (ils ne sont plus dans la scène). 10 articles de plus cliquables (plan 3D et VR) : ecran2, bras, lightbar, ledecran, lattes, succulentes, ampe14, echo, prises, prise5.
+- Plan 3D : bouton « Dans ma liste · <zone> » sur chaque fiche → `source/liste_achat.html#item=<id>` sur GitHub Pages. La liste lit `#item=` (ou `#zone=`), ouvre la zone, retire les filtres qui cacheraient l'article, l'entoure en olive (« Touché dans le plan 3D ») et le centre ; `hashchange` aussi. `build.py` exporte `window.ZONES`.
+- Prix (sources : labonneconfig.fr 21/11, prixometre.fr 21/11, leDénicheur 22/11, Dealabs, materiel.net 22/11) : écran 34" 656,99 → 539,96 € (Materiel.net, code VISIONBF) ; CPU 416,90 → 359 € (Amazon ; LDLC 449,95 €) ; RAM 517,09 → 519 € (Patriot, Alternate) ; SSD 299,99 → 318,61 € (Samsung 990 EVO Plus, l'offre Predator est finie) ; GPU 899,90 → 932,41 € (ASUS PRIME OC, PC Componentes ; les offres à 850-890 € sont finies) ; carte mère 219,95 € + AIO offert confirmé. Magasins ajoutés : Alternate, PC Componentes.
+- Total : 7 804,93 → **7 683,04 €** (gaming 3 893,60 €, chambre 3 789,44 €). Aucun choix d'Enzo changé (même écran, mêmes composants ; RAM/SSD/GPU restent des « ex. »).
+- Vues de contrôle : identiques (écart moyen < 2/255 = grain). VR : 0 erreur, 433 lots, ~172 k triangles.
+- Scores : cohérence 9,25 → 9,5, liste 9,5 → 9,75, plan 3D 8,75 → 9 → **64,5 → 65,25/70**.
+- Ensuite : vidéo v5 (l'actuelle montre l'ancien bureau) ; prix après le Black Friday.
+
+### Compte rendu (pour 7h20)
+- Mieux : toucher un objet du bureau dans le plan 3D (ou en VR) entoure enfin le bon objet, 10 articles de plus ont leur fiche, et un bouton « Dans ma liste » ouvre la liste d'achat pile sur l'article.
+- Prix Black Friday revérifiés : écran 34" à 539,96 € (-117 €), processeur 359 € ; la carte graphique a monté (932 €). Total 7 804,93 → 7 683,04 €.
+- Score : 64,5 → 65,25/70 (cohérence, liste, plan 3D en hausse ; aucun critère en baisse). Le total affiché avant (64,25) avait une erreur de calcul de 0,25, corrigée.
+- Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
+- À décider : commander écran (code VISIONBF) et carte mère (watercooling offert jusqu'au 30/11) avant la fin des offres ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA/supports vinyles.

@@ -13,6 +13,10 @@ D=json.loads(js);U={}
 try:
     u0=L.index('const S={');U=json.loads(subprocess.run(['node','-e','process.stdout.write(JSON.stringify(eval("("+require("fs").readFileSync(0,"utf8")+")")))'],input=L[u0+8:L.index('};',u0)+1],capture_output=True,text=True,check=True).stdout)
 except Exception as e:print('magasins :',e)
-open(os.path.join(S,'items.js'),'w',encoding='utf-8').write('// Généré par tools/build.py depuis liste_achat.html — ne pas modifier à la main.\nwindow.ITEMS='+json.dumps(D,ensure_ascii=False)+';window.STORES='+json.dumps(U,ensure_ascii=False)+';\n')
+ZN={}
+try:
+    z0=L.index('const Z={');ZN=json.loads(subprocess.run(['node','-e','process.stdout.write(JSON.stringify(eval("("+require("fs").readFileSync(0,"utf8")+")")))'],input=L[z0+8:L.index('};',z0)+1],capture_output=True,text=True,check=True).stdout)
+except Exception as e:print('zones :',e)
+open(os.path.join(S,'items.js'),'w',encoding='utf-8').write('// Généré par tools/build.py depuis liste_achat.html — ne pas modifier à la main.\nwindow.ITEMS='+json.dumps(D,ensure_ascii=False)+';window.STORES='+json.dumps(U,ensure_ascii=False)+';window.ZONES='+json.dumps(ZN,ensure_ascii=False)+';\n')
 ids={d[0] for d in D};C=open(os.path.join(S,'catalog.js'),encoding='utf-8').read()
 import re;miss=sorted({i for i in re.findall(r'"([a-z0-9]+)"',C)}-ids);print('items.js OK',len(D),'articles',('| ids inconnus dans catalog.js : '+', '.join(miss)) if miss else '')

@@ -1,7 +1,8 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Plan 3D
-- Bouton « Liste » dans le plan : ouvrir la liste d'achat filtrée sur la zone touchée.
+- Bouton « Dans ma liste » aussi dans les fiches VR (le lien n'ouvre rien dans le casque : afficher plutôt le total de la zone).
+- Vérifier les boîtes cliquables des autres coins comme celles du bureau (séance 34) : commode, Kallax, portant.
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
 ## Meubles 3D
@@ -15,13 +16,14 @@
 ## Liste d'achat
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
-- Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11).
+- Revérifier chaque semaine : carte graphique, RAM, SSD, écran, carte mère (offre jusqu'au 30/11). Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
+- Vidéo v5 : la visite actuelle montre encore l'ancien bureau (27", FORSÅ) → à refaire en priorité.
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo

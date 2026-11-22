@@ -162,7 +162,8 @@ window.__jump=(k,p,q)=>{const v=k?VIEWS[k]:[p,q];cam.position.set(...v[0]);tgt.s
 setup();setMode('cosy');frame();
 
 // ---------- fiche produit : touche un meuble pour voir l'article de la liste ----------
-(function(){const CAT=window.CATALOG||[],IT={};(window.ITEMS||[]).forEach(d=>IT[d[0]]=d);const ST=window.STORES||{};
+(function(){const CAT=window.CATALOG||[],IT={};(window.ITEMS||[]).forEach(d=>IT[d[0]]=d);const ST=window.STORES||{},ZN=window.ZONES||{};
+ const LISTE='https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/source/liste_achat.html';
  const SQ={ikea:'https://www.ikea.com/fr/fr/search/?q=',amazon:'https://www.amazon.fr/s?k=',fnac:'https://www.fnac.com/SearchResult/ResultList.aspx?Search=',leroy:'https://www.leroymerlin.fr/resultats/?q=',darty:'https://www.darty.com/nav/recherche?text=',action:'https://www.action.com/fr-fr/search/?q=',ldlc:'https://www.ldlc.com/recherche/',materiel:'https://www.materiel.net/recherche/',vente:'https://www.vente-unique.com/recherche?q='};
  const card=document.getElementById('card');if(!card||!CAT.length)return;
  const hl=new THREE.Group();sc.add(hl);hl.visible=false;const hlF=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0x1f250c,transparent:true,opacity:1,blending:THREE.AdditiveBlending,depthWrite:false}));hlF.castShadow=false;hlF.userData.noTop=true;hlF.renderOrder=20;hl.add(hlF);
@@ -176,7 +177,7 @@ setup();setMode('cosy');frame();
   const th=Math.tan(cam.fov*Math.PI/360);const d=[0,1,2].map(i=>f[i]+rt[i]*x*th*cam.aspect+u[i]*y*th);l=Math.hypot(...d);return{o:[P.x,P.y,P.z],d:d.map(v=>v/l)}}
  function hit(o,d,b){let t0=-1e9,t1=1e9;for(let i=0;i<3;i++){const lo=b[i*2],hi=b[i*2+1];if(Math.abs(d[i])<1e-9){if(o[i]<lo||o[i]>hi)return null;continue}let a=(lo-o[i])/d[i],c=(hi-o[i])/d[i];if(a>c)[a,c]=[c,a];t0=Math.max(t0,a);t1=Math.min(t1,c);if(t0>t1)return null}return t0>0?t0:null}
  function line(d,main){const q=d[3]||1,p=d[4];const tot=p*q;const url=d[11]||(SQ[d[7]]?SQ[d[7]]+encodeURIComponent(d[8])+(d[7]==='ldlc'||d[7]==='materiel'?'/':''):'');
-  return main?`<div class="cz">${esc(ST[d[7]]||d[7])}</div><div class="cn">${esc(d[1])}</div><div class="cm">${esc(d[2])}</div><div class="cp">${q>1?q+' × '+eur(p)+' = ':''}<b>${eur(tot)}</b>${d[10]?' <span class="ok">prix vérifié</span>':''}</div>${d[9]?`<div class="cnote">${esc(d[9])}</div>`:''}${url?`<a class="cl" href="${esc(url)}" target="_blank" rel="noopener">${d[11]?'Voir le produit':'Chercher sur '+esc(ST[d[7]]||d[7])} →</a>`:''}`
+  return main?`<div class="cz">${esc(ST[d[7]]||d[7])}</div><div class="cn">${esc(d[1])}</div><div class="cm">${esc(d[2])}</div><div class="cp">${q>1?q+' × '+eur(p)+' = ':''}<b>${eur(tot)}</b>${d[10]?' <span class="ok">prix vérifié</span>':''}</div>${d[9]?`<div class="cnote">${esc(d[9])}</div>`:''}${url?`<a class="cl" href="${esc(url)}" target="_blank" rel="noopener">${d[11]?'Voir le produit':'Chercher sur '+esc(ST[d[7]]||d[7])} →</a>`:''}<a class="cl cl2" href="${LISTE}#item=${encodeURIComponent(d[0])}" target="_blank" rel="noopener">Dans ma liste${ZN[d[6]]?' · '+esc(ZN[d[6]]):''} →</a>`
   :`<button class="ca" data-id="${esc(d[0])}">${esc(d[1])} · ${eur(tot)}</button>`}
  function show(ids,b){const m=IT[ids[0]];if(!m)return;const rest=ids.slice(1).map(i=>IT[i]).filter(Boolean);
   card.innerHTML=`<button class="cx" aria-label="Fermer">×</button>${line(m,true)}${rest.length?`<div class="cal">Aussi ici</div><div class="cas">${rest.map(d=>line(d,false)).join('')}</div>`:''}`;

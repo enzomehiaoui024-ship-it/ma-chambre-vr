@@ -2,6 +2,28 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-22",
+    titre: "Séance 34 — fiches du bureau justes, bouton « Dans ma liste », prix Black Friday",
+    avant: 64.5, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.25, 9.5], liste: [9.5, 9.75], vr: [9, 9], plan: [8.75, 9], video: [8, 8] },
+    changements: [
+      "Quand tu touches un objet du bureau, le cadre vert entoure enfin le bon objet : écran 34\", écran vertical, lampe, étagères, casque (avant, les cadres étaient restés à l'emplacement de l'ancien bureau)",
+      "10 articles de plus ont leur fiche dans le plan 3D et en VR : écran vertical, bras d'écran, barre lumineuse, ruban LED des écrans, pan de lattes, plantes grasses, ampoule de la lampe, Echo Show 5, prises connectées",
+      "Nouveau bouton « Dans ma liste » sur chaque fiche : il ouvre la liste d'achat directement sur cet article, entouré en vert",
+      "Prix revérifiés pour le Black Friday : écran 34\" 539,96 € (au lieu de 656,99 €), processeur 359 € (au lieu de 416,90 €), mémoire 519 €, SSD 318,61 €, carte graphique 932,41 € (elle a augmenté), carte mère 219,95 € avec watercooling offert jusqu'au 30/11",
+      "Total de la liste : 7 804,93 € → 7 683,04 € (-121,89 €), sans changer aucun de tes choix",
+      "VR : 0 erreur (~172 k triangles)"
+    ],
+    images: [
+      ["ecran34", "Fiche de l'écran 34\" (cadre vert)"],
+      ["lampe34", "Fiche de la lampe du bureau"],
+      ["etagere34", "Fiche des étagères du bureau"],
+      ["fiche34", "Fiche sur iPhone avec « Dans ma liste »"],
+      ["liste34", "La liste s'ouvre sur l'article touché"]
+    ],
+    ensuite: "Refaire la vidéo de visite avec le nouveau bureau ; revérifier les prix des composants après le Black Friday (27/11)."
+  },
+  {
     date: "2026-11-21",
     titre: "Séance 33 — bugs VR corrigés, VR plus légère, couette drapée, franges du tapis",
     avant: 64, apres: 64.25,
