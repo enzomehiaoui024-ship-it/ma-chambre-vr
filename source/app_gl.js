@@ -16,10 +16,10 @@ for(const k in o){if(k=='L'||k=='G'||k=='em')Object.assign(s[k],o[k]);else s[k]=
 const amber=hex(0xff8a2a),warm=hex(0xffcf94);
 const DAY=st({night:0,moon:0,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),sunI:2.0,sunC:hex(0xfff1dc),elev:38,ambI:.62,skyC:hex(0xfff7ec),gndC:hex(0xa58b70),sky:hex(0xffffff),expo:1.05,mon:.95,shaft:.07,dust:1,
  L:{mon:[hex(0x9fb6ff),.25],spot:[hex(0xfff3dc),.15]},G:{monGlow:mixc([0,0,0],hex(0x6f8cff),.22)}});
-const GOLD=st({night:.12,moon:0,sunI:1.35,sunC:hex(0xffa860),elev:16,az:-30,ambI:.32,skyC:hex(0xffd0a0),gndC:hex(0x8a6448),sky:hex(0xffb488),expo:1.0,mon:.9,shaft:.07,dust:.9,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),
- L:{arc:[warm,.5],mon:[hex(0x9fb6ff),.3]},em:{arc:.5},G:{monGlow:[.08,.11,.25]}});
-const EVE=st({sunI:0,ambI:.12,sky:hex(0x1e2848),expo:1.0,tv:.95,mon:.25,pcIn:mixc([0,0,0],hex(0xff8a2a),.5),
- L:{pend:[hex(0xffe1b8),.3],arc:[warm,.8],ns:[warm,.6],fado:[hex(0xffd9a8),.55],desk:[hex(0xfff0d8),.35],deskLed:[amber,.6],bed:[amber,.85],head:[amber,.6],tv:[amber,.7],tvs:[hex(0xffb080),.35],sneak:[hex(0xfff0d8),.35],spot:[hex(0xfff3dc),.35],mon:[hex(0x9fb6ff),.12]},
+const GOLD=st({night:.12,moon:0,sunI:2.1,sunC:hex(0xff7a30),elev:10,az:-30,ambI:.22,skyC:hex(0xff9a60),gndC:hex(0x7a4a30),sky:hex(0xff8a50),expo:1.0,mon:.9,shaft:.12,dust:1,pcIn:mixc([0,0,0],hex(0x8a3dff),.7),
+ L:{arc:[warm,.55],ns:[warm,.25],fado:[hex(0xffd9a8),.2],bed:[amber,.25],mon:[hex(0x9fb6ff),.3]},em:{arc:.55,ns:.3,fado:.25},G:{monGlow:[.08,.11,.25],bedLed:mixc([0,0,0],amber,.15)}});
+const EVE=st({sunI:0,ambI:.12,sky:hex(0x1e2848),expo:1.12,tv:.95,mon:.25,cand:.6,pcIn:mixc([0,0,0],hex(0xff8a2a),.5),
+ L:{pend:[hex(0xffe1b8),.4],arc:[warm,1.0],ns:[warm,.8],fado:[hex(0xffd9a8),.75],desk:[hex(0xfff0d8),.35],deskLed:[amber,.6],bed:[amber,.85],head:[amber,.7],candle:[hex(0xff9a40),.4],candle2:[hex(0xff9a40),.35],candle3:[hex(0xff9a40),.3],tv:[amber,.7],tvs:[hex(0xffb080),.35],sneak:[hex(0xfff0d8),.35],spot:[hex(0xfff3dc),.35],mon:[hex(0x9fb6ff),.12]},
  em:{pend:.5,arc:1.2,ns:.8,fado:.9,dl:1},G:{deskLed:mixc([0,0,0],amber,.42),bedLed:mixc([0,0,0],amber,.45),headLed:mixc([0,0,0],amber,.28),tvLed:mixc([0,0,0],amber,.32),sneak:[.25,.22,.18],shelf:[0,0,0]}});
 const vio=hex(0x8a3dff),cya=hex(0x22d8ff),mag=hex(0xff2fa8);
 const GAME=st({sunI:0,ambI:.08,skyC:hex(0x6a60a8),sky:hex(0x141a36),expo:1.1,tv:.25,mon:1,
@@ -32,12 +32,14 @@ const ora=hex(0xffb877),ora2=hex(0xffc28a);
 const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.06,skyC:hex(0x55669e),gndC:hex(0x3a2216),sky:hex(0x262c48),expo:1.05,tv:0,mon:.35,shaft:.035,dust:0,pcIn:mixc([0,0,0],ora,.25),fadoC:hex(0xff9a45),
  L:{deskLed:[hex(0xff7a2a),.55],arc:[ora,.85],ns:[ora,.7],fado:[ora2,.8],desk:[hex(0xffd2a0),.45],shelf:[hex(0xffd2a0),.3],bed:[hex(0xff7a2a),.6],head:[hex(0xff8a3a),.4],tv:[hex(0xff8a3a),.3],mon:[hex(0x9fb6ff),.12],pc:[ora,.25],sneak:[hex(0xffb070),.3],spot:[hex(0xffa860),.55],candle:[hex(0xff9a40),.55],candle2:[hex(0xff9a40),.5],candle3:[hex(0xff9a40),.45]},
  em:{pend:.03,arc:1.5,ns:1.1,fado:1.25,dl:1},G:{deskLed:mixc([0,0,0],hex(0xff6a1a),.4),bedLed:mixc([0,0,0],hex(0xff6a1a),.42),headLed:mixc([0,0,0],hex(0xff7a2a),.22),tvLed:mixc([0,0,0],hex(0xff7a2a),.18),shelf:[.14,.07,.02],sneak:[.16,.09,.04],pc:mixc([0,0,0],ora,.15)}});
-const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.8,mon:0,ambi:1,
- L:{arc:[hex(0xffb877),.12],candle:[hex(0xff9a40),.3],candle2:[hex(0xff9a40),.25],candle3:[hex(0xff9a40),.2]},em:{arc:.3,pend:.02,fado:.05}});
+const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.62,mon:0,ambi:1,
+ L:{arc:[hex(0xffb877),.06],candle:[hex(0xff9a40),.2],candle2:[hex(0xff9a40),.16],candle3:[hex(0xff9a40),.12]},em:{arc:.2,pend:.02,fado:.05}});
 function blend(a,b,t){if(t<=0)return a;if(t>=1)return b;const s=st({});for(const k in a){if(k=='L'){for(const n of LN)s.L[n]=[mixc(a.L[n][0],b.L[n][0],t),mix(a.L[n][1],b.L[n][1],t)]}else if(k=='G'){for(const n of GN)s.G[n]=mixc(a.G[n],b.G[n],t)}else if(k=='em'){for(const n in a.em)s.em[n]=mix(a.em[n],b.em[n],t)}else if(Array.isArray(a[k]))s[k]=mixc(a[k],b[k],t);else s[k]=mix(a[k],b[k],t)}return s}
 const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[41.2,'COSY'],[46.5,'COSY'],[47.8,'CINE'],[53,'CINE'],[54.3,'GAME'],[57.3,'GAME'],[58.4,'FETE'],[61.4,'FETE'],[63,'EVE']];
 const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:n=='COSY'?COSY:n=='CINE'?CINE:FETE(t);
-function stateAt(t){for(let i=0;i<SCHED.length-1;i++){const[a,na]=SCHED[i],[b,nb]=SCHED[i+1];if(t<b)return blend(getS(na,t),getS(nb,t),ss(0,1,(t-a)/(b-a)))}return getS(SCHED[SCHED.length-1][1],t)}
+function stateAt0(t){for(let i=0;i<SCHED.length-1;i++){const[a,na]=SCHED[i],[b,nb]=SCHED[i+1];if(t<b)return blend(getS(na,t),getS(nb,t),ss(0,1,(t-a)/(b-a)))}return getS(SCHED[SCHED.length-1][1],t)}
+// pendant le plan sur la TV (vers 15-20 s), la TV s'allume
+function stateAt(t){const s=stateAt0(t);const k=ss(14.6,15.8,t)*(1-ss(19.6,20.8,t));if(k>0){const o=Object.assign({},s);o.tv=Math.max(s.tv||0,.9*k);return o}return s}
 
 const setC=(c,v)=>{c.r=v[0];c.g=v[1];c.b=v[2]};
 function apply(s,t){const e=s.elev*Math.PI/180,a=s.az*Math.PI/180;const sd=[Math.sin(a)*Math.cos(e),Math.sin(e),Math.cos(a)*Math.cos(e)];
@@ -73,11 +75,12 @@ const K=[
 [7,[288,154,58],[110,80,268],56],
 [10.5,[215,142,118],[12,126,268],52],
 [14,[205,118,205],[350,48,259],50],
-[17.5,[232,138,232],[354,130,259],54],
+[17.5,[196,140,252],[354,142,259],58],
 [21,[228,132,152],[350,72,138],50],
 [24.5,[175,142,175],[78,98,30],52],
 [28,[106,118,128],[80,102,20],46],
-[31,[172,78,165],[136,30,60],48],
+[31,[62,150,112],[24,86,44],50],
+[32.8,[170,166,122],[130,85,250],54],
 [34.5,[260,150,110],[150,75,330],56],
 [38,[285,140,70],[110,80,270],58],
 [41.5,[300,150,80],[160,125,335],54],
@@ -95,17 +98,17 @@ function camAt(t){let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const a=K[Math.max
 if(i==0)u=u*u*(3-2*u)*.5+u*.5;const p=cr(a[1],b[1],c[1],d[1],u),q=cr(a[2],b[2],c[2],d[2],u),f=mix(b[3],c[3],ss(0,1,u));
 const hh=t<61?1:1-ss(61,63,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
 const CAP=[
-[3.4,8.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, plaid SÖRBYSKOGEN'],
-[9.4,12.0,'02 · AU-DESSUS DU LIT','Trois affiches','Cadres noirs, LED derrière la tête de lit'],
-[12.9,15.6,'03 · COMMODE','6 tiroirs · 195,99 €','Bois foncé, pieds noirs, ficus lyrata à côté'],
-[16.4,19.1,'04 · TV','TCL 65" Mini LED au mur','144 Hz · barre de son sur la commode'],
+[3.4,8.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, mur en lattes noyer'],
+[9.4,12.0,'02 · AU-DESSUS DU LIT','Trois affiches sur les lattes','Cadres noirs, LED derrière la tête de lit'],
+[12.9,15.6,'03 · COMMODE ET SON','Barre Samsung 2.1 + caisson sans fil','Commode 6 tiroirs bois foncé · sansevière dans le coin'],
+[16.4,19.1,'04 · TV','TCL 75" Mini LED au mur','144 Hz · support inclinable · rétroéclairage'],
 [19.9,22.6,'05 · VINYLES','Kallax + platine AT-LP60X','Enceintes Edifier R1280DB'],
-[23.4,29.4,'06 · SETUP GAMING','MSI MAG 274QP · OLED 27" 2K 240 Hz','Chaise Sihoo Doro C300 · lampe FORSÅ'],
-[30.0,32.6,'07 · LE PC','Ryzen 7 9800X3D · RX 9070 XT','32 Go DDR5 · SSD 2 To · tour sous le bureau'],
+[23.4,29.4,'06 · BUREAU GAMING','Écran OLED 32" 4K AOC AGON PRO','PS5 · chaise Sihoo Doro C300 · lampe à ampoule apparente'],
+[30.0,31.4,'07 · LE COIN VR','PS VR2 rangé sur son support','Station de charge des manettes · câble caché sous le bureau'],
 [33.6,39.6,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
 [40.6,46.0,'09 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
 [47.6,53.0,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
-[54.6,57.6,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du PC synchronisées'],
+[54.6,57.6,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du bureau synchronisées'],
 [58.2,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
 [63.0,66.0,'13 · LE PLAN','Cotes et passages','3,60 × 3,60 m · passages de 91 à 133 cm']];
 
@@ -150,7 +153,7 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
 window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
  const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);if(window.__mesVis)window.__mesVis(t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
- const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
+ const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;const dk=ss(31.6,32.15,t)*(1-ss(32.65,33.2,t));if(dk>0){g.fillStyle='rgba(0,0,0,'+dk+')';g.fillRect(0,0,W,H)}if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
  let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}
  if(sh&&al>0){g.save();g.globalAlpha=al;const x=56*k,y=60*k;const gr=g.createLinearGradient(0,0,620*k,0);gr.addColorStop(0,'rgba(10,10,9,.55)');gr.addColorStop(1,'rgba(10,10,9,0)');g.fillStyle=gr;g.fillRect(0,y-38*k,640*k,130*k);
   g.fillStyle='#A4AE6E';g.fillRect(x,y-28*k,5*k,104*k);g.fillStyle='#C9D19A';g.font=`600 ${15*k}px Inter, sans-serif`;g.fillText(sh[2].split('').join(String.fromCharCode(8202)),x+20*k,y-6*k);

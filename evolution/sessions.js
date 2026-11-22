@@ -3,6 +3,22 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — vidéo v5 de la chambre + ambiances plus belles",
+    avant: 66, apres: 67,
+    video: "video/visite.mp4", poster: "video/visite_poster.jpg", videoCap: "Vidéo de visite v5 (1 min 08) : TV 75\", bureau console, PS VR2, ambiances",
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.25, 9.25], plan: [9.25, 9.25], video: [8, 9] },
+    changements: [
+      "Nouvelle vidéo de visite (1 min 08, 1280 x 720) : la chambre d'aujourd'hui avec la TV 75\" qui s'allume, le bureau console (écran 32\" 4K, PS5), le coin VR et le mur en lattes",
+      "Titres mis à jour (commode et son, TV 75\", bureau gaming, coin VR) et fondu au noir entre le coin VR et le coucher de soleil",
+      "Coucher de soleil plus doré : soleil plus bas et plus orange, ciel chaud, rayons plus marqués",
+      "Soir chaud plus chaleureux : lampadaire, chevet et FADO plus forts, bougies allumées",
+      "Ciné Ambilight : image de la TV moins délavée, pièce plus sombre autour"
+    ],
+    images: [],
+    ensuite: "Refaire la vidéo verticale pour téléphone avec la chambre actuelle."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — TV 75 pouces, sansevière à la place du ficus, mur en lattes derrière le lit, système son 2.1",
     avant: 65.75, apres: 66,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.75], liste: [9.75, 9.75], vr: [9.25, 9.25], plan: [9.25, 9.25], video: [8, 8] },
@@ -433,7 +449,7 @@ window.SESSIONS = [
       "Les titres apparaissent pile quand la caméra arrive sur le meuble (avant, ils avaient une seconde de retard)",
       "La vidéo montre toutes les améliorations de la nuit : lumière des lampes, vue par la fenêtre, suspension en papier, sneakers, tapis, platine…"
     ],
-    video: "video/visite.mp4", poster: "video/visite_poster.jpg",
+    video: "video/visite_v4.mp4", poster: "video/visite_v4_poster.jpg",
     images: [],
     ensuite: "Version verticale de la vidéo pour le téléphone."
   },

@@ -331,3 +331,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - Son : barre Samsung HW-B460F (85,8 cm) sur la commode + caisson sans fil au sol entre le Kallax et la commode (x 321-351, z 179-198). Liste : `barre` → HW-B460F 149 € (Auchan jusqu'au 29/11 ; Easylounge 148,44 €).
 - Total : 5 314,26 → **5 721,82 €**. VR : 0 erreur. Scores : cohérence 9,5 → 9,75 → **65,75 → 66/70**.
 
+## 2026-11-22 — Demande d'Enzo : ambiances + vidéo v5
+- Ambiances (`app_gl.js` et `app_vr.js`) : Coucher de soleil (soleil 2,1, 0xff7a30, élévation 10°, ciel 0xff8a50, rayons 0,12, chevet/FADO/LED du lit discrets) ; Soir chaud (expo 1,12, lampadaire 1,0, chevet 0,8, FADO 0,75, bougies) ; Ciné (TV 0,62 au lieu de 0,8, lampadaire et bougies plus faibles).
+- Visite : titres mis à jour (03 commode et son, 04 TV 75", 06 bureau gaming 32" + PS5, 07 coin VR), plan TV élargi et TV allumée entre 15 et 20 s, caméra du coin VR plus haute + point de passage (32,8 s) + fondu au noir 31,6-33,2 s (la caméra traversait la chaise).
+- Nouvel outil `tools/render_video.py` : rendu par morceaux reprenables (`test`, `chunk K N`, `join`), ffmpeg par morceau puis concat `-c copy`. 2 055 images, ~1,4 à 3,4 s par image (scènes de nuit plus lentes).
+- `video/visite.mp4` = v5 (68,5 s, 1280x720, 30 i/s, x264 CRF 24, 28,4 Mo) + affiche ; v4 gardée en `visite_v4.mp4`. Pas de musique (aucune piste libre de droits dans le projet).
+- VR : 0 erreur. Scores : vidéo 8 → 9 → **66 → 67/70**.
+- Ensuite : vidéo verticale v5 ; musique libre de droits si Enzo en fournit une.
+

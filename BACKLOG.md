@@ -25,7 +25,7 @@
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
-- Vidéo v5 : la visite actuelle montre encore l'ancien bureau (27", FORSÅ) → à refaire en priorité.
+- Vidéo verticale (téléphone) à refaire avec la chambre actuelle (la v5 horizontale est faite).
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
