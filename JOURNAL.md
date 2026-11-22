@@ -305,3 +305,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - VR : 0 erreur, 436 lots, ~179 k triangles. Scores inchangés (demande d'Enzo) → **65,25/70**.
 - Ensuite : vérifier que les 4,5 m de câble atteignent la zone de jeu sur le tapis (environ 2,7 m du bureau à vol d'oiseau) sans traverser le passage.
 
+## 2026-11-22 — Demande d'Enzo : PC + Meta Quest 3 à la place de PS5 / PS VR2
+- Choix d'Enzo : config PC « le plus de perf » ~2 800 € avec SSD 2 To (RTX 5080 jugée pas rentable : +15 à 18 % pour +38 % de prix, tests ThePCEnthusiast 09/2026, GamersNexus, NoobFeed) + Meta Quest 3. Achat prévu fin 2027 / début 2028 (il économise).
+- `room.js` : boîtier PC rétabli (ligne de retrait supprimée), câbles de l'écran de nouveau vers le PC ; PS5 retirée ; bloc PS VR2 (station, range-câbles, aimants, câble) remplacé par un **Meta Quest 3** sur le support LÅNESPELARE (visière blanche, 3 bandes de capteurs, sangle tissu grise) + 2 manettes Touch Plus devant la lampe. `catalog.js` : boîtes PS5/PS VR2 retirées, boîtes Quest 3 et PC.
+- Liste : `psvr2`, `ps5`, `stationvr`, `rangecable`, `aimants` retirés ; `quest3` 619,99 € (prix officiel depuis le 19/04/2026, hivr.fr 22/11) ; `gpu` → RTX 5070 Ti MSI Ventus 3X OC 1 349,99 € (Fnac, labonneconfig 22/11) ; les 7 lignes PC repassent en E/I (dans le total) avec la mention « achat prévu fin 2027 / début 2028 » ; note carte mère : l'AIO offert s'arrête le 30/11/2026 ; `supvr` sert au Quest 3 ; `ecran` : branché au PC en DisplayPort.
+- Total : **8 515,61 €** (PC 2 991,45 € + Quest 3 619,99 €).
+- Prévisions (à revoir chaque mois) : mémoire DDR5/SSD chère jusqu'à fin 2027, vrai repli plutôt 2028 (TrendForce, Counterpoint, BofA, Bernstein via TopAchat/DropReference/Oscoo) ; RTX 60 : rumeurs S1 2027 (TweakTown), S2 2027 (KitGuru), 2028 (Shattered) ; Zen 6 desktop annoncé vers Computex 2027 (TechPowerUp) ; Quest 4 attendu en 2027 (rumeurs TechRadar, Tom's Guide). Estimation fin 2027 / début 2028 pour PC + Quest 3 : environ 2 650 € (optimiste) / 3 250 € (médian) / 3 900 € (pessimiste), contre 3 611 € aujourd'hui.
+- VR : 0 erreur, 437 lots, ~174 k triangles. Scores inchangés → **65,25/70**.
+

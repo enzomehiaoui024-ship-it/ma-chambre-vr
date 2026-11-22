@@ -3,6 +3,25 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — retour au PC (RTX 5070 Ti, SSD 2 To) + Meta Quest 3 à la place de PS5 / PS VR2",
+    avant: 65.25, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
+    changements: [
+      "Le PC revient sous le bureau (achat prévu fin 2027 / début 2028) : Ryzen 7 9800X3D + RTX 5070 Ti + 32 Go + SSD 2 To = 2 991,45 €",
+      "La PS5 et le PS VR2 (avec sa station et le range-câbles) sont retirés ; le Meta Quest 3 est posé sur le support à gauche du bureau, ses 2 manettes devant la lampe",
+      "Liste : Quest 3 512 Go à 619,99 € ; carte graphique RTX 5070 Ti à 1 349,99 € (Fnac) ; le PC compte de nouveau dans le total",
+      "Total de la liste : 8 515,61 € (dont PC 2 991,45 € et Quest 3 619,99 €)",
+      "VR : 0 erreur (~174 k triangles)"
+    ],
+    images: [
+      ["bureau_pc_q3", "Le bureau avec le PC dessous et le Quest 3"],
+      ["coin_quest3", "Le Quest 3 sur son support"],
+      ["pc_gaming", "Le bureau en ambiance Gaming"]
+    ],
+    ensuite: "Suivre les prix du PC chaque mois (surtout carte graphique, mémoire, SSD) jusqu'au Black Friday 2027 (26/11/2027) et aux soldes d'hiver (12/01/2028)."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — PC retiré du plan, écran 32\" choisi, rangement propre du PS VR2",
     avant: 65.25, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
