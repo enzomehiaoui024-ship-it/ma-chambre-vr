@@ -145,8 +145,9 @@ const dyn=new Set([...R.tvGrp.children,...MES.map(m=>m.bar),...MES.map(m=>m.lab)
 [R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
 const V=makeVRRenderer(gl,sc,dyn);
 // taille de la TV (65, 75 ou 85 pouces) : bouton du menu, gardée d'une visite à l'autre
-function setTv(n){R.setTvSize(n);const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+n+' pouces';try{localStorage.setItem('tvSize',String(n))}catch(e){}}
-try{const n=+localStorage.getItem('tvSize');if(n===75||n===85)setTv(n)}catch(e){}
+function setTv(n){R.setTvSize(n);const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+n+' pouces';try{localStorage.setItem('tvSize2',String(n))}catch(e){}}
+{const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+R.tvSize+' pouces'}
+try{const n=+localStorage.getItem('tvSize2');if([65,75,85].includes(n))setTv(n)}catch(e){}
 window.__setTv=setTv;const ambiUp=makeAmbi(R,THREE);window.__V=V;
 const MODES=[['cosy','Nuit cosy',()=>COSY],['jour','Jour',()=>DAY],['coucher','Coucher de soleil',()=>GOLD],['soir','Soir chaud',()=>EVE],['gaming','Gaming néon',()=>GAME],['fete','Fête',t=>FETE(t)],['cine','Ciné Ambilight',()=>CINE]];
 let mi=0,from=COSY,blendT=1,cur=COSY,el=0;

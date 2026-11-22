@@ -324,3 +324,10 @@ Vues de contrôle fixes (tools/preview.py) :
 - Vérifs : en 65", vue de contrôle TV identique ; 75" et 85" corrects dans le plan et en VR (Ambilight suit). 85" passe devant les cadres du Kallax et le ficus. VR : 0 erreur, 424 lots, ~179 k triangles.
 - Scores : VR 9 → 9,25, plan 3D 9 → 9,25 → **65,25 → 65,75/70**.
 
+## 2026-11-22 — Demande d'Enzo : TV 75", plante, mur en lattes, système son
+- TV : `R.setTvSize(75)` par défaut (bouton toujours là pour 65/85 ; clé localStorage `tvSize2` pour repartir de 75). Liste : TCL 75C69K 914,17 € (Amazon ; Fnac MP 903,46 €, OfficeEasy 864,90 €, leDénicheur 22/11). Support : One For All WM 4621 33,35 € (32-90", VESA 600x400) à la place du Meliconi 40-65".
+- Ficus retiré (objets enlevés juste après construction pour garder la même suite `rnd()`), remplacé par une sansevière (pot noir 21 cm, 13 feuilles en épée 48-80 cm, sous le bas de la TV). Liste : `ficus` → IKEA SANSEVIERIA pot 21 cm 19,99 € (hauteur à vérifier en magasin).
+- Mur en lattes derrière le lit : `LAT=true` partout (VR comprise), hauteur 240 cm. Liste : `lattes2` lot de 4 panneaux 240x60 noyer foncé 144,99 € (Leroy Merlin, vendeur partenaire). Catalogue : boîte du mur.
+- Son : barre Samsung HW-B460F (85,8 cm) sur la commode + caisson sans fil au sol entre le Kallax et la commode (x 321-351, z 179-198). Liste : `barre` → HW-B460F 149 € (Auchan jusqu'au 29/11 ; Easylounge 148,44 €).
+- Total : 5 314,26 → **5 721,82 €**. VR : 0 erreur. Scores : cohérence 9,5 → 9,75 → **65,75 → 66/70**.
+

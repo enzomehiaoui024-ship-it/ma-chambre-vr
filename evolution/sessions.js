@@ -3,6 +3,21 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — TV 75 pouces, sansevière à la place du ficus, mur en lattes derrière le lit, système son 2.1",
+    avant: 65.75, apres: 66,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.75], liste: [9.75, 9.75], vr: [9.25, 9.25], plan: [9.25, 9.25], video: [8, 8] },
+    changements: [
+      "La TV passe en 75 pouces (TCL 75C69K, 167 x 96 cm) sur un support One For All qui accepte cette taille",
+      "Le ficus qui cachait la TV est remplacé par une sansevière (feuilles droites, sous le bas de la TV)",
+      "Le mur en lattes noyer derrière le lit est gardé pour de vrai : il apparaît aussi en VR et il est dans la liste (lot de 4 panneaux 240 x 60 cm)",
+      "Système son : Samsung HW-B460F 2.1 (barre de 86 cm sur la commode + caisson sans fil au sol entre le Kallax et la commode), 149 €",
+      "Total de la liste : 5 314,26 € → 5 721,82 €"
+    ],
+    images: [["tv75_mur", "TV 75 pouces, sans le ficus"], ["tv75_cosy", "Le lit et le mur en lattes"], ["son_caisson", "Le caisson de basses entre le Kallax et la commode"]],
+    ensuite: "Vérifier la hauteur de la sansevière en magasin (60-80 cm) ; prix de la TV après le Black Friday."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — réglage de la taille de la TV (65, 75 ou 85 pouces) en VR et dans le plan 3D",
     avant: 65.25, apres: 65.75,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9.25], plan: [9, 9.25], video: [8, 8] },

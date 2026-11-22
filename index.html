@@ -33,6 +33,7 @@ window.CATALOG = [
   // coin lit
   [[0, 199, 0, 46, 171, 327], ["lit", "boites", "led"]],
   [[0, 8, 46, 100, 171, 327], ["lit", "ledtete"]],
+  [[0, 3.4, 0, 240, 150, 350], ["lattes2"]],
   [[8, 199, 46, 62, 171, 327], ["housse", "couette", "matelas", "drap", "protege"]],
   [[6, 55, 55, 92, 178, 322], ["oreillers", "coussins", "coussins2"]],
   [[155, 196, 48, 64, 173, 325], ["plaid"]],
@@ -83,7 +84,8 @@ window.CATALOG = [
   [[356, 360, 104, 152, 102, 172], ["cadres", "posters"]],
   // commode + TV
   [[320, 360, 0, 76, 199, 319], ["commode", "organis"]],
-  [[320, 332, 76, 84, 218, 300], ["barre"]],
+  [[320, 331, 76, 83, 215, 303], ["barre"]],
+  [[320, 353, 0, 36, 178, 199], ["barre"]],
   [[333, 359, 76, 105, 294, 320], ["champi", "ampoules"]],
   [[335, 357, 76, 80, 221, 245], ["plateau", "bougies"]],
   [[335, 357, 76, 84, 277, 293], ["livres"]],
@@ -97,7 +99,7 @@ window.CATALOG = [
   // fenêtre
   [[60, 300, 0, 240, 340, 358], ["rideaux", "tringle"]],
   [[138, 163, 88, 114, 346, 374], ["pothos", "pots"]],
-  [[314, 358, 0, 205, 318, 360], ["ficus", "spots"]],
+  [[322, 352, 0, 95, 324, 354], ["ficus", "spots", "pots"]],
   [[198, 254, 0, 112, 308, 360], ["monstera", "spots", "pots"]],
   // porte
   [[338, 348, 0, 205, 2, 85], ["pateres", "crochets"]]
@@ -346,11 +348,11 @@ R.G.bedLed=[];const gb=noShadow(P(214,174,glow(0x000000,1),100,.6,BC,0,-Math.PI/
 const softT=gb.material.map;
 const mkGlow=(w,h,x,y,z,ry,rx)=>{const m=noShadow(P(w,h,glow(0x000000,1),x,y,z,ry,rx));m.material.map=softT;return m};
 R.moonHalo.material.map=softT;
-// ---------- TEST (plan 3D seulement) : mur en lattes de bois derrière la tête de lit ----------
-const LAT=typeof window!=='undefined'&&!!window.__LATTES;const WX=LAT?3.4:0;
-if(LAT){const felt=M(0x141312,{roughness:1});B(0,1.2,0,250,150,350,felt);
+// ---------- mur en lattes noyer foncé derrière la tête de lit (choisi par Enzo le 22/11/2026) : 4 panneaux 240 x 60 cm sur feutre noir ----------
+const LAT=true;const WX=LAT?3.4:0;
+if(LAT){const felt=M(0x141312,{roughness:1});B(0,1.2,0,240,150,350,felt);
  const woodT=T(64,512,(g,w,h)=>{g.fillStyle='#4a3324';g.fillRect(0,0,w,h);for(let i=0;i<90;i++){const x=Math.random()*w;g.strokeStyle=Math.random()<.5?'rgba(30,18,10,.35)':'rgba(120,85,55,.25)';g.lineWidth=.6+Math.random()*1.6;g.beginPath();g.moveTo(x,0);g.bezierCurveTo(x+(Math.random()-.5)*6,h*.33,x+(Math.random()-.5)*6,h*.66,x+(Math.random()-.5)*4,h);g.stroke()}},1,1);
- const wood=M(0xffffff,{map:woodT,roughness:.55});for(let z=151;z+2.7<=349.5;z+=4)B(1.2,3.3,0,250,z,z+2.7,wood)}
+ const wood=M(0xffffff,{map:woodT,roughness:.55});for(let z=151;z+2.7<=349.5;z+=4)B(1.2,3.3,0,240,z,z+2.7,wood)}
 R.G.headLed=[mkGlow(220,170,.8+WX,116,BC,Math.PI/2)];
 // rubans LED visibles sous le lit (côté pied et côtés) : la ligne lumineuse elle-même, pas seulement le halo
 strip(197.2,198.2,3.6,4.4,BZ0+4,BZ1-4,'bedLed');strip(12,197,3.6,4.4,BZ0+1.2,BZ0+2.2,'bedLed');strip(12,197,3.6,4.4,BZ1-2.2,BZ1-1.2,'bedLed');
@@ -610,8 +612,10 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  RB(X0,X1,8,76,Z0,Z1,.8,cmd,null,2);B(X0-.2,X0+.05,9,75.6,Z0+.6,Z1-.6,M(0x0d0a08,{roughness:1}));
  for(let c=0;c<2;c++)for(let r=0;r<3;r++){const z0=Z0+1.2+c*59.4,y0=10+r*21.8;RB(X0-.8,X0+.6,y0,y0+20.8,z0,z0+58.2,.6,cmd2,null,1);RB(X0-2.4,X0-.8,y0+13.6,y0+15.2,z0+17,z0+41,.6,metalBlk,null,1);
   [z0+18,z0+40].forEach(zz=>B(X0-2,X0-.8,y0+13.8,y0+15,zz-.6,zz+.6,metalBlk))}
- // soundbar Ultimea Apollo S40 (front) + FADO (back right) + tray, candles, diffuser, books
- RB(322,331,76,82.5,219,299,1.6,M(0x161616,{roughness:.6}),null,2);B(321.6,322,77,82,220,298,M(0x232325,{roughness:.9}));
+ // barre de son Samsung HW-B460F 2.1 (85,8 x 5,9 x 7,5 cm, devant) + FADO (back right) + tray, candles, diffuser, books
+ RB(322,329.5,76,81.9,216.1,301.9,1.4,M(0x161616,{roughness:.6}),null,2);B(321.6,322,76.8,81.2,217,301,M(0x232325,{roughness:.9}));B(321.5,321.7,77.6,78.4,256.4,261.6,M(0x3a3a3c,{roughness:.4}));
+ // caisson de basses sans fil (18,4 x 34,3 x 29,5 cm) au sol, entre le Kallax et la commode
+ {const sm=M(0x161616,{roughness:.65});RB(321.5,351,.4,34.7,179.3,197.7,1.2,sm,null,2);B(351,352,8,26,183,194,M(0x0e0e0e,{roughness:.9}));[[323,181],[349,181],[323,196],[349,196]].forEach(([x,z])=>Cy(x,z,0,.4,.9,M(0x111111)))}
  Lathe(346,76,307,[[0,0],[6,0],[6.2,.6],[5,2.6],[3,3.2],[0,3.2]],M(0xF7F6F2,{roughness:.3}),24);
  const fado=S(346,91.7,307,12.5,M(0xffffff,{emissive:0xffe2b0,emissiveIntensity:.05,roughness:.15}),1,1,1,null,28);R.fado=fado.material;
  RB(336,356,76,77.4,222,244,.6,M(C.brass,{metalness:.9,roughness:.25}));
@@ -677,11 +681,21 @@ const monsteraLeafT=T(256,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.mov
  g.globalCompositeOperation='source-over';g.strokeStyle='rgba(170,200,130,.7)';g.lineWidth=3;g.beginPath();g.moveTo(128,246);g.lineTo(128,32);g.stroke()});
 
 // ---------- plants: ficus lyrata (corner), monstera (window right), plant spots ----------
+const _f0=sc.children.length;
 {const potM=M(0xC9C2B6,{roughness:.85});Lathe(336,0,340,[[0,0],[12,0],[13,1.5],[15.6,30],[16.4,30.4],[16.4,32],[15.2,32],[12.4,2],[0,2]],potM,32);Cy(336,340,30,31,14.8,soilM);
  const tr=new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,30,340),new THREE.Vector3(331,80,343),new THREE.Vector3(337,130,338)),16,1.6,8),M(0x5a3d22,{roughness:.9}));add(tr);
  const brM=M(0x5a3d22,{roughness:.9});const tips=[];for(let b=0;b<5;b++){const a=b*1.3+.4,ht=130+b*14;const e=new THREE.Vector3(336+Math.cos(a)*16,ht+16,340+Math.sin(a)*13);add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(336,95+b*12,340),new THREE.Vector3(336+Math.cos(a)*6,ht,340+Math.sin(a)*5),e),10,.7,6),brM));tips.push([e,a])}
  for(let i=0;i<72;i++){const[e,a0]=tips[i%5];const t=rnd(),a=a0+(rnd()-.5)*1.6,r=4+rnd()*14;const px=336+(e.x-336)*(.4+t*.6)+Math.cos(a)*r*.5,py=95+(e.y-95)*(.35+t*.65)+rnd()*10,pz=340+(e.z-340)*(.4+t*.6)+Math.sin(a)*r*.4;
   const g=Grp(px,py,pz,-a+Math.PI/2);g.rotation.x=-.9+rnd()*.7;g.rotation.z=(rnd()-.5)*.6;const lf=leafPlane(17+rnd()*6,27+rnd()*8,ficusLeafT,g);lf.position.y=12}
+ // ficus retiré le 22/11/2026 (il cachait la TV 75 pouces) : ses objets sont enlevés, la suite de nombres aléatoires reste la même pour le reste de la scène
+ sc.children.slice(_f0).forEach(o=>sc.remove(o));
+ // sansevière (IKEA SANSEVIERIA, pot 21 cm) dans le coin : feuilles droites en épée, sous le bas de la TV (1,05 m)
+ {const sT=T(48,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.moveTo(w/2,2);g.bezierCurveTo(w*.95,h*.25,w*.92,h*.8,w*.82,h);g.lineTo(w*.18,h);g.bezierCurveTo(w*.08,h*.8,w*.05,h*.25,w/2,2);g.closePath();g.save();g.clip();
+   g.fillStyle='#2f5a2a';g.fillRect(0,0,w,h);for(let y=8;y<h;y+=9){g.fillStyle=y%18?'rgba(150,185,110,.35)':'rgba(20,45,20,.45)';g.beginPath();g.ellipse(w/2,y,w*.42,2.2,0,0,7);g.fill()}
+   g.strokeStyle='#d8c75a';g.lineWidth=3;g.stroke();g.restore()});
+  const pot=M(0x2a2a2a,{roughness:.6});Lathe(336,0,338,[[0,0],[9,0],[10.5,19],[10,19],[8.6,1],[0,1]],pot,28);Cy(336,338,17.6,18.4,9.6,soilM);
+  let q=11;const rr=()=>(q=(q*16807)%2147483647)/2147483647;
+  for(let i=0;i<13;i++){const a=i*2.4+rr()*.4,r0=i<4?1:3+rr()*3,H=48+rr()*24+(i<4?8:0);const g=Grp(336+Math.cos(a)*r0,18,338+Math.sin(a)*r0,a+rr()*.8);g.rotation.z=(.04+rr()*.12)*(i%2?1:-1);g.rotation.x=(rr()-.5)*.16;const lf=leafPlane(4.6+rr()*1.4,H,sT,g);lf.position.y=H/2}}
  // monstera at window right (x 226, z 336)
  Lathe(226,0,336,[[0,0],[10,0],[11.6,20],[12.7,20.3],[12.9,24],[11.5,24],[11.3,21],[9.6,1.5],[0,1.5]],M(0xC56B45,{roughness:.8}),24);Cy(226,336,22,23,11.2,soilM);
  for(let i=0;i<9;i++){const a=i/9*Math.PI*2+rnd()*.4,len=40+rnd()*45;const tip=new THREE.Vector3(226+Math.cos(a)*len*.45,22+len*.9,336+Math.sin(a)*len*.35);
@@ -733,7 +747,9 @@ sun.castShadow=true;if(sun.shadow&&sun.shadow.camera){sun.shadow.mapSize.set(204
 function PL(name,c,x,y,z,d,dec){const l=new THREE.PointLight(c,0,d||300,dec||1.5);l.position.set(x,y,z);sc.add(l);R.L[name]=l;return l}
 PL('pend',0xffe1b8,180,196,180,520);PL('arc',0xffd39a,214,176,262,330);PL('ns',0xffd09a,18,76,140,220);PL('fado',0xffd9a8,346,92,307,220);
 PL('desk',0xfff0d8,50,89,16,170);PL('deskLed',0xff8a30,72,110,10,150,1.3);PL('shelf',0xf4f7ff,90,166,12,150,1.2);PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
-PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
+PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);
+// TV 75 pouces choisie par Enzo le 22/11/2026 (TCL 75C69K, 167 x 96 cm) ; le bouton TV permet encore d'essayer 65 ou 85
+R.setTvSize(75);PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);PL('sneak',0xfff0d8,10,150,116,110);PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);PL('candle2',0xff9a40,29,68,157,140,1.6);PL('candle3',0xff9a40,206,102,350,130,1.6);
 {const sp=(n,d,c)=>{const l=Math.hypot(...d);R.L[n].userData.spot=[d[0]/l,d[1]/l,d[2]/l,c]};sp('arc',[0,-1,0],.15);sp('desk',[-23,-24,16],.45);sp('spot',[.15,1,.2],.55);sp('sneak',[0,-1,0],.1)}
 ['arc','fado','ns','spot'].forEach(n=>R.L[n].userData.sh=1);R.L.ns.userData.shO=[0,9,0];
 return R}
@@ -1152,8 +1168,9 @@ const dyn=new Set([...R.tvGrp.children,...MES.map(m=>m.bar),...MES.map(m=>m.lab)
 [R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
 const V=makeVRRenderer(gl,sc,dyn);
 // taille de la TV (65, 75 ou 85 pouces) : bouton du menu, gardée d'une visite à l'autre
-function setTv(n){R.setTvSize(n);const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+n+' pouces';try{localStorage.setItem('tvSize',String(n))}catch(e){}}
-try{const n=+localStorage.getItem('tvSize');if(n===75||n===85)setTv(n)}catch(e){}
+function setTv(n){R.setTvSize(n);const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+n+' pouces';try{localStorage.setItem('tvSize2',String(n))}catch(e){}}
+{const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+R.tvSize+' pouces'}
+try{const n=+localStorage.getItem('tvSize2');if([65,75,85].includes(n))setTv(n)}catch(e){}
 window.__setTv=setTv;const ambiUp=makeAmbi(R,THREE);window.__V=V;
 const MODES=[['cosy','Nuit cosy',()=>COSY],['jour','Jour',()=>DAY],['coucher','Coucher de soleil',()=>GOLD],['soir','Soir chaud',()=>EVE],['gaming','Gaming néon',()=>GAME],['fete','Fête',t=>FETE(t)],['cine','Ciné Ambilight',()=>CINE]];
 let mi=0,from=COSY,blendT=1,cur=COSY,el=0;
