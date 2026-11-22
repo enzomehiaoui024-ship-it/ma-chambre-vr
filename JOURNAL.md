@@ -297,3 +297,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - Scores : inchangés (demande d'Enzo) → **65,25/70**.
 - Ensuite : si Enzo choisit le 27", écran 60,9 x 35,5 cm (prix 299,90 €) ; le boîtier PC (« plus tard ») reste dessiné sous le bureau ; vidéo v5 à refaire avec ce bureau.
 
+## 2026-11-22 — Demande d'Enzo : PC retiré du plan, 32" confirmé, rangement du câble PS VR2
+- PC : objets du boîtier retirés de la scène juste après leur création (`_p0` → fin, `R.pcFans`/`R.pcIn` gardés pour les ambiances) ; câbles de l'écran et de la PS5 redirigés vers la multiprise au sol (x 130, z 2,5). Boîte cliquable du PC retirée. Les 7 lignes PC restent en « plus tard ».
+- Écran : AOC AG326UD 32" confirmé par Enzo (note mise à jour).
+- Système câble PS VR2 (hors jeu) : support IKEA LÅNESPELARE (socle en (30, 52), cintre à 26,5 cm) avec le casque posé dessus, visière vers Enzo ; station de charge Sony Sense en (47,5, 29) avec les 2 manettes debout ; câble (courbe Catmull-Rom) : port USB-C avant de la PS5 → le long de la PS5 (x 21) → aimant HAVSKÅL au bord arrière → derrière le bureau → 3 boucles dans le range-câbles IKEA SIGNUM 70 cm vissé sous le fond gauche (x 6–76, z 3–17, y 63–69) → remonte au 2e aimant (x 36) → derrière le support → arrière du serre-tête.
+- Liste : `supvr` 14,99 € (ikea.fr), `stationvr` 41,12 € (Boulanger via leDénicheur), `rangecable` 14,99 € (prix de la page catégorie ikea.fr), `aimants` 3,99 € (ikea.fr), tous le 22/11/2026. Total 5 239,17 → **5 314,26 €**.
+- VR : 0 erreur, 436 lots, ~179 k triangles. Scores inchangés (demande d'Enzo) → **65,25/70**.
+- Ensuite : vérifier que les 4,5 m de câble atteignent la zone de jeu sur le tapis (environ 2,7 m du bureau à vol d'oiseau) sans traverser le passage.
+

@@ -251,6 +251,7 @@ add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new TH
 [[21],[39]].forEach(([z])=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,3,20),M(0x222222,{roughness:.8}));c.rotation.x=Math.PI/2;c.position.set(20,89,z);add(c)});
 Lathe(118,75,32,[[0,0],[3.8,0],[4,9],[3.6,9],[3.4,1],[0,1]],M(C.olive,{roughness:.5}),20);
 const _d1=sc.children.length;
+const _p0=sc.children.length;
 // PC tower (front +z) with mesh front, 3 RGB fans, glass side
 {const pcM=M(0x0f0f10,{roughness:.35,metalness:.4});RB(128,150,2,50,18,64,1.2,pcM);[[130,20],[130,62],[148,20],[148,62]].forEach(p=>RB(p[0]-1.4,p[0]+1.4,0,2,p[1]-1.4,p[1]+1.4,.6,M(0x222222)));
  const meshT=T(64,64,(g,w,h)=>{g.fillStyle='#0d0d0e';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2c';for(let y=0;y<h;y+=4)for(let x=(y/4%2)*2;x<w;x+=4)g.fillRect(x,y,2,2)},4,8);
@@ -260,6 +261,8 @@ const _d1=sc.children.length;
  const pcIn=noShadow(B(128.2,129,6,46,22,60,MB(0x000000)));R.pcIn=pcIn;
  B(140,148,48,50,58,62,metalBlk);}
 R.G.pc=[mkGlow(60,40,139,1,64,0,-Math.PI/2)];
+// PC « plus tard » (22/11/2026) : retiré de la scène en attendant ; R.pcFans / R.pcIn restent définis pour les ambiances
+sc.children.slice(_p0).forEach(o=>sc.remove(o));
 // ---------- plant helpers: pothos (heart leaves, variegated, trailing vines), soil ----------
 let _s2=7;const r2=()=>(_s2=(_s2*16807)%2147483647)/2147483647;
 const pothosT=T(128,128,(g,w,h)=>{g.clearRect(0,0,w,h);g.save();g.beginPath();g.moveTo(64,4);g.bezierCurveTo(96,24,124,58,118,90);g.bezierCurveTo(114,114,90,126,72,114);g.lineTo(64,104);g.lineTo(56,114);g.bezierCurveTo(38,126,14,114,10,90);g.bezierCurveTo(4,58,32,24,64,4);g.closePath();g.clip();const gr=g.createLinearGradient(0,0,128,128);gr.addColorStop(0,'#5a9a40');gr.addColorStop(1,'#2e6227');g.fillStyle=gr;g.fillRect(0,0,w,h);g.strokeStyle='rgba(226,214,120,.5)';g.lineWidth=2;for(let i=0;i<14;i++){const x=64+(r2()-.5)*80;g.beginPath();g.moveTo(64,104);g.quadraticCurveTo(x,70,x+(x-64)*.6,18);g.stroke()}g.strokeStyle='rgba(28,58,24,.85)';g.lineWidth=2.5;g.beginPath();g.moveTo(64,104);g.lineTo(64,10);g.stroke();g.restore()});
@@ -337,10 +340,10 @@ R.G.shelf=[mkGlow(130,70,80,122,.8,0,0),mkGlow(110,60,80,75.6,40,0,-Math.PI/2)];
  {const m=Grp(98,117,16,0);RB(-5,5,-5,5,-4,-1.4,.5,blk,m);arm(128,4,100,98,117,12);
   const sm=screen(m,71.7,42.1,R.screens.mon.material);R.screens.mon.material.map=artT(72,42,47);R.screens.mon=sm;
   RB(-25,25,21.6,23.6,-3.2,.4,.9,blk,m);noShadow(P(48,1.4,MB(0xfff1dc),0,21.55,-1.4,0,Math.PI/2,m))}
- // câbles des écrans : le long des bras, descendent le mât, longent le dessous du bureau (attaches scratch), puis vont au PC
+ // câbles : écran le long du bras, PS5 derrière le bureau ; ils longent le dessous du bureau (attaches scratch) puis descendent à la multiprise
  {const cm=M(0x0e0e0e,{roughness:.8}),V=(x,y,z)=>new THREE.Vector3(x,y,z),cab=(a,b,c)=>add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(V(...a),V(...b),V(...c)),12,.32,5),cm));
   cab([100,110,11],[120,104,7.5],[126.6,99,5.8]);cab([126.6,99,5.8],[126.6,88,5.8],[126.6,77.5,5.8]);
-  cab([12,80,6.4],[13.5,78,5.8],[15.6,75.5,5.8]);cab([15.6,75.5,5.8],[15.6,74,5.8],[15.6,71,5]);cab([15.6,71,5],[16,72.3,5],[22,72.5,5]);cab([22,72.5,5],[73,72.5,5],[124,72.5,5]);cab([124,72.5,5],[128,58,8],[132.5,47,17.6]);cab([126.6,71,5.8],[128,57,9],[134.5,47,17.6]);
+  cab([12,80,6.4],[13.5,78,5.8],[15.6,75.5,5.8]);cab([15.6,75.5,5.8],[15.6,74,5.8],[15.6,71,5]);cab([15.6,71,5],[16,72.3,5],[22,72.5,5]);cab([22,72.5,5],[73,72.5,5],[124,72.5,5]);cab([124,72.5,5],[128,40,3.5],[130,.6,2.5]);cab([126.6,71,5.8],[128.6,40,4],[131.6,.6,2.5]);
   [30,55,80,105].forEach(x=>RB(x-.8,x+.8,72,73,3.6,6.4,.3,M(0x1a1a1a)))}
  // tapis XXL noir, clavier TKL blanc (Red Blade), souris G305 blanche
  RB(40,130,75,75.4,34,74,1.2,M(0x121212,{roughness:1}));
@@ -439,22 +442,37 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  Lathe(349,76,268,[[0,0],[3.6,0],[3.8,7],[2,9.5],[1.2,10],[0,10]],M(0x5b4636,{transparent:true,opacity:.8,roughness:.1}),18);for(let i=0;i<5;i++){const s=B(348.6,349.4,86,99,267.6,268.4,M(0x3a2a1a));s.rotation.x=(i-2)*.14}
  RB(336,356,76,79.5,278,292,.4,M(C.olive));RB(337,355,79.5,82.5,279,291,.4,M(0xEDE5D3))}
 
-// ---------- PlayStation VR2 (casque 21x16x28 + 2 manettes Sense) posé sur le bureau, à côté de la PS5 (22/11/2026) ----------
-{const W=M(0xF3F2EE,{roughness:.32}),K=M(0x161618,{roughness:.45}),K2=M(0x0c0c0e,{roughness:.2,metalness:.2});
- // casque : repère local, visière vers -x (tournée vers Enzo, +z, par la rotation du groupe)
- const h=Grp(12.5,75.5,51,Math.PI/2);
+// ---------- PlayStation VR2 rangé sur le bureau (22/11/2026) : casque sur support LÅNESPELARE, manettes Sense dans la station de charge Sony,
+// câble USB-C : PS5 (port avant) → le long de la PS5 → aimant HAVSKÅL au bord arrière → boucles cachées dans le range-câbles SIGNUM sous le bureau → remonte (2e aimant) → casque
+{const W=M(0xF3F2EE,{roughness:.32}),K=M(0x161618,{roughness:.45}),K2=M(0x0c0c0e,{roughness:.2,metalness:.2}),cblM=M(0x1a1a1c,{roughness:.7});
+ const V=(x,y,z)=>new THREE.Vector3(x,y,z),tube=(pts,r,m,p)=>{const cv={getPoint:t=>{const n=pts.length-1,f=Math.min(n-1e-6,t*n),i=Math.floor(f),u=f-i,a=pts[Math.max(0,i-1)],b=pts[i],c=pts[i+1],d=pts[Math.min(n,i+2)];
+   const h=(k)=>.5*((2*b[k])+(-a[k]+c[k])*u+(2*a[k]-5*b[k]+4*c[k]-d[k])*u*u+(-a[k]+3*b[k]-3*c[k]+d[k])*u*u*u);return V(h(0),h(1),h(2))}};return add(new THREE.Mesh(new THREE.TubeGeometry(cv,pts.length*10,r,6),m),p)};
+ // support casque IKEA LÅNESPELARE (28 x 13 x 13 cm) : socle bois, mât frêne, cintre alu noir
+ const ash=M(0xCDB08A,{roughness:.55}),alu=M(0x1b1b1d,{roughness:.4,metalness:.5}),SX=30,SZ=52,TY=75.5;
+ Lathe(SX,TY,SZ,[[0,0],[6.4,0],[6.5,1.4],[6,1.8],[0,1.8]],ash,28);Cy(SX,SZ,TY+1.8,TY+25.5,1.1,ash,.9,16);
+ const hg=Grp(SX,TY+26.5,SZ,0);RB(-5.5,5.5,-.6,.6,-1.8,1.8,.5,alu,hg);[-1,1].forEach(d=>RB(d>0?4.6:-5.6,d>0?5.6:-4.6,-2.2,.6,-1.8,1.8,.4,alu,hg));
+ // casque posé sur le cintre (anneau du serre-tête autour du mât), visière tournée vers Enzo
+ const h=Grp(SX,TY+18.2,SZ+4.4,Math.PI/2);
  RB(-14,-4,.4,11,-10.4,10.4,3.8,W,h,2);RB(-14.8,-12,3.4,7.8,-5.2,5.2,.9,K2,h);
  [[-6.2,7.6],[6.2,7.6],[-6.2,3.6],[6.2,3.6]].forEach(([z,y])=>S(-15.2,y,z,.75,K,.6,1,1,h,10));
  RB(-4.5,-1.5,1.6,9.8,-8.6,8.6,2.2,K,h);
- const ring={getPoint:t=>{const a=t*Math.PI*2;const c=Math.cos(a);return new THREE.Vector3(4.4-9.8*c,8.3+1.3*c,9.4*Math.sin(a))}};
+ const ring={getPoint:t=>{const a=t*Math.PI*2;const c=Math.cos(a);return V(4.4-9.8*c,8.3+1.3*c,9.4*Math.sin(a))}};
  add(new THREE.Mesh(new THREE.TubeGeometry(ring,40,1.25,10),W),h);
  RB(10.6,14.4,.6,10.2,-5.6,5.6,2.4,K,h);const dial=new THREE.Mesh(new THREE.CylinderGeometry(2.6,2.6,1.2,20),W);dial.rotation.z=Math.PI/2;dial.position.set(14.6,6.2,0);add(dial,h);
- // manettes Sense à plat, derrière le casque (entre la PS5 et la lampe)
- const c=Grp(30.5,75.5,30,Math.PI/2);
- [[-6.9,1],[6.9,-1]].forEach(([z,s])=>{const g=new THREE.Mesh(new THREE.LatheGeometry([[0,-5.4],[1.6,-5.2],[2.4,-4.2],[2.7,-1],[2.5,2.6],[2.1,4.6],[1.2,5.4],[0,5.6]],16),W);g.rotation.z=Math.PI/2;g.position.set(0,2.7,z);add(g,c);
-  const tip=new THREE.Mesh(new THREE.CylinderGeometry(.9,1,1.2,12),K);tip.position.set(-3.2,5.2,z);add(tip,c);
-  const arc={getPoint:t=>{const a=t*Math.PI;return new THREE.Vector3(-5.6*Math.cos(a),1.6,z+s*(0.6+6.2*Math.sin(a)))}};
-  add(new THREE.Mesh(new THREE.TubeGeometry(arc,20,1.35,8),W),c);RB(-5,5,.2,1.2,s>0?z+.4:z-6.4,s>0?z+6.4:z-.4,.4,K,c)})}
+ // station de charge Sony pour manettes Sense (~ 16 x 6 x 10 cm) + 2 manettes debout, anneau en haut
+ const st=Grp(47.5,TY,29,0);RB(-8,8,0,3.2,-4.6,4.6,1.4,W,st);RB(-7.6,7.6,3.2,3.6,-4.2,4.2,.15,K,st);
+ [-1,1].forEach(d=>{const g=Grp(d*4,3.4,0,0,st);Lathe(0,0,0,[[0,0],[2.5,0],[2.7,3],[2.4,7.5],[1.9,9.5],[1,10.3],[0,10.4]],W,16,g);
+  Cy(0,0,10.3,11.3,.8,K,1,10,g);const arc={getPoint:t=>{const a=t*Math.PI;return V(-d*(0.6+5.8*Math.sin(a)),3.5+4*(1-Math.cos(a)),0)}};
+  add(new THREE.Mesh(new THREE.TubeGeometry(arc,18,1.25,8),W),g)});
+ // range-câbles IKEA SIGNUM 70 cm sous le bureau (fond gauche) + boucles du câble cachées dedans
+ const sg=M(0xB9BCC0,{roughness:.4,metalness:.6});B(6,76,63,63.6,3,17,sg);B(6,76,63.6,69,3,3.6,sg);B(6,76,63.6,67,16.4,17,sg);[10,72].forEach(x=>B(x-1,x+1,69,71,3,8,sg));
+ [0,1,2].forEach(k=>{const cx=41+k*1.2,cz=10,rx=28-k*1.5,rz=4.6;add(new THREE.Mesh(new THREE.TubeGeometry({getPoint:t=>{const a=t*Math.PI*2;return V(cx+rx*Math.cos(a),64.3+k*.7,cz+rz*Math.sin(a))}},48,.45,6),cblM))});
+ // aimants HAVSKÅL au bord arrière du bureau
+ [21,36].forEach(x=>{RB(x-2,x+2,TY,TY+3.6,.6,4.6,.6,M(0x161616,{roughness:.6}));RB(x-2.1,x+2.1,TY+1.2,TY+1.8,.5,4.7,.2,M(0xE8B923,{roughness:.5}))});
+ // câble : port USB-C avant de la PS5 → le long de la PS5 → aimant → derrière le bureau → range-câbles
+ tube([[16.5,82,32.6],[19,77.5,34],[21,76,30],[21,76.2,12],[21,77.6,2.6],[21,75,-.4],[20,69,1.5],[16,65,8]],.45,cblM);
+ // remonte du range-câbles → 2e aimant → derrière le support → casque (arrière du serre-tête)
+ tube([[66,65,9],[44,67,3],[36,72,-.4],[36,77.6,2.6],[35.5,76.2,14],[34.5,76.2,40],[31.5,78,44.8],[30,88,46],[30,93.5,45.4]],.45,cblM)}
 // ---------- TV TCL 65C69K on wall (bottom at 105 cm) + Meliconi mount ----------
 {const Y0=105,Y1=188.2,Z0=186.6,Z1=331.4,YC=(Y0+Y1)/2;
  B(355,359.8,YC-28,YC+28,240,278,M(0x1a1a1a,{metalness:.6}));

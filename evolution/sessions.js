@@ -3,6 +3,24 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — PC retiré du plan, écran 32\" choisi, rangement propre du PS VR2",
+    avant: 65.25, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
+    changements: [
+      "Le boîtier du PC n'est plus sous le bureau (il reste dans la liste en « plus tard ») ; les câbles de l'écran et de la PS5 descendent directement à la multiprise",
+      "Écran 32\" 4K confirmé (AOC AG326UD, 549,95 €)",
+      "Rangement du PS VR2 quand tu ne joues pas : casque sur un support IKEA LÅNESPELARE, manettes debout dans la station de charge Sony, câble tenu par 2 aimants au bord du bureau et ses boucles cachées dans un range-câbles IKEA SIGNUM sous le bureau",
+      "Liste : support 14,99 €, station de charge 41,12 €, range-câbles 14,99 €, aimants 3,99 € (+75,09 €) → total 5 314,26 €",
+      "VR : 0 erreur (~179 k triangles)"
+    ],
+    images: [
+      ["bureau_sanspc", "Le bureau sans le PC"],
+      ["rangement_vr", "Le PS VR2 rangé : support, station de charge, câble caché"]
+    ],
+    ensuite: "Quand Enzo joue : le câble sort du range-câbles ; vérifier qu'il atteint la zone de jeu (tapis berbère, environ 2,7 m du bureau)."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — bureau console : un seul écran OLED 32\" 4K, PS5 et PS VR2 sur le bureau",
     avant: 65.25, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
