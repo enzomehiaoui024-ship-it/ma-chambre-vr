@@ -313,3 +313,8 @@ Vues de contrôle fixes (tools/preview.py) :
 - Prévisions (à revoir chaque mois) : mémoire DDR5/SSD chère jusqu'à fin 2027, vrai repli plutôt 2028 (TrendForce, Counterpoint, BofA, Bernstein via TopAchat/DropReference/Oscoo) ; RTX 60 : rumeurs S1 2027 (TweakTown), S2 2027 (KitGuru), 2028 (Shattered) ; Zen 6 desktop annoncé vers Computex 2027 (TechPowerUp) ; Quest 4 attendu en 2027 (rumeurs TechRadar, Tom's Guide). Estimation fin 2027 / début 2028 pour PC + Quest 3 : environ 2 650 € (optimiste) / 3 250 € (médian) / 3 900 € (pessimiste), contre 3 611 € aujourd'hui.
 - VR : 0 erreur, 437 lots, ~174 k triangles. Scores inchangés → **65,25/70**.
 
+## 2026-11-22 — Demande d'Enzo : retour à la PS5 + PS VR2 (le PC est trop cher)
+- Plan 3D, catalogue et liste remis comme au commit c175d07 : PS5 d'origine + PS VR2 sur le bureau avec son rangement (support LÅNESPELARE, station de charge Sony, range-câbles SIGNUM, aimants HAVSKÅL), pas de boîtier PC, pas de Quest 3.
+- PC gardé en « plus tard » (hors total) avec la config retenue : RTX 5070 Ti 1 349,99 € (Fnac), SSD 2 To → 2 991,45 €.
+- Total : **5 314,26 €** (+ 2 991,45 € plus tard). VR : 0 erreur. Scores inchangés → **65,25/70**.
+

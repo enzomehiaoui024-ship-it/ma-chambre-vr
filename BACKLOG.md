@@ -16,11 +16,11 @@
 ## Liste d'achat
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
-- Revérifier chaque mois (achat prévu fin 2027 / début 2028) : RTX 5070 Ti, RAM 32 Go DDR5, SSD 2 To, Ryzen 7 9800X3D, Quest 3 (et sortie du Quest 4), écran 32". Surveiller la sortie des RTX 60 et des Ryzen Zen 6. Meilleures dates : Black Friday 26/11/2027, soldes d'hiver 12/01/2028. Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
+- Revérifier chaque semaine : PS VR2 (349,99 € Black Friday, fin non annoncée), écran 32", station de charge Sense. PC « plus tard » (RTX 5070 Ti, SSD 2 To) : un coup d'œil par mois suffit. Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
-- Quest 3 sans fil : zone de jeu sur le tapis berbère (~1 m x 1,1 m) ; l'abat-jour du lampadaire arc est au-dessus (bas à 1,60 m).
+- Câble PS VR2 en jeu : où joue Enzo (tapis berbère ou devant le bureau) ? Les 4,5 m doivent arriver sans traverser le passage.
 - Proposer de déplacer le lampadaire arc (ou un modèle contre le mur) pour libérer la zone VR.
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 

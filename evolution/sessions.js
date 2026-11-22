@@ -3,6 +3,19 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — retour à la PS5 + PS VR2 (le PC passe en « plus tard »)",
+    avant: 65.25, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
+    changements: [
+      "Le bureau redevient console : ta PS5 et le PS VR2 rangé (support, station de charge, câble caché sous le bureau)",
+      "Le PC et le Quest 3 sont retirés du plan ; le PC reste dans la liste en « plus tard » avec la config choisie (RTX 5070 Ti, SSD 2 To, 2 991,45 €)",
+      "Total de la liste : 5 314,26 €"
+    ],
+    images: [["rangement_vr", "Le PS VR2 rangé sur le bureau"], ["bureau_sanspc", "Le bureau console"]],
+    ensuite: "Suivre le prix du PS VR2 (349,99 € pendant le Black Friday)."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — retour au PC (RTX 5070 Ti, SSD 2 To) + Meta Quest 3 à la place de PS5 / PS VR2",
     avant: 65.25, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
