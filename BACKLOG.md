@@ -29,6 +29,7 @@
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
+- Taille de TV choisie avec le nouveau bouton (65 / 75 / 85") ? 75" : TCL C69K dès 903,46 € (leDénicheur, 22/11), décaler le ficus.
 - Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).

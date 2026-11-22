@@ -51,7 +51,7 @@ const vig=new THREE.Mesh(new THREE.PlaneGeometry(32,32),new THREE.MeshBasicMater
 const tele={on:false,hit:null,ok:false};const BLOCK=[[0,205,165,333],[0,165,0,84],[314,360,193,325],[314,360,96,181],[164,262,0,42],[0,40,118,172]];window.__tele=tele;let seat=false,yBase=0,fpsS=72,fpsT=0;
 window.__menuRef=()=>menu;const menu={open:false,hover:null,C:[0,0,0],N:[0,0,1],Rx:[1,0,0],btns:[]};
 (function(){const B=[];const names=['Nuit cosy','Jour','Coucher de soleil','Soir chaud','Gaming','Fête','Ciné Ambilight'];names.forEach((n,i)=>B.push({id:'m'+i,x:48+(i%2)*474,y:150+Math.floor(i/2)*100,w:454,h:84,t:n}));
- B.push({id:'auto',x:522,y:450,w:454,h:84,t:'Défilé auto'});B.push({id:'home',x:48,y:566,w:454,h:84,t:'Revenir au départ'});B.push({id:'seat',x:522,y:566,w:454,h:84,t:'Mode assis'});B.push({id:'close',x:48,y:672,w:454,h:84,t:'Fermer le menu'});B.push({id:'vig',x:522,y:672,w:454,h:84,t:'Confort : oui'});B.push({id:'mes',x:48,y:778,w:928,h:84,t:'Afficher les mesures'});menu.btns=B})();
+ B.push({id:'auto',x:522,y:450,w:454,h:84,t:'Défilé auto'});B.push({id:'home',x:48,y:566,w:454,h:84,t:'Revenir au départ'});B.push({id:'seat',x:522,y:566,w:454,h:84,t:'Mode assis'});B.push({id:'close',x:48,y:672,w:454,h:84,t:'Fermer le menu'});B.push({id:'vig',x:522,y:672,w:454,h:84,t:'Confort : oui'});B.push({id:'mes',x:48,y:778,w:454,h:84,t:'Afficher les mesures'});B.push({id:'tvs',x:522,y:778,w:454,h:84,t:'TV : 65 pouces'});menu.btns=B})();
 menu.draw=function(){const g=mc.getContext('2d');g.fillStyle='#16150f';g.fillRect(0,0,1024,900);g.strokeStyle='#A4AE6E';g.lineWidth=6;g.strokeRect(3,3,1018,894);
  g.fillStyle='#F6F2E8';g.font='600 60px Inter, -apple-system, sans-serif';g.fillText('Ma chambre',48,92);g.font='400 30px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.65)';g.font='400 25px Inter, -apple-system, sans-serif';g.fillText('Gâchette : choisir · stick droit en avant : téléportation · poignée : fiche',48,128);
  for(const b of this.btns){const cur=(b.id==='m'+mi)||(b.id==='auto'&&auto)||(b.id==='seat'&&seat)||(b.id==='mes'&&mesOn)||(b.id==='vig'&&vigOn),hov=this.hover===b.id;g.fillStyle=cur?'#A4AE6E':hov?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)';g.beginPath();g.roundRect(b.x,b.y,b.w,b.h,24);g.fill();
@@ -64,7 +64,7 @@ menu.toggle=function(hp,hm){this.open=!this.open;menuMesh.visible=this.open;if(t
 menu.hit=function(O,D){const dn=D[0]*this.N[0]+D[1]*this.N[1]+D[2]*this.N[2];if(dn>-1e-4)return null;const t=((this.C[0]-O[0])*this.N[0]+(this.C[1]-O[1])*this.N[1]+(this.C[2]-O[2])*this.N[2])/dn;if(t<0)return null;
  const Hh=[O[0]+D[0]*t-this.C[0],O[1]+D[1]*t-this.C[1],O[2]+D[2]*t-this.C[2]];const u=Hh[0]*this.Rx[0]+Hh[2]*this.Rx[2],v=Hh[1];if(Math.abs(u)>MW/2||Math.abs(v)>MH/2)return null;
  const px=(u/MW+.5)*1024,py=(.5-v/MH)*900;const b=this.btns.find(b=>px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h);return{t,btn:b?b.id:null}};
-menu.click=function(id){if(id[0]==='m'&&id!=='m'){setAuto(false);setMode(+id.slice(1),false)}else if(id==='auto')setAuto(!auto);else if(id==='home')resetPos();else if(id==='vig'){vigOn=!vigOn}else if(id==='seat'){seat=!seat;yOff=yBase+(seat?45:0)}else if(id==='mes'){setMes(!mesOn)}else if(id==='close'){this.open=false;menuMesh.visible=false}this.draw()};
+menu.click=function(id){if(id==='tvs'){setTv({65:75,75:85,85:65}[R.tvSize]||65);this.draw();return}if(id[0]==='m'&&id!=='m'){setAuto(false);setMode(+id.slice(1),false)}else if(id==='auto')setAuto(!auto);else if(id==='home')resetPos();else if(id==='vig'){vigOn=!vigOn}else if(id==='seat'){seat=!seat;yOff=yBase+(seat?45:0)}else if(id==='mes'){setMes(!mesOn)}else if(id==='close'){this.open=false;menuMesh.visible=false}this.draw()};
 const RD={updateShadows:(s,sd)=>V.updateShadows(sd)};
 const hex=h=>[((h>>16)&255)/255,((h>>8)&255)/255,(h&255)/255];
 const mix=(a,b,t)=>a+(b-a)*t,mixc=(a,b,t)=>[mix(a[0],b[0],t),mix(a[1],b[1],t),mix(a[2],b[2],t)];
@@ -139,11 +139,15 @@ let mesOn=false;const MES=(window.MESURES||[]).map(m=>{const[a,b,c,d,e,f,n]=m;co
  return{bar,lab,p:[(a+d)/2,(b+e)/2+7,(c+f)/2]}});
 function setMes(v){mesOn=v;MES.forEach(m=>{m.bar.visible=v;m.lab.visible=v})}
 window.__setMes=setMes;
-const dyn=new Set([...MES.map(m=>m.bar),...MES.map(m=>m.lab),vig,R.platter,R.label,labMesh,infMesh,...selE,menuMesh,...rays,...dots,...arcDots,ring,...ctrlParts,...R.shafts,...R.dust]);
+const dyn=new Set([...R.tvGrp.children,...MES.map(m=>m.bar),...MES.map(m=>m.lab),vig,R.platter,R.label,labMesh,infMesh,...selE,menuMesh,...rays,...dots,...arcDots,ring,...ctrlParts,...R.shafts,...R.dust]);
 [...Object.values(R.G).flat().map(m=>m.material),...(R.echoScreen?[R.echoScreen.material]:[]),...(R.strips||[]).map(o=>o.m.material),...Object.values(R.ambiPads).map(m=>m.material),R.screens.tv.material,R.screens.mon.material,...R.flames.map(m=>m.material),...R.cityLit.map(m=>m.material),...R.out.map(m=>m.material),
  R.sky.material,R.skyN.material,R.moon.material,R.moonHalo.material,R.tree.material,R.tree2.material,R.pend,R.arcBulb,R.nsShade,R.fado,R.dlBulb,...R.pcFans.map(m=>m.material),R.pcIn.material,R.ceil.material].forEach(m=>dyn.add(m));
 [R.sky,R.skyN,R.moon,R.moonHalo,R.tree,R.tree2,R.ceil].forEach(o=>dyn.add(o));
-const V=makeVRRenderer(gl,sc,dyn);const ambiUp=makeAmbi(R,THREE);window.__V=V;
+const V=makeVRRenderer(gl,sc,dyn);
+// taille de la TV (65, 75 ou 85 pouces) : bouton du menu, gardée d'une visite à l'autre
+function setTv(n){R.setTvSize(n);const b=menu.btns.find(b=>b.id==='tvs');if(b)b.t='TV : '+n+' pouces';try{localStorage.setItem('tvSize',String(n))}catch(e){}}
+try{const n=+localStorage.getItem('tvSize');if(n===75||n===85)setTv(n)}catch(e){}
+window.__setTv=setTv;const ambiUp=makeAmbi(R,THREE);window.__V=V;
 const MODES=[['cosy','Nuit cosy',()=>COSY],['jour','Jour',()=>DAY],['coucher','Coucher de soleil',()=>GOLD],['soir','Soir chaud',()=>EVE],['gaming','Gaming néon',()=>GAME],['fete','Fête',t=>FETE(t)],['cine','Ciné Ambilight',()=>CINE]];
 let mi=0,from=COSY,blendT=1,cur=COSY,el=0;
 function setMode(i,show){mi=(i+MODES.length)%MODES.length;if(R.echoSet)R.echoSet(MODES[mi][0]);if(typeof menu!=='undefined'&&menu.open){menu.draw();show=false}from=cur;blendT=0;document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));if(show)setLabel(MODES[mi][1],'A : ambiance suivante · B : précédente')}

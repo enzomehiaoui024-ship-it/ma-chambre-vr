@@ -3,6 +3,20 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — réglage de la taille de la TV (65, 75 ou 85 pouces) en VR et dans le plan 3D",
+    avant: 65.25, apres: 65.75,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9.25], plan: [9, 9.25], video: [8, 8] },
+    changements: [
+      "Nouveau bouton « TV : 65 pouces » dans le menu VR (bouton Y) : il passe à 75 puis 85 pouces, et revient à 65",
+      "Même bouton « 📺 TV » dans le plan 3D, ligne des vues",
+      "La TV grandit vers le haut et sur les côtés (le bas reste à 1,05 m), avec son halo Ambilight ; ton choix est gardé pour la prochaine visite",
+      "En 85 pouces, la TV passe devant les cadres du Kallax et le ficus : c'est normal, c'est pour voir si ça rentre"
+    ],
+    images: [["tv75", "65 pouces → 75 pouces"], ["tv85", "65 pouces → 85 pouces (Ciné Ambilight)"]],
+    ensuite: "Si Enzo choisit 75 pouces : mettre la TV 75\" dans la liste et décaler le ficus vers la fenêtre."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — retour à la PS5 + PS VR2 (le PC passe en « plus tard »)",
     avant: 65.25, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },

@@ -474,13 +474,21 @@ Lathe(158,0,92,[[0,0],[11,0],[12,26],[11.4,26],[10.4,1],[0,1]],M(0xF4F4F2,{rough
  // remonte du range-câbles → 2e aimant → derrière le support → casque (arrière du serre-tête)
  tube([[66,65,9],[44,67,3],[36,72,-.4],[36,77.6,2.6],[35.5,76.2,14],[34.5,76.2,40],[31.5,78,44.8],[30,88,46],[30,93.5,45.4]],.45,cblM)}
 // ---------- TV TCL 65C69K on wall (bottom at 105 cm) + Meliconi mount ----------
-{const Y0=105,Y1=188.2,Z0=186.6,Z1=331.4,YC=(Y0+Y1)/2;
- B(355,359.8,YC-28,YC+28,240,278,M(0x1a1a1a,{metalness:.6}));
- RB(352.5,357,YC-30,YC+30,212,306,2,M(0x101011,{roughness:.4}));
- RB(350.6,353.2,Y0,Y1,Z0,Z1,.6,M(0x0b0b0c,{roughness:.3,metalness:.3}));
- R.screens.tv=noShadow(P(143,81.4,MB(0x000000,{map:tvT}),350.55,YC,259,-Math.PI/2));
- R.G.tvLed=[mkGlow(210,140,359.3,YC,259,-Math.PI/2)];
- R.ambiPads={l:mkGlow(90,150,359.2,YC,172,-Math.PI/2),r:mkGlow(90,150,359.2,YC,346,-Math.PI/2),t:mkGlow(200,70,359.2,Y1+13,259,-Math.PI/2),b:mkGlow(200,34,359.2,Y0-10,259,-Math.PI/2)};}
+// Tout est dans le groupe R.tvGrp (pivot : bas-centre de l'écran, contre le mur) pour pouvoir passer en 75" ou 85" (R.setTvSize).
+{const tg=new THREE.Group();tg.position.set(355,105,259);sc.add(tg);R.tvGrp=tg;
+ const Y0=105,Y1=188.2,Z0=186.6,Z1=331.4,YC=(Y0+Y1)/2,ox=355,oy=105,oz=259;
+ const rep=m=>{sc.remove(m);m.position.x-=ox;m.position.y-=oy;m.position.z-=oz;tg.add(m);return m};
+ B(0,4.8,YC-28-oy,YC+28-oy,240-oz,278-oz,M(0x1a1a1a,{metalness:.6}),tg);
+ RB(-2.5,2,YC-30-oy,YC+30-oy,212-oz,306-oz,2,M(0x101011,{roughness:.4}),tg);
+ RB(-4.4,-1.8,0,Y1-oy,Z0-oz,Z1-oz,.6,M(0x0b0b0c,{roughness:.3,metalness:.3}),tg);
+ R.screens.tv=rep(noShadow(P(143,81.4,MB(0x000000,{map:tvT}),350.55,YC,259,-Math.PI/2)));
+ R.G.tvLed=[rep(mkGlow(210,140,359.3,YC,259,-Math.PI/2))];
+ R.ambiPads={l:rep(mkGlow(90,150,359.2,YC,172,-Math.PI/2)),r:rep(mkGlow(90,150,359.2,YC,346,-Math.PI/2)),t:rep(mkGlow(200,70,359.2,Y1+13,259,-Math.PI/2)),b:rep(mkGlow(200,34,359.2,Y0-10,259,-Math.PI/2))};
+ // taille de la TV : 65" (de base), 75" ou 85" ; l'épaisseur ne change pas, la TV grandit vers le haut et sur les côtés
+ R.tvSize=65;R.setTvSize=n=>{const k=n/65;R.tvSize=n;tg.scale.set(1,k,k);
+  [['tv',147],['tvs',147]].forEach(([l,y])=>{if(R.L[l])R.L[l].position.y=oy+(y-oy)*k});
+  const C=window.CATALOG;if(C){const e=C.find(c=>c[1][0]==='tv');if(e){const h=(Y1-Y0)*k,w=(Z1-Z0)*k;e[0]=[350,358,Y0-1,Y0+h+2,oz-w/2-1,oz+w/2+1]}}
+  return n};}
 
 // leaf textures (alpha cut-out)
 const ficusLeafT=T(128,256,(g,w,h)=>{g.clearRect(0,0,w,h);g.beginPath();g.moveTo(64,250);g.bezierCurveTo(30,220,24,170,30,140);g.bezierCurveTo(34,118,22,104,14,80);g.bezierCurveTo(4,40,30,6,64,8);g.bezierCurveTo(98,6,124,40,114,80);g.bezierCurveTo(106,104,94,118,98,140);g.bezierCurveTo(104,170,98,220,64,250);g.closePath();

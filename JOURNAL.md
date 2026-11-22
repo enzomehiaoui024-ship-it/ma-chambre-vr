@@ -318,3 +318,9 @@ Vues de contrôle fixes (tools/preview.py) :
 - PC gardé en « plus tard » (hors total) avec la config retenue : RTX 5070 Ti 1 349,99 € (Fnac), SSD 2 To → 2 991,45 €.
 - Total : **5 314,26 €** (+ 2 991,45 € plus tard). VR : 0 erreur. Scores inchangés → **65,25/70**.
 
+## 2026-11-22 — Demande d'Enzo : réglage de la taille de la TV (65 / 75 / 85")
+- `room.js` : toute la TV (dalle, support Meliconi, écran, halo tvLed, 4 halos Ambilight) est dans le groupe `R.tvGrp` (pivot au bas-centre, x 355, y 105, z 259). `R.setTvSize(n)` met l'échelle (1, n/65, n/65), remonte les lumières `tv`/`tvs` et met à jour la boîte cliquable « tv » du catalogue.
+- VR (`app_vr.js`) : bouton « TV : 65 pouces » dans le menu (à côté de « Afficher les mesures »), cycle 65 → 75 → 85 ; les objets de la TV sont dynamiques (hors lots fusionnés). Plan 3D (`plan_gl.html`) : bouton « 📺 TV » dans la ligne des vues. Choix gardé dans localStorage (`tvSize`).
+- Vérifs : en 65", vue de contrôle TV identique ; 75" et 85" corrects dans le plan et en VR (Ambilight suit). 85" passe devant les cadres du Kallax et le ficus. VR : 0 erreur, 424 lots, ~179 k triangles.
+- Scores : VR 9 → 9,25, plan 3D 9 → 9,25 → **65,25 → 65,75/70**.
+

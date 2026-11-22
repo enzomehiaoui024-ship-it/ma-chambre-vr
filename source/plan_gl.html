@@ -31,10 +31,14 @@ button.on{background:#A4AE6E;border-color:#A4AE6E;color:#1b1d12}
 <div class="lbl">ÉCLAIRAGE</div>
 <div class="row"><button data-mode="cosy">Nuit cosy</button><button data-mode="jour">Jour</button><button data-mode="coucher">Coucher de soleil</button><button data-mode="soir">Soir chaud</button><button data-mode="gaming">Gaming</button><button data-mode="fete">Fête</button><button data-mode="cine">Ciné Ambilight</button><button id="auto">Défilé de toutes les ambiances</button></div>
 <div class="lbl">VUES</div>
-<div class="row"><button id="mes">📏 Mesures</button><button data-view="ens">Ensemble</button><button data-view="fenetre">Fenêtre et lune</button><button data-view="lit">Lit</button><button data-view="ambi">TV Ambilight</button><button data-view="tv">Commode et TV</button><button data-view="vinyle">Vinyles</button><button data-view="bureau">Bureau gaming</button><button data-view="dessus">Vu de dessus</button></div>
+<div class="row"><button id="mes">📏 Mesures</button><button data-view="ens">Ensemble</button><button data-view="fenetre">Fenêtre et lune</button><button data-view="lit">Lit</button><button data-view="ambi">TV Ambilight</button><button data-view="tv">Commode et TV</button><button id="tvsz">📺 TV 65"</button><button data-view="vinyle">Vinyles</button><button data-view="bureau">Bureau gaming</button><button data-view="dessus">Vu de dessus</button></div>
 <button id="play">&#9654;&nbsp; Lancer la visite</button>
 </div>
 <script src="items.js"></script><script src="catalog.js"></script><script src="mesures.js"></script><script>window.__LATTES=true</script><script src="shim2.js"></script><script src="room.js"></script><script src="gl2.js"></script><script src="ambi.js"></script>
 <script src="app_gl.js"></script>
+<script>(function(){const R=window.__R,b=document.getElementById('tvsz');if(!R||!b||!R.setTvSize)return;
+ const set=n=>{R.setTvSize(n);b.textContent='📺 TV '+n+'"';b.classList.toggle('on',n!==65);try{localStorage.setItem('tvSize',String(n))}catch(e){}};
+ let n=65;try{n=+localStorage.getItem('tvSize')||65}catch(e){}if(n===75||n===85)set(n);
+ b.onclick=()=>set({65:75,75:85,85:65}[R.tvSize]||65);window.__setTv=set})()</script>
 <script>(function(){const h=document.getElementById('hint');if(!h)return;const off=()=>{setTimeout(()=>h.classList.add('off'),2500)};addEventListener('pointerdown',off,{once:true});setTimeout(()=>h.classList.add('off'),9000)})()</script>
 </body></html>
