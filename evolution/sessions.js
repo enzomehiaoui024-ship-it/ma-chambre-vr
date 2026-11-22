@@ -3,6 +3,26 @@
 window.SESSIONS = [
   {
     date: "2026-11-22",
+    titre: "Demande d'Enzo — bureau console : un seul écran OLED 32\" 4K, PS5 et PS VR2 sur le bureau",
+    avant: 65.25, apres: 65.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },
+    changements: [
+      "Un seul écran : le 34\" ultra-large et l'écran vertical sont remplacés par un 32\" OLED 4K (AOC AG326UD, 71,7 x 42,1 cm) sur un seul bras, avec la barre lumineuse au-dessus",
+      "Ta PS5 (modèle d'origine, 39 cm de haut) est debout sur son socle à gauche du bureau",
+      "Le PS VR2 quitte la commode : le casque est posé devant la PS5 et les 2 manettes Sense entre la PS5 et la lampe",
+      "Liste : écran 32\" 4K à 549,95 € (2 HDMI 2.1 pour la PS5 en 4K 120 Hz) ; option 27\" notée dans la fiche (AOC Q27G41ZDF, 299,90 €) ; écran vertical retiré ; 1 seul bras",
+      "Total de la liste : 5 459,16 € → 5 239,17 €",
+      "VR : 0 erreur (~175 k triangles)"
+    ],
+    images: [
+      ["bureau_ps5", "Le bureau avec un seul écran 32\""],
+      ["coin_ps5", "La PS5 et le PS VR2 à gauche du bureau"],
+      ["bureau_gaming", "Le bureau en ambiance Gaming"]
+    ],
+    ensuite: "Enzo choisit 27\" ou 32\" ; si 27\", remplacer l'écran du plan (60,9 x 35,5 cm). Le PC (« plus tard ») est encore sous le bureau dans le plan."
+  },
+  {
+    date: "2026-11-22",
     titre: "Demande d'Enzo — PS VR2 sur la commode, PC gaming mis « plus tard »",
     avant: 65.25, apres: 65.25,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.5, 9.5], liste: [9.75, 9.75], vr: [9, 9], plan: [9, 9], video: [8, 8] },

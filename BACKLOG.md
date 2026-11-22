@@ -20,7 +20,7 @@
 - Confirmer le prix de la barre de son Ultimea Apollo S40.
 
 ## VR
-- PS VR2 : demander où est la PS5 (la modéliser) ; zone de jeu debout sur le tapis berbère (~1 m x 1,1 m) : l'abat-jour du lampadaire arc est au-dessus (bas à 1,60 m) → proposer de le déplacer ou un modèle qui reste contre le mur.
+- PS VR2 : (PS5 et PS VR2 sur le bureau depuis le 22/11) ; zone de jeu debout sur le tapis berbère (~1 m x 1,1 m) : l'abat-jour du lampadaire arc est au-dessus (bas à 1,60 m) → proposer de le déplacer ou un modèle qui reste contre le mur.
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
@@ -28,7 +28,8 @@
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
-- Sans PC : les écrans du bureau, le clavier/souris, le casque micro et la chaise passent-ils aussi en « plus tard » ?
+- Écran 27" ou 32" OLED ? (32" 4K dessiné par défaut, 549,95 € ; 27" 1440p 299,90 €, vérifier le HDMI 2.1)
+- Boîtier PC « plus tard » encore dessiné sous le bureau : le retirer du plan en attendant ?
 - Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).

@@ -287,3 +287,13 @@ Vues de contrôle fixes (tools/preview.py) :
 - Scores : inchangés (demande d'Enzo, pas une séance d'entraînement ; aucun critère en baisse) → **65,25/70**.
 - Ensuite : placer la PS5 d'Enzo dans le plan quand on saura où elle est ; zone de jeu debout sur le tapis berbère (~1 m x 1,1 m ; l'abat-jour du lampadaire arc est au-dessus, à 1,60 m).
 
+## 2026-11-22 — Demande d'Enzo : bureau console (1 écran OLED, PS5 + PS VR2 sur le bureau)
+- Enzo : un seul écran OLED 27" ou 32" (pas encore décidé), PS5 (modèle d'origine) et PS VR2 sur le bureau. Il garde clavier/souris/tapis et casque micro dans le total.
+- `room.js` : écran 34" ultra-large + écran vertical retirés → **AOC AG326UD 32" 4K** (71,7 x 42,1 cm), centre (98, 117, 16), un seul bras (droite), barre lumineuse au-dessus, halo LED recentré (y 117). PS5 d'origine debout sur socle rond à gauche (groupe en (12, 75.5, 19) : cœur noir, 2 coques blanches légèrement évasées, liserés bleus en façade). PS VR2 déplacé de la commode vers le bureau (groupes : casque en (12.5, 75.5, 51) tourné vers Enzo, manettes en (30.5, 75.5, 30)). Dessous de verre déplacé à droite (137, 45). Câbles du bras gauche retirés ; câble de la PS5 qui descend derrière le bureau.
+- `catalog.js` : boîtes écran/barre mises à jour ; écran vertical et bras gauche retirés ; boîtes PS5 + PS VR2 sur le bureau ; boîtes PS VR2 de la commode retirées.
+- Liste : `ecran` → AOC AG326UD 549,95 € (TopAchat, prix affiché sur aoc.com le 22/11 ; 2 x HDMI 2.1, 165 Hz, Adaptive Sync) ; alternatives dans la note : Samsung Odyssey OLED G8 G81SF 726,52 € (Amazon, geekslands.fr 19/11), AOC Q27G41ZDF 26,5" 1440p 299,90 € (Cybertek ; HDMI 2.1 à confirmer). `ecran2` retiré ; `bras` x1 ; `psvr2` zone bureau ; nouvelle ligne `ps5` (déjà à Enzo, 0 €).
+- Total : 5 459,16 → **5 239,17 €** (+ 2 573,87 € plus tard).
+- Vues : seules celles du bureau changent. VR : 0 erreur, 439 lots, ~175 k triangles.
+- Scores : inchangés (demande d'Enzo) → **65,25/70**.
+- Ensuite : si Enzo choisit le 27", écran 60,9 x 35,5 cm (prix 299,90 €) ; le boîtier PC (« plus tard ») reste dessiné sous le bureau ; vidéo v5 à refaire avec ce bureau.
+
