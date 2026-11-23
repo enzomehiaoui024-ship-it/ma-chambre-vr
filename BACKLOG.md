@@ -1,8 +1,7 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Plan 3D
-- Bouton « Dans ma liste » aussi dans les fiches VR (le lien n'ouvre rien dans le casque : afficher plutôt le total de la zone).
-- Vérifier les boîtes cliquables des autres coins comme celles du bureau (séance 34) : commode, Kallax, portant.
+- Fiche du plan 3D : afficher aussi le total de la zone (comme en VR depuis la séance 35) à côté du bouton « Dans ma liste ».
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
 ## Meubles 3D
@@ -14,7 +13,7 @@
 - Reflets légers sur le parquet et l'écran de TV.
 
 ## Liste d'achat
-- Sansevière : vérifier la hauteur en magasin (viser 60-80 cm) ; TV 75" et barre Samsung HW-B460F : revoir les prix après le Black Friday (offre Auchan jusqu'au 29/11).
+- Sansevière : vérifier la hauteur en magasin (viser 60-80 cm) ; TV 75" (aucun prix trouvé le 23/11 pour le modèle non-Pro) et barre Samsung HW-B460F (134 € Rue du Commerce vu le 23/11, à confirmer) : revoir les prix après le Black Friday (offre Auchan jusqu'au 29/11). Écran AG326UD : 589,99 € sur les comparateurs le 23/11, vérifier les 549,95 € TopAchat.
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
 - Revérifier chaque semaine : PS VR2 (349,99 € Black Friday, fin non annoncée), écran 32", station de charge Sense. PC « plus tard » (RTX 5070 Ti, SSD 2 To) : un coup d'œil par mois suffit. Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
@@ -29,6 +28,7 @@
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 
 ## À demander à Enzo
+- Pothos : 4 dans la 3D (2 étagères du bureau, haut du portant, fenêtre) pour 3 dans la liste → en acheter un 4e (+12,99 €) ou en retirer un de la 3D ?
 - Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).

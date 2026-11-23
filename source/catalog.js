@@ -9,7 +9,7 @@ window.CATALOG = [
   [[8, 199, 46, 62, 171, 327], ["housse", "couette", "matelas", "drap", "protege"]],
   [[6, 55, 55, 92, 178, 322], ["oreillers", "coussins", "coussins2"]],
   [[155, 196, 48, 64, 173, 325], ["plaid"]],
-  [[0, 4, 120, 210, 178, 322], ["cadres2", "posters"]],
+  [[0, 7, 110, 184, 165, 333], ["cadres2", "posters"]],
   [[0, 36, 0, 59, 123, 168], ["chevet", "multi"]],
   [[4, 32, 59, 88, 131, 160], ["lchevet", "ampoules"]],
   [[7, 23, 59, 69, 154, 168], ["echo", "prises"]],
@@ -48,12 +48,13 @@ window.CATALOG = [
   [[146, 170, 0, 27, 80, 104], ["poubelle"]],
   // portant
   [[168, 258, 0, 176, 2, 38], ["portant", "cintres"]],
+  [[228, 256, 125, 200, 20, 55], ["pothos", "pots"]],
   // coin vinyles
   [[321, 360, 0, 77, 100, 177], ["kallax", "brosse"]],
   [[323, 358, 77, 90, 120, 158], ["platine"]],
   [[328, 355, 77, 103, 101, 118], ["enceintes"]],
   [[328, 355, 77, 103, 159, 176], ["enceintes"]],
-  [[356, 360, 104, 152, 102, 172], ["cadres", "posters"]],
+  [[356, 360, 108, 198, 102, 172], ["cadres", "posters"]],
   // commode + TV
   [[320, 360, 0, 76, 199, 319], ["commode", "organis"]],
   [[320, 331, 76, 83, 215, 303], ["barre"]],

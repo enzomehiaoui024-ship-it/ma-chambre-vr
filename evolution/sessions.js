@@ -2,6 +2,22 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-23",
+    titre: "Séance 35 — total de la zone dans les fiches VR, cadres du Kallax et pothos du portant cliquables",
+    avant: 67, apres: 67.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.25, 9.5], plan: [9.25, 9.25], video: [9, 9] },
+    changements: [
+      "En VR, la fiche d'un objet montre maintenant le total de sa zone dans ta liste (ex. « Commode et TV : 9 articles · 1 377,49 € »), car le lien « Dans ma liste » ne s'ouvre pas dans le casque",
+      "Les 2 cadres du haut au-dessus du Kallax n'étaient pas cliquables : c'est corrigé (plan 3D et VR)",
+      "La boîte des cadres au-dessus du lit suit leur vraie place (devant le mur en lattes)",
+      "Le pothos en haut du portant a sa fiche (avant, on tombait sur le portant)",
+      "Prix revérifiés : PS VR2 toujours à 349,99 € (Fnac), barre Samsung vue à 134 € chez Rue du Commerce (à confirmer), écran 32\" : les comparateurs montrent 589,99 €, vérifie l'offre TopAchat à 549,95 €",
+      "Le reste de la chambre ne change pas (8 vues de contrôle identiques)"
+    ],
+    images: [["fiche_vr", "Fiche VR de la TV : ligne « Dans ma liste » avec le total de la zone"], ["cadres_kallax", "Cadre du haut au-dessus du Kallax : rien → sa fiche"], ["pothos_portant", "Pothos du portant : fiche du portant → fiche du pothos"], ["vue_tv", "Vue de contrôle TV : identique"]],
+    ensuite: "Il y a 4 pothos dans la 3D pour 3 dans la liste : à décider avec Enzo (en ajouter un ou en retirer un). Prix TV 75\" et barre de son après le Black Friday."
+  },
+  {
     date: "2026-11-22",
     titre: "Demande d'Enzo — vidéo v5 de la chambre + ambiances plus belles",
     avant: 66, apres: 67,

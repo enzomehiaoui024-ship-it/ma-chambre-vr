@@ -339,3 +339,19 @@ Vues de contrôle fixes (tools/preview.py) :
 - VR : 0 erreur. Scores : vidéo 8 → 9 → **66 → 67/70**.
 - Ensuite : vidéo verticale v5 ; musique libre de droits si Enzo en fournit une.
 
+
+## 2026-11-23 — Séance 35 : total de la zone dans les fiches VR, boîtes cliquables vérifiées
+- `app_vr.js` : panneau de fiche 1024×500 (plan 56 × 27,34 cm) avec une ligne « Dans ma liste · <zone> : N articles · total » (articles « Plus tard » hors total, affichés à part s'il y en a), calculée depuis `window.ITEMS` / `window.ZONES` — même total que la liste (vérifié : Commode et TV 9 articles, 1 377,49 €).
+- `catalog.js` vérifié contre `room.js` (commode, barre, caisson, FADO, plateau, Kallax, platine, enceintes, portant, panier, poubelle, rideaux, plantes, lampes) : cadres du Kallax y 104–152 → 108–198 (la rangée du haut n'était pas cliquable) ; cadres au-dessus du lit → x 0–7, y 110–184, z 165–333 (vraie place devant les lattes) ; nouvelle boîte pour le pothos du portant (x 228–256, y 125–200, z 20–55). Testé avec `__pick` dans le plan 3D.
+- Prix (23/11) : PS VR2 349,99 € Fnac toujours (hivr.fr) ; HW-B460F 134 € Rue du Commerce (magicprices, relevé 22/11) et 148,44 € Easylounge ; AG326UD 589,99 € Amazon (leDénicheur) / 599,99 € Cdiscount ; TCL 75C69K (non-Pro) : pas de prix trouvé. Prix du panier inchangés (notes mises à jour), total **5 721,82 €**.
+- Trouvé : 4 pothos dans la 3D pour 3 dans la liste → question pour Enzo.
+- Vues de contrôle : identiques (écart moyen < 2/255). VR : 0 erreur, 431 lots, ~179 k triangles.
+- Scores : VR 9,25 → 9,5 → **67 → 67,25/70** (aucun critère en baisse).
+- Ensuite : total de la zone aussi dans la fiche du plan 3D ; vidéo verticale v5 ; prix après le Black Friday.
+
+### Compte rendu (pour 7h20)
+- Mieux : en VR, la fiche d'un objet affiche le total de sa zone dans ta liste ; les cadres du haut du Kallax et le pothos du portant ont enfin leur fiche (plan 3D et VR).
+- Score : 67 → 67,25/70 (VR 9,25 → 9,5), aucun critère en baisse ; le reste de la chambre est identique.
+- Prix : PS VR2 toujours 349,99 € ; barre Samsung vue à 134 € (Rue du Commerce, à confirmer) ; écran 32" à 589,99 € sur les comparateurs, vérifie l'offre TopAchat à 549,95 €. Total inchangé : 5 721,82 €.
+- Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
+- À décider : 4e pothos (+12,99 €) ou un de moins dans la 3D ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA / supports vinyles.

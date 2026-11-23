@@ -37,7 +37,7 @@ window.CATALOG = [
   [[8, 199, 46, 62, 171, 327], ["housse", "couette", "matelas", "drap", "protege"]],
   [[6, 55, 55, 92, 178, 322], ["oreillers", "coussins", "coussins2"]],
   [[155, 196, 48, 64, 173, 325], ["plaid"]],
-  [[0, 4, 120, 210, 178, 322], ["cadres2", "posters"]],
+  [[0, 7, 110, 184, 165, 333], ["cadres2", "posters"]],
   [[0, 36, 0, 59, 123, 168], ["chevet", "multi"]],
   [[4, 32, 59, 88, 131, 160], ["lchevet", "ampoules"]],
   [[7, 23, 59, 69, 154, 168], ["echo", "prises"]],
@@ -76,12 +76,13 @@ window.CATALOG = [
   [[146, 170, 0, 27, 80, 104], ["poubelle"]],
   // portant
   [[168, 258, 0, 176, 2, 38], ["portant", "cintres"]],
+  [[228, 256, 125, 200, 20, 55], ["pothos", "pots"]],
   // coin vinyles
   [[321, 360, 0, 77, 100, 177], ["kallax", "brosse"]],
   [[323, 358, 77, 90, 120, 158], ["platine"]],
   [[328, 355, 77, 103, 101, 118], ["enceintes"]],
   [[328, 355, 77, 103, 159, 176], ["enceintes"]],
-  [[356, 360, 104, 152, 102, 172], ["cadres", "posters"]],
+  [[356, 360, 108, 198, 102, 172], ["cadres", "posters"]],
   // commode + TV
   [[320, 360, 0, 76, 199, 319], ["commode", "organis"]],
   [[320, 331, 76, 83, 215, 303], ["barre"]],
@@ -1034,14 +1035,14 @@ function setLabel(t1,t2){const g=lab.getContext('2d');g.clearRect(0,0,1024,256);
  labMesh.material.map=new THREE.CanvasTexture(lab);labMesh.visible=true;labUntil=performance.now()+3500}
 let labUntil=0;
 // ---------- fiche produit en VR : vise un meuble et serre la poignée ----------
-const CAT=window.CATALOG||[],IT={};(window.ITEMS||[]).forEach(d=>IT[d[0]]=d);const STO=window.STORES||{};
-const inf=document.createElement('canvas');inf.width=1024;inf.height=420;
-const infMesh=new THREE.Mesh(new THREE.PlaneGeometry(56,23),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,depthWrite:false}));infMesh.visible=false;infMesh.renderOrder=13;sc.add(infMesh);
+const CAT=window.CATALOG||[],IT={};(window.ITEMS||[]).forEach(d=>IT[d[0]]=d);const STO=window.STORES||{},ZN=window.ZONES||{};
+const inf=document.createElement('canvas');inf.width=1024;inf.height=500;
+const infMesh=new THREE.Mesh(new THREE.PlaneGeometry(56,27.34),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,depthWrite:false}));infMesh.visible=false;infMesh.renderOrder=13;sc.add(infMesh);
 const selE=[...Array(12)].map(()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xD8E48A}));m.visible=false;m.renderOrder=12;sc.add(m);return m});
 const info={id:null,box:null,until:0};
 function pickCat(O,D){let best=null;for(const [b,ids] of CAT){let t0=-1e9,t1=1e9,ok=true;for(let i=0;i<3;i++){const lo=b[i*2],hi=b[i*2+1];if(Math.abs(D[i])<1e-9){if(O[i]<lo||O[i]>hi){ok=false;break}continue}let a=(lo-O[i])/D[i],c=(hi-O[i])/D[i];if(a>c)[a,c]=[c,a];t0=Math.max(t0,a);t1=Math.min(t1,c);if(t0>t1){ok=false;break}}
  if(ok&&t0>0){const v=(b[1]-b[0])*(b[3]-b[2])*(b[5]-b[4]);if(!best||t0<best.t-5||(t0<best.t+5&&v<best.v))best={t:t0,b,ids,v}}}return best}
-function drawInfo(ids){const d=IT[ids[0]];if(!d)return;const g=inf.getContext('2d');g.clearRect(0,0,1024,420);g.fillStyle='rgba(16,16,14,.9)';g.beginPath();g.roundRect(6,6,1012,408,44);g.fill();g.strokeStyle='#A4AE6E';g.lineWidth=5;g.stroke();
+function drawInfo(ids){const d=IT[ids[0]];if(!d)return;const g=inf.getContext('2d');g.clearRect(0,0,1024,500);g.fillStyle='rgba(16,16,14,.9)';g.beginPath();g.roundRect(6,6,1012,488,44);g.fill();g.strokeStyle='#A4AE6E';g.lineWidth=5;g.stroke();
  const fit=(t,w)=>{t=String(t);if(g.measureText(t).width<=w)return t;while(t.length>3&&g.measureText(t+'…').width>w)t=t.slice(0,-1);return t+'…'};
  g.fillStyle='#C9D19A';g.font='600 34px Inter, -apple-system, sans-serif';g.fillText((STO[d[7]]||d[7]||'').toUpperCase(),48,72);
  g.fillStyle='#F6F2E8';g.font='600 64px Inter, -apple-system, sans-serif';g.fillText(fit(d[1],928),48,148);
@@ -1049,6 +1050,11 @@ function drawInfo(ids){const d=IT[ids[0]];if(!d)return;const g=inf.getContext('2
  const q=d[3]||1,p=d[4],e=n=>n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:n%1?2:0});
  g.fillStyle='#F6F2E8';g.font='700 76px Inter, -apple-system, sans-serif';const pt=e(p*q);g.fillText(pt,48,300);const pw=g.measureText(pt).width;if(q>1){g.font='400 34px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.7)';g.fillText(q+' × '+e(p),48+pw+28,296)}
  const rest=ids.slice(1).map(i=>IT[i]).filter(Boolean);if(rest.length){g.font='400 32px Inter, -apple-system, sans-serif';g.fillStyle='#C9D19A';g.fillText(fit('Aussi ici : '+rest.map(r=>r[1]).join(', '),928),48,370)}
+ // total de la zone dans la liste d'achat (le lien « Dans ma liste » ne s'ouvre pas dans le casque) ; « Plus tard » hors total, comme dans la liste
+ {const zi=(window.ITEMS||[]).filter(x=>x[6]===d[6]),zc=zi.filter(x=>x[5]!=='L'),zt=zc.reduce((a,x)=>a+Math.round((x[4]||0)*(x[3]||0)*100)/100,0),zl=zi.filter(x=>x[5]==='L').reduce((a,x)=>a+(x[4]||0)*(x[3]||0),0);
+  g.strokeStyle='rgba(164,174,110,.45)';g.lineWidth=2;g.beginPath();g.moveTo(48,400);g.lineTo(976,400);g.stroke();
+  g.font='400 32px Inter, -apple-system, sans-serif';g.fillStyle='rgba(246,242,232,.75)';const zt0='Dans ma liste · '+(ZN[d[6]]||d[6]||'')+' : ';g.fillText(fit(zt0,600),48,452);const zw=Math.min(600,g.measureText(zt0).width);
+  g.font='700 32px Inter, -apple-system, sans-serif';g.fillStyle='#F6F2E8';const zs=zc.length+' article'+(zc.length>1?'s':'')+' · '+e(zt)+(zl>0?' (+ '+e(Math.round(zl*100)/100)+' plus tard)':'');g.fillText(fit(zs,976-48-zw),48+zw,452)}
  if(infMesh.material.map)V.retex(infMesh.material.map);infMesh.material.map=new THREE.CanvasTexture(inf)}
 function placeSel(b){const c=[(b[0]+b[1])/2,(b[2]+b[3])/2,(b[4]+b[5])/2],s=[b[1]-b[0]+2,b[3]-b[2]+2,b[5]-b[4]+2],w=.8;let k=0;
  for(const a of[0,1,2])for(const u of[-1,1])for(const v of[-1,1]){const o=[...c],sz=[w,w,w];sz[a]=s[a]+w;const[i,j]=[0,1,2].filter(q=>q!==a);o[i]+=u*s[i]/2;o[j]+=v*s[j]/2;const m=selE[k++];m.visible=true;m.userData.matrix=m4mul(T4(...o),new Float32Array([sz[0],0,0,0,0,sz[1],0,0,0,0,sz[2],0,0,0,0,1]))}}
