@@ -361,6 +361,7 @@ Vues de contrôle fixes (tools/preview.py) :
 - Vidéo verticale v5 : `tools/render_video.py` accepte `VERTICAL=1` (720×1280, morceaux dans `video/_chunksV`). 2 055 images en 8 morceaux (~2 min chacun, ~19 min en tout), réencodée x264 veryfast CRF 23 faststart → `video/visite_vertical.mp4` (18,3 Mo) + affiche ; l'ancienne gardée en `visite_vertical_v1.mp4`. Texte de fin sur 2 lignes s'il dépasse la largeur.
 - Vues de contrôle : identiques (écart moyen 1,6–2,05/255 = grain ; après flou 0,16–0,32). VR : 0 erreur, 431 lots, ~179 k triangles.
 - Scores : plan 3D 9,25 → 9,5, vidéo 9 → 9,25 → **67,25 → 67,75/70** (aucun critère en baisse). Liste inchangée (prix à revoir après le Black Friday du 27/11).
+- Publication : plan 3D (v47, fichiers copiés dans le dossier scratchpad de la séance : l'outil refuse /home/claude hors du dépôt) et VR (v41) republiés ; liste inchangée.
 - Ensuite : prix après le Black Friday ; plan TV de la vidéo verticale un peu plus large ; questions en attente (4e pothos, lampadaire arc, chargeur Qi2).
 
 ### Compte rendu (pour 7h20)
