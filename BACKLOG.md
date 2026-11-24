@@ -1,7 +1,7 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Plan 3D
-- Fiche du plan 3D : afficher aussi le total de la zone (comme en VR depuis la séance 35) à côté du bouton « Dans ma liste ».
+- Fiche du plan 3D : bouton pour ajouter/retirer l'article de « J'ai acheté » sans ouvrir la liste (à voir avec la liste qui garde son état en local).
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
 ## Meubles 3D
@@ -24,8 +24,9 @@
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
-- Vidéo verticale (téléphone) à refaire avec la chambre actuelle (la v5 horizontale est faite).
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
+- Vidéo verticale : sur le plan TV (15-20 s), la TV 75" touche les bords de l'image → caméra un peu plus reculée en vertical seulement.
+- Musique libre de droits pour les vidéos (si Enzo en fournit une).
 
 ## À demander à Enzo
 - Pothos : 4 dans la 3D (2 étagères du bureau, haut du portant, fenêtre) pour 3 dans la liste → en acheter un 4e (+12,99 €) ou en retirer un de la 3D ?

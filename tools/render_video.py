@@ -1,11 +1,14 @@
 """Rendu de la vidéo de visite (plan 3D, window.__renderAt) par morceaux reprenables.
 Usage : python3 tools/render_video.py test 2,15,31        -> images de contrôle video/_test_<t>.jpg
         python3 tools/render_video.py chunk K [N]        -> morceau K (sur N, défaut 8) en video/_chunks/c_K.mp4
-        python3 tools/render_video.py join SORTIE.mp4    -> assemble les morceaux (concat, -c copy)"""
+        python3 tools/render_video.py join SORTIE.mp4    -> assemble les morceaux (concat, -c copy)
+Vidéo verticale (téléphone) : préfixer par VERTICAL=1 (720x1280, morceaux dans video/_chunksV)."""
 import sys,os,base64,subprocess,time,json
 from playwright.sync_api import sync_playwright
 R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));W,H,FPS=1280,720,30
-C=os.path.join(R,'video','_chunks');os.makedirs(C,exist_ok=True)
+VERT=os.environ.get('VERTICAL')=='1'
+if VERT:W,H=720,1280
+C=os.path.join(R,'video','_chunksV' if VERT else '_chunks');os.makedirs(C,exist_ok=True)
 def page(p):
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--allow-file-access-from-files'])
     pg=b.new_page(viewport={'width':W,'height':H});pg.goto('file://'+os.path.join(R,'source','plan_gl.html')+'?ombres=1');pg.wait_for_timeout(5000);return b,pg
@@ -18,7 +21,7 @@ with sync_playwright() as p:
     b,pg=page(p);tot=pg.evaluate('window.__TOTAL||68.5')
     if mode=='test':
         for t in sys.argv[2].split(','):
-            d=pg.evaluate(f'__renderAt({float(t)},{W},{H})');open(os.path.join(R,'video',f'_test_{t}.jpg'),'wb').write(base64.b64decode(d.split(',')[1]));print('img',t,flush=True)
+            d=pg.evaluate(f'__renderAt({float(t)},{W},{H})');open(os.path.join(R,'video',f'_test{"V" if VERT else ""}_{t}.jpg'),'wb').write(base64.b64decode(d.split(',')[1]));print('img',t,flush=True)
     else:
         k=int(sys.argv[2]);n=int(sys.argv[3]) if len(sys.argv)>3 else 8;nf=int(round(tot*FPS));a=nf*k//n;z=nf*(k+1)//n
         out=os.path.join(C,f'c_{k:02d}.mp4');tmp=os.path.join(C,f'tmp_{k:02d}.mp4');t0=time.time()

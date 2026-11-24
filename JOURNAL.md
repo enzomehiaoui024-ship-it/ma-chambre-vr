@@ -355,3 +355,16 @@ Vues de contrôle fixes (tools/preview.py) :
 - Prix : PS VR2 toujours 349,99 € ; barre Samsung vue à 134 € (Rue du Commerce, à confirmer) ; écran 32" à 589,99 € sur les comparateurs, vérifie l'offre TopAchat à 549,95 €. Total inchangé : 5 721,82 €.
 - Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
 - À décider : 4e pothos (+12,99 €) ou un de moins dans la 3D ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA / supports vinyles.
+
+## 2026-11-24 — Séance 36 : total de la zone dans les fiches du plan 3D, vidéo verticale v5
+- `app_gl.js` : `zoneTot(d)` ajoute sous les boutons de la fiche une ligne « Total de la zone : N articles · total (+ … plus tard) », même calcul que la liste et la fiche VR (arrondi par ligne, « Plus tard » à part). Style `.czt` dans `plan_gl.html` (trait olive au-dessus). Vérifié en émulation iPhone (390×844) : Setup gaming 4 articles · 1 139,73 € (+ 2 991,45 € plus tard), Commode et TV 9 articles · 1 377,49 €, Coin lit 18 articles · 1 125,87 €.
+- Vidéo verticale v5 : `tools/render_video.py` accepte `VERTICAL=1` (720×1280, morceaux dans `video/_chunksV`). 2 055 images en 8 morceaux (~2 min chacun, ~19 min en tout), réencodée x264 veryfast CRF 23 faststart → `video/visite_vertical.mp4` (18,3 Mo) + affiche ; l'ancienne gardée en `visite_vertical_v1.mp4`. Texte de fin sur 2 lignes s'il dépasse la largeur.
+- Vues de contrôle : identiques (écart moyen 1,6–2,05/255 = grain ; après flou 0,16–0,32). VR : 0 erreur, 431 lots, ~179 k triangles.
+- Scores : plan 3D 9,25 → 9,5, vidéo 9 → 9,25 → **67,25 → 67,75/70** (aucun critère en baisse). Liste inchangée (prix à revoir après le Black Friday du 27/11).
+- Ensuite : prix après le Black Friday ; plan TV de la vidéo verticale un peu plus large ; questions en attente (4e pothos, lampadaire arc, chargeur Qi2).
+
+### Compte rendu (pour 7h20)
+- Mieux : dans le plan 3D, toucher un objet affiche maintenant le total de sa zone dans ta liste (comme en VR) ; nouvelle vidéo verticale pour téléphone avec la chambre actuelle (TV 75", lattes, PS5 + PS VR2).
+- Score : 67,25 → 67,75/70 (plan 3D 9,25 → 9,5, vidéo 9 → 9,25), aucun critère en baisse ; la chambre elle-même est identique.
+- Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
+- À décider : 4e pothos (+12,99 €) ou un de moins dans la 3D ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA / supports vinyles. Prix revérifiés après le Black Friday (27/11).

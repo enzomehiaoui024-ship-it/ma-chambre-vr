@@ -2,6 +2,22 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-24",
+    titre: "Séance 36 — total de la zone dans les fiches du plan 3D, vidéo verticale v5",
+    avant: 67.25, apres: 67.75,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.5, 9.5], plan: [9.25, 9.5], video: [9, 9.25] },
+    changements: [
+      "Plan 3D : quand tu touches un objet, sa fiche montre maintenant le total de sa zone dans ta liste (ex. « 4 articles · 1 139,73 € (+ 2 991,45 € plus tard) » pour le setup gaming), comme en VR",
+      "Le total est calculé exactement comme dans la liste d'achat : les articles « Plus tard » (le PC) sont à part",
+      "Nouvelle vidéo verticale pour le téléphone avec la chambre actuelle : TV 75\", mur en lattes derrière le lit, bureau avec PS5 et PS VR2 rangé sur son support",
+      "Sur la vidéo verticale, le texte de fin passe sur 2 lignes s'il est trop large",
+      "Le reste de la chambre ne change pas (8 vues de contrôle identiques)"
+    ],
+    video: "video/visite_vertical.mp4", poster: "video/visite_vertical_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone v5 (verticale, 1 min 08)",
+    images: [["fiche_ecran", "Fiche de l'écran 32\" dans le plan 3D : ligne « Total de la zone » en bas"], ["fiche_tv", "Fiche de la TV : 9 articles · 1 377,49 € pour la zone Commode et TV"], ["video_lit", "Vidéo verticale : l'ancienne n'avait pas le mur en lattes"], ["video_tv", "Vidéo verticale : TV 65\" éteinte → TV 75\" allumée"], ["video_bureau", "Vidéo verticale : ancien PC → PS5 + PS VR2 sur son support"]],
+    ensuite: "Prix après le Black Friday (27/11) : TV 75\", barre Samsung, écran 32\", PS VR2. Questions à Enzo : 4e pothos, lampadaire arc de remplacement, chargeur Qi2."
+  },
+  {
     date: "2026-11-23",
     titre: "Séance 35 — total de la zone dans les fiches VR, cadres du Kallax et pothos du portant cliquables",
     avant: 67, apres: 67.25,
@@ -399,7 +415,7 @@ window.SESSIONS = [
       "Matelas VALEVÅG : il existe bien en 140×190 (la taille du lit MALM, vérifiée : 199×156 cm). Lien corrigé et prix en promo 249 € au lieu de 279 €",
       "Total de la liste : 7 325,34 € → 7 295,34 €"
     ],
-    video: "video/visite_vertical.mp4", poster: "video/visite_vertical_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone (verticale, 1 min 08)",
+    video: "video/visite_vertical_v1.mp4", poster: "video/visite_vertical_v1_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone (verticale, 1 min 08)",
     images: [],
     ensuite: "Spots pour plantes : trouver le vrai prix ; placer les supports vinyles (à décider avec Enzo)."
   },
