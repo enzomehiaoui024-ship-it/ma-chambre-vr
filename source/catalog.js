@@ -15,8 +15,8 @@ window.CATALOG = [
   [[7, 23, 59, 69, 254, 268], ["echo", "prises"]],
   [[58, 148, 0, 2, 210, 268], ["passage"]],
   // mur à sneakers
-  [[0, 36, 0, 92, 188, 220], ["boitesneak"]],
-  [[0, 26, 118, 200, 186, 247], ["sneakers", "ledsneak"]],
+  [[0, 36, 0, 92, 191, 223], ["boitesneak"]],
+  [[0, 26, 118, 200, 189, 250], ["sneakers", "ledsneak"]],
   // bureau gaming
   [[190, 350, 71, 75.5, 0, 80], ["bureau", "ledbureau", "cables"]],
   [[190, 197, 0, 71, 34, 46], ["bureau", "cables"]],
@@ -46,9 +46,10 @@ window.CATALOG = [
   [[246, 294, 75, 124, 120, 138], ["chaise2"]],
   [[196, 232, 0, 50, 40, 76], ["linge"]],
   [[318, 342, 0, 27, 33, 57], ["poubelle"]],
-  // portant
-  [[93, 183, 0, 176, 2, 38], ["portant", "cintres"]],
-  [[153, 181, 125, 200, 20, 55], ["pothos", "pots"]],
+  // portant (mur ouest, à côté de la porte) + coin sport
+  [[0, 40, 0, 176, 99, 189], ["portant", "cintres"]],
+  [[18, 56, 125, 200, 99, 131], ["pothos", "pots"]],
+  [[100, 186, 0, 212, 0, 78], ["tour"]],
   // coin vinyles
   [[321, 360, 0, 77, 200, 277], ["kallax", "brosse"]],
   [[323, 358, 77, 90, 220, 258], ["platine"]],

@@ -9,7 +9,7 @@ Chambre de 3,60 × 4,60 m (16,6 m², plan d'Enzo du 27/11/2026), thème **noir &
 - Lit MALM 140×190 brun noir dans le coin sud-ouest, à 33 cm du mur de la fenêtre (x 0–199, z 271–427).
 - Bureau TROTTEN 160×80 dans le coin nord-est (x 190–350, z 0–80), PS5 + PS VR2 dessus.
 - Mur est : Kallax 77×77 (z 200–277), commode 6 tiroirs 120×40×76 (z 299–419), TV 75" au mur (bas de l'écran à 1,05 m, centre z 359).
-- Portant GRÅFJÄLLET sur le mur nord à côté de la porte (x 93–183). Sansevière dans le coin sud-est, lampadaire arc à côté.
+- Coin sport (plan 2, 27/11) : tour de traction DH FitLife 82×75×210 contre le mur nord (x 102–184, z 2–77) ; portant GRÅFJÄLLET tourné contre le mur ouest entre la porte et les sneakers (z 99–189). Sansevière dans le coin sud-est, lampadaire arc à côté.
 
 Repère (cm) : x vers l'est (0–360), z vers le sud (0–460), y vers le haut (plafond 250).
 Dans `room.js`, chaque meuble est construit dans une zone (`ZN`) et `ZOFF` déplace chaque zone d'un bloc à la fin (lit/mur est/fenêtre +100 en z, bureau +190 en x…).

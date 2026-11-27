@@ -378,3 +378,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - Vues de contrôle équivalentes (décalées) : mur est identique, coin lit identique (sans la chaise derrière), bureau et porte nouveaux. VR : 0 erreur, 443 lots, ~179 k triangles.
 - Scores inchangés (demande d'Enzo) → **67,75/70**.
 - Ensuite : vidéo de visite v6 dans la nouvelle pièce (`movie.js` a encore l'ancien parcours) ; demander où sont les prises et l'interrupteur.
+
+## 2026-11-27 — Demande d'Enzo : plan 2 « coin sport à l'entrée » + tour de traction
+- 5 schémas proposés (tour au milieu, coin sport à l'entrée, bureau face à la fenêtre, lit à droite, tour dans le coin du bureau) ; Enzo choisit le 2.
+- Tour : modèle de sa capture = DH FitLife Power Tower 10 niveaux ASIN B0DNTWJJV2, 82 x 75 x 210 cm, 150 kg (≠ B09PGQ66NV 100 x 65 x 230). `room.js` : groupe `R.tower` en (143, 0, 2) : rails au sol + 4 pieds, montants carrés avec trous, jambes de force, coudes, barre de traction + poignées inclinées en mousse, barres de dips, dossier, traverse basse, poignées de pompes.
+- Portant : zone `port` regroupée dans `R.portant` (groupe tourné de 90°, centre (20, 0, 144)) → mur ouest x 2–38, z 99–189, face à l'est. Mur à sneakers +3 cm (zone `snk`, z 191–250) pour laisser la place.
+- `catalog.js` (tour, portant, pothos du portant, sneakers), `mesures.js` (tour, portant, passage devant la tour 194 cm), VR : zones interdites tour + portant.
+- Liste : ligne `tour` 87,99 € (Amazon.be le 27/11, Amazon.fr non relevé → non vérifié), nouvelle zone « Coin sport », mini-plan de la liste redessiné en 3,60 x 4,60 m. Total +87,99 €.
+- VR : 0 erreur, 453 lots, ~189 k triangles. Scores inchangés (demande d'Enzo) → **67,75/70**.

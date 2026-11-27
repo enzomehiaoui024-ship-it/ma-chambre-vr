@@ -3,6 +3,21 @@
 window.SESSIONS = [
   {
     date: "2026-11-27",
+    titre: "Demande d'Enzo — coin sport à l'entrée (plan 2) avec la tour de traction",
+    avant: 67.75, apres: 67.75,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.5, 9.5], plan: [9.5, 9.5], video: [9.25, 9.25] },
+    changements: [
+      "Tour de traction DH FitLife (82 × 75 × 210 cm) contre le mur du haut, entre la porte et le bureau : barre de traction, barres de dips, dossier, poignées de pompes",
+      "Le portant tourne d'un quart de tour et passe sur le mur de gauche, entre la porte et le mur à sneakers",
+      "60 cm libres devant la tour ; le centre de la pièce reste libre pour jouer en VR",
+      "Ajoutée à la liste (zone « Coin sport », 87,99 € à confirmer sur Amazon.fr) ; fiche cliquable dans le plan 3D et en VR",
+      "Conseil : plafond à 2,50 m → barre réglée à 2,10 m maximum"
+    ],
+    images: [["sport_dessus", "Vue de dessus : la tour à la place du portant"], ["sport", "L'entrée : portant sur le mur de gauche, tour à droite de la porte"], ["tour", "La tour vue de face"]],
+    ensuite: "Confirmer le prix de la tour sur Amazon.fr ; vidéo de visite dans la nouvelle pièce."
+  },
+  {
+    date: "2026-11-27",
     titre: "Demande d'Enzo — nouvelle chambre 3,60 × 4,60 m, porte sur le mur de gauche",
     avant: 67.75, apres: 67.75,
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.5, 9.5], plan: [9.5, 9.5], video: [9.25, 9.25] },

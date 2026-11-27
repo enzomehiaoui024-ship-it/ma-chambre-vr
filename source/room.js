@@ -25,7 +25,7 @@ const R={scene:sc,L:{},G:{},anim:{},screens:{}};
 // est déplacée d'un bloc (ZOFF, en cm) : lit, mur est (Kallax, commode, TV) et fenêtre +100 vers le sud,
 // bureau dans le coin nord-est, portant près de la porte, suspension au centre.
 const RX=360,RZ=460;R.size=[RX,RZ];let ZN='fix';
-const ZOFF={fix:[0,0],S:[0,100],lit:[0,100],E:[0,100],bur:[190,0],port:[-75,0],pb:[172,-47],pend:[0,50]};R.zoff=ZOFF;
+const ZOFF={fix:[0,0],S:[0,100],lit:[0,100],E:[0,100],bur:[190,0],pb:[172,-47],pend:[0,50],snk:[0,103],port:[0,0]};R.zoff=ZOFF;
 {const _a=sc.add.bind(sc);sc.add=function(){for(const o of arguments)if(o){o.userData=o.userData||{};if(o.userData._z==null)o.userData._z=ZN}return _a.apply(sc,arguments)}}
 R.strips=[];const strip=(x0,x1,y0,y1,z0,z1,k,g)=>{const m=noShadow(B(x0,x1,y0,y1,z0,z1,MB(0x000000)));R.strips.push({m,k,g:g||2.4});return m};
 
@@ -226,6 +226,7 @@ const frM=M(0x141414,{roughness:.35});[BC-58,BC,BC+58].forEach((zc,i)=>{RB(WX,WX
  const sm=new THREE.Mesh(new THREE.PlaneGeometry(11.6,7),MB(0xffffff,{map:st}));R.echoScreen=sm;sm.position.set(0,4.5,3.75);g.add(sm);
  const cam=S(5.4,7.9,3.72,.22,M(0x050505,{roughness:.1}),1,1,.4,g,8)}
 
+ZN='snk';
 // ---------- sneaker wall: clear boxes + 3 floating shelves with Tapo L900-5 LED ----------
 function sneaker(x,y,z,c,acc,ry,p){const g=Grp(x,y,z,ry||0,p);const mc=M(c,{roughness:.75}),ma=M(acc,{roughness:.65});
  RB(-5,5,0,.8,-14,14,.5,M(0xd9d3c6,{roughness:.9}),g,1);RB(-5.1,5.1,.6,3,-14.2,14.2,1.2,M(0xF7F6F2,{roughness:.8}),g,1);
@@ -592,6 +593,28 @@ const shaftT=TI(64,256,(u,v)=>(1-v)*.9*Math.min(1,Math.min(u,1-u)*4));
 R.shafts=[];for(let i=0;i<4;i++){const m=noShadow(new THREE.Mesh(new THREE.PlaneGeometry(52,260),glow(0xfff0d0,.05)));m.material.map=shaftT;m.position.set(132+i*32,150-40,300);m.rotation.x=0.68;m.rotation.y=.1*(i-1.5);sc.add(m);R.shafts.push(m)}
 
 ZN='fix';
+// ---------- tour de traction DH FitLife Power Tower 10 niveaux (82 x 75 x 210 cm), coin sport à l'entrée (plan 2 choisi par Enzo le 27/11/2026) ----------
+// contre le mur nord entre la porte et le bureau (x 102-184, z 2-77) ; on s'entraîne face au sud, barre réglée à 2,10 m max (plafond 2,50 m)
+{const g=Grp(143,0,2,0);R.tower=g;const st=M(0x1c1c1e,{metalness:.55,roughness:.38}),foam=M(0x111112,{roughness:1}),rub=M(0x232325,{roughness:.9});
+ const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+ const tb=(pts,r,m)=>{const cv={getPoint:t=>{const n=pts.length-1,f=Math.min(n-1e-6,t*n),i=Math.floor(f),u=f-i,a=pts[i],b=pts[i+1];return V(a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,a[2]+(b[2]-a[2])*u)}};return add(new THREE.Mesh(new THREE.TubeGeometry(cv,pts.length*8,r,10),m),g)};
+ const bend=(a,c,b,r,m)=>add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(V(...a),V(...c),V(...b)),16,r,10),m),g);
+ [-1,1].forEach(sd=>{const xr=sd*36,xu=sd*24;
+  RB(xr-2.5,xr+2.5,1,6,3,73,1.2,st,g,2);// rail au sol (avant-arrière)
+  [[6],[70]].forEach(([z])=>{Cy(xr,z,0,1.6,5.5,rub,null,20,g);RB(xr-3,xr+3,1.6,7,z-3,z+3,.8,foam,g,1)});// pieds ventouses
+  RB(xu-2.5,xu+2.5,5,172,16,21,1,st,g,2);// montant carré
+  for(let k=0;k<6;k++)Cy(xu,21.2,118+k*9,118.6+k*9,.5,M(0x050505),null,8,g);// trous de réglage (devant)
+  tb([[xr,6,30],[xu+sd*1,62,19]],1.6,st);tb([[xr,6,62],[xu,46,21]],1.6,st);// jambes de force
+  bend([xu,170,18.5],[xu,192,18],[xu,196,30],2.2,st);// coude du haut vers l'avant
+  tb([[xu,196,30],[sd*39,203,38]],1.9,st);// poignée inclinée
+  tb([[sd*31,201.5,35],[sd*41,204.5,39.5]],2.3,foam);
+  // barres de dips
+  RB(xu-3,xu+3,108,118,14,23,1,st,g,1);tb([[xu,114,23],[xu+sd*4,114,52]],1.7,st);tb([[xu+sd*1.6,114,34],[xu+sd*4.4,114,54]],2.4,foam);
+  tb([[xu,98,21],[xu+sd*1,112,34]],1.3,st)});
+ tb([[-27,196,30],[27,196,30]],1.6,st);// barre de traction
+ RB(-24,24,128,140,9,15,3,foam,g,2);RB(-21,21,129,139,15,16,1,st,g,1);// dossier
+ RB(-24,24,18,24,16.5,20.5,1,st,g,1);RB(-14,14,19.2,22.8,20.4,20.6,.2,M(0x9a9a9a,{metalness:.6}),g,1);// traverse basse + plaque
+ [-1,1].forEach(sd=>{tb([[sd*36,12,50],[sd*46,12,50]],1.6,st);tb([[sd*39,12,50],[sd*46,12,50]],2.2,foam)})}// poignées de pompes
 // ---------- lights ----------
 const amb=new THREE.HemisphereLight(0xfff6ea,0x9a8068,.6);sc.add(amb);R.amb=amb;
 const sun=new THREE.DirectionalLight(0xfff0dc,1);sun.position.set(180+150,180+420,180+500);sun.target.position.set(RX/2,0,RZ/2);sc.add(sun);sc.add(sun.target);R.sun=sun;
@@ -601,11 +624,13 @@ ZN='pend';PL('pend',0xffe1b8,180,196,180,520);ZN='lit';PL('arc',0xffd39a,214,176
 ZN='bur';PL('desk',0xfff0d8,50,89,16,170);PL('deskLed',0xff8a30,72,110,10,150,1.3);PL('shelf',0xf4f7ff,90,166,12,150,1.2);ZN='lit';PL('bed',0xff8a30,100,6,249,190);PL('head',0xff8a30,6,118,249,200);
 ZN='E';PL('tv',0xff8a30,357,147,259,230);PL('tvs',0xffb080,330,147,259,260);
 // TV 75 pouces choisie par Enzo le 22/11/2026 (TCL 75C69K, 167 x 96 cm) ; le bouton TV permet encore d'essayer 65 ou 85
-R.setTvSize(75);ZN='bur';PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);ZN='lit';PL('sneak',0xfff0d8,10,150,116,110);ZN='E';PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);ZN='lit';PL('candle2',0xff9a40,29,68,157,140,1.6);ZN='S';PL('candle3',0xff9a40,206,102,350,130,1.6);
+R.setTvSize(75);ZN='bur';PL('mon',0x7a6cff,98,113,30,170);PL('pc',0xb040ff,139,26,70,140);ZN='snk';PL('sneak',0xfff0d8,10,150,116,110);ZN='E';PL('spot',0xfff3dc,330,60,330,160);PL('candle',0xff9a40,345,88,233,150,1.6);ZN='lit';PL('candle2',0xff9a40,29,68,157,140,1.6);ZN='S';PL('candle3',0xff9a40,206,102,350,130,1.6);
 {const sp=(n,d,c)=>{const l=Math.hypot(...d);R.L[n].userData.spot=[d[0]/l,d[1]/l,d[2]/l,c]};sp('arc',[0,-1,0],.15);sp('desk',[-23,-24,16],.45);sp('spot',[.15,1,.2],.55);sp('sneak',[0,-1,0],.1)}
 ['arc','fado','ns','spot'].forEach(n=>R.L[n].userData.sh=1);R.L.ns.userData.shO=[0,9,0];
 // déplacement final de chaque zone (pièce 3,60 x 4,60)
 sc.children.forEach(o=>{const d=ZOFF[(o.userData||{})._z];if(d&&(d[0]||d[1])){o.position.x+=d[0];o.position.z+=d[1]}});
+// portant GRÅFJÄLLET tourné d'un quart de tour contre le mur ouest, entre la porte et les sneakers (x 2-38, z 99-189), face à l'est
+{const PG=new THREE.Group();PG.position.set(20,0,144);PG.rotation.y=Math.PI/2;sc.children.filter(o=>(o.userData||{})._z==='port').forEach(o=>{sc.remove(o);o.position.x-=213;o.position.z-=20;PG.add(o)});ZN='fix';sc.add(PG);R.portant=PG}
 if(R.setTvSize)R.setTvSize(R.tvSize);
 return R}
 if(typeof module!=='undefined')module.exports=buildRoom;
