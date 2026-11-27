@@ -24,13 +24,14 @@
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
+- Refaire la vidéo (normale + verticale) dans la pièce 3,60 × 4,60 m : `movie.js` garde l'ancien parcours.
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 - Vidéo verticale : sur le plan TV (15-20 s), la TV 75" touche les bords de l'image → caméra un peu plus reculée en vertical seulement.
 - Musique libre de droits pour les vidéos (si Enzo en fournit une).
 
 ## À demander à Enzo
 - Pothos : 4 dans la 3D (2 étagères du bureau, haut du portant, fenêtre) pour 3 dans la liste → en acheter un 4e (+12,99 €) ou en retirer un de la 3D ?
-- Où sont les prises murales (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
+- Nouvelle pièce : où sont l'interrupteur et les prises (quels murs) ? → nombre de multiprises (zone TV/Kallax : TV, barre de son, platine, enceintes, FADO = 5 prises, aucune multiprise prévue).
 - Murs en placo ou en béton ? → chevilles pour le support TV (65 kg) et les étagères.
 - Remplaçant du lampadaire arc (épuisé) et de la lampe NOOLI (« bientôt disponible »).
 - Chargeur : Enzo a un iPhone 14 (Qi2 15 W depuis iOS 17.2). Proposé : Belkin BoostCharge Pro Qi2 15 W noir + adaptateur 20 W, 59,95 € LDLC → attendre son accord avant panier/3D.

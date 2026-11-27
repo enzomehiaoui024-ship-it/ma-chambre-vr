@@ -1,19 +1,19 @@
-// Cotes affichées par le bouton « Mesures » du plan 3D (cm, repère de room.js).
+// Cotes affichées par le bouton « Mesures » du plan 3D (cm, repère de room.js, pièce 3,60 x 4,60 m depuis le 27/11/2026).
 // [x1,y1,z1, x2,y2,z2, "nom"] : la longueur est calculée ; « passage » = espace libre pour circuler.
 window.MESURES = [
-  [0, 2, 352, 360, 2, 352, "Pièce"],
-  [292, 2, 0, 292, 2, 360, "Pièce"],
-  [0, 50, 166, 199, 50, 166, "Lit MALM"],
-  [205, 50, 171, 205, 50, 327, "Lit"],
-  [199, 3, 259, 320, 3, 259, "Passage"],
-  [0, 78, 85, 160, 78, 85, "Bureau"],
-  [165, 78, 0, 165, 78, 80, "Bureau"],
-  [110, 3, 80, 110, 3, 171, "Passage"],
-  [315, 80, 199, 315, 80, 319, "Commode"],
-  [315, 80, 100, 315, 80, 177, "Kallax"],
-  [168, 3, 44, 258, 3, 44, "Portant"],
-  [213, 3, 38, 213, 3, 171, "Passage"],
-  [352, 0, 192, 352, 105, 192, "Bas de la TV"],
-  [336, 3, 4, 336, 3, 83, "Porte"],
-  [36, 3, 145, 36, 59, 145, "Chevet"]
+  [0, 2, 452, 360, 2, 452, "Pièce"],
+  [180, 2, 0, 180, 2, 460, "Pièce"],
+  [0, 50, 266, 199, 50, 266, "Lit MALM"],
+  [205, 50, 271, 205, 50, 427, "Lit"],
+  [199, 3, 359, 320, 3, 359, "Passage"],
+  [190, 78, 85, 350, 78, 85, "Bureau"],
+  [355, 78, 0, 355, 78, 80, "Bureau"],
+  [330, 3, 80, 330, 3, 200, "Passage"],
+  [315, 80, 299, 315, 80, 419, "Commode"],
+  [315, 80, 200, 315, 80, 277, "Kallax"],
+  [93, 3, 44, 183, 3, 44, "Portant"],
+  [140, 3, 38, 140, 3, 271, "Passage"],
+  [352, 0, 290, 352, 105, 290, "Bas de la TV"],
+  [4, 3, 15, 4, 3, 95, "Porte"],
+  [36, 3, 245, 36, 59, 245, "Chevet"]
 ];

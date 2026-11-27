@@ -9,12 +9,12 @@ uniform sampler2D uMap,uSM,uTM;uniform vec2 uRep;uniform vec3 uPP[${VNL}],uPC[${
 vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
 float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float tx=1./2048.,s=0.;
 s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(-tx,-tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(tx,-tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(-tx,tx))))?0.:1.;s+=(p.z-.0012>unpack(texture2D(uSM,p.xy+vec2(tx,tx))))?0.:1.;return s*.25;}
-float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.,r=8./420.;
+float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.,r=8./500.;
 for(int i=0;i<4;i++){float a=float(i)*1.5708+.4;float d=unpack(texture2D(uTM,p.xy+vec2(cos(a),sin(a))*r));float gap=(p.z-d)*300.;if(gap>1.5)o+=exp(-gap/85.);}return 1.-.7*o*.25;}
 void main(){vec2 uv=uFract==1?fract(vU*uRep):vU*uRep;vec4 tx=vec4(1.);vec3 base=uCol;if(uHasMap==1){tx=texture2D(uMap,uv);base*=uBasic==1?tx.rgb:pow(tx.rgb,vec3(2.2));}
 if(uHasMap==1&&tx.a<uAT)discard;if(uBasic==1){gl_FragColor=vec4(base,uOp*tx.a);return;}
 vec3 n=normalize(vN);if(uDbl==1&&!gl_FrontFacing)n=-n;vec3 V=normalize(uCam-vW);
-float dx=min(vW.x,360.-vW.x),dz=min(vW.z,360.-vW.z),dw=min(dx,dz),dy=min(vW.y,250.-vW.y);float inR=step(-1.,vW.x)*step(vW.x,361.)*step(-1.,vW.z)*step(vW.z,361.);
+float dx=min(vW.x,360.-vW.x),dz=min(vW.z,460.-vW.z),dw=min(dx,dz),dy=min(vW.y,250.-vW.y);float inR=step(-1.,vW.x)*step(vW.x,361.)*step(-1.,vW.z)*step(vW.z,461.);
 float aoc=1.-inR*(.32*(1.-smoothstep(0.,40.,dw))*(1.-smoothstep(0.,40.,dy))+.22*(1.-smoothstep(0.,45.,dx))*(1.-smoothstep(0.,45.,dz)));
 vec3 amb=mix(uGnd,uSky,.5*n.y+.5)*uHI*topAO()*aoc;
 float sh=4.+(1.-uRough)*(1.-uRough)*180.;float ks=mix(.04,1.,uMetal)*(1.-uRough)*(1.-uRough)*1.6;vec3 dif=vec3(0.),spc=vec3(0.);
@@ -68,8 +68,8 @@ function shadowPass(F,L,top){const {meshes}=collect();gl.bindFramebuffer(gl.FRAM
  for(let i=0;i<8;i++)gl.disableVertexAttribArray(i);gl.enableVertexAttribArray(attr.SP);gl.uniformMatrix4fv(PS.U.uL,false,L);
  for(const[o,m,v]of meshes){const mt=o.material;if(!v||o.castShadow===false||mt.basic||mt.transparent||(top&&o.userData&&o.userData.noTop))continue;const g=geo(o.geometry);gl.uniformMatrix4fv(PS.U.uM,false,m);gl.bindBuffer(gl.ARRAY_BUFFER,g.p);gl.vertexAttribPointer(attr.SP,3,gl.FLOAT,false,0,0);gl.drawArrays(gl.TRIANGLES,0,g.c)}}
 const api={batches,dyn};api.retex=t=>{const r=texs.get(t);if(r){gl.deleteTexture(r.o);texs.delete(t)}};
-api.updateShadows=function(sd){const c={x:180,y:90,z:180};SL=m4mul(ortho(-300,300,-300,300,200,1300),look({x:c.x+sd[0]*700,y:c.y+sd[1]*700,z:c.z+sd[2]*700},c));shadowPass(SM,SL,false);
- if(!TL){TL=m4mul(ortho(-210,210,-210,210,10,310),look({x:180,y:260,z:180},{x:180,y:-40,z:180.0001}));shadowPass(TM,TL,true)}};
+api.updateShadows=function(sd){const c={x:180,y:90,z:230};SL=m4mul(ortho(-300,300,-300,300,200,1300),look({x:c.x+sd[0]*700,y:c.y+sd[1]*700,z:c.z+sd[2]*700},c));shadowPass(SM,SL,false);
+ if(!TL){TL=m4mul(ortho(-250,250,-250,250,10,310),look({x:180,y:260,z:230},{x:180,y:-40,z:230.0001}));shadowPass(TM,TL,true)}};
 let frameLights=[],frameSun=null;
 let LC=null;api.begin=function(expo){if(!LC)LC=collect();const {pts,hemi,dir}=LC;frameLights=pts.filter(p=>p.intensity>.02&&(p.color.r+p.color.g+p.color.b)>.01).map(p=>({x:p.position.x,y:p.position.y,z:p.position.z,c:[lin(p.color.r)*p.intensity,lin(p.color.g)*p.intensity,lin(p.color.b)*p.intensity],d:p.distance,dec:p.decay,s:(p.userData&&p.userData.spot)||[0,0,0,-2],w:p.intensity*(p.color.r+p.color.g+p.color.b)}));
  for(const b of batches){const sel=[];frameLights.forEach((p,k)=>{const dd=Math.hypot(p.x-b.ctr[0],p.y-b.ctr[1],p.z-b.ctr[2]);if(dd<p.d+b.r)sel.push([k,p.w*Math.pow(Math.max(.05,1-Math.max(0,dd-b.r)/p.d),p.dec)])});sel.sort((a,b2)=>b2[1]-a[1]);b.lights=sel.slice(0,VNL).map(s=>s[0]);b.lkey=b.lights.join(',')}

@@ -2,6 +2,23 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-27",
+    titre: "Demande d'Enzo — nouvelle chambre 3,60 × 4,60 m, porte sur le mur de gauche",
+    avant: 67.75, apres: 67.75,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.5, 9.5], plan: [9.5, 9.5], video: [9.25, 9.25] },
+    changements: [
+      "La chambre fait maintenant 3,60 m de large (mur de la fenêtre) sur 4,60 m de long, d'après ton dessin",
+      "La porte est sur le mur de gauche, tout près du coin du haut ; ouverte, elle se range contre le mur du bureau",
+      "La fenêtre reste au milieu du mur du bas, le lit garde ses 33 cm devant la fenêtre",
+      "Bureau déplacé dans le coin opposé à la porte, portant juste à côté de l'entrée, poubelle sous le bureau",
+      "Kallax, commode, TV 75\" et sansevière gardent leur place face au lit ; la suspension est au centre de la nouvelle pièce",
+      "Passages : lit ↔ commode 1,21 m, bureau ↔ Kallax 1,20 m, rien dans le débattement de la porte",
+      "VR : départ, téléportation et zones interdites mis à jour ; mesures, fiches cliquables et visite du plan 3D aussi"
+    ],
+    images: [["dessus", "Vue de dessus : 3,60 × 3,60 → 3,60 × 4,60 m"], ["porte", "La nouvelle porte, le portant et les sneakers"], ["lit", "Le coin lit ne change pas"], ["bureau", "Le bureau dans le coin nord-est"]],
+    ensuite: "Refaire la vidéo de visite avec la nouvelle pièce ; vérifier les prises et l'interrupteur près de la nouvelle porte."
+  },
+  {
     date: "2026-11-24",
     titre: "Séance 36 — total de la zone dans les fiches du plan 3D, vidéo verticale v5",
     avant: 67.25, apres: 67.75,

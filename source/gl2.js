@@ -29,7 +29,7 @@ float sunSh(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 
 float bs=0.,bn=0.;for(int i=0;i<8;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/8.)*7.;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));if(p.z-.0012>d){bs+=d;bn+=1.;}}
 if(bn<.5)return 1.;float dist=(p.z-bs/bn)*1100.;float pen=clamp(dist*.11,1.3,15.);
 float s=0.;for(int i=0;i<16;i++){float a=float(i)*2.39996+rot;float r=sqrt((float(i)+.5)/16.)*pen;float d=unpack(texture2D(uSM,p.xy+vec2(cos(a),sin(a))*r*tx));s+=(p.z-.0012>d)?0.:1.;}return s/16.;}
-float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.;float r=9./420.;
+float topAO(){vec3 p=vT.xyz/vT.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.)return 1.;float o=0.;float r=9./500.;
 for(int i=0;i<7;i++){float a=float(i)*2.39996;float rr=r*sqrt((float(i)+.5)/7.);float d=unpack(texture2D(uTM,p.xy+vec2(cos(a),sin(a))*rr));float gap=(p.z-d)*300.;if(gap>1.5)o+=exp(-gap/85.);}return 1.-.7*o/7.;}
 float ptSh(float sl,vec3 D){vec3 a=abs(D);float fi,du,dv,dw;
 if(a.x>=a.y&&a.x>=a.z){fi=D.x>0.?0.:1.;du=D.z;dv=D.y;dw=a.x;}else if(a.y>=a.z){fi=D.y>0.?2.:3.;du=D.x;dv=D.z;dw=a.y;}else{fi=D.z>0.?4.:5.;du=D.x;dv=D.y;dw=a.z;}
@@ -42,7 +42,7 @@ void main(){vec3 base=uCol;vec2 uv=uFract==1?fract(vU*uRep):vU*uRep;vec4 tx=vec4
 if(uHasMap==1&&tx.a<uAT)discard;if(uBasic==1){gl_FragColor=vec4(base,uOp*tx.a);return;}
 base=lin(base);vec3 n=normalize(vN);if(uDbl==1&&!gl_FrontFacing)n=-n;vec3 V=normalize(uCam-vW);
 float ao=topAO();ao=mix(1.,ao,uAO);
-float dx=min(vW.x,360.-vW.x),dz=min(vW.z,360.-vW.z),dw=min(dx,dz),dy=min(vW.y,250.-vW.y);
+float dx=min(vW.x,360.-vW.x),dz=min(vW.z,460.-vW.z),dw=min(dx,dz),dy=min(vW.y,250.-vW.y);
 float inR=step(-1.,vW.x)*step(vW.x,361.)*step(-1.,vW.z)*step(vW.z,361.);
 float aoc=1.-inR*(.32*(1.-smoothstep(0.,40.,dw))*(1.-smoothstep(0.,40.,dy))+.22*(1.-smoothstep(0.,45.,dx))*(1.-smoothstep(0.,45.,dz)));
 vec3 amb=lin(mix(uGnd,uSky,.5*n.y+.5))*uHI*ao*aoc;
@@ -104,9 +104,9 @@ lights.forEach((lp,sl)=>{const o=lp.userData.shO||[0,0,0];const L=[lp.position.x
   for(const[o,m]of cast){const g=geo(o.geometry),mt=o.material;gl.uniformMatrix4fv(PCS.U.uM,false,m);if(mt.alphaTest>0&&mt.map){const T=tex(mt.map);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,T.o);gl.uniform1i(PCS.U.uMap,0);gl.uniform1f(PCS.U.uAT,mt.alphaTest);gl.uniform2f(PCS.U.uRep,mt.map.repeat.x,mt.map.repeat.y)}else gl.uniform1f(PCS.U.uAT,0);bindGeo(PCS,g,false);const aU=gl.getAttribLocation(PCS.p,'aU');gl.bindBuffer(gl.ARRAY_BUFFER,g.u);gl.enableVertexAttribArray(aU);gl.vertexAttribPointer(aU,2,gl.FLOAT,false,0,0);gl.drawArrays(gl.TRIANGLES,0,g.c)}}});
 gl.disable(gl.SCISSOR_TEST);for(let i=0;i<8;i++)gl.disableVertexAttribArray(i)}
 const api={};
-api.updateShadows=function(scene,sunDir){const {meshes}=collect(scene);const c={x:180,y:90,z:180};const e={x:c.x+sunDir[0]*700,y:c.y+sunDir[1]*700,z:c.z+sunDir[2]*700};
+api.updateShadows=function(scene,sunDir){const {meshes}=collect(scene);const c={x:180,y:90,z:230};const e={x:c.x+sunDir[0]*700,y:c.y+sunDir[1]*700,z:c.z+sunDir[2]*700};
 SL=m4mul(ortho(-300,300,-300,300,200,1300),look(e,c));shadowPass(meshes,SM,SL);
-if(!TL){TL=m4mul(ortho(-210,210,-210,210,10,310),look({x:180,y:260,z:180},{x:180,y:-40,z:180.0001}));shadowPass(meshes,TM,TL,true)}};
+if(!TL){TL=m4mul(ortho(-250,250,-250,250,10,310),look({x:180,y:260,z:230},{x:180,y:-40,z:230.0001}));shadowPass(meshes,TM,TL,true)}};
 api.render=function(scene,cam,post){const {meshes,pts,hemi,dir}=collect(scene);
 gl.bindFramebuffer(gl.FRAMEBUFFER,F0.f);gl.viewport(0,0,W,H);const bg=post.bg||[.1,.1,.1];gl.clearColor(bg[0],bg[1],bg[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);for(let i=0;i<8;i++)gl.disableVertexAttribArray(i);gl.useProgram(PM.p);gl.enable(gl.DEPTH_TEST);const U=PM.U;
 const VP=m4mul(persp(cam.fov,cam.aspect,cam.near,cam.far),look(cam.position,cam.target));gl.uniformMatrix4fv(U.uVP,false,VP);gl.uniformMatrix4fv(U.uSL,false,SL);gl.uniformMatrix4fv(U.uTL,false,TL);

@@ -3,15 +3,16 @@
 Site VR en ligne : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/
 
 ## Le projet
-Chambre de 3,60 × 3,60 m (13 m²), thème **noir & olive**, setup gaming.
-- Porte : mur nord, à droite (x 265–345).
-- Fenêtre : milieu du mur sud (x 120–240, y 90–210). Pas de radiateur.
-- Lit MALM 140×190 brun noir dans le coin sud-ouest, à 15 cm du mur de la fenêtre (x 0–199, z 171–327).
-- Bureau TROTTEN 160×80 dans le coin nord-ouest, PC sous le bureau à droite.
-- Mur est : Kallax 77×77 (vinyles, platine, enceintes), commode 6 tiroirs 120×40×76, TV 65" au mur (bas de l'écran à 1,05 m).
-- Portant GRÅFJÄLLET entre le bureau et la porte. Ficus dans le coin sud-est, lampadaire arc à côté.
+Chambre de 3,60 × 4,60 m (16,6 m², plan d'Enzo du 27/11/2026), thème **noir & olive**, setup gaming.
+- Porte : mur ouest, près du coin nord (z 15–95), ouverte contre le mur nord.
+- Fenêtre : milieu du mur sud (x 120–240, y 90–210, z 460). Pas de radiateur.
+- Lit MALM 140×190 brun noir dans le coin sud-ouest, à 33 cm du mur de la fenêtre (x 0–199, z 271–427).
+- Bureau TROTTEN 160×80 dans le coin nord-est (x 190–350, z 0–80), PS5 + PS VR2 dessus.
+- Mur est : Kallax 77×77 (z 200–277), commode 6 tiroirs 120×40×76 (z 299–419), TV 75" au mur (bas de l'écran à 1,05 m, centre z 359).
+- Portant GRÅFJÄLLET sur le mur nord à côté de la porte (x 93–183). Sansevière dans le coin sud-est, lampadaire arc à côté.
 
-Repère (cm) : x vers l'est (0–360), z vers le sud (0–360), y vers le haut (plafond 250).
+Repère (cm) : x vers l'est (0–360), z vers le sud (0–460), y vers le haut (plafond 250).
+Dans `room.js`, chaque meuble est construit dans une zone (`ZN`) et `ZOFF` déplace chaque zone d'un bloc à la fin (lit/mur est/fenêtre +100 en z, bureau +190 en x…).
 
 ## Fichiers (`source/`)
 | Fichier | Rôle |

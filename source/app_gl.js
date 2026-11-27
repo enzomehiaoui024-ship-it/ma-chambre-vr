@@ -43,7 +43,7 @@ function stateAt(t){const s=stateAt0(t);const k=ss(14.6,15.8,t)*(1-ss(19.6,20.8,
 
 const setC=(c,v)=>{c.r=v[0];c.g=v[1];c.b=v[2]};
 function apply(s,t){const e=s.elev*Math.PI/180,a=s.az*Math.PI/180;const sd=[Math.sin(a)*Math.cos(e),Math.sin(e),Math.cos(a)*Math.cos(e)];
-R.sun.position.set(180+sd[0]*600,90+sd[1]*600,180+sd[2]*600);R.sun.target.position.set(180,90,180);R.sun.intensity=s.sunI;setC(R.sun.color,s.sunC);
+R.sun.position.set(180+sd[0]*600,90+sd[1]*600,230+sd[2]*600);R.sun.target.position.set(180,90,230);R.sun.intensity=s.sunI;setC(R.sun.color,s.sunC);
 const key=sd.map(v=>v.toFixed(3)).join();if(key!==lastSun){RD.updateShadows(sc,sd);lastSun=key}
 R.amb.intensity=s.ambI;setC(R.amb.color,s.skyC);setC(R.amb.groundColor,s.gndC);
 setC(R.sky.material.color,s.sky);const so=mixc(s.sky,[1,1,1],.0);R.out.forEach(o=>{const c=hex(o.userData.c0||(o.userData.c0=o.material.color.getHex()));setC(o.material.color,[c[0]*s.sky[0],c[1]*s.sky[1],c[2]*s.sky[2]])});
@@ -70,28 +70,28 @@ return s}
 let lastSun='';
 // ---------- camera path ----------
 const K=[
-[0,[305,160,-100],[300,135,120],50],
-[3.5,[304,158,-18],[220,110,210],52],
-[7,[288,154,58],[110,80,268],56],
-[10.5,[215,142,118],[12,126,268],52],
-[14,[205,118,205],[350,48,259],50],
-[17.5,[196,140,252],[354,142,259],58],
-[21,[228,132,152],[350,72,138],50],
-[24.5,[175,142,175],[78,98,30],52],
-[28,[106,118,128],[80,102,20],46],
-[31,[62,150,112],[24,86,44],50],
-[32.8,[170,166,122],[130,85,250],54],
-[34.5,[260,150,110],[150,75,330],56],
-[38,[285,140,70],[110,80,270],58],
-[41.5,[300,150,80],[160,125,335],54],
-[45,[250,140,140],[150,110,340],50],
-[48.5,[60,128,250],[355,128,259],58],
-[52,[45,135,259],[355,125,259],56],
-[55.5,[195,148,205],[70,100,35],54],
-[59,[305,168,48],[130,60,250],60],
-[62.5,[205,330,195],[180,0,190],58],
-[66,[181,560,183],[180,0,180],52],
-[68.5,[181,570,183],[180,0,180],52]];
+[0,[-110,160,55],[120,135,210],50],
+[3.5,[-18,158,56],[150,110,260],52],
+[7,[288,154,158],[110,80,368],56],
+[10.5,[215,142,218],[12,126,368],52],
+[14,[205,118,305],[350,48,359],50],
+[17.5,[196,140,352],[354,142,359],58],
+[21,[228,132,252],[350,72,238],50],
+[24.5,[300,142,190],[268,98,30],52],
+[28,[296,118,128],[270,102,20],46],
+[31,[252,150,112],[214,86,44],50],
+[32.8,[200,166,170],[130,85,350],54],
+[34.5,[260,150,210],[150,75,430],56],
+[38,[285,140,170],[110,80,370],58],
+[41.5,[300,150,180],[160,125,435],54],
+[45,[250,140,240],[150,110,440],50],
+[48.5,[60,128,350],[355,128,359],58],
+[52,[45,135,359],[355,125,359],56],
+[55.5,[300,148,215],[262,100,35],54],
+[59,[305,168,148],[130,60,350],60],
+[62.5,[205,330,245],[180,0,240],58],
+[66,[181,600,233],[180,0,230],52],
+[68.5,[181,630,233],[180,0,230],52]];
 const TOTAL=68.5;
 function cr(p0,p1,p2,p3,u){const u2=u*u,u3=u2*u;return p1.map((_,i)=>.5*((2*p1[i])+(-p0[i]+p2[i])*u+(2*p0[i]-5*p1[i]+4*p2[i]-p3[i])*u2+(-p0[i]+3*p1[i]-3*p2[i]+p3[i])*u3))}
 function camAt(t){let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const a=K[Math.max(0,i-1)],b=K[i],c=K[i+1],d=K[Math.min(K.length-1,i+2)];let u=cl((t-b[0])/(c[0]-b[0]),0,1);
@@ -134,7 +134,7 @@ const cap=document.getElementById('cap'),capT=document.getElementById('capT'),ca
 function setMode(m){from=cur;mode=m;blendT=0;if(R.echoSet)R.echoSet(m);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===m))}
 let auto=false,autoT=0;const KEYS=['cosy','jour','coucher','soir','gaming','fete','cine'];const autoB=document.getElementById('auto');function setAuto(on){auto=on;autoT=0;autoB.classList.toggle('on',on);autoB.textContent=on?'Arrêter le défilé':'Défilé de toutes les ambiances'}autoB.onclick=()=>{stopTour();setAuto(!auto);if(auto)setMode(KEYS[(KEYS.indexOf(mode)+1)%7])};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{stopTour();setAuto(false);setMode(b.dataset.mode)});
-const VIEWS={ambi:[[35,140,259],[355,125,259]],fenetre:[[310,155,70],[150,120,330]],ens:[[560,470,640],[180,70,180]],lit:[[300,150,120],[60,60,268]],tv:[[200,135,240],[352,80,259]],vinyle:[[230,130,152],[350,72,138]],bureau:[[160,145,195],[75,92,30]],dessus:[[181,640,183],[180,0,180]]};
+const VIEWS={ambi:[[35,140,359],[355,125,359]],fenetre:[[300,155,150],[160,120,430]],ens:[[560,500,780],[180,70,230]],lit:[[300,150,220],[60,60,368]],tv:[[200,135,340],[352,80,359]],vinyle:[[230,130,252],[350,72,238]],bureau:[[300,150,215],[262,92,30]],dessus:[[181,720,233],[180,0,230]],porte:[[270,150,330],[10,95,60]]};
 function flyTo(k){stopTour();const v=VIEWS[k];fly={t:0,p0:cam.position.clone(),q0:tgt.clone(),p1:new THREE.Vector3(...v[0]),q1:new THREE.Vector3(...v[1])}}
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>flyTo(b.dataset.view));
 const playB=document.getElementById('play');
@@ -147,11 +147,11 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
   if(t>=TOTAL-.02){stopTour();setMode('cosy')}}
  else{if(auto){autoT+=dt;if(autoT>6){autoT=0;setMode(KEYS[(KEYS.indexOf(mode)+1)%7])}}blendT=Math.min(1,blendT+dt/1.2);s=blend(from,MODES[mode](el),ss(0,1,blendT));cam.fov=FV(52);
   if(fly){fly.t=Math.min(1,fly.t+dt/1.6);const u=ss(0,1,fly.t);cam.position.lerpVectors(fly.p0,fly.p1,u);tgt.x=mix(fly.q0.x,fly.q1.x,u);tgt.y=mix(fly.q0.y,fly.q1.y,u);tgt.z=mix(fly.q0.z,fly.q1.z,u);cam.lookAt(tgt);if(fly.t>=1){fly=null;fromPos(cam.position,tgt)}}else toPos()}
- cur=s;apply(s,el);ambiUp(s,el);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
+ cur=s;apply(s,el);ambiUp(s,el);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<460;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:el,noPtSh,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
  if(window.__onframe)window.__onframe()}
 window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
- const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);if(window.__mesVis)window.__mesVis(t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<360;
+ const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);if(window.__mesVis)window.__mesVis(t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<460;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
  const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;const dk=ss(31.6,32.15,t)*(1-ss(32.65,33.2,t));if(dk>0){g.fillStyle='rgba(0,0,0,'+dk+')';g.fillRect(0,0,W,H)}if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
  let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}

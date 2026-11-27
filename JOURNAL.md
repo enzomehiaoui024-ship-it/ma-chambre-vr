@@ -369,3 +369,12 @@ Vues de contrôle fixes (tools/preview.py) :
 - Score : 67,25 → 67,75/70 (plan 3D 9,25 → 9,5, vidéo 9 → 9,25), aucun critère en baisse ; la chambre elle-même est identique.
 - Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
 - À décider : 4e pothos (+12,99 €) ou un de moins dans la 3D ? Lampadaire arc de remplacement, chargeur Qi2, emplacement MOSSLANDA / supports vinyles. Prix revérifiés après le Black Friday (27/11).
+
+## 2026-11-27 — Demande d'Enzo : nouvelle pièce 3,60 × 4,60 m (dessin)
+- Dessin d'Enzo : pièce rectangulaire, porte (bleu) sur le mur de gauche près du coin du haut, fenêtre (jaune) au milieu du mur du bas. Mesures données : 3,60 × 4,60 m.
+- `room.js` : `RX=360, RZ=460` (sol, plafond, murs, plinthes) ; porte sur le mur ouest z 15–95 (chambranle, battant ouvert à 90° parallèle au mur nord, poignée) ; couloir déplacé à l'ouest. Zones (`ZN`) taguées par `sc.add` et déplacées à la fin par `ZOFF` : fenêtre/extérieur, lit, mur est +100 en z ; bureau +190 en x (coin nord-est) ; portant −75 en x (à côté de la porte) ; poubelle sous le bureau ; suspension +50 (centre). Lumières suivent leur zone. `setTvSize` lit le z du groupe TV.
+- `gl2.js`/`vrgl.js` : centre des ombres z 230, AO du dessus ±250, distance aux murs z 460. `app_gl.js` : vues (nouvelle vue « Porte »), visite recalée (entrée par la porte ouest), soleil centré. `app_vr.js` : départ (240,170), zones interdites, limites de téléportation z 440. `catalog.js` et `mesures.js` déplacés pareil.
+- Passages : lit ↔ commode 121 cm, bureau ↔ Kallax 120 cm, portant ↔ chevet 185 cm ; débattement de porte libre.
+- Vues de contrôle équivalentes (décalées) : mur est identique, coin lit identique (sans la chaise derrière), bureau et porte nouveaux. VR : 0 erreur, 443 lots, ~179 k triangles.
+- Scores inchangés (demande d'Enzo) → **67,75/70**.
+- Ensuite : vidéo de visite v6 dans la nouvelle pièce (`movie.js` a encore l'ancien parcours) ; demander où sont les prises et l'interrupteur.
