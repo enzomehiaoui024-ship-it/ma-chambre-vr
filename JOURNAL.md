@@ -397,3 +397,11 @@ Vues de contrôle fixes (tools/preview.py) :
 - Scores : vidéo 9,25 → 9,75 → **67,75 → 68,25/70** (aucun critère en baisse ; liste gardée à 9,75 car la tour n'est pas vérifiée).
 - Remarque : les vues de contrôle du JOURNAL datent de la pièce 3,60 × 3,60 (plusieurs visent un mur ou la porte) → les remplacer à la prochaine séance par des vues de la nouvelle pièce (garder les anciennes une fois pour comparer).
 - Ensuite : corriger le bug du casque PS VR2 dans gl2 ; nouvelles vues de contrôle ; vidéo verticale : plan TV un peu plus large.
+- Publication : plan 3D (v50 : app_gl.js, items.js), VR (v44), liste (v42) republiés.
+
+### Compte rendu (pour 7h20)
+- Mieux : nouvelle vidéo de visite (normale + téléphone, 1 min 12) dans ta vraie chambre 3,60 × 4,60 m, avec un plan « Coin sport » (tour + portant) ; la caméra ne traverse plus le portant ni la chaise, le casque PS VR2 reste visible, le plan final montre toute la pièce.
+- Prix après le Black Friday : l'offre à 549,95 € de l'écran 32" est finie (643,75 € chez Amazon) ; barre de son 137 € (-12 €) ; PS VR2 et TV 75" inchangés. Total 5 809,81 → 5 891,61 €.
+- Score : 67,75 → 68,25/70 (vidéo 9,25 → 9,75), aucun critère en baisse.
+- Voir : https://enzomehiaoui024-ship-it.github.io/ma-chambre-vr/evolution.html
+- À décider : attendre que l'écran 32" redescende sous 600 € ? Prix de la tour à confirmer sur Amazon.fr ; 4e pothos, lampadaire arc de remplacement, chargeur Qi2.
