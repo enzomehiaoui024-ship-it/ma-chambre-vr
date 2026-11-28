@@ -2,6 +2,24 @@
 // Images : evolution/<date>/avant_<nom>.jpg et apres_<nom>.jpg
 window.SESSIONS = [
   {
+    date: "2026-11-28",
+    titre: "Séance 37 — vidéo de visite v6 dans la nouvelle chambre (coin sport), prix après le Black Friday",
+    avant: 67.75, apres: 68.25,
+    scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.5, 9.5], plan: [9.5, 9.5], video: [9.25, 9.75] },
+    changements: [
+      "Nouvelle vidéo de visite (1 min 12) tournée dans ta chambre actuelle de 3,60 × 4,60 m, en version normale et en version téléphone",
+      "L'entrée ne traverse plus le portant : la caméra passe la porte, longe le mur du haut puis se tourne vers le lit",
+      "Nouveau plan « 08 · Coin sport » : la tour de traction, le portant sur le mur de gauche et la porte",
+      "Coin VR : la caméra ne passe plus dans le dossier de la chaise (le tapis de souris et le clavier disparaissaient) et le casque PS VR2 reste visible",
+      "Plan final : toute la pièce tient dans l'image, avec la bonne taille (3,60 × 4,60 m, passages de 1,20 à 1,94 m)",
+      "Liste : prix revérifiés après le Black Friday. L'offre TopAchat à 549,95 € pour l'écran 32\" est finie → 643,75 € chez Amazon ; barre de son Samsung 149 → 137 € (Cdiscount) ; PS VR2 toujours 349,99 € ; TV 75\" toujours 914,17 €. Total 5 809,81 → 5 891,61 €"
+    ],
+    video: "video/visite.mp4", poster: "video/visite_poster.jpg", videoCap: "Vidéo de visite v6 (1 min 12) : nouvelle chambre, coin sport, ambiances",
+    video2: "video/visite_vertical.mp4", poster2: "video/visite_vertical_poster.jpg", vertical2: true, videoCap2: "Vidéo pour téléphone v6 (verticale, 1 min 12)",
+    images: [["entree", "Début de la visite : avant, la caméra traversait le portant"], ["coin_sport", "Nouveau plan du coin sport (avant : pas de plan, on passait au coucher de soleil)"], ["coin_vr", "Coin VR : avant, le casque PS VR2 disparaissait sous cet angle"], ["plan", "Plan final : avant « 3,60 × 3,60 m » et pièce coupée ; maintenant 3,60 × 4,60 m en entier"]],
+    ensuite: "Comprendre pourquoi le casque PS VR2 disparaît sous certains angles dans le plan 3D (bug du moteur) ; écran 32\" : surveiller un retour sous 600 €."
+  },
+  {
     date: "2026-11-27",
     titre: "Demande d'Enzo — coin sport à l'entrée (plan 2) avec la tour de traction",
     avant: 67.75, apres: 67.75,
@@ -45,7 +63,7 @@ window.SESSIONS = [
       "Sur la vidéo verticale, le texte de fin passe sur 2 lignes s'il est trop large",
       "Le reste de la chambre ne change pas (8 vues de contrôle identiques)"
     ],
-    video: "video/visite_vertical.mp4", poster: "video/visite_vertical_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone v5 (verticale, 1 min 08)",
+    video: "video/visite_vertical_v5.mp4", poster: "video/visite_vertical_v5_poster.jpg", vertical: true, videoCap: "Vidéo pour téléphone v5 (verticale, 1 min 08)",
     images: [["fiche_ecran", "Fiche de l'écran 32\" dans le plan 3D : ligne « Total de la zone » en bas"], ["fiche_tv", "Fiche de la TV : 9 articles · 1 377,49 € pour la zone Commode et TV"], ["video_lit", "Vidéo verticale : l'ancienne n'avait pas le mur en lattes"], ["video_tv", "Vidéo verticale : TV 65\" éteinte → TV 75\" allumée"], ["video_bureau", "Vidéo verticale : ancien PC → PS5 + PS VR2 sur son support"]],
     ensuite: "Prix après le Black Friday (27/11) : TV 75\", barre Samsung, écran 32\", PS VR2. Questions à Enzo : 4e pothos, lampadaire arc de remplacement, chargeur Qi2."
   },
@@ -69,7 +87,7 @@ window.SESSIONS = [
     date: "2026-11-22",
     titre: "Demande d'Enzo — vidéo v5 de la chambre + ambiances plus belles",
     avant: 66, apres: 67,
-    video: "video/visite.mp4", poster: "video/visite_poster.jpg", videoCap: "Vidéo de visite v5 (1 min 08) : TV 75\", bureau console, PS VR2, ambiances",
+    video: "video/visite_v5.mp4", poster: "video/visite_v5_poster.jpg", videoCap: "Vidéo de visite v5 (1 min 08) : TV 75\", bureau console, PS VR2, ambiances",
     scores: { meubles: [10, 10], eclairage: [10, 10], coherence: [9.75, 9.75], liste: [9.75, 9.75], vr: [9.25, 9.25], plan: [9.25, 9.25], video: [8, 9] },
     changements: [
       "Nouvelle vidéo de visite (1 min 08, 1280 x 720) : la chambre d'aujourd'hui avec la TV 75\" qui s'allume, le bureau console (écran 32\" 4K, PS5), le coin VR et le mur en lattes",

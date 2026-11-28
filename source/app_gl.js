@@ -35,7 +35,7 @@ const COSY=st({night:1,moon:1,cand:1,sunI:.42,sunC:hex(0x9fb2ff),elev:24,az:6,am
 const CINE=st({night:1,moon:.7,cand:.5,sunI:.18,sunC:hex(0x9fb2ff),elev:24,az:6,ambI:.035,skyC:hex(0x55669e),gndC:hex(0x2a1a14),sky:hex(0x1c2238),expo:1.0,tv:.62,mon:0,ambi:1,
  L:{arc:[hex(0xffb877),.06],candle:[hex(0xff9a40),.2],candle2:[hex(0xff9a40),.16],candle3:[hex(0xff9a40),.12]},em:{arc:.2,pend:.02,fado:.05}});
 function blend(a,b,t){if(t<=0)return a;if(t>=1)return b;const s=st({});for(const k in a){if(k=='L'){for(const n of LN)s.L[n]=[mixc(a.L[n][0],b.L[n][0],t),mix(a.L[n][1],b.L[n][1],t)]}else if(k=='G'){for(const n of GN)s.G[n]=mixc(a.G[n],b.G[n],t)}else if(k=='em'){for(const n in a.em)s.em[n]=mix(a.em[n],b.em[n],t)}else if(Array.isArray(a[k]))s[k]=mixc(a[k],b[k],t);else s[k]=mix(a[k],b[k],t)}return s}
-const SCHED=[[0,'DAY'],[29,'DAY'],[33,'GOLD'],[36.5,'EVE'],[39,'EVE'],[41.2,'COSY'],[46.5,'COSY'],[47.8,'CINE'],[53,'CINE'],[54.3,'GAME'],[57.3,'GAME'],[58.4,'FETE'],[61.4,'FETE'],[63,'EVE']];
+const SCHED=[[0,'DAY'],[33,'DAY'],[37,'GOLD'],[40.5,'EVE'],[43,'EVE'],[45.2,'COSY'],[50.5,'COSY'],[51.8,'CINE'],[57,'CINE'],[58.3,'GAME'],[61.3,'GAME'],[62.4,'FETE'],[65.4,'FETE'],[67,'EVE']];
 const getS=(n,t)=>n=='DAY'?DAY:n=='GOLD'?GOLD:n=='EVE'?EVE:n=='GAME'?GAME:n=='COSY'?COSY:n=='CINE'?CINE:FETE(t);
 function stateAt0(t){for(let i=0;i<SCHED.length-1;i++){const[a,na]=SCHED[i],[b,nb]=SCHED[i+1];if(t<b)return blend(getS(na,t),getS(nb,t),ss(0,1,(t-a)/(b-a)))}return getS(SCHED[SCHED.length-1][1],t)}
 // pendant le plan sur la TV (vers 15-20 s), la TV s'allume
@@ -70,33 +70,35 @@ return s}
 let lastSun='';
 // ---------- camera path ----------
 const K=[
-[0,[-110,160,55],[120,135,210],50],
-[3.5,[-18,158,56],[150,110,260],52],
+[0,[-110,160,38],[200,118,170],50],
+[2.2,[58,159,44],[230,112,190],51],
+[3.5,[95,158,92],[130,80,330],52],
 [7,[288,154,158],[110,80,368],56],
 [10.5,[215,142,218],[12,126,368],52],
 [14,[205,118,305],[350,48,359],50],
 [17.5,[196,140,352],[354,142,359],58],
 [21,[228,132,252],[350,72,238],50],
 [24.5,[300,142,190],[268,98,30],52],
-[28,[296,118,128],[270,102,20],46],
-[31,[252,150,112],[214,86,44],50],
-[32.8,[200,166,170],[130,85,350],54],
-[34.5,[260,150,210],[150,75,430],56],
-[38,[285,140,170],[110,80,370],58],
-[41.5,[300,150,180],[160,125,435],54],
-[45,[250,140,240],[150,110,440],50],
-[48.5,[60,128,350],[355,128,359],58],
-[52,[45,135,359],[355,125,359],56],
-[55.5,[300,148,215],[262,100,35],54],
-[59,[305,168,148],[130,60,350],60],
-[62.5,[205,330,245],[180,0,240],58],
-[66,[181,600,233],[180,0,230],52],
-[68.5,[181,630,233],[180,0,230],52]];
-const TOTAL=68.5;
+[28,[298,140,150],[268,98,22],46],
+[31,[268,146,156],[220,86,46],48],
+[33.4,[214,146,262],[120,108,50],56],
+[35.6,[188,140,236],[110,104,40],54],
+[38.5,[260,150,210],[150,75,430],56],
+[42,[285,140,170],[110,80,370],58],
+[45.5,[300,150,180],[160,125,435],54],
+[49,[250,140,240],[150,110,440],50],
+[52.5,[60,128,350],[355,128,359],58],
+[56,[45,135,359],[355,125,359],56],
+[59.5,[300,148,215],[262,100,35],54],
+[63,[305,168,148],[130,60,350],60],
+[66.5,[205,330,245],[180,0,240],58],
+[70,[181,720,231],[180,0,230],52],
+[72.5,[181,750,231],[180,0,230],52]];
+const TOTAL=72.5;window.__TOTAL=TOTAL;
 function cr(p0,p1,p2,p3,u){const u2=u*u,u3=u2*u;return p1.map((_,i)=>.5*((2*p1[i])+(-p0[i]+p2[i])*u+(2*p0[i]-5*p1[i]+4*p2[i]-p3[i])*u2+(-p0[i]+3*p1[i]-3*p2[i]+p3[i])*u3))}
 function camAt(t){let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const a=K[Math.max(0,i-1)],b=K[i],c=K[i+1],d=K[Math.min(K.length-1,i+2)];let u=cl((t-b[0])/(c[0]-b[0]),0,1);
 if(i==0)u=u*u*(3-2*u)*.5+u*.5;const p=cr(a[1],b[1],c[1],d[1],u),q=cr(a[2],b[2],c[2],d[2],u),f=mix(b[3],c[3],ss(0,1,u));
-const hh=t<61?1:1-ss(61,63,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
+const hh=t<65?1:1-ss(65,67,t);p[0]+=Math.sin(t*1.3)*.6*hh;p[1]+=Math.sin(t*1.7+1)*.45*hh;q[0]+=Math.sin(t*.9)*.8*hh;return{p,q,f}}
 const CAP=[
 [3.4,8.6,'01 · LE LIT','MALM brun noir','Housse olive, coussins beige et moutarde, mur en lattes noyer'],
 [9.4,12.0,'02 · AU-DESSUS DU LIT','Trois affiches sur les lattes','Cadres noirs, LED derrière la tête de lit'],
@@ -104,13 +106,14 @@ const CAP=[
 [16.4,19.1,'04 · TV','TCL 75" Mini LED au mur','144 Hz · support inclinable · rétroéclairage'],
 [19.9,22.6,'05 · VINYLES','Kallax + platine AT-LP60X','Enceintes Edifier R1280DB'],
 [23.4,29.4,'06 · BUREAU GAMING','Écran OLED 32" 4K AOC AGON PRO','PS5 · chaise Sihoo Doro C300 · lampe à ampoule apparente'],
-[30.0,31.4,'07 · LE COIN VR','PS VR2 rangé sur son support','Station de charge des manettes · câble caché sous le bureau'],
-[33.6,39.6,'08 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
-[40.6,46.0,'09 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
-[47.6,53.0,'10 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
-[54.6,57.6,'11 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du bureau synchronisées'],
-[58.2,61.4,'12 · MODE FÊTE','Couleurs qui tournent',''],
-[63.0,66.0,'13 · LE PLAN','Cotes et passages','3,60 × 3,60 m · passages de 91 à 133 cm']];
+[29.9,31.2,'07 · LE COIN VR','PS VR2 rangé sur son support','Station de charge des manettes · câble caché sous le bureau'],
+[32.2,35.8,'08 · COIN SPORT','Tour de traction DH FitLife','Traction, dips, pompes · portant contre le mur, près de la porte'],
+[37.6,43.6,'09 · AMBIANCE','Coucher de soleil → soir chaud','Lampadaire, chevet, FADO, LED ambrées'],
+[44.6,50.0,'10 · NUIT COSY','La lune par la fenêtre','Bougies, lumières de la ville, murs blancs'],
+[51.6,57.0,'11 · CINÉ AMBILIGHT','La TV déborde sur le mur','Les couleurs de l\'image éclairent la chambre'],
+[58.6,61.6,'12 · MODE GAMING','Néon violet et cyan','LED du lit, de la TV et du bureau synchronisées'],
+[62.2,65.4,'13 · MODE FÊTE','Couleurs qui tournent',''],
+[67.0,70.0,'14 · LE PLAN','Cotes et passages','3,60 × 4,60 m · passages de 120 à 194 cm']];
 
 
 // ---------- touch / mouse orbit ----------
@@ -153,13 +156,13 @@ function frame(){requestAnimationFrame(frame);if(window.__offline)return;const n
 window.__renderAt=(t,W,H)=>{window.__offline=true;if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;RD=makeRenderer(cv);lastSun='';cam.aspect=W/H}
  const c=camAt(t);cam.position.set(...c.p);tgt.set(...c.q);cam.lookAt(tgt);cam.fov=FV(c.f);const s=stateAt(t);cur=s;apply(s,t);ambiUp(s,t);if(window.__mesVis)window.__mesVis(t);const p=cam.position;R.ceil.visible=p.y<250&&p.x>0&&p.x<360&&p.z>0&&p.z<460;
  RD.render(sc,cam,{expo:s.expo,bloom:(.25+.4*(1-cl(s.sunI/1.5,0,1)))*(1-.55*(s.ambi||0)),thr:.8,time:t,vig:.3,bg:[s.sky[0]*.25,s.sky[1]*.25,s.sky[2]*.3]});
- const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;const dk=ss(31.6,32.15,t)*(1-ss(32.65,33.2,t));if(dk>0){g.fillStyle='rgba(0,0,0,'+dk+')';g.fillRect(0,0,W,H)}if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
+ const o=window.__oc||(window.__oc=document.createElement('canvas'));o.width=W;o.height=H;const g=o.getContext('2d');g.drawImage(cv,0,0,W,H);const k=Math.min(W,H)/720;if(window.__mesDraw)window.__mesDraw(t,g,W,H,k);
  let sh=null,al=0;for(const c2 of CAP)if(t>=c2[0]-.4&&t<=c2[1]+.4){sh=c2;al=Math.min(1,(t-(c2[0]-.4))/.5,((c2[1]+.4)-t)/.5)}
  if(sh&&al>0){g.save();g.globalAlpha=al;const x=56*k,y=60*k;const gr=g.createLinearGradient(0,0,620*k,0);gr.addColorStop(0,'rgba(10,10,9,.55)');gr.addColorStop(1,'rgba(10,10,9,0)');g.fillStyle=gr;g.fillRect(0,y-38*k,640*k,130*k);
   g.fillStyle='#A4AE6E';g.fillRect(x,y-28*k,5*k,104*k);g.fillStyle='#C9D19A';g.font=`600 ${15*k}px Inter, sans-serif`;g.fillText(sh[2].split('').join(String.fromCharCode(8202)),x+20*k,y-6*k);
   const fit=(txt,base,wt)=>{let fs=base*k;g.font=`${wt} ${fs}px Inter, sans-serif`;while(fs>8&&g.measureText(txt).width>W-x-48*k){fs*=.93;g.font=`${wt} ${fs}px Inter, sans-serif`}};g.fillStyle='#F6F2E8';fit(sh[3],36,700);g.fillText(sh[3],x+20*k,y+34*k);g.globalAlpha=al*.85;fit(sh[4],19,400);g.fillText(sh[4],x+20*k,y+64*k);g.restore()}
  const ti=Math.min(1,t/.8)*(1-ss(2.6,3.4,t));if(ti>0){g.save();g.globalAlpha=ti;g.fillStyle='rgba(10,10,9,.35)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${64*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-6*k);g.fillStyle='#C9D19A';g.font=`500 ${22*k}px Inter, sans-serif`;g.fillText('NOIR & OLIVE · VISITE 3D',W/2,H/2+34*k);g.restore()}
- const te=ss(66.2,67.4,t);if(te>0){g.save();g.globalAlpha=te;g.fillStyle='rgba(10,10,9,.6)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${52*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-10*k);g.fillStyle='#C9D19A';g.font=`500 ${21*k}px Inter, sans-serif`;const st='Visite VR sur Quest 2 · plan 3D · liste d\'achat';if(g.measureText(st).width<W-48*k)g.fillText(st,W/2,H/2+30*k);else{g.fillText('Visite VR sur Quest 2',W/2,H/2+30*k);g.fillText('plan 3D · liste d\'achat',W/2,H/2+58*k)}g.restore()}
+ const te=ss(70.2,71.4,t);if(te>0){g.save();g.globalAlpha=te;g.fillStyle='rgba(10,10,9,.6)';g.fillRect(0,0,W,H);g.fillStyle='#F6F2E8';g.textAlign='center';g.font=`700 ${52*k}px Inter, sans-serif`;g.fillText('Ma chambre',W/2,H/2-10*k);g.fillStyle='#C9D19A';g.font=`500 ${21*k}px Inter, sans-serif`;const st='Visite VR sur Quest 2 · plan 3D · liste d\'achat';if(g.measureText(st).width<W-48*k)g.fillText(st,W/2,H/2+30*k);else{g.fillText('Visite VR sur Quest 2',W/2,H/2+30*k);g.fillText('plan 3D · liste d\'achat',W/2,H/2+58*k)}g.restore()}
  return o.toDataURL('image/jpeg',.92)};
 window.__jump=(k,p,q)=>{const v=k?VIEWS[k]:[p,q];cam.position.set(...v[0]);tgt.set(...v[1]);fromPos(cam.position,tgt);fly=null};window.__mode=m=>{setMode(m);blendT=1;from=MODES[m](0)};
 setup();setMode('cosy');frame();
@@ -209,7 +212,7 @@ setup();setMode('cosy');frame();
  const uiE=document.getElementById('ui');function upd(){if(!on)return;requestAnimationFrame(upd);const r=cv.getBoundingClientRect();const yMax=(uiE?uiE.getBoundingClientRect().top:r.bottom)-14,yMin=r.top+48;for(const m of els){const q=proj(m.p);const y=q&&r.top+(1-q[1])/2*r.height;if(!q||Math.abs(q[0])>1.05||y<yMin||y>yMax){m.el.style.display='none';continue}m.el.style.display='';const w=m.el.offsetWidth||80;m.el.style.left=Math.max(r.left+w/2+4,Math.min(r.right-w/2-4,r.left+(q[0]+1)/2*r.width))+'px';m.el.style.top=y+'px'}}
  btn.onclick=()=>{on=!on;btn.classList.toggle('on',on);g.visible=on;lay.style.display=on?'':'none';if(on){flyTo('dessus');upd()}};lay.style.display='none';
  window.__mesures=v=>{if(v!==on)btn.onclick()};
- const mA=t=>ss(62.6,63.4,t)*(1-ss(66.0,66.6,t));window.__mesVis=t=>{g.visible=on||mA(t)>0};
+ const mA=t=>ss(66.6,67.4,t)*(1-ss(70.0,70.6,t));window.__mesVis=t=>{g.visible=on||mA(t)>0};
  window.__mesDraw=(t,ctx,W,H,k)=>{const a=mA(t);if(a<=0)return;ctx.save();ctx.globalAlpha=a;
   for(const m of els){const q=proj(m.p);if(!q||Math.abs(q[0])>1||Math.abs(q[1])>1)continue;const x=(q[0]+1)/2*W,y=(1-q[1])/2*H;const n=m.el.querySelector('small').textContent,v=m.el.textContent.slice(n.length);
    ctx.font=`500 ${11*k}px Inter, sans-serif`;const w0=ctx.measureText(n).width;ctx.font=`700 ${12.5*k}px Inter, sans-serif`;const w1=ctx.measureText(v).width;const w=w0+w1+22*k,h=22*k;

@@ -1,6 +1,8 @@
 # Idées d'amélioration (à piocher, une ou deux par séance)
 
 ## Plan 3D
+- Bug gl2 (séance 37) : le casque PS VR2 (groupe `h`, matériau blanc) disparaît depuis certains angles (caméra au nord-est du bureau, vue de contrôle n° 6), son ombre reste. Pas le culling ni l'ombre des lampes : chercher dans `collect()`/`compose()` ou le tri des lots.
+- Nouvelles vues de contrôle pour la pièce 3,60 × 4,60 (les actuelles visent parfois un mur ou la porte).
 - Fiche du plan 3D : bouton pour ajouter/retirer l'article de « J'ai acheté » sans ouvrir la liste (à voir avec la liste qui garde son état en local).
 - Étagères flottantes Action : les modéliser ou retirer de la liste (à vérifier).
 
@@ -13,7 +15,7 @@
 - Reflets légers sur le parquet et l'écran de TV.
 
 ## Liste d'achat
-- Sansevière : vérifier la hauteur en magasin (viser 60-80 cm) ; TV 75" (aucun prix trouvé le 23/11 pour le modèle non-Pro) et barre Samsung HW-B460F (134 € Rue du Commerce vu le 23/11, à confirmer) : revoir les prix après le Black Friday (offre Auchan jusqu'au 29/11). Écran AG326UD : 589,99 € sur les comparateurs le 23/11, vérifier les 549,95 € TopAchat.
+- Sansevière : vérifier la hauteur en magasin (viser 60-80 cm). Écran AG326UD : 643,75 € Amazon le 27/11 (TopAchat épuisé) → surveiller un retour sous 600 €. Tour DH FitLife : prix Amazon.fr à confirmer (illisible par robot ; deal à 74 € vu sur Dealabs il y a 2 semaines).
 - Remplacer le lampadaire arc OMBRAGE (épuisé) par un modèle noir/marbre E27 en stock.
 - Vérifier à la réception que les spots des plantes se rallument seuls quand la prise Tapo remet le courant.
 - Revérifier chaque semaine : PS VR2 (349,99 € Black Friday, fin non annoncée), écran 32", station de charge Sense. PC « plus tard » (RTX 5070 Ti, SSD 2 To) : un coup d'œil par mois suffit. Prochaine fois : juste après le Black Friday (27/11) ; le code VISIONBF de l'écran et le 359 € Amazon du processeur peuvent disparaître.
@@ -24,7 +26,6 @@
 - Tester sur le vrai Quest 2 et noter les images/s affichées dans le menu (demander à Enzo).
 
 ## Vidéo
-- Refaire la vidéo (normale + verticale) dans la pièce 3,60 × 4,60 m : `movie.js` garde l'ancien parcours.
 - Vidéo : refaire la visite avec les fiches produit et la chaise Sihoo dans toutes les scènes.
 - Vidéo verticale : sur le plan TV (15-20 s), la TV 75" touche les bords de l'image → caméra un peu plus reculée en vertical seulement.
 - Musique libre de droits pour les vidéos (si Enzo en fournit une).
